@@ -24,7 +24,9 @@ carries an address so it can be re-verified with
 ``llvm-objdump --triple=armv7-linux-androideabi``.
 
 Optionally ``--check-map docs/JNI_MAP.json`` verifies that every v7a/v5
-address, size and exported symbol recorded in the map matches .dynsym.
+export address/size/symbol, every native->Java wrapper address/size and every
+gJAVAFunction entry recorded in the map matches the binaries (exit 1 on any
+mismatch).
 
 Usage (repo root):
     tools/inventory/jni_native_scan.py \

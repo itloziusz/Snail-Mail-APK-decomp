@@ -148,7 +148,7 @@
   "returns": "void",
   "thread": "main/UI thread (Activity lifecycle / View input callback) - SnailMailActivity.onCreate, after setContentView and SoundPool creation",
   "thread_confidence": "likely",
-  "native_side_behavior": "FindClass(\"java/io/FileDescriptor\") -> NewGlobalRef(cls) -> GetFieldID(cls,\"descriptor\",\"I\") -> GetIntField(fd) -> dup() -> gJavaAssetFid=dupfd, gJavaAssetStart=start, gJavaAssetLength=length; gDatFP=fdopen(dupfd,\"rb\"); fseek(start); fread 244-byte header; gDat=RShellMemoryMalloc(hdr.u32[2]); fseek(start); fread directory; cRHash::Init(&gDatHash,count,DatHashGetString); for each 24-byte record rewrite u32 at +4 (name offset) into an absolute pointer and cRHash::Add(name,i). Finally DeleteLocalRef(cls) and DeleteLocalRef(globalRef) (sic).",
+  "native_side_behavior": "FindClass(\"java/io/FileDescriptor\") -> NewGlobalRef(cls) -> GetFieldID(cls,\"descriptor\",\"I\") -> GetIntField(fd) -> dup() -> gJavaAssetFid=dupfd, gJavaAssetStart=start, gJavaAssetLength=length; gDatFP=fdopen(dupfd,\"rb\"); fseek(start); fread 244-byte header; gDat=RShellMemoryMalloc(hdr.u32[2]); fseek(start); fread directory; cRHash::Init(&gDatHash,count=u32@0,DatHashGetString); for each record i rewrite the u32 at archive offset 4+24*i (name_offset) into an absolute pointer and cRHash::Add(name,i). Finally DeleteLocalRef(cls) and DeleteLocalRef(globalRef) (sic).",
   "jobject_handling": "fd jobject used only during the call; not cached. The dup()ed int fd and FILE* are cached (gJavaAssetFid/gDatFP).",
   "lifetime_notes": "Archive stays open for the process lifetime (JNIDatUnInit does not close it). A second onCreate in the same process leaks the previous FILE*/fd/directory.",
   "arm64_hazards": [
@@ -2353,7 +2353,7 @@
   "id": "HZ-08",
   "direction": "hazard",
   "title": "32-bit pointers stored in archive directory",
-  "description": "JNIDatInit rewrites the u32 at +4 of each 24-byte directory record into an absolute pointer.",
+  "description": "JNIDatInit rewrites each record's name_offset (u32 at archive offset 4+24*i) into an absolute pointer.",
   "port_guidance": "Keep the offset and resolve on lookup, or build a separate char* table.",
   "evidence": [
    "EV-JNI-0018"

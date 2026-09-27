@@ -32,6 +32,9 @@ tools/inventory/managed_shell_scan.py --apk original/com.sandlotgames.snailmail-
 tools/inventory/jni_native_scan.py --bin v7a=work/apk_unzip/lib/armeabi-v7a/libsnailmail.so \
     --bin v5=work/apk_unzip/lib/armeabi/libsnailmail.so \
     --managed analysis/dex/managed_shell_scan.json > analysis/dex/jni_native_scan.json
+# Rebuild the curated outputs (numbers are pulled from the two scans above)
+tools/inventory/build_jni_map.py        # -> docs/JNI_MAP.json (58 entries)
+tools/inventory/build_jni_evidence.py   # -> analysis/evidence/jni.jsonl (70 claims)
 # Verify every address/size/table entry recorded in docs/JNI_MAP.json (exit 1 on mismatch)
 tools/inventory/jni_native_scan.py ... --check-map docs/JNI_MAP.json   # "90 record(s) checked, 0 problem(s)"
 ```
@@ -65,7 +68,7 @@ output agrees with it.
 
 Permission use found in the DEX:
 
-* `WAKE_LOCK`: `newWakeLock(26 = SCREEN_BRIGHT_WAKE_LOCK|ON_AFTER_RELEASE)` in `SnailMailActivity`.
+* `WAKE_LOCK`: `newWakeLock(26 = 0x1a = FULL_WAKE_LOCK, "DoNotDimScreen")` in `SnailMailActivity`.
 * `VIBRATE`: `ADRenderer.JAVAVibrate`.
 * `INTERNET` and `ACCESS_NETWORK_STATE`: OpenFeint (`ConnectivityManager` in `OpenFeintInternal.smali:3409`).
 * `GET_ACCOUNTS`: OpenFeint `Util5.getAccountNameEclair`.
@@ -153,7 +156,8 @@ symbols in each build). Detailed ABI and GL analysis belongs to the platform wor
 * `asm.mp3` is the game data archive opened by `JNIDatInit`.
   * Its data starts at APK offset 58,804 (local header 58,759 + 30-byte header + 14 name bytes + 1 extra byte). That is the value `AssetFileDescriptor.getStartOffset()` reports.
   * `openFd()` works only on stored entries. The `.mp3` extension is in aapt's default no-compress list, which is the likely reason for the name.
-* The native side reads a 244-byte header at the asset start. It then uses u32[0] as the entry count (734 in this file) and u32[2] as the directory byte size (34,701). See EV-JNI-0018. The archive format belongs to the asset workstream.
+* The native side reads a 244-byte probe at the asset start. It uses u32[0] as the entry count (734 in this file) and u32[2] as the directory byte size (34,701), a word that is also `record[0].data_offset`. See EV-JNI-0018. The archive format is documented by the asset workstream in `docs/ASSET_FORMATS.md`.
+* That document also records the texture loader uploading the decoded TGA pixels as `GL_RGBA`. This agrees with the RGBA byte order of the Java decoders (section 9).
 
 ## 6. Signing (EV-JNI-0055, established)
 
@@ -171,7 +175,7 @@ Every non-Ogg APK entry outside `assets/`, `lib/` and `classes.dex` was scanned 
 trailing data and embedded ZIP, ELF, DEX or Ogg magics
 (`managed_shell_scan.json:apk_non_ogg_entry_checks`):
 
-* `com/openfeint/api/doc-files/*` holds **7 PNGs**:
+* `com/openfeint/api/doc-files/*` holds **6 PNGs**:
   * `appSettings`, `devDashAppName`, `myOpenFeintSampleProject`, `OpenFeintSDKProject`, `ProjectErr`, `sourceLink`.
   * All are valid, end with IEND and have 0 trailing bytes.
   * Chunks are only IHDR/iCCP/pHYs/IDAT/IEND.
@@ -294,6 +298,11 @@ Specific confirmations:
   * Later calls (the EGL context was lost on pause, or a new Activity started in the same process): **`nativeReInit()`** runs. It calls `JAVA_RegisterFunctions` again, then `InitGL`, then `cRResourceManager::ReInit`, which reloads textures through the `JAVAC_Un*` callbacks, and sets `*(Game+0x718b4)=4` and `G0StartBlackCount=2`. If `AudioInitFlag` is set, which happens only after a fresh `onCreate`, it also calls **`JNIAudioInit()`** (a no-op) and clears the flag.
 * **`onSurfaceChanged(w,h)`** calls **`nativeResize(w,h)`**. Width and height are stored as floats in `gG0DeviceScreen*` and `gG0Screen*`.
 * **`onDrawFrame`** calls **`nativeRender(HasFocus ? 0 : 1)`**, which runs `AppInit()` and then `appRender(flag)`. All 26 native→Java callbacks (audio, files, decoders, time, OpenFeint) are issued from here or from `nativeReInit`, on the GL thread (EV-JNI-0014/0015).
+* BOOT_CHAIN asks "[MANAGED?]": can `nativeReInit` run before the first `nativeRender`/`AppInit`?
+  * `SurfaceCreatedFirstTime` is a process-wide static that is set only after `nativeInit` returns.
+  * GLSurfaceView's `GLThread.guardedRun` calls `onSurfaceCreated`, then `onSurfaceChanged`, then `onDrawFrame` in the same loop iteration.
+  * So the first `nativeRender` follows `nativeInit` before any later surface creation can take the `nativeReInit` path.
+  * This is **likely**, based on framework behaviour. It is not guaranteed by app code.
 
 ### 10.5 Input and sensors (main thread)
 
@@ -427,7 +436,7 @@ NewStringUTF=167 at 0x29c. Confidence is high.
 | HZ-05 | 64-bit time split in two | `System.nanoTime` returns two `jint`s through a Java static, recombined as `u64/1000` (µs) by `__aeabi_uldivmod`. Callers use both halves. | Replace with `clock_gettime(CLOCK_MONOTONIC)` returning `uint64_t` µs natively. No JNI needed. | established |
 | HZ-06 | `byte[]` buffers sized by native | `JAVAUnZip`/`UnJpg`/`UnPng`/`LoadFile`/`LastLoggedInUserID` fill arrays whose size native chose. Overflow is swallowed by `UnZip` and truncated silently. For `UnPng`/`UnJpg`/`UserID` the exception is left pending and never checked. | Decode natively with explicit lengths (zlib, libpng/libjpeg or stb). If JNI is kept, check `ExceptionCheck` after every call. | established |
 | HZ-07 | Pixel contract of the image callbacks | ARGB_8888 `copyPixelsToBuffer` gives RGBA byte order with **premultiplied** alpha. Rows are copied **bottom-up** behind an 18-byte TGA header (type 2, 32 bpp, descriptor 8). | A native decoder must reproduce RGBA order, premultiplication and the row flip. Validate against a device capture. | likely |
-| HZ-08 | 32-bit pointers inside data structures | The archive directory's u32 name field at record+4 is rewritten in place to an absolute pointer (`JNIDatInit`). | Keep offsets or build a separate `char*` table. Coordinate with the native and asset workstreams. | established |
+| HZ-08 | 32-bit pointers inside data structures | Each archive directory record's `name_offset` (u32 at archive offset 4+24*i) is rewritten in place to an absolute pointer (`JNIDatInit`). | Keep offsets or build a separate `char*` table. Coordinate with the native and asset workstreams. | established |
 | HZ-09 | Unsynchronised cross-thread state | Touch, key, sensor and pause-invalidate (main) and OpenFeint callbacks (main) write engine globals that the GL thread reads. The Java statics `HasFocus`/`AudioInitFlag` are non-volatile. | Marshal input to the GL thread (`queueEvent` or a lock-free queue). Use atomics for flags. | established |
 | HZ-10 | JNI misuse | `DeleteLocalRef(globalRef)` in `JNIDatInit`; `GetStringUTFChars` without release in `JNIOFOInit`; no exception checks; stale local refs. | Fix, and validate with `-Xcheck:jni`. | established |
 | HZ-11 | softfp float passing | armeabi JNI passes `float` in core registers and on the stack (`JNIMouseEvent` x in r3, y on the stack), and varargs `Call*Method` promote float to double. | Nothing to do for C prototypes on AArch64. Relevant only for hand-written glue or emulation harnesses. | established |
@@ -450,5 +459,5 @@ NewStringUTF=167 at 0x29c. Confidence is high.
    workstream.
 5. Whether the engine's blend state expects premultiplied textures (HZ-07). This
    decides whether a native decoder must premultiply.
-6. The `asm.mp3` archive layout (u32[0]=734 entries, u32[2]=34,701 directory
-   bytes, 24-byte records). Asset workstream.
+6. The `asm.mp3` archive layout is covered in `docs/ASSET_FORMATS.md`: 734
+   records of 24 bytes starting at offset 4, and `dir_size` = 34,701.
