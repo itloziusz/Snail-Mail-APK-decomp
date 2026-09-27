@@ -25,12 +25,16 @@ if(NOT EXISTS ${SM_AOT_GENERATED}/aot_table.c)
 endif()
 
 file(GLOB SM_AOT_GEN_SOURCES ${SM_AOT_GENERATED}/aot_funcs_*.c)
+# Hand-written wrappers for the functions listed in tools/aot/hooks.txt
+# (display adaptation, options menu); see aot/port/port.h.
+set(SM_AOT_PORT_SOURCES port/port_display.c port/port_menu.c)
 # The runtime and the generated tables reference each other, so they form one
 # static library (sm_aot_game = runtime sources + translated sources).
 add_library(sm_aot_game STATIC
-  runtime/aot_core.c runtime/aot_libc.c runtime/aot_gl.c runtime/aot_jni.c
+  runtime/aot_core.c runtime/aot_libc.c runtime/aot_gl.c runtime/aot_jni.c ${SM_AOT_PORT_SOURCES}
   ${SM_AOT_GEN_SOURCES} ${SM_AOT_GENERATED}/aot_table.c)
-target_include_directories(sm_aot_game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/runtime ${SM_AOT_GENERATED})
+target_include_directories(sm_aot_game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/runtime ${SM_AOT_GENERATED}
+                           ${CMAKE_CURRENT_SOURCE_DIR}/port)
 target_link_libraries(sm_aot_game PUBLIC Threads::Threads m)
 if(SM_AOT_TRACE_CALLS)
   target_compile_definitions(sm_aot_game PUBLIC AOT_TRACE_CALLS=1)
@@ -69,10 +73,10 @@ endif()
 if(SM_UNICORN_DIR AND EXISTS ${SM_UNICORN_DIR}/include/unicorn/unicorn.h AND EXISTS ${SM_UNICORN_DIR}/lib/libunicorn.so.2)
   add_executable(snailmail_ref EXCLUDE_FROM_ALL
     ${CMAKE_CURRENT_SOURCE_DIR}/../tools/validation/arm32_ref/game_ref.c ${SM_HOST_SOURCES}
-    runtime/aot_core.c runtime/aot_libc.c runtime/aot_gl.c runtime/aot_jni.c
+    runtime/aot_core.c runtime/aot_libc.c runtime/aot_gl.c runtime/aot_jni.c ${SM_AOT_PORT_SOURCES}
     ${SM_AOT_GEN_SOURCES} ${SM_AOT_GENERATED}/aot_table.c)
   target_include_directories(snailmail_ref PRIVATE ${SM_HOST_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/runtime
-                             ${SM_AOT_GENERATED} ${SM_UNICORN_DIR}/include)
+                             ${SM_AOT_GENERATED} ${CMAKE_CURRENT_SOURCE_DIR}/port ${SM_UNICORN_DIR}/include)
   target_link_libraries(snailmail_ref PRIVATE ${SM_UNICORN_DIR}/lib/libunicorn.so.2 Threads::Threads m
                         PNG::PNG JPEG::JPEG ZLIB::ZLIB)
   set_target_properties(snailmail_ref PROPERTIES BUILD_RPATH ${SM_UNICORN_DIR}/lib)

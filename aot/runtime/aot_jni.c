@@ -37,6 +37,7 @@ typedef struct {
     char ret;
     char args[32];
     int nargs;
+    int clock; /* 1: ADRenderer.JAVATime, 2: JAVATimeHi (see aot_clock_override) */
 } method_rec;
 #define MAX_IDS 512
 static method_rec g_methods[MAX_IDS];
@@ -70,6 +71,21 @@ static void parse_sig(const char *sig, method_rec *m)
     }
     if (*p != ')') aot_fatal("bad JNI signature %s", sig);
     m->ret = p[1] == '[' ? 'L' : p[1];
+}
+
+/* ---------------------------------------------------------------- clock override */
+/* The original reads its frame clock through two Java callbacks: JAVATime()
+ * stores System.nanoTime() and returns its low 32 bits, JAVATimeHi() returns
+ * the high 32 bits of the stored value (smali ADRenderer.smali:982-1013;
+ * GetTime v7a:0x7d110 combines them, docs/BOOT_CHAIN.md 3.2). While an
+ * override is set they return the given time instead. */
+static int g_clock_on;
+static uint64_t g_clock_ns, g_clock_latched;
+
+void aot_clock_override(int on, uint64_t ns)
+{
+    g_clock_on = on;
+    g_clock_ns = ns;
 }
 
 static inline uint32_t arg(aot_cpu *c, int i)
@@ -123,6 +139,13 @@ static void call_v(aot_cpu *c, char want_ret)
     if (m->ret != want_ret && !(want_ret == 'I' && strchr("ZBCSI", m->ret))) {
         aot_fatal("JNI Call%sMethodV on method returning %c", want_ret == 'V' ? "Void" : "Int", m->ret);
     }
+    if (g_clock_on && m->clock) {
+        if (m->clock == 1) {
+            g_clock_latched = g_clock_ns;
+        }
+        c->r[0] = m->clock == 1 ? (uint32_t)g_clock_latched : (uint32_t)(g_clock_latched >> 32);
+        return;
+    }
     r = aot_cfg->java->call_method(ctx, obj, m->id, m->ret, args, m->nargs);
     c->r[0] = want_ret == 'V' ? 0u : (uint32_t)r.i;
 }
@@ -159,6 +182,10 @@ void aot_jni_dispatch(aot_cpu *c, uint32_t index)
             if (g_nmethods >= MAX_IDS) aot_fatal("too many method IDs");
             g_methods[i].id = id;
             parse_sig(gstr(c->r[3]), &g_methods[i]);
+            g_methods[i].clock = strcmp(gstr(c->r[3]), "()I") != 0            ? 0
+                                 : strcmp(gstr(c->r[2]), "JAVATime") == 0   ? 1
+                                 : strcmp(gstr(c->r[2]), "JAVATimeHi") == 0 ? 2
+                                                                            : 0;
             ++g_nmethods;
         }
         c->r[0] = METHOD_ID_BASE + 4u * (uint32_t)i;

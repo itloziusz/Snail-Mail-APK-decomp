@@ -22,12 +22,14 @@ import android.view.inputmethod.InputMethodManager;
  * (docs/BOOT_CHAIN.md 3.2), so the original assumes a display of about 60 Hz.
  * On a 120 Hz display the game ran twice as fast. The game's timing code is
  * unchanged; the shell restores the frame rate it was written for:
- *   1. SnailMailActivity asks the window for the 60 Hz display mode;
+ *   1. PortSettings asks the window for the 60 Hz display mode;
  *   2. surfaceCreated() declares the surface as fixed-rate 60 fps content
  *      (Surface.setFrameRate, Android 11+);
  *   3. FramePacer draws on vsync, but never twice within MIN_FRAME_INTERVAL_NS,
  *      in case the system keeps a faster refresh rate anyway.
- * On a 60 Hz display every vsync is drawn, as in the original.
+ * On a 60 Hz display every vsync is drawn, as in the original. The 120 Hz and
+ * VRR port options (PortSettings) draw every vsync instead; native code then
+ * interpolates between the game's 60 Hz steps.
  */
 class ADGLSurfaceView extends GLSurfaceView {
     ADRenderer mRenderer;
@@ -40,6 +42,7 @@ class ADGLSurfaceView extends GLSurfaceView {
     private static final int FRAME_RATE_COMPATIBILITY_FIXED_SOURCE = 1;
 
     private final FramePacer mPacer = new FramePacer();
+    private int mRefresh = PortSettings.REFRESH_60;
 
     // (IFF)V -- native scales x by 640/deviceWidth, y by 480/deviceHeight
     // (v7a:0x14318-0x14370).
@@ -138,15 +141,34 @@ class ADGLSurfaceView extends GLSurfaceView {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         super.surfaceCreated(holder);
-        // Surface.setFrameRate(float, int) is API 30; the shell compiles
-        // against android-23, so it is looked up by reflection.
-        if (Build.VERSION.SDK_INT >= 30) {
-            try {
-                Surface.class.getMethod("setFrameRate", float.class, int.class)
-                        .invoke(holder.getSurface(), 60.0f, FRAME_RATE_COMPATIBILITY_FIXED_SOURCE);
-            } catch (Exception e) {
-                // Best effort: FramePacer still limits presentation to 60 Hz.
-            }
+        applyFrameRate(holder.getSurface());
+    }
+
+    /** PortSettings.REFRESH_*; UI thread. */
+    void setPresentation(int refresh) {
+        mRefresh = refresh;
+        mPacer.mMinIntervalNs = refresh == PortSettings.REFRESH_60 ? MIN_FRAME_INTERVAL_NS : 0L;
+        Surface s = getHolder().getSurface();
+        if (s != null && s.isValid()) {
+            applyFrameRate(s);
+        }
+    }
+
+    // Surface.setFrameRate(float, int) is API 30; the shell compiles against
+    // android-23, so it is looked up by reflection. Best effort: at 60 Hz the
+    // FramePacer still limits presentation. 0 clears the vote (VRR: the system
+    // chooses).
+    private void applyFrameRate(Surface surface) {
+        if (Build.VERSION.SDK_INT < 30) {
+            return;
+        }
+        float rate = mRefresh == PortSettings.REFRESH_60 ? 60.0f
+                : mRefresh == PortSettings.REFRESH_120 ? 120.0f : 0.0f;
+        try {
+            Surface.class.getMethod("setFrameRate", float.class, int.class)
+                    .invoke(surface, rate, FRAME_RATE_COMPATIBILITY_FIXED_SOURCE);
+        } catch (Exception e) {
+            // ignored, see above
         }
     }
 
@@ -162,10 +184,11 @@ class ADGLSurfaceView extends GLSurfaceView {
         super.onPause();
     }
 
-    /** Requests one render per vsync, at most one per MIN_FRAME_INTERVAL_NS. Main thread only. */
+    /** Requests one render per vsync, at most one per mMinIntervalNs. Main thread only. */
     private final class FramePacer implements Choreographer.FrameCallback {
         private boolean mRunning;
         private long mLastFrameNs;
+        long mMinIntervalNs = MIN_FRAME_INTERVAL_NS;
 
         void start() {
             if (mRunning) {
@@ -186,7 +209,7 @@ class ADGLSurfaceView extends GLSurfaceView {
             if (!mRunning) {
                 return;
             }
-            if (mLastFrameNs == 0 || frameTimeNanos - mLastFrameNs >= MIN_FRAME_INTERVAL_NS) {
+            if (mLastFrameNs == 0 || frameTimeNanos - mLastFrameNs >= mMinIntervalNs) {
                 mLastFrameNs = frameTimeNanos;
                 requestRender();
             }

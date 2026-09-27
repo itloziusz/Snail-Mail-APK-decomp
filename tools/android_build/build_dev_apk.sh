@@ -51,11 +51,13 @@ mkdir -p "$OUT/app/classes" "$OUT/app/pkg/lib/arm64-v8a" "$OUT/out" "$OUT/keys"
 if [ "$VARIANT" = "aot" ] || [ "$VARIANT" = "aot-gles2" ]; then
   echo "== translate original ARM32 code (tools/aot/arm2c.py)"
   ORIG_SO=work/apk_unzip/lib/armeabi-v7a/libsnailmail.so
-  if [ ! -f aot/generated/aot_table.c ] || ! grep -q "$(sha256sum "$ORIG_SO" | cut -d' ' -f1)" aot/generated/aot_table.c; then
+  if [ ! -f aot/generated/aot_table.c ] || ! grep -q "$(sha256sum "$ORIG_SO" | cut -d' ' -f1)" aot/generated/aot_table.c \
+     || [ tools/aot/arm2c.py -nt aot/generated/aot_table.c ] || [ tools/aot/hooks.txt -nt aot/generated/aot_table.c ]; then
     python3 tools/aot/arm2c.py --elf "$ORIG_SO" --out aot/generated
   fi
   AOT_SRCS=(aot/runtime/aot_core.c aot/runtime/aot_libc.c aot/runtime/aot_gl.c aot/runtime/aot_jni.c
-    aot/runtime/aot_android.c aot/generated/aot_table.c aot/generated/aot_funcs_*.c)
+    aot/runtime/aot_android.c aot/generated/aot_table.c aot/generated/aot_funcs_*.c
+    aot/port/port_display.c aot/port/port_menu.c aot/port/port_android.c)
   if [ "$VARIANT" = "aot" ]; then
     echo "== native (arm64-v8a, NDK-less): AOT runtime + translated game (GLES 1.1)"
     GL_ARGS=(--lib libGLESv1_CM)
@@ -74,7 +76,7 @@ if [ "$VARIANT" = "aot" ] || [ "$VARIANT" = "aot-gles2" ]; then
   python3 tools/android_build/ndkless/build_so.py \
     --out "$OUT/app/pkg/lib/arm64-v8a/libsnailmail.so" --workdir "$OUT/obj-aot" \
     --lib libc --lib libm --lib liblog "${GL_ARGS[@]}" \
-    -I aot/runtime -I aot/generated -D SM_NDKLESS_GLES_DECLS \
+    -I aot/runtime -I aot/generated -I aot/port -D SM_NDKLESS_GLES_DECLS \
     --nowarn-prefix aot/generated \
     "${AOT_SRCS[@]}"
   python3 - "$OUT/app/pkg/lib/arm64-v8a/libsnailmail.so" "$GL_LIB" "$NOT_GL_LIB" <<'PY'

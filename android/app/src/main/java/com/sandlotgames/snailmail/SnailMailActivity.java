@@ -9,8 +9,6 @@ import android.media.SoundPool;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.view.Display;
-import android.view.WindowManager;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
@@ -84,7 +82,10 @@ public class SnailMailActivity extends Activity {
         getWindow().setFlags(1024, 1024); // WindowManager.LayoutParams.FLAG_FULLSCREEN
         this.mGLView = new ADGLSurfaceView(this);
         setContentView(this.mGLView);
-        prefer60HzDisplayMode();
+        // PORT-CHANGE: port options (screen fit, FOV, refresh); applies the
+        // display mode for the refresh setting (60 Hz by default, see
+        // ADGLSurfaceView).
+        PortSettings.init(this);
         AudioInitFlag = true;
         wprintf("Sfx Init");
         // 8 streams, AudioManager.STREAM_MUSIC (3), srcQuality 0 -- as original.
@@ -104,30 +105,6 @@ public class SnailMailActivity extends Activity {
         Accelerometer = new AccelerometerListener(this);
         // TODO(port): the original never unregisters the listener (not even in onPause).
         Accelerometer.start();
-    }
-
-    /**
-     * PORT-CHANGE: request the display's 60 Hz mode at the current resolution.
-     * The game runs at least one 16,666 us update per drawn frame (appRender,
-     * v7a:0x15690), so it assumes a 60 Hz display; see ADGLSurfaceView for the
-     * other two parts of this change. No-op if the display has no 60 Hz mode.
-     */
-    private void prefer60HzDisplayMode() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Display.Mode current = display.getMode();
-        Display.Mode best = null;
-        for (Display.Mode m : display.getSupportedModes()) {
-            if (m.getPhysicalWidth() == current.getPhysicalWidth()
-                    && m.getPhysicalHeight() == current.getPhysicalHeight()
-                    && Math.abs(m.getRefreshRate() - 60.0f) < 1.0f) {
-                best = m;
-            }
-        }
-        if (best != null) {
-            WindowManager.LayoutParams lp = getWindow().getAttributes();
-            lp.preferredDisplayModeId = best.getModeId();
-            getWindow().setAttributes(lp);
-        }
     }
 
     @Override

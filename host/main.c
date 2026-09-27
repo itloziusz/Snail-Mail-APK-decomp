@@ -26,6 +26,7 @@
 
 #include "aot_host.h"
 #include "java_emul.h"
+#include "port.h"
 
 #ifdef SM_HOST_HAVE_GL
 #include "egl_offscreen.h"
@@ -101,6 +102,7 @@ int sm_host_run(int argc, char **argv)
     const char *trace = NULL, *gltrace = NULL;
     int frames = 300, width = 800, height = 480, shot_every = 0, headless = 0, realtime = 0;
     double hz = 60.0; /* simulated display refresh (virtual clock step per frame) */
+    sm_port_settings port; /* port options; default: all original (reference behaviour) */
     int i, fd;
     struct stat st;
     char asm_path[1024], tmpl[] = "/tmp/snailmail_filesXXXXXX";
@@ -111,6 +113,7 @@ int sm_host_run(int argc, char **argv)
     uint32_t act_cls, view_cls, acc_obj, thiz;
     struct timespec t0, t1;
 
+    sm_port_settings_original(&port);
     for (i = 1; i < argc; ++i) {
         const char *a = argv[i];
         const char *v = i + 1 < argc ? argv[i + 1] : NULL;
@@ -126,10 +129,14 @@ int sm_host_run(int argc, char **argv)
         else if (!strcmp(a, "--headless")) headless = 1;
         else if (!strcmp(a, "--realtime")) realtime = 1;
         else if (!strcmp(a, "--hz") && v) hz = atof(argv[++i]);
+        else if (!strcmp(a, "--fit") && v) port.fit = !strcmp(argv[++i], "adaptive") ? SM_PORT_FIT_ADAPTIVE : SM_PORT_FIT_STRETCH;
+        else if (!strcmp(a, "--fov") && v) port.fov = !strcmp(argv[++i], "adaptive") ? SM_PORT_FOV_ADAPTIVE : SM_PORT_FOV_ORIGINAL;
+        else if (!strcmp(a, "--port-defaults")) sm_port_settings_default(&port);
         else {
             fprintf(stderr,
                     "usage: %s [--assets DIR] [--files DIR] [--out DIR] [--frames N] [--size WxH]\n"
-                    "          [--shot-every K] [--input SCRIPT] [--trace F] [--gltrace F] [--headless] [--realtime] [--hz N]\n",
+                    "          [--shot-every K] [--input SCRIPT] [--trace F] [--gltrace F] [--headless] [--realtime] [--hz N]\n"
+                    "          [--fit stretch|adaptive] [--fov original|adaptive] [--port-defaults]\n",
                     argv[0]);
             return 2;
         }
@@ -181,6 +188,7 @@ int sm_host_run(int argc, char **argv)
     aot_gl_trace_set(gltrace_f);
     clock_gettime(CLOCK_MONOTONIC, &t0);
     if (aot_init(&cfg) != 0) return 1;
+    sm_port_set(&port);
 
     g_cpu = aot_thread_enter(NULL);
     g_env = aot_thread_guest_env();
@@ -221,7 +229,9 @@ int sm_host_run(int argc, char **argv)
             if (e->frame != frame) continue;
             if (!strcmp(e->what, "down") || !strcmp(e->what, "move") || !strcmp(e->what, "up")) {
                 uint32_t action = !strcmp(e->what, "down") ? 0u : !strcmp(e->what, "move") ? 1u : 2u;
-                uint32_t a[5] = {g_env, view_cls, action, fbits(e->x), fbits(e->y)};
+                float tx = e->x, ty = e->y;
+                sm_port_map_touch(&tx, &ty);
+                uint32_t a[5] = {g_env, view_cls, action, fbits(tx), fbits(ty)};
                 call("Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIMouseEvent", a, 5);
             } else if (!strcmp(e->what, "key")) {
                 uint32_t a[3] = {g_env, thiz, (uint32_t)e->key};
@@ -235,6 +245,7 @@ int sm_host_run(int argc, char **argv)
         }
         {
             uint32_t a[3] = {g_env, thiz, 0u};
+            sm_port_frame_begin();
             call("Java_com_sandlotgames_snailmail_ADRenderer_nativeRender", a, 3);
         }
         if (!realtime) sm_java_clock_advance((uint64_t)(1e9 / hz + 0.5));

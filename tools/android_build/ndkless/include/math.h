@@ -5,6 +5,7 @@ extern "C" {
 double acos(double);
 double atan(double);
 double atan2(double, double);
+float atanf(float);
 double cos(double);
 float cosf(float);
 double exp(double);
@@ -13,6 +14,8 @@ float fabsf(float);
 double floor(double);
 float floorf(float);
 double fmod(double, double);
+float fmaxf(float, float);
+float fminf(float, float);
 double pow(double, double);
 double sin(double);
 float sinf(float);

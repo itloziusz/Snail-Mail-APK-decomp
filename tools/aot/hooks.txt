@@ -1,0 +1,24 @@
+# Translated functions wrapped by hand-written port code (aot/port/).
+# arm2c.py emits each one's translated body as F_xxxxxxxx_orig; aot/port
+# defines F_xxxxxxxx, which adjusts arguments or adds behaviour and calls the
+# original. With every port option at its "original" setting the wrappers
+# pass straight through (checked by the GL-trace differential, docs/TESTING.md).
+
+# Display adaptation (aot/port/port_display.c)
+_Z12G0RenderFontP9cRTextureffffffffffffffR7tColourif   # 2D quads: aspect-correct UI
+_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture        # full-screen backdrops
+_ZN15cRSplashManager6RenderEf                          # splash / loading screens
+_Z14gluPerspectivefffff                                # field of view
+
+# Options menu: Display page (aot/port/port_menu.c)
+_ZN9cROptions4InitEv
+_ZN9cROptions2AIEv
+_ZN9cROptions6UnInitEv
+
+# Smart HUD alignment (aot/port/port_display.c): every 2D element is a queued
+# cFontPrintBuffer entry (borders queue theirs from cRBorder::Draw during the
+# update), drawn by FontPrintRender through FontPrintReal / OSDPrintReal.
+_ZN8cRBorder4DrawEv
+_Z15FontPrintRenderi
+_Z13FontPrintRealP16cFontPrintBuffer
+_Z12OSDPrintRealP16cFontPrintBuffer

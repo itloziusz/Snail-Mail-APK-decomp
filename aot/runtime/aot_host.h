@@ -115,7 +115,22 @@ void aot_jni_dispatch(aot_cpu *c, uint32_t index);
 void aot_jni_init_tables(void);
 void aot_libc_init(void);
 uint32_t aot_import_data_addr(const char *name);   /* __sF, __stack_chk_guard */
+/* Presentation-driven game clock (aot/port frame interpolation): while `on`,
+ * the original's clock callbacks ADRenderer.JAVATime / JAVATimeHi (low / high
+ * 32 bits of System.nanoTime) return `ns` without calling Java. */
+void aot_clock_override(int on, uint64_t ns);
+
 void aot_gl_trace_set(FILE *f);
+
+/* Display-adaptation filter (aot/port): adjusts the values handed to the GL
+ * backend. Applied after tracing, so a trace records what the game issued.
+ * NULL members (the default) mean no adjustment. */
+typedef struct aot_gl_filter {
+    void (*ortho)(float v[6]);   /* glOrthof l, r, b, t, n, f */
+    void (*color)(float v[4]);   /* glColor4f r, g, b, a */
+    void (*draw)(void);          /* before each glDrawElements */
+} aot_gl_filter;
+extern aot_gl_filter aot_gl_port_filter;
 
 #ifdef __cplusplus
 }

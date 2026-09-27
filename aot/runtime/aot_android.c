@@ -22,6 +22,7 @@
 
 #include "aot_host.h"
 #include "aot_platform.h"
+#include "port.h"
 
 #ifdef SM_GL_EMULATE_GLES1
 #include "sm_rendering/smgl.h"
@@ -349,6 +350,7 @@ JNIEXPORT void JNICALL Java_com_sandlotgames_snailmail_ADRenderer_nativeRender(J
 {
     aot_cpu *c = enter(env);
     uint32_t ret_;
+    sm_port_frame_begin(); /* display adaptation, aot/port */
     CALL(PKG "ADRenderer_nativeRender", ENV_AND(thiz), (uint32_t)pause);
     (void)ret_;
 }
@@ -381,6 +383,7 @@ JNIEXPORT void JNICALL Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIMouseE
 {
     aot_cpu *c = enter(env);
     uint32_t ret_;
+    sm_port_map_touch(&x, &y); /* follow the adapted 2D layout, aot/port */
     CALL(PKG "ADGLSurfaceView_JNIMouseEvent", ENV_AND(cls), (uint32_t)action, fbits(x), fbits(y));
     (void)ret_;
 }

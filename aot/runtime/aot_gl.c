@@ -18,6 +18,8 @@ static uint64_t g_gl_calls;
 
 void aot_gl_trace_set(FILE *f) { g_trace = f; }
 
+aot_gl_filter aot_gl_port_filter;
+
 static inline uint32_t arg(aot_cpu *c, int i)
 {
     return i < 4 ? c->r[i] : AOT_LD32(c->r[13] + 4u * (uint32_t)(i - 4));
@@ -65,8 +67,12 @@ IMP(glClearColor)
 IMP(glClearDepthf) { T("glClearDepthf %08x\n", arg(c, 0)); GLB->ClearDepthf(argf(c, 0)); }
 IMP(glColor4f)
 {
+    float v[4] = {argf(c, 0), argf(c, 1), argf(c, 2), argf(c, 3)};
     T("glColor4f %08x %08x %08x %08x\n", arg(c, 0), arg(c, 1), arg(c, 2), arg(c, 3));
-    GLB->Color4f(argf(c, 0), argf(c, 1), argf(c, 2), argf(c, 3));
+    if (aot_gl_port_filter.color) {
+        aot_gl_port_filter.color(v);
+    }
+    GLB->Color4f(v[0], v[1], v[2], v[3]);
 }
 IMP(glCullFace) { T("glCullFace %x\n", arg(c, 0)); GLB->CullFace(arg(c, 0)); }
 IMP(glDeleteTextures)
@@ -88,6 +94,9 @@ IMP(glDrawElements)
     uint32_t idx = arg(c, 3);
     const void *p = g_element_buffer ? (const void *)(uintptr_t)idx : gptr(idx);
     T("glDrawElements %x %d %x %08x eb=%u\n", arg(c, 0), (int)arg(c, 1), arg(c, 2), idx, g_element_buffer);
+    if (aot_gl_port_filter.draw) {
+        aot_gl_port_filter.draw();
+    }
     GLB->DrawElements(arg(c, 0), (sm_GLsizei)arg(c, 1), arg(c, 2), p);
 }
 IMP(glEnable) { T("glEnable %x\n", arg(c, 0)); GLB->Enable(arg(c, 0)); }
@@ -128,9 +137,13 @@ IMP(glMultMatrixf)
 }
 IMP(glOrthof)
 {
+    float v[6] = {argf(c, 0), argf(c, 1), argf(c, 2), argf(c, 3), argf(c, 4), argf(c, 5)};
     T("glOrthof %08x %08x %08x %08x %08x %08x\n", arg(c, 0), arg(c, 1), arg(c, 2), arg(c, 3), arg(c, 4),
       arg(c, 5));
-    GLB->Orthof(argf(c, 0), argf(c, 1), argf(c, 2), argf(c, 3), argf(c, 4), argf(c, 5));
+    if (aot_gl_port_filter.ortho) {
+        aot_gl_port_filter.ortho(v);
+    }
+    GLB->Orthof(v[0], v[1], v[2], v[3], v[4], v[5]);
 }
 IMP(glPixelStorei) { T("glPixelStorei %x %d\n", arg(c, 0), (int)arg(c, 1)); GLB->PixelStorei(arg(c, 0), (sm_GLint)arg(c, 1)); }
 IMP(glPopMatrix) { (void)c; T("glPopMatrix\n"); GLB->PopMatrix(); }
