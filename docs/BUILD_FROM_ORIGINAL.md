@@ -16,7 +16,7 @@ API 23 platform jar, and Python. Package names can vary on other systems.
 
 ```sh
 sudo apt update
-sudo apt install python3 python3-venv openjdk-17-jdk clang lld \
+sudo apt install python3 python3-venv python3-tk openjdk-17-jdk clang lld \
   aapt apksigner dalvik-exchange libandroid-23-java
 python3 -m venv .venv
 .venv/bin/python -m pip install 'capstone==5.0.7' 'pyelftools==0.33'
@@ -27,7 +27,19 @@ Run these commands at the repository root. The shell build needs `clang`,
 `PATH`. If the Android platform jar is elsewhere, set `ANDROID_JAR` to its
 absolute path. `JAVA_HOME` is detected from `javac` when it is unset.
 
-## 2. Build
+## 2. Select the APK and build
+
+On a Linux desktop, run the builder without arguments. Choose your original
+APK in the first file dialog and the output location in the second. A progress
+window shows the build log and reports success or failure. The file chooser
+requires Tkinter and a graphical desktop session; the build itself runs on
+Linux, not on the phone.
+
+```sh
+.venv/bin/python tools/android_build/build_from_original.py
+```
+
+For terminal-only systems or automation, pass the original APK path directly:
 
 ```sh
 .venv/bin/python tools/android_build/build_from_original.py \
@@ -35,7 +47,9 @@ absolute path. `JAVA_HOME` is detected from `javac` when it is unset.
   --output SnailMail-ARM64-v0.1.1.apk
 ```
 
-The default output is `SnailMail-ARM64-v0.1.1.apk` in the current directory.
+In terminal mode, the default output is `SnailMail-ARM64-v0.1.1.apk` in the
+current directory. In the desktop mode, choose the destination in the save
+dialog.
 The installed app is **Snail Mail**, package
 `com.sandlotgames.snailmail.port.preview`, version name `0.1.1`, version code
 `5`. It contains only `arm64-v8a` native code, the original icon and assets,
