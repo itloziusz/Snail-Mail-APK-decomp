@@ -9,6 +9,9 @@ The tool accepts the known original package with SHA-256
 `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
 Other releases may contain different code or assets and are rejected.
 
+On Windows, follow the [Windows build tutorial](BUILD_ON_WINDOWS.md) to run
+these Linux tools in Ubuntu on WSL 2.
+
 ## 1. Prepare a Linux build environment
 
 On Debian or Ubuntu, install a JDK, Clang/LLD, the Android packaging tools and
