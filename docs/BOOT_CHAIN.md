@@ -207,7 +207,7 @@ All established from the disassembly at `0x15690`–`0x15834` (EV-NAT-0021, 0022
   | `L+2S < T ≤ L+3S` | 3 | `L+3S` |
   | `T > L+3S` | 4 | `T` (resync, drops time) |
 
-  At least one update runs per rendered frame, even when the render rate is above 60 Hz. The inference that the simulation then runs faster than real time is **likely**. The first frame has `L = 0`, so it runs 4 updates and resyncs.
+  At least one update runs per rendered frame, even when the render rate is above 60 Hz. The simulation then runs faster than real time. Three observations support this: the host runner at `--hz 120`, an offline simulation of this table (120 updates/s at 120 Hz), and the owner's report from a 120 Hz Galaxy S24+ that the game "runs faster". The Android shell therefore paces presentation to 60 Hz (`ADGLSurfaceView`, `docs/PORTING_STATUS.md`). The first frame has `L = 0`, so it runs 4 updates and resyncs.
 * Each update is `FontAI()` (`0x21944`) then `cRGame::AI(Game)` (`0x3af98`). `G0RenderNextFlag` is 0 for the first n−1 updates and 1 for the last. Text and OSD printers read the flag, so only the last update emits text.
 * Render: `G0RenderAvailable = 1; G0Render(); G0RenderAvailable = 0`. `G0Render` (`0x7ad84`) does the following, unless `*(Game+0x328)` is set:
   1. `glViewport(0,0,devW,devH)`

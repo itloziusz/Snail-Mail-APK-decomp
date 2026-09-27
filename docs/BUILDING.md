@@ -254,6 +254,9 @@ cmake -S . -B build-game -DCMAKE_BUILD_TYPE=Release
 cmake --build build-game --target snailmail_host snailmail_ref -j
 # play (offscreen, PNG every 60 frames); input script format in host/main.c
 build-game/aot/snailmail_host --frames 3000 --shot-every 60 --out shots --input in.txt
+# simulated display rate: the virtual clock advances 1/N s per drawn frame
+# (default 60). --hz 120 reproduces the unpaced 2x speed on 120 Hz panels.
+build-game/aot/snailmail_host --hz 120 --frames 1560 --shot-every 120 --out shots120
 # differential vs the ORIGINAL ARM32 code (Unicorn 2 from the pip wheel)
 build-game/aot/snailmail_host --headless --frames 6000 --input in.txt --gltrace aot.txt
 build-game/aot/snailmail_ref  --headless --frames 6000 --input in.txt --gltrace ref.txt

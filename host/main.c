@@ -100,6 +100,7 @@ int sm_host_run(int argc, char **argv)
     const char *assets = "work/apk_unzip/assets", *files = NULL, *out = NULL, *script = NULL;
     const char *trace = NULL, *gltrace = NULL;
     int frames = 300, width = 800, height = 480, shot_every = 0, headless = 0, realtime = 0;
+    double hz = 60.0; /* simulated display refresh (virtual clock step per frame) */
     int i, fd;
     struct stat st;
     char asm_path[1024], tmpl[] = "/tmp/snailmail_filesXXXXXX";
@@ -124,10 +125,11 @@ int sm_host_run(int argc, char **argv)
         else if (!strcmp(a, "--gltrace") && v) gltrace = argv[++i];
         else if (!strcmp(a, "--headless")) headless = 1;
         else if (!strcmp(a, "--realtime")) realtime = 1;
+        else if (!strcmp(a, "--hz") && v) hz = atof(argv[++i]);
         else {
             fprintf(stderr,
                     "usage: %s [--assets DIR] [--files DIR] [--out DIR] [--frames N] [--size WxH]\n"
-                    "          [--shot-every K] [--input SCRIPT] [--trace F] [--gltrace F] [--headless] [--realtime]\n",
+                    "          [--shot-every K] [--input SCRIPT] [--trace F] [--gltrace F] [--headless] [--realtime] [--hz N]\n",
                     argv[0]);
             return 2;
         }
@@ -235,7 +237,7 @@ int sm_host_run(int argc, char **argv)
             uint32_t a[3] = {g_env, thiz, 0u};
             call("Java_com_sandlotgames_snailmail_ADRenderer_nativeRender", a, 3);
         }
-        if (!realtime) sm_java_clock_advance(16666667ull);
+        if (!realtime) sm_java_clock_advance((uint64_t)(1e9 / hz + 0.5));
 #ifdef SM_HOST_HAVE_GL
         if (shot && out && !headless) {
             char p[1200];
