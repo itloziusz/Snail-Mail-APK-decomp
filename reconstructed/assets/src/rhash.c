@@ -2,7 +2,7 @@
  * Reconstruction of cRHash from v7a (sha256 e43bc913...a466).
  * Every function names the original address range it reconstructs; the
  * instruction-level argument is in docs/ASSET_FORMATS.md section 4 and the
- * evidence ledger analysis/evidence/assets.jsonl (EV-ASSET-0010..0016).
+ * evidence ledger analysis/evidence/assets.jsonl (EV-ASSET-0011..0016).
  */
 #include "sm_assets/rhash.h"
 

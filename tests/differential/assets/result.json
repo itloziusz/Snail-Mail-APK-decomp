@@ -14,14 +14,18 @@
  },
  "reconstructed": {
   "sources": {
-   "reconstructed/assets/src/rhash.c": "1ad1eb56f125bd158ff1683d666fcba7c38d83faaaf1d4f4344c75b4a7d3167b",
+   "reconstructed/assets/src/rhash.c": "e89e6f4c5802bc2b28184b21c8c478960161117d7b772c313d873e4a17956922",
    "reconstructed/assets/src/asm_archive.c": "d86cc4680abb9dc8477e45c7e352fc8f09ac546ddd77082f99ad9926054cb01b",
    "reconstructed/assets/include/sm_assets/rhash.h": "85311b4386ff86a579b9be3219b36a3901c55127d98d627bc6e7f6a166a39cbd",
-   "reconstructed/assets/include/sm_assets/asm_archive.h": "499c656020240fd3c7b6c9102a770e0ef8c635d9b67f617b3e8d254884c17d16",
-   "tests/differential/assets/sm_assets_cli.c": "83d84dbbbadaeeecd80c740c66136282c303056deaafffce70ba9564940fe802"
+   "reconstructed/assets/include/sm_assets/asm_archive.h": "7ff77d60a18ed709bb94cd3e8ffb9b63cef64d37c6494397fe374a7f0a6bbef0",
+   "tests/differential/assets/sm_assets_cli.c": "6420da25c6e02697b600177bebeeb46ba122c1ba9434dcd5cf269981c56aeea6"
   },
   "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
   "flags": "-std=c11 -O1 -Wall -Wextra -Werror"
+ },
+ "fixture": {
+  "path": "tests/fixtures/assets/synthetic_small.asm",
+  "sha256": "7451650247fa9c0d45e82d9a05e785ae8364ed645cc0426e08236cd59ffabb28"
  },
  "archive": {
   "present": true,
@@ -68,7 +72,7 @@
    ]
   },
   {
-   "name": "jnidatinit",
+   "name": "jnidatinit[synthetic_small.asm]",
    "original_functions": [
     "Java_..._JNIDatInit v7a:0x15244",
     "DatHashGetString v7a:0x19954",
@@ -78,18 +82,66 @@
    "reconstructed_functions": [
     "sm_asm_directory_parse",
     "sm_asm_directory_build_index",
-    "sm_asm_directory_find_index"
+    "sm_asm_directory_find_index",
+    "sm_rhash_chain"
    ],
-   "inputs": 3490,
-   "comparisons": 4473,
+   "inputs": 353,
+   "comparisons": 381,
    "mismatches": 0,
    "first_divergence": null,
    "notes": [
-    "fd content = 4661 pad bytes + archive; start offset 0x1235; records 734; names resolving to another record: [54] -> [43]"
+    "archive synthetic_small.asm sha256 7451650247fa9c0d45e82d9a05e785ae8364ed645cc0426e08236cd59ffabb28; fd content = 4661 pad bytes + archive; start offset 0x1235; records 7; names resolving to another record: [4] -> [0]"
    ]
   },
   {
-   "name": "loader",
+   "name": "loader[synthetic_small.asm]",
+   "original_functions": [
+    "RShellLoadFile(char*, void*, int*) v7a:0x1b980",
+    "PfmLoadFileDat v7a:0x14c74",
+    "JAVAC_UnZip v7a:0x14b60",
+    "JAVAC_UnJpg v7a:0x149e8",
+    "JAVAC_UnPng v7a:0x144c0",
+    "JAVA_RegisterFunctions v7a:0x13ca4"
+   ],
+   "reconstructed_functions": [
+    "sm_asm_entry_read_span",
+    "sm_asm_entry_output_extent",
+    "sm_asm_build_tga_header",
+    "sm_asm_image_place_rows",
+    "sm_asm_record_raw fields"
+   ],
+   "inputs": 6,
+   "comparisons": 37,
+   "mismatches": 0,
+   "first_divergence": null,
+   "notes": [
+    "Java side replaced by Python stand-ins: JAVAUnZip decodes the first zip entry; JAVAUnPng/UnJpg write an aperiodic w*h*4 pattern using the image header's own dims (bitmap decoding itself is NOT compared). Shadowed-name records are skipped (unreachable by name)."
+   ]
+  },
+  {
+   "name": "jnidatinit[asm.mp3]",
+   "original_functions": [
+    "Java_..._JNIDatInit v7a:0x15244",
+    "DatHashGetString v7a:0x19954",
+    "RShellDatFind v7a:0x1b920",
+    "cRHash::* v7a:0x7d114-0x7d397"
+   ],
+   "reconstructed_functions": [
+    "sm_asm_directory_parse",
+    "sm_asm_directory_build_index",
+    "sm_asm_directory_find_index",
+    "sm_rhash_chain"
+   ],
+   "inputs": 3490,
+   "comparisons": 5206,
+   "mismatches": 0,
+   "first_divergence": null,
+   "notes": [
+    "archive asm.mp3 sha256 59740ec3a2cd1f7e9ff250e3c6128ffff922193925e3d0316db22a4118861b6a; fd content = 4661 pad bytes + archive; start offset 0x1235; records 734; names resolving to another record: [54] -> [43]"
+   ]
+  },
+  {
+   "name": "loader[asm.mp3]",
    "original_functions": [
     "RShellLoadFile(char*, void*, int*) v7a:0x1b980",
     "PfmLoadFileDat v7a:0x14c74",
@@ -106,16 +158,16 @@
     "sm_asm_record_raw fields"
    ],
    "inputs": 733,
-   "comparisons": 3223,
+   "comparisons": 3887,
    "mismatches": 0,
    "first_divergence": null,
    "notes": [
-    "Java side replaced by Python stand-ins: JAVAUnZip decodes the first zip entry; JAVAUnPng/UnJpg write a synthetic w*h*4 pattern (bitmap decoding itself is NOT compared). Shadowed-name records skipped (unreachable by name)."
+    "Java side replaced by Python stand-ins: JAVAUnZip decodes the first zip entry; JAVAUnPng/UnJpg write an aperiodic w*h*4 pattern using the image header's own dims (bitmap decoding itself is NOT compared). Shadowed-name records are skipped (unreachable by name)."
    ]
   }
  ],
  "totals": {
-  "comparisons": 16079,
+  "comparisons": 17894,
   "mismatches": 0
  }
 }

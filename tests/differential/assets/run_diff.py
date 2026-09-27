@@ -39,6 +39,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 SO = REPO / "work/apk_unzip/lib/armeabi-v7a/libsnailmail.so"
 ARCHIVE = REPO / "work/apk_unzip/assets/asm.mp3"
+FIXTURE = REPO / "tests/fixtures/assets/synthetic_small.asm"
 V7A_SHA256 = "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466"
 ARCHIVE_SHA256 = "59740ec3a2cd1f7e9ff250e3c6128ffff922193925e3d0316db22a4118861b6a"
 SOURCES = ["reconstructed/assets/src/rhash.c", "reconstructed/assets/src/asm_archive.c",
@@ -235,15 +236,13 @@ class FakeJava:
     """Just enough JNI for JNIDatInit and the JAVAC_Un* wrappers. Every call
     is checked; anything unexpected raises."""
 
-    def __init__(self, ref: ArmRef, archive: bytes, dims_by_offset: dict):
+    def __init__(self, ref: ArmRef):
         self.ref = ref
-        self.archive = archive
         self.arrays: dict[int, bytearray] = {}
         self.next_handle = 0x10000
         self.methods: dict[int, str] = {}
         self.fd = None
         self.log: list[tuple] = []
-        self.dims_by_offset = dims_by_offset
         self.last_input: bytes | None = None
         h = {
             "FindClass": self.find_class, "NewGlobalRef": self.new_global_ref, "DeleteLocalRef": self.delete_ref,
@@ -331,7 +330,7 @@ class FakeJava:
             pix = w * h * 4
             if pix > len(out):
                 raise GuestFault("copyPixelsToBuffer would overflow the Java buffer")
-            out[:pix] = bytes(((k * 7 + 3) & 0xFF) for k in range(pix))
+            out[:pix] = pattern(pix)
         else:
             raise GuestFault(f"unexpected Java method {name}")
 
@@ -342,51 +341,73 @@ class FakeJava:
         return s["width"], s["height"]
 
 
-def run_jni_suites(ref: ArmRef, cli: Path, tmp: Path, archive: bytes) -> list[dict]:
-    s1 = Suite("jnidatinit", ["Java_..._JNIDatInit v7a:0x15244", "DatHashGetString v7a:0x19954",
-                              "RShellDatFind v7a:0x1b920", "cRHash::* v7a:0x7d114-0x7d397"],
-               ["sm_asm_directory_parse", "sm_asm_directory_build_index", "sm_asm_directory_find_index"])
+def pattern(n: int) -> bytes:
+    """Aperiodic stand-in bitmap bytes; identical to sm_assets_cli.c 'image'."""
+    return bytes(((k * 2654435761) >> 16) & 0xFF for k in range(n))
+
+
+def parse_records(lines: list[str]) -> list[dict]:
+    out = []
+    for ln in lines:
+        p = ln.split()
+        if p[0] != "R":
+            continue
+        v = [int(x) for x in p[1:]]
+        out.append({"index": v[0], "raw": tuple(v[1:7]), "span": None if v[7] < 0 else (v[7], v[8]),
+                    "extent": None if v[9] < 0 else v[9]})
+    return out
+
+
+def run_jni_suites(so: Path, cli: Path, tmp: Path, archive_path: Path, label: str) -> list[dict]:
+    """JNIDatInit + lookups, then the loader, on a FRESH image of the original
+    library (clean .bss). Expected values come from the C module via the CLI."""
+    archive = archive_path.read_bytes()
+    ref = ArmRef(str(so), expected_sha256=V7A_SHA256)
+    s1 = Suite(f"jnidatinit[{label}]", ["Java_..._JNIDatInit v7a:0x15244", "DatHashGetString v7a:0x19954",
+                                        "RShellDatFind v7a:0x1b920", "cRHash::* v7a:0x7d114-0x7d397"],
+               ["sm_asm_directory_parse", "sm_asm_directory_build_index", "sm_asm_directory_find_index",
+                "sm_rhash_chain"])
     pad = bytes((i * 37 + 11) & 0xFF for i in range(0x1235))   # odd, non-zero start offset
-    fj = FakeJava(ref, archive, {})
+    fj = FakeJava(ref)
     fj.fd = ref.add_fd(pad + archive + b"\xEE" * 64)
     start, length = len(pad), len(archive)
     ref.call("Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit", fj.env, 0x7415, 0xFD0B, start, length,
              max_insns=50_000_000)
-    g = {n: ref.read_u32(ref.sym(n)) for n in ("gDat", "gDatFP", "gJavaAssetStart", "gJavaAssetLength",
-                                               "gJavaAssetFid")}
+    g = {n: ref.read_u32(ref.sym(n)) for n in ("gDat", "gDatFP", "gJavaAssetStart", "gJavaAssetLength")}
     s1.cmp("gJavaAssetStart", g["gJavaAssetStart"], start)
     s1.cmp("gJavaAssetLength", g["gJavaAssetLength"], length)
     s1.cmp("gDatFP set", g["gDatFP"] != 0, True)
     gdat = g["gDat"]
-    # reconstructed directory
-    names_hex = tmp / "anames.hex"
-    count = struct.unpack_from("<I", archive, 0)[0]
-    dir_size = struct.unpack_from("<I", archive, 8)[0]
-    # keys: every name + variants + misses
-    parsed = X.parse_directory(archive)       # only used to generate probe strings
+
+    # probe keys (generated from the archive bytes; expectations come from C)
+    parsed = X.parse_directory(archive)
     names = [r["name"] for r in parsed["records"]]
     rnd = random.Random(7)
     keys = list(names) + [n.lower() for n in names] + [n.swapcase() for n in names]
     keys += [n[:-1] for n in names] + [n + b"X" for n in names[:100]] + [n.replace(b"/", b"\\") for n in names[:100]]
     keys += [b"./" + n for n in names[:50]] + [b"", b"NO/SUCH/FILE.TXT", b"RANDTABLE", b"randtable.bin\x80"]
     keys += [bytes(rnd.randrange(1, 256) for _ in range(rnd.randrange(0, 40))) for _ in range(300)]
-    write_hex(names_hex, keys)
-    lines = run_cli(cli, "archive", ARCHIVE, names_hex)
+    keys_hex = tmp / f"keys_{label}.hex"
+    write_hex(keys_hex, keys)
+    lines = run_cli(cli, "archive", archive_path, keys_hex)
     rs, rchains, rpool, other = parse_table_out(lines)
+    crecs = parse_records(lines)
     n_line = [o for o in other if o[0] == "N"][0]
-    s1.cmp("record count", count, int(n_line[1]))
-    s1.cmp("directory size", dir_size, int(n_line[2]))
-    # directory image in guest: identical to file bytes except the fixed-up name pointers
+    count, dir_size = int(n_line[1]), int(n_line[2])
+    s1.cmp("record count (original u32 at +0 of gDat vs C)", ref.read_u32(gdat), count)
+
+    # directory image in guest: file bytes except the in-place name pointer fix-ups
     img = bytearray(ref.read(gdat, dir_size))
-    fix_ok = True
-    for i in range(count):
-        off = 4 + 24 * i
-        name_off = struct.unpack_from("<I", archive, off)[0]
-        fix_ok &= s1.cmp("name pointer fix-up", struct.unpack_from("<I", img, off)[0], (gdat + name_off) & M32,
-                         {"record": i})
+    for r in crecs:
+        off = 4 + 24 * r["index"]
+        s1.cmp("name pointer fix-up = gDat + C name_offset", struct.unpack_from("<I", img, off)[0],
+               (gdat + r["raw"][0]) & M32, {"record": r["index"]})
+        s1.cmp("other raw fields = C raw fields", struct.unpack_from("<5I", img, off + 4), r["raw"][1:],
+               {"record": r["index"]})
         img[off:off + 4] = archive[off:off + 4]
-    s1.cmp("directory bytes (fix-ups undone)", bytes(img), archive[:dir_size])
-    # lookups
+    s1.cmp("directory bytes (fix-ups undone) == archive[0:C dir_size]", bytes(img), archive[:dir_size])
+    # the original must not have read more than dir_size into gDat: next heap byte untouched is not
+    # observable reliably, so check the C dir_size equals the u32 the original used for malloc/fread
     kbuf = ref.alloc(4096)
     orig = []
     for k in keys:
@@ -407,63 +428,69 @@ def run_jni_suites(ref: ArmRef, cli: Path, tmp: Path, archive: bytes) -> list[di
         s1.cmp("chain", ochains.get(b), rchains.get(b), {"bucket": b})
     s1.cmp("pool nodes used", opool, rpool)
     shadow = [i for i in range(count) if orig[i] != i]
-    s1.d["notes"].append(f"fd content = {len(pad)} pad bytes + archive; start offset {start:#x}; "
-                         f"records {count}; names resolving to another record: {shadow} -> "
-                         f"{[orig[i] for i in shadow]}")
+    s1.d["notes"].append(f"archive {label} sha256 {hashlib.sha256(archive).hexdigest()}; fd content = "
+                         f"{len(pad)} pad bytes + archive; start offset {start:#x}; records {count}; "
+                         f"names resolving to another record: {shadow} -> {[orig[i] for i in shadow]}")
 
     # ---------------------------------------------------------------- loader
-    s2 = Suite("loader", ["RShellLoadFile(char*, void*, int*) v7a:0x1b980", "PfmLoadFileDat v7a:0x14c74",
-                          "JAVAC_UnZip v7a:0x14b60", "JAVAC_UnJpg v7a:0x149e8", "JAVAC_UnPng v7a:0x144c0",
-                          "JAVA_RegisterFunctions v7a:0x13ca4"],
+    s2 = Suite(f"loader[{label}]", ["RShellLoadFile(char*, void*, int*) v7a:0x1b980", "PfmLoadFileDat v7a:0x14c74",
+                                    "JAVAC_UnZip v7a:0x14b60", "JAVAC_UnJpg v7a:0x149e8",
+                                    "JAVAC_UnPng v7a:0x144c0", "JAVA_RegisterFunctions v7a:0x13ca4"],
                ["sm_asm_entry_read_span", "sm_asm_entry_output_extent", "sm_asm_build_tga_header",
                 "sm_asm_image_place_rows", "sm_asm_record_raw fields"])
     ref.call("JAVA_RegisterFunctions(_JNIEnv*, _jobject*)", fj.env, 0x0B1)
-    recs = parsed["records"]
-    max_out = max(max(r["raw"][2] for r in recs), 1) + 64
+    max_out = max([r["raw"][2] for r in crecs] + [1]) + 64
     buf = ref.alloc(max_out)
     psize = ref.alloc(4)
     codec_java = {1: "JAVAUnZip", 2: "JAVAUnJpg", 3: "JAVAUnPng"}
-    for i, r in enumerate(recs):
+    pat_cache: dict[int, bytes] = {}
+    for r in crecs:
+        i = r["index"]
         if orig[i] != i:
             continue  # shadowed name: loading by name reaches another record
-        name_off, data_off, dec, stored, codec, dims = r["raw"]
-        ref.write(kbuf, r["name"] + b"\0")
-        # (a) buf == (void*)-1: returns data_offset, *size = decoded_size
+        _name_off, data_off, dec, _stored, codec, dims = r["raw"]
+        ref.write(kbuf, names[i] + b"\0")
+        # (a) buf == (void*)-1: RShellLoadFile returns rec+4 (data_offset), *size = rec+8
         ref.write_u32(psize, 0xDEADBEEF)
         o = ref.call("RShellLoadFile(char*, void*, int*)", kbuf, M32, psize)
-        s2.cmp("LoadFile(-1) return = data_offset", o, data_off, {"record": i})
-        s2.cmp("*size = decoded_size", ref.read_u32(psize), dec, {"record": i})
+        s2.cmp("LoadFile(-1) return == C data_offset", o, data_off, {"record": i})
+        s2.cmp("*size == C decoded_size", ref.read_u32(psize), dec, {"record": i})
         # (b) real load into a sentinel-filled buffer
         ref.write(buf, b"\xCD" * max_out)
         fj.log.clear()
         fj.last_input = None
         ref.call("RShellLoadFile(char*, void*, int*)", kbuf, buf, psize, max_insns=200_000_000)
-        span = {0: (data_off, dec), 1: (data_off, stored), 2: (data_off, stored), 3: (data_off, stored)}[codec]
-        expect_in = archive[span[0]:span[0] + span[1]]
+        extent = r["extent"] or 0
+        if r["span"] is None:
+            s2.cmp("unsupported codec: no Java call", fj.log, [], {"record": i})
+            s2.cmp("unsupported codec: buffer untouched", ref.read(buf, 64), b"\xCD" * 64, {"record": i})
+            s2.d["inputs"] += 1
+            continue
+        so, sn = r["span"]
+        expect_in = archive[so:so + sn]
         if codec == 0:
-            got = ref.read(buf, dec)
-            s2.cmp("raw bytes == archive[read_span]", got, expect_in, {"record": i})
-            extent = dec
+            s2.cmp("raw bytes == archive[C read_span]", ref.read(buf, sn), expect_in, {"record": i})
+            s2.cmp("C extent == C span length (raw)", extent, sn, {"record": i})
         else:
-            s2.cmp("Java method for codec", [x[0] for x in fj.log], [codec_java[codec]], {"record": i})
-            s2.cmp("Java input == archive[read_span]", fj.last_input, expect_in, {"record": i})
-            s2.cmp("Java output array length == decoded_size", fj.log[0][1] if fj.log else None, dec,
+            s2.cmp("Java method for C codec", [x[0] for x in fj.log], [codec_java[codec]], {"record": i})
+            s2.cmp("Java input == archive[C read_span]", fj.last_input, expect_in, {"record": i})
+            s2.cmp("Java output array length == C decoded_size", fj.log[0][1] if fj.log else None, dec,
                    {"record": i})
             if codec == 1:
                 data = X.decode_zip_first_entry(expect_in)["decoded"]
-                extent = dec
                 s2.cmp("zip output bytes", ref.read(buf, dec), data[:dec].ljust(dec, b"\0"), {"record": i})
             else:
                 w, h = dims & 0xFFFF, dims >> 16
-                extent = 18 + (dec // h) * h
                 img_path = tmp / "img.bin"
                 run_cli(cli, "image", w, h, dec, img_path)
-                s2.cmp("TGA header + placed rows", ref.read(buf, extent), img_path.read_bytes(), {"record": i})
-        s2.cmp("no write past output extent", ref.read(buf + extent, 16), b"\xCD" * 16, {"record": i})
+                s2.cmp("C extent == 18 + rows", extent, img_path.stat().st_size, {"record": i})
+                s2.cmp("TGA header + placed rows (C)", ref.read(buf, extent), img_path.read_bytes(), {"record": i})
+        s2.cmp("no write past C output extent", ref.read(buf + extent, 16), b"\xCD" * 16, {"record": i})
         s2.d["inputs"] += 1
     s2.d["notes"].append("Java side replaced by Python stand-ins: JAVAUnZip decodes the first zip entry; "
-                         "JAVAUnPng/UnJpg write a synthetic w*h*4 pattern (bitmap decoding itself is NOT "
-                         "compared). Shadowed-name records skipped (unreachable by name).")
+                         "JAVAUnPng/UnJpg write an aperiodic w*h*4 pattern using the image header's own dims "
+                         "(bitmap decoding itself is NOT compared). Shadowed-name records are skipped "
+                         "(unreachable by name).")
     return [s1.d, s2.d]
 
 
@@ -481,10 +508,11 @@ def main() -> int:
         cli, ccver = build_cli(tmp)
         suites.append(suite_calc(ref, cli, tmp, names))
         suites.append(suite_table(ref, cli, tmp))
+        suites += run_jni_suites(SO, cli, tmp, FIXTURE, "synthetic_small.asm")
         if have_archive:
-            suites += run_jni_suites(ref, cli, tmp, archive)
+            suites += run_jni_suites(SO, cli, tmp, ARCHIVE, "asm.mp3")
         else:
-            suites.append({"name": "jnidatinit+loader", "skipped": "archive absent"})
+            suites.append({"name": "jnidatinit+loader[asm.mp3]", "skipped": "archive absent"})
     import unicorn
     result = {
         "reference": {"binary": "lib/armeabi-v7a/libsnailmail.so", "sha256": ref.sha256,
@@ -492,6 +520,7 @@ def main() -> int:
                       "load_base": hex(ref.base), "relocations_applied": ref.relocation_counts},
         "reconstructed": {"sources": {p: hashlib.sha256((REPO / p).read_bytes()).hexdigest() for p in SOURCES},
                           "compiler": ccver, "flags": "-std=c11 -O1 -Wall -Wextra -Werror"},
+        "fixture": {"path": str(FIXTURE.relative_to(REPO)), "sha256": hashlib.sha256(FIXTURE.read_bytes()).hexdigest()},
         "archive": {"present": have_archive, "sha256": hashlib.sha256(archive).hexdigest() if have_archive else None,
                     "expected_sha256": ARCHIVE_SHA256},
         "comparison": "exact (integers, byte strings, chain lists)",
@@ -504,7 +533,7 @@ def main() -> int:
     else:
         (HERE / "result.json").write_text(json.dumps(result, indent=1) + "\n")
     for s in suites:
-        print(f"{s['name']:12s} inputs={s.get('inputs')} comparisons={s.get('comparisons')} "
+        print(f"{s['name']:32s} inputs={s.get('inputs')} comparisons={s.get('comparisons')} "
               f"mismatches={s.get('mismatches')} {s.get('skipped', '')}")
         if s.get("first_divergence"):
             print("   first divergence:", s["first_divergence"])

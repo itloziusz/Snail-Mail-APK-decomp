@@ -6,7 +6,7 @@
  *   sha256 e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466
  *
  * Original consumers (full spec: docs/ASSET_FORMATS.md):
- *   Java_..._SnailMailActivity_JNIDatInit      v7a:0x15244-0x15453  load + index
+ *   Java_..._SnailMailActivity_JNIDatInit      v7a:0x15244-0x1548f  load + index
  *   DatHashGetString(int)                      v7a:0x19954-0x1997f  name getter
  *   RShellDatFind(char*)                       v7a:0x1b920-0x1b97f  lookup
  *   RShellLoadFile(char*, void*, int*)         v7a:0x1b980-0x1baeb  record use
@@ -109,7 +109,9 @@ sm_asm_status sm_asm_directory_parse(const uint8_t *buf, size_t len, sm_asm_dire
                                      uint32_t *bad_index);
 
 /* Builds the name index exactly as JNIDatInit does (v7a:0x153b0-0x15414):
- * cRHash::Init(count) then cRHash::Add(name_i, i) for i = 0..count-1. */
+ * cRHash::Init(count) then cRHash::Add(name_i, i) for i = 0..count-1.
+ * The index keeps a pointer to *dir (name getter context): do not copy or
+ * move the sm_asm_directory object after building the index. */
 sm_asm_status sm_asm_directory_build_index(sm_asm_directory *dir);
 
 /* RShellDatFind (v7a:0x1b920) without the pointer: record index for `name`,
