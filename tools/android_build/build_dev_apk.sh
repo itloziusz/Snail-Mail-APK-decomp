@@ -47,10 +47,20 @@ for t in clang ld.lld javac dalvik-exchange aapt apksigner keytool python3; do
 done
 [ -f "$ANDROID_JAR" ] || { echo "missing $ANDROID_JAR (apt install android-sdk-platform-23)"; exit 1; }
 [ -f work/apk_unzip/assets/asm.mp3 ] || { echo "run tools/inventory/setup_workspace.sh first"; exit 1; }
+for density in ldpi mdpi hdpi; do
+  [ -f "work/apk_unzip/res/drawable-$density/icon.png" ] || {
+    echo "missing original drawable-$density/icon.png (run tools/inventory/setup_workspace.sh)"
+    exit 1
+  }
+done
 
 rm -rf "$OUT/app"   # objects are cached in $OUT/obj-*
 rm -f "$APK" "$APK.idsig"   # the other variant's APK is kept
 mkdir -p "$OUT/app/classes" "$OUT/app/pkg/lib/arm64-v8a" "$OUT/out" "$OUT/keys"
+for density in ldpi mdpi hdpi; do
+  mkdir -p "$OUT/app/res/drawable-$density"
+  cp "work/apk_unzip/res/drawable-$density/icon.png" "$OUT/app/res/drawable-$density/icon.png"
+done
 
 if [ "$VARIANT" = "aot" ] || [ "$VARIANT" = "aot-gles2" ]; then
   echo "== translate original ARM32 code (tools/aot/arm2c.py)"
@@ -150,7 +160,7 @@ fi
 aapt package -f --debug-mode \
   --min-sdk-version "$MIN_SDK" --target-sdk-version "$TARGET_SDK" \
   --rename-manifest-package "$APP_ID" \
-  -M "$OUT/app/AndroidManifest.xml" -S android/app/src/main/res -A work/apk_unzip/assets \
+  -M "$OUT/app/AndroidManifest.xml" -S "$OUT/app/res" -S android/app/src/main/res -A work/apk_unzip/assets \
   -I "$ANDROID_JAR" -0 arsc -0 mp3 -0 ogg -F "$OUT/app/unaligned.apk"
 
 python3 - "$OUT/app/unaligned.apk" "$OUT/app/pkg" <<'PY'

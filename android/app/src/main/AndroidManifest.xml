@@ -47,6 +47,7 @@
     <application
         android:name="com.sandlotgames.snailmail.SnailMailApplication"
         android:allowBackup="false"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
         <activity

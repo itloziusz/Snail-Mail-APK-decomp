@@ -16,6 +16,25 @@ plugins {
 val repoRoot: File = rootDir.parentFile
 val assetsDir: String = providers.gradleProperty("snailmail.assetsDir").orNull
     ?: File(repoRoot, "work/apk_unzip/assets").path
+val originalResDir: File = File(providers.gradleProperty("snailmail.originalResDir").orNull
+    ?: File(repoRoot, "work/apk_unzip/res").path)
+val stagedIconRes = layout.buildDirectory.dir("generated/snailmailIcon/res")
+val stageOriginalIcon = tasks.register<Copy>("stageOriginalIcon") {
+    for (density in listOf("ldpi", "mdpi", "hdpi")) {
+        from(File(originalResDir, "drawable-$density/icon.png")) {
+            into("drawable-$density")
+        }
+    }
+    into(stagedIconRes)
+    doFirst {
+        for (density in listOf("ldpi", "mdpi", "hdpi")) {
+            check(File(originalResDir, "drawable-$density/icon.png").isFile) {
+                "Missing original drawable-$density/icon.png; extract the owner-supplied APK first"
+            }
+        }
+    }
+}
+tasks.matching { it.name == "preBuild" }.configureEach { dependsOn(stageOriginalIcon) }
 
 android {
     namespace = "com.sandlotgames.snailmail"
@@ -71,6 +90,7 @@ android {
 
     sourceSets {
         getByName("main") {
+            res.srcDir(stagedIconRes)
             if (File(assetsDir).isDirectory) {
                 assets.srcDir(assetsDir)
             }

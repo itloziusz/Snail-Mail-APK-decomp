@@ -10,25 +10,25 @@ conflict that can produce the generic “App not installed” error when an olde
 test build used a different debug key. The existing test build and its save
 files are left alone.
 
-The APK contains the assets from the owner's original 1.00 package. Keep the
+The installed app is named “Snail Mail 64-bit” and uses the original launcher icon in ldpi, mdpi, and hdpi. The APK contains the assets from the owner's original 1.00 package. The build stages the icon from that package; no proprietary art is checked into the source repository. Keep the
 original APK out of the repository. Build locally with:
 
 ```sh
 # Place the original package at original/com.sandlotgames.snailmail-1.00.apk
 tools/inventory/setup_workspace.sh
-JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=2 \
+JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=3 \
   SM_APP_ID=com.sandlotgames.snailmail.port.preview \
   tools/android_build/build_dev_apk.sh
 ```
 
-The output is `work/android_build/out/snailmail-port-arm64-gles2.apk`. Its
-application version is `1.00-port-gles2-dev2` and it uses the same local debug signing
+The output is `work/android_build/out/snailmail-port-arm64-gles2.apk` (SHA-256 `8016d49196f13b85361a765245d494135c95deb33c3d57f1084f9098ed68c294`). Its
+application version is `1.00-port-gles2-dev3` and it uses the same local debug signing
 key. The owner reported gameplay running on a Galaxy S24+ with an earlier
 version; the latest display settings and pacing changes have not been verified
 on a physical device. Treat this as an experimental build and keep a copy of
 any save files before testing updates.
 
-Version code 2 requests immersive mode for both the status bar and navigation
+Version code 3 requests immersive mode for both the status bar and navigation
 bar. The Activity reapplies it when resumed or refocused. Android can still
 show the bars briefly when the user swipes from the screen edge.
 
