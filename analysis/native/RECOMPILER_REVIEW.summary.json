@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "binary_sha256": "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466",
+  "raw_defined_symbols": 1183,
+  "unique_text_functions_reviewed": 1173,
+  "plt_stubs_separate": 94,
+  "unwind_entries": 1151,
+  "unwind_matches": 1151,
+  "gaps": [
+    {
+      "start": "0x19694",
+      "end": "0x19698",
+      "bytes": 4,
+      "all_zero": true
+    },
+    {
+      "start": "0x4b3fc",
+      "end": "0x4b400",
+      "bytes": 4,
+      "all_zero": true
+    }
+  ],
+  "candidate_starts": [],
+  "unsupported_sites": 44,
+  "functions_with_unsupported_sites": 8,
+  "reference_suite_addresses": 13,
+  "priority_counts": {
+    "medium": 1128,
+    "high": 37,
+    "blocker": 8
+  },
+  "interpretation": "Static census and translation triage, not full semantic or device validation."
+}
