@@ -73,6 +73,7 @@ from your own original APK.
 | `reconstructed/rendering/` | GLES 1 calls implemented over GLES 2 |
 | `tests/`, `tools/validation/` | Unit, differential, and platform checks |
 | `tools/recompiler32/` | Standalone experimental ARM32-to-C recompiler starter |
+| `analysis/native/RECOMPILER_REVIEW.*` | Per-function ARM32 census and AOT review ledger |
 
 ## Recompiler starter for developers
 
@@ -83,6 +84,22 @@ compare results with known test vectors. It is a
 starting point for exploring another game's port, not an automatic converter
 for arbitrary games or an APK builder. The Snail Mail build uses the more
 complete game-specific translator in `tools/aot/arm2c.py`.
+
+The starter can also export an **editable Visual Studio 2022 x64 project**:
+
+```sh
+python3 tools/recompiler32/recompile.py /path/to/function.a32 \
+  --base 0x1000 --vs-project /path/to/NewProject
+```
+
+Its generated C is a normal source file you can change by hand. The exporter
+never overwrites an existing project directory; see the
+[Visual Studio walkthrough](docs/RECOMPILER_STARTER.md#edit-the-translation-in-visual-studio).
+
+The [function review](docs/RECOMPILER_REVIEW.md) cross-checks all 1,173 unique
+game-library `.text` starts and 94 separate import stubs against the original
+ELF, unwind table, function index, and AOT manifest. It identifies unknown
+behavior and untested translations explicitly, with a next action per function.
 
 For technical detail, see [architecture](docs/ARCHITECTURE.md),
 [build internals](docs/BUILDING.md), and [testing](docs/TESTING.md).
