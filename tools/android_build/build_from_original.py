@@ -71,8 +71,12 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
     output = args.output.expanduser().resolve()
     if not apk.is_file() or not zipfile.is_zipfile(apk):
         raise ValueError("the input must be an Android APK file")
-    if output == apk or output == BUILT_APK:
-        raise ValueError("output must not overwrite the original APK or the builder's intermediate APK")
+    if output == apk:
+        raise ValueError("output must not overwrite the original APK")
+    if output.suffix.lower() != ".apk":
+        raise ValueError("output must be an .apk file")
+    if output.is_relative_to(REPO / "work/android_build"):
+        raise ValueError("output must be outside the builder's working directory")
     if args.version_code < 1 or args.version_code > 2_100_000_000:
         raise ValueError("--version-code must be a positive Android version code")
     if not re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*(\.[A-Za-z_][A-Za-z_0-9]*)+", args.app_id):
@@ -80,11 +84,6 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]*", args.version_name):
         raise ValueError("--version-name must contain only letters, numbers, dots, underscores, plus or minus")
 
-    actual = sha256(apk)
-    if actual != ORIGINAL_SHA256:
-        raise ValueError(f"unsupported original APK: SHA-256 {actual}; expected {ORIGINAL_SHA256}")
-
-    emit(f"Verified original APK: {actual}")
     work = REPO / "work"
     work.mkdir(exist_ok=True)
     # The native object cache, app staging directory, and intermediate APK are
@@ -95,7 +94,17 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
         emit("Build lock acquired")
         with tempfile.TemporaryDirectory(prefix="snailmail-apk-", dir=work) as temp:
             extracted = Path(temp)
-            extract_original(apk, extracted)
+            # Read the original only once. A user moving or changing the
+            # selected file cannot swap it between verification and extraction.
+            snapshot = extracted / "original.apk"
+            shutil.copyfile(apk, snapshot)
+            actual = sha256(snapshot)
+            if actual != ORIGINAL_SHA256:
+                raise ValueError(f"unsupported original APK: SHA-256 {actual}; expected {ORIGINAL_SHA256}")
+            emit(f"Verified original APK: {actual}")
+            source_dir = extracted / "source"
+            source_dir.mkdir()
+            extract_original(snapshot, source_dir)
             env = os.environ.copy()
             if not env.get("JAVA_HOME"):
                 javac = shutil.which("javac")
@@ -104,7 +113,7 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
                 env["JAVA_HOME"] = str(Path(javac).resolve().parent.parent)
             env.update(SM_APK_VARIANT="aot-gles2", SM_APP_ID=args.app_id,
                        SM_VERSION_CODE=str(args.version_code), SM_VERSION_NAME=args.version_name,
-                       SM_EXTRACTED_DIR=str(extracted))
+                       SM_EXTRACTED_DIR=str(source_dir))
             with subprocess.Popen([str(REPO / "tools/android_build/build_dev_apk.sh")],
                                   cwd=REPO, env=env, stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT, text=True, bufsize=1) as process:
@@ -155,7 +164,7 @@ def browse_and_build(args: argparse.Namespace) -> int:
         return 0
     destination = filedialog.asksaveasfilename(
         parent=root, title="Save the new ARM64 APK", defaultextension=".apk",
-        initialfile="SnailMail-ARM64-v0.1.1.apk",
+        initialfile=f"SnailMail-ARM64-v{args.version_name}.apk",
         filetypes=[("Android APK", "*.apk")])
     if not destination:
         root.destroy()
