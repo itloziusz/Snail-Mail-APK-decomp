@@ -33,6 +33,7 @@ On a Linux machine with the tools described in [building](docs/BUILDING.md):
 ```sh
 tools/inventory/setup_workspace.sh
 JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=3 \
+  SM_VERSION_NAME=0.1.0 \
   SM_APP_ID=com.sandlotgames.snailmail.port.preview \
   tools/android_build/build_dev_apk.sh
 ```
