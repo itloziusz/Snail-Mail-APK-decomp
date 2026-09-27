@@ -4,15 +4,15 @@
 
 The `aot-gles2` branch at `6de0c2b` was built from the reference APK whose
 SHA-256 is `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
-The corrected versionCode 2 APK has SHA-256
-`ca2409d510ad0a7f9436f664d45be16e3f9ccd381994c4fdbcbb25d6413e7feb`.
+The branded versionCode 3 APK has SHA-256
+`8016d49196f13b85361a765245d494135c95deb33c3d57f1084f9098ed68c294`.
 `apksigner verify` passed for v1, v2, and v3; the ELF/APK checker passed
 arm64-v8a only, stored native library, 16 KiB alignment, and no text
 relocations. `aapt` reports package `com.sandlotgames.snailmail.port.preview`,
 minSdk 23, targetSdk 35, and GLES 2.0. This build uses a local debug key.
 The unique preview package ID avoids signature conflicts with older test
 installs of `com.sandlotgames.snailmail.port`; those installs retain their data.
-Version code 2 also hides the navigation bar via immersive mode. The earlier
+Version code 3 also hides the navigation bar via immersive mode and uses the original launcher icon staged from the owner's APK. Its launcher label is “Snail Mail 64-bit”. The earlier
 `FLAG_FULLSCREEN` setting only hid the status bar. The request is reapplied on
 resume and window focus; this has been compiled and packaged, but not observed
 on a device yet.
