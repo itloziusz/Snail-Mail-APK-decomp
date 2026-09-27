@@ -8,9 +8,10 @@ implementation of the game's GLES 1 calls.
 
 ## Build from your original APK
 
-The port has a Python builder with a file picker. Run it on a Linux desktop,
-choose your original Snail Mail Android 1.00 APK, then choose where to save the
-new APK:
+The port has a Python desktop builder. Run it on a Linux desktop, browse for
+your original Snail Mail Android 1.00 APK, choose an output APK, adjust the
+version for installed updates, and click **Build APK**. The window shows the
+build log and result:
 
 ```sh
 .venv/bin/python tools/android_build/build_from_original.py
