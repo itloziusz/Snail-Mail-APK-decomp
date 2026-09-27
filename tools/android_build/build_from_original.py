@@ -9,6 +9,7 @@ The original APK and extracted proprietary files remain outside git.
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import os
 from pathlib import Path
@@ -86,43 +87,49 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
     emit(f"Verified original APK: {actual}")
     work = REPO / "work"
     work.mkdir(exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix="snailmail-apk-", dir=work) as temp:
-        extracted = Path(temp)
-        extract_original(apk, extracted)
-        env = os.environ.copy()
-        if not env.get("JAVA_HOME"):
-            javac = shutil.which("javac")
-            if not javac:
-                raise RuntimeError("javac is required; install a JDK or set JAVA_HOME")
-            env["JAVA_HOME"] = str(Path(javac).resolve().parent.parent)
-        env.update(SM_APK_VARIANT="aot-gles2", SM_APP_ID=args.app_id,
-                   SM_VERSION_CODE=str(args.version_code), SM_VERSION_NAME=args.version_name,
-                   SM_EXTRACTED_DIR=str(extracted))
-        with subprocess.Popen([str(REPO / "tools/android_build/build_dev_apk.sh")],
-                              cwd=REPO, env=env, stdout=subprocess.PIPE,
-                              stderr=subprocess.STDOUT, text=True, bufsize=1) as process:
-            assert process.stdout is not None
-            for line in process.stdout:
-                emit(line.rstrip("\n"))
-            if process.wait() != 0:
-                raise RuntimeError("Android build failed; see the log above")
-    badging = subprocess.check_output(["aapt", "dump", "badging", str(BUILT_APK)], text=True)
-    package = re.search(r"^package: name='([^']+)' versionCode='(\d+)' versionName='([^']+)'", badging, re.M)
-    label = re.search(r"^application-label:'([^']+)'", badging, re.M)
-    if not package or package.groups() != (args.app_id, str(args.version_code), args.version_name):
-        raise RuntimeError("built APK package or version does not match the requested identity")
-    if not label or label.group(1) != "Snail Mail":
-        raise RuntimeError("built APK launcher name is not Snail Mail")
-    subprocess.run(["apksigner", "verify", str(BUILT_APK)], check=True)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    descriptor, temporary = tempfile.mkstemp(prefix=".snailmail-", suffix=".apk", dir=output.parent)
-    os.close(descriptor)
-    try:
-        shutil.copyfile(BUILT_APK, temporary)
-        os.replace(temporary, output)
-    finally:
-        if os.path.exists(temporary):
-            os.unlink(temporary)
+    # The native object cache, app staging directory, and intermediate APK are
+    # shared by every invocation. Hold this lock through validation and copy.
+    with (work / ".apk-build.lock").open("w") as lock:
+        emit("Waiting for the repository build lock…")
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        emit("Build lock acquired")
+        with tempfile.TemporaryDirectory(prefix="snailmail-apk-", dir=work) as temp:
+            extracted = Path(temp)
+            extract_original(apk, extracted)
+            env = os.environ.copy()
+            if not env.get("JAVA_HOME"):
+                javac = shutil.which("javac")
+                if not javac:
+                    raise RuntimeError("javac is required; install a JDK or set JAVA_HOME")
+                env["JAVA_HOME"] = str(Path(javac).resolve().parent.parent)
+            env.update(SM_APK_VARIANT="aot-gles2", SM_APP_ID=args.app_id,
+                       SM_VERSION_CODE=str(args.version_code), SM_VERSION_NAME=args.version_name,
+                       SM_EXTRACTED_DIR=str(extracted))
+            with subprocess.Popen([str(REPO / "tools/android_build/build_dev_apk.sh")],
+                                  cwd=REPO, env=env, stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT, text=True, bufsize=1) as process:
+                assert process.stdout is not None
+                for line in process.stdout:
+                    emit(line.rstrip("\n"))
+                if process.wait() != 0:
+                    raise RuntimeError("Android build failed; see the log above")
+        badging = subprocess.check_output(["aapt", "dump", "badging", str(BUILT_APK)], text=True)
+        package = re.search(r"^package: name='([^']+)' versionCode='(\d+)' versionName='([^']+)'", badging, re.M)
+        label = re.search(r"^application-label:'([^']+)'", badging, re.M)
+        if not package or package.groups() != (args.app_id, str(args.version_code), args.version_name):
+            raise RuntimeError("built APK package or version does not match the requested identity")
+        if not label or label.group(1) != "Snail Mail":
+            raise RuntimeError("built APK launcher name is not Snail Mail")
+        subprocess.run(["apksigner", "verify", str(BUILT_APK)], check=True)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        descriptor, temporary = tempfile.mkstemp(prefix=".snailmail-", suffix=".apk", dir=output.parent)
+        os.close(descriptor)
+        try:
+            shutil.copyfile(BUILT_APK, temporary)
+            os.replace(temporary, output)
+        finally:
+            if os.path.exists(temporary):
+                os.unlink(temporary)
     emit(f"Built {output}\nSHA-256 {sha256(output)}\nInstalled name: Snail Mail")
     return output
 
@@ -165,6 +172,7 @@ def browse_and_build(args: argparse.Namespace) -> int:
     log.pack(fill="both", expand=True, pady=(10, 0))
     messages: queue.Queue[tuple[str, str]] = queue.Queue()
     finished = False
+    exit_status = 0
 
     def close_window() -> None:
         if finished:
@@ -183,7 +191,7 @@ def browse_and_build(args: argparse.Namespace) -> int:
             messages.put(("done", str(result)))
 
     def show_progress() -> None:
-        nonlocal finished
+        nonlocal finished, exit_status
         while not messages.empty():
             kind, value = messages.get_nowait()
             if kind == "log":
@@ -193,19 +201,21 @@ def browse_and_build(args: argparse.Namespace) -> int:
                 log.configure(state="disabled")
             elif kind == "error":
                 finished = True
+                exit_status = 1
                 root.title("Snail Mail ARM64 Builder — failed")
                 messagebox.showerror("Build failed", value, parent=root)
             else:
                 finished = True
                 root.title("Snail Mail ARM64 Builder — complete")
                 messagebox.showinfo("Build complete", f"New APK saved at:\n{value}", parent=root)
-        root.after(100, show_progress)
+        if not finished:
+            root.after(100, show_progress)
 
     root.deiconify()
     threading.Thread(target=worker, daemon=True).start()
     root.after(100, show_progress)
     root.mainloop()
-    return 0
+    return exit_status
 
 
 def run() -> int:
