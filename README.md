@@ -1,9 +1,8 @@
-# Snail Mail for Android ARM64
+# Snail Mail ARM64 Builder
 
-An experimental native 64-bit Android port of Sandlot Games' *Snail Mail*.
-This repository includes a Python desktop builder that turns your own copy of
-the original Android 1.00 APK into an ARM64 APK. The original game and its
-assets are not distributed here.
+A Python desktop GUI and CLI for building an experimental native 64-bit
+Android port of Sandlot Games' *Snail Mail* from your own original Android
+1.00 APK. The original game and its assets are not distributed here.
 
 The port translates the original ARM32 game code ahead of time into native
 AArch64 code. It retains the Android Java/JNI interface and renders the game's
@@ -13,11 +12,11 @@ launcher icon.
 
 ## Build the APK
 
-**Host:** Linux with Python 3.10+, a JDK, Clang/LLD, Android API 23 platform
+**Host:** Linux, or Ubuntu on Windows through WSL 2, with Python 3.10+, a JDK, Clang/LLD, Android API 23 platform
 jar, `aapt`, `apksigner`, and `dalvik-exchange`. The Python dependencies are
 `capstone==5.0.7` and `pyelftools==0.33`; the desktop GUI also needs Tkinter
-and a graphical session. See the [complete setup and build tutorial](docs/BUILD_FROM_ORIGINAL.md)
-for package commands and details.
+and a graphical session. See the [Linux setup and build tutorial](docs/BUILD_FROM_ORIGINAL.md)
+or the [Windows tutorial](docs/BUILD_ON_WINDOWS.md) for package commands and details.
 
 1. Get your own original Snail Mail Android 1.00 APK. The builder accepts the
    known original with SHA-256
@@ -73,6 +72,16 @@ from your own original APK.
 | `android/` | Android shell, resources, and JNI bridge |
 | `reconstructed/rendering/` | GLES 1 calls implemented over GLES 2 |
 | `tests/`, `tools/validation/` | Unit, differential, and platform checks |
+| `tools/recompiler32/` | Standalone experimental ARM32-to-C recompiler starter |
+
+## Recompiler starter for developers
+
+The repository also has a [documented experimental recompiler](docs/RECOMPILER_STARTER.md)
+for a small subset of raw 32-bit ARM instructions. It emits C that can be
+compiled into a 64-bit host program and includes runnable tests. It is a
+starting point for exploring another game's port, not an automatic converter
+for arbitrary games or an APK builder. The Snail Mail build uses the more
+complete game-specific translator in `tools/aot/arm2c.py`.
 
 For technical detail, see [architecture](docs/ARCHITECTURE.md),
 [build internals](docs/BUILDING.md), and [testing](docs/TESTING.md).
@@ -80,3 +89,7 @@ For technical detail, see [architecture](docs/ARCHITECTURE.md),
 This is an independent preservation and compatibility project. *Snail Mail*
 and its original artwork and assets belong to their respective rights holders.
 Use and distribute game assets only according to the rights you hold.
+
+🎉 **Snail Mail is saved!** The little ship has crossed from 32-bit history
+into a new ARM64 harbor. Here's to everyone keeping old games playable, one
+careful build at a time. 🐌✉️
