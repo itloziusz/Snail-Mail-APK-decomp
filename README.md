@@ -9,7 +9,7 @@ implementation of the game's GLES 1 calls.
 ## Current release
 
 **v0.1.0 is an installable preview.** It appears on the launcher as **Snail
-Mail 64-bit** with the original icon. It installs under
+Mail** with the original icon. It installs under
 `com.sandlotgames.snailmail.port.preview`, so it can coexist with the original
 game and earlier port test builds. The shell requests immersive full screen,
 including the navigation bar, and limits drawing to the game's intended 60 Hz
@@ -32,7 +32,7 @@ On a Linux machine with the tools described in [building](docs/BUILDING.md):
 
 ```sh
 tools/inventory/setup_workspace.sh
-JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=3 \
+JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=4 \
   SM_VERSION_NAME=0.1.0 \
   SM_APP_ID=com.sandlotgames.snailmail.port.preview \
   tools/android_build/build_dev_apk.sh

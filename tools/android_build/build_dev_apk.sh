@@ -20,7 +20,7 @@
 #     sources) and libsnailmail.so renders through the GLES1-on-GLES2
 #     emulation of reconstructed/rendering (smgl) on libGLESv2 instead of
 #     libGLESv1_CM. Same applicationId and debug key, so the two replace each
-#     other; versionCode defaults to 3 (aot: 2).
+#     other; versionCode defaults to 4 (aot: 2).
 #   bridge: only the hand-reconstructed modules + fail-loudly JNI bridge.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -38,7 +38,7 @@ fi
 VARIANT="${SM_APK_VARIANT:-aot}"
 case "$VARIANT" in
   aot|bridge) APK="$OUT/out/snailmail-port-arm64-dev.apk"; VC="${SM_VERSION_CODE:-2}"; VNAME="1.00-port-dev$VC" ;;
-  aot-gles2) APK="$OUT/out/snailmail-port-arm64-gles2.apk"; VC="${SM_VERSION_CODE:-3}"; VNAME="1.00-port-gles2-dev$VC" ;;
+  aot-gles2) APK="$OUT/out/snailmail-port-arm64-gles2.apk"; VC="${SM_VERSION_CODE:-4}"; VNAME="1.00-port-gles2-dev$VC" ;;
   *) echo "unknown SM_APK_VARIANT=$VARIANT (expected aot, aot-gles2 or bridge)"; exit 1 ;;
 esac
 VNAME="${SM_VERSION_NAME:-$VNAME}"
