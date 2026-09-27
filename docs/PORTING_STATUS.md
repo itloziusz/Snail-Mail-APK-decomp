@@ -1,5 +1,21 @@
 # Porting status
 
+## Preview build — 2026-09-27
+
+The `aot-gles2` branch at `6de0c2b` was built from the reference APK whose
+SHA-256 is `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
+The resulting versionCode 5 APK has SHA-256
+`ee19481e3c621b86f5ef61d500e2c9bbe48141f5a43e9b54cb9a06055b52149e`.
+`apksigner verify` passed for v1, v2, and v3; the ELF/APK checker passed
+arm64-v8a only, stored native library, 16 KiB alignment, and no text
+relocations. `aapt` reports package `com.sandlotgames.snailmail.port`,
+minSdk 23, targetSdk 35, and GLES 2.0. This build uses a local debug key.
+
+This verifies a build artifact, not a device run. The GLES2 renderer, 60 Hz
+pacer, adaptive FOV, HUD alignment, and Display page in this revision still
+need hands-on device testing. The first downloadable APK is therefore marked
+as an experimental preview; see `RELEASE_NOTES_v0.1.0.md`.
+
 ## Pass 2 — 2026-09-27: the game runs natively
 
 **The complete game logic runs as natively compiled code**, through the
