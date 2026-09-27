@@ -144,16 +144,25 @@ def translate(data: bytes, base: int, max_steps: int) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", type=Path, help="little-endian A32 raw code region")
-    parser.add_argument("--output", required=True, type=Path, help="generated C source")
+    destination = parser.add_mutually_exclusive_group(required=True)
+    destination.add_argument("--output", type=Path, help="generated C source")
+    destination.add_argument("--vs-project", type=Path, help="new editable Visual Studio project directory")
+    parser.add_argument("--project-name", default="A32Recompiled", help="Visual Studio project name")
     parser.add_argument("--base", type=lambda value: int(value, 0), default=0x1000)
     parser.add_argument("--max-steps", type=int, default=1000000)
     args = parser.parse_args()
     try:
-        source = translate(args.input.read_bytes(), args.base, args.max_steps)
-        args.output.write_text(source, encoding="utf-8")
-    except (Unsupported, OSError) as exc:
+        data = args.input.read_bytes()
+        source = translate(data, args.base, args.max_steps)
+        if args.vs_project:
+            from vs_project import export_project
+            export_project(data, source, args.base, args.max_steps,
+                           args.vs_project, args.project_name)
+        else:
+            args.output.write_text(source, encoding="utf-8")
+    except (Unsupported, OSError, ValueError) as exc:
         parser.exit(2, f"recompile: {exc}\n")
-    print(f"Wrote {args.output}")
+    print(f"Wrote {args.vs_project if args.vs_project else args.output}")
     return 0
 
 

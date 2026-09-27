@@ -20,6 +20,8 @@ boundary. Study those after the minimal starter.
 | [`analyze.py`](../tools/recompiler32/analyze.py) | Counts accepted and rejected A32 words, records unsupported reasons and branch examples in JSON |
 | [`recompile.py`](../tools/recompiler32/recompile.py) | Rejects unsupported input and generates C99 for the accepted region |
 | [`verify.py`](../tools/recompiler32/verify.py) | Compiles generated C and checks `r0` results against JSON test vectors |
+| [`vs_project.py`](../tools/recompiler32/vs_project.py) | Exports an editable Visual Studio 2022 x64 solution through `recompile.py` |
+| [`review_all.py`](../tools/recompiler32/review_all.py) | Cross-checks the Snail Mail-specific ELF census and AOT output; writes a per-function review queue |
 
 For an ELF32 ARM shared object you are authorized to examine, install the
 existing `pyelftools==0.33` Python dependency, then choose an exact symbol:
@@ -75,6 +77,39 @@ python3 tools/recompiler32/analyze.py /tmp/count.a32 --base 0x1000 --strict
 python3 tools/recompiler32/verify.py /tmp/count.a32 \
   tools/recompiler32/examples/count_cases.json --base 0x1000
 ```
+
+## Edit the translation in Visual Studio
+
+Export to a **new** directory. The project name is optional and accepts ASCII
+letters, digits, and underscores, starting with a letter:
+
+```sh
+python3 tools/recompiler32/recompile.py /tmp/count.a32 --base 0x1000 \
+  --vs-project /tmp/CountProject --project-name CountProject
+```
+
+Copy that directory to Windows if you created it in WSL. Open
+`CountProject.sln` in Visual Studio 2022 with the **Desktop development with
+C++** workload and a current Windows SDK. Select **Debug | x64** or
+**Release | x64**, then build. The project uses toolset `v143`, compiles
+`CountProject.c` as C11, and creates a console executable. Microsoft's
+[project file guide](https://learn.microsoft.com/en-us/cpp/build/reference/project-files?view=msvc-170)
+and [C11 setup guide](https://learn.microsoft.com/en-us/cpp/overview/install-c17-support?view=msvc-170)
+describe those Visual Studio requirements.
+
+The `.c` file is regular source code. Edit its `run` function and cases by
+hand, add C functions, or refactor it in Solution Explorer. Visual Studio
+builds those edits directly: **it does not rerun Python**. The directory also
+contains `source.a32`, `manifest.json` with source SHA-256 and base address,
+and a local README. Exporting again to the same directory fails instead of
+overwriting human changes; use a new directory and compare the two versions.
+The raw input is included for provenance, so do not publish that project
+unless you have rights to share those bytes.
+
+The generated solution and XML project structure are tested on Linux, and the
+generated C passes strict host compilation. A real Visual Studio build has
+not yet been run in this environment; Windows developers should report any
+MSVC diagnostic with the project configuration and toolset version.
 
 The output is `5`. The generated program accepts up to four unsigned 32-bit
 arguments as guest `r0` through `r3`, prints the returned `r0`, and reports
