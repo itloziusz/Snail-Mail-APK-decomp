@@ -4,12 +4,14 @@
 
 The `aot-gles2` branch at `6de0c2b` was built from the reference APK whose
 SHA-256 is `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
-The resulting versionCode 5 APK has SHA-256
-`ee19481e3c621b86f5ef61d500e2c9bbe48141f5a43e9b54cb9a06055b52149e`.
+The corrected versionCode 1 APK has SHA-256
+`333679b4ef8ad9079761e4dc0e230ff404f5fbf7a8d1c232a68b630c3b6bdd6f`.
 `apksigner verify` passed for v1, v2, and v3; the ELF/APK checker passed
 arm64-v8a only, stored native library, 16 KiB alignment, and no text
-relocations. `aapt` reports package `com.sandlotgames.snailmail.port`,
+relocations. `aapt` reports package `com.sandlotgames.snailmail.port.preview`,
 minSdk 23, targetSdk 35, and GLES 2.0. This build uses a local debug key.
+The unique preview package ID avoids signature conflicts with older test
+installs of `com.sandlotgames.snailmail.port`; those installs retain their data.
 
 This verifies a build artifact, not a device run. The GLES2 renderer, 60 Hz
 pacer, adaptive FOV, HUD alignment, and Display page in this revision still
