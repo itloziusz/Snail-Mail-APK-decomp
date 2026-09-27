@@ -1,0 +1,48 @@
+{
+ "binary": "v5",
+ "binary_sha256": "96dbeaeb20c60d687301ca769656727467371489db5e3ed744a93248bc8d8136",
+ "capstone_edges": 4621,
+ "ghidra_edges": 4621,
+ "common": 4618,
+ "only_capstone": [
+  {
+   "caller": "0x827f8",
+   "caller_name": "_Z6InitGLv",
+   "callee": "0x1435c",
+   "callee_name": "glColor4f@plt"
+  },
+  {
+   "caller": "0x8779c",
+   "caller_name": "__aeabi_cdrcmple",
+   "callee": "0x87718",
+   "callee_name": "__cmpdf2"
+  },
+  {
+   "caller": "0x87ee4",
+   "caller_name": "__aeabi_cfrcmple",
+   "callee": "0x87e84",
+   "callee_name": "__cmpsf2"
+  }
+ ],
+ "only_ghidra": [
+  {
+   "caller": "0x8779c",
+   "caller_name": "__aeabi_cdrcmple",
+   "callee": "0x877b8",
+   "callee_name": "__aeabi_cdcmpeq"
+  },
+  {
+   "caller": "0x8792c",
+   "caller_name": "__aeabi_frsub",
+   "callee": "0x87938",
+   "callee_name": "__addsf3"
+  },
+  {
+   "caller": "0x87ee4",
+   "caller_name": "__aeabi_cfrcmple",
+   "callee": "0x87ef4",
+   "callee_name": "__aeabi_cfcmpeq"
+  }
+ ],
+ "ghidra_unresolved_computed_calls": 78
+}

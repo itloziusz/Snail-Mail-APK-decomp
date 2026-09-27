@@ -58,6 +58,7 @@ COMPONENT_RULES = [
     (r"^_GLOBAL__I_", "static_init"),
     (r"OpenFeint|^(_Z\d+)?OFO|OFO", "openfeint"),
     (r"^(_Z\d+)?RShell", "rshell_platform"),
+    (r"^(_Z\d+)?Pfm", "pfm_platform"),
     (r"^_ZN\d+cRResourceManager|^_ZN\d+cRHash", "resource_archive"),
     (r"^(_Z\d+)?(importGL|appInit|appRender|appDeinit|AppInit|_getTime)|^_ZL8_getTime", "app_glue"),
     (r"^(_Z\d+)?(GL|InitGL|gl)", "gl_wrapper"),

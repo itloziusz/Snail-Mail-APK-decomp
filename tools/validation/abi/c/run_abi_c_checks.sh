@@ -37,10 +37,10 @@ for t in host aarch64 armv7; do
 done
 if command -v clang >/dev/null 2>&1; then
   for v in default off; do
-    ex="--target=aarch64-linux-gnu --sysroot=/usr/aarch64-linux-gnu -fuse-ld=bfd"
+    ex="--target=aarch64-linux-gnu -fuse-ld=bfd"
     [ $v = off ] && ex="$ex -ffp-contract=off"
     # shellcheck disable=SC2086
-    clang -O2 $ex -B/usr/bin/aarch64-linux-gnu- -o "$OUT/fpcontract_clang_$v.aarch64" "$HERE/fpcontract_demo.c" 2>/dev/null \
+    clang -O2 $ex -o "$OUT/fpcontract_clang_$v.aarch64" "$HERE/fpcontract_demo.c" 2>/dev/null \
       && echo "built fpcontract_clang_$v.aarch64" || echo "SKIP clang aarch64 build ($v)"
   done
 fi

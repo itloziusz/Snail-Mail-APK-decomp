@@ -256,7 +256,7 @@ class Resolver:
         # --- fixpoint
         TOP = None
         state_in = {blk[0]: TOP for blk in blocks}
-        state_in[blocks[0][0]] = {}
+        state_in[blocks[0][0]] = {"sp": ("sp", 0)}
         work = [blocks[0][0]]
         seen_iter = 0
         while work and seen_iter < 20000:
@@ -322,7 +322,7 @@ class Resolver:
         return st.get(reg)
 
     def _set(self, st, reg, val, i):
-        if reg in ("pc", "sp"):
+        if reg == "pc":
             return
         if val is None:
             st.pop(reg, None)
@@ -332,6 +332,23 @@ class Resolver:
                 st.pop(reg, None)
             return
         st[reg] = val
+
+    def _frame_off(self, st, i, memop):
+        """Frame offset (relative to the entry sp) addressed by a memory operand
+        whose base holds a frame pointer value ('sp', off); None otherwise."""
+        _, base, index, disp, _stype, _sval, _sub = memop
+        if not base or index:
+            return None
+        bv = st.get(base)
+        if not (isinstance(bv, tuple) and bv[0] == "sp"):
+            return None
+        return bv[1] if i.post_index else bv[1] + disp
+
+    def _stack_store(self, st, off, val, i, size=4):
+        for k in range(off - (off % 4), off + size, 4):
+            st.pop(("stk", k), None)
+        if size == 4 and off % 4 == 0 and val is not None and i.cc in (AL, 0):
+            st[("stk", off)] = val
 
     def _eff_addr(self, st, i, memop):
         _, base, index, disp, stype, sval, sub = memop
@@ -392,6 +409,38 @@ class Resolver:
         handled = False
         if iid in LOAD_IDS or iid in STORE_IDS:
             mem = next((o for o in ops if o[0] == "mem"), None)
+            fo = self._frame_off(st, i, mem) if mem is not None and mem[1] != "pc" else None
+            if fo is not None:
+                regs = [o[1] for o in ops if o[0] == "reg"]
+                if iid in LOAD_IDS:
+                    for r in regs:
+                        self._set(st, r, None, i)
+                    if iid == A.ARM_INS_LDR and regs and regs[0] != "pc":
+                        self._set(st, regs[0], st.get(("stk", fo)), i)
+                    elif iid == A.ARM_INS_LDRD and len(regs) >= 2:
+                        self._set(st, regs[0], st.get(("stk", fo)), i)
+                        self._set(st, regs[1], st.get(("stk", fo + 4)), i)
+                else:
+                    if iid == A.ARM_INS_STR and regs:
+                        self._stack_store(st, fo, st.get(regs[0]) if regs[0] != "pc" else None, i)
+                    elif iid == A.ARM_INS_STRD and len(regs) >= 2:
+                        self._stack_store(st, fo, st.get(regs[0]), i)
+                        self._stack_store(st, fo + 4, st.get(regs[1]), i)
+                    else:
+                        size = 8 if (iid == A.ARM_INS_VSTR and regs and regs[0].startswith("d")) else 1
+                        self._stack_store(st, fo, None, i, size=size)
+                if i.writeback and mem[1]:
+                    bv = st.get(mem[1])
+                    if i.post_index:
+                        imm = next((o[1] for o in ops if o[0] == "imm"), None)
+                        if imm is not None and imm & 0x80000000:
+                            imm -= 1 << 32
+                        nb = ("sp", bv[1] + imm) if imm is not None else None
+                    else:
+                        nb = ("sp", bv[1] + mem[3])
+                    self._set(st, mem[1], nb, i)
+                mem = None
+                handled = True
             if mem is not None:
                 ea = self._eff_addr(st, i, mem)
                 dst = [o[1] for o in ops if o[0] == "reg"]
@@ -434,14 +483,39 @@ class Resolver:
                     self._set(st, mem[1], nb, i)
                 handled = True
         elif iid in LDM_IDS or iid in STM_IDS:
-            base = ops[0][1] if ops and ops[0][0] == "reg" and iid not in (A.ARM_INS_POP, A.ARM_INS_PUSH, A.ARM_INS_VPUSH, A.ARM_INS_VPOP) else "sp"
+            implicit_sp = iid in (A.ARM_INS_POP, A.ARM_INS_PUSH, A.ARM_INS_VPUSH, A.ARM_INS_VPOP)
+            base = ops[0][1] if ops and ops[0][0] == "reg" and not implicit_sp else "sp"
             bv = self._val(st, base, i)
+            if isinstance(bv, tuple) and bv[0] == "sp":
+                regs = [o[1] for o in (ops if implicit_sp else ops[1:]) if o[0] == "reg"]
+                sizes = [8 if r.startswith("d") else 4 for r in regs]
+                total = sum(sizes)
+                dec = iid in (A.ARM_INS_PUSH, A.ARM_INS_VPUSH, A.ARM_INS_STMDB, A.ARM_INS_LDMDB,
+                              A.ARM_INS_VSTMDB, A.ARM_INS_VLDMDB, A.ARM_INS_STMDA, A.ARM_INS_LDMDA)
+                start_off = bv[1] - total if dec else bv[1]
+                if iid in (A.ARM_INS_STMIB, A.ARM_INS_LDMIB):
+                    start_off += 4
+                elif iid in (A.ARM_INS_STMDA, A.ARM_INS_LDMDA):
+                    start_off += 4
+                off = start_off
+                for r, sz in zip(regs, sizes):
+                    if iid in STM_IDS:
+                        self._stack_store(st, off, st.get(r) if sz == 4 else None, i, size=sz)
+                    elif r != "pc":
+                        self._set(st, r, st.get(("stk", off)) if sz == 4 else None, i)
+                    off += sz
+                if implicit_sp or i.writeback:
+                    self._set(st, base, ("sp", bv[1] - total if dec else bv[1] + total), i)
+                handled = True
+        if handled:
+            pass
+        elif iid in LDM_IDS or iid in STM_IDS:
             if rec and isinstance(bv, int) and base != "sp":
                 fa.refs.append({"site": i.addr, "kind": "read" if iid in LDM_IDS else "write", "addr": bv, "via": "reg"})
             for r in i.regs_w:
                 self._set(st, r, None, i)
             handled = True
-        elif iid in (A.ARM_INS_MOV, A.ARM_INS_MOVW, A.ARM_INS_MVN, A.ARM_INS_MOVT) and ops and ops[0][0] == "reg":
+        elif not handled and iid in (A.ARM_INS_MOV, A.ARM_INS_MOVW, A.ARM_INS_MVN, A.ARM_INS_MOVT) and ops and ops[0][0] == "reg":
             rd = ops[0][1]
             v = None
             if iid == A.ARM_INS_MOVT and len(ops) == 2 and ops[1][0] == "imm":
@@ -459,7 +533,7 @@ class Resolver:
                     self._set(st, r, None, i)
             self._set(st, rd, v, i)
             handled = True
-        elif iid in (A.ARM_INS_ADD, A.ARM_INS_SUB, A.ARM_INS_ADR) and ops and ops[0][0] == "reg" and ops[0][1] != "pc":
+        elif not handled and iid in (A.ARM_INS_ADD, A.ARM_INS_SUB, A.ARM_INS_ADR) and ops and ops[0][0] == "reg" and ops[0][1] != "pc":
             rd = ops[0][1]
             v = None
             if iid == A.ARM_INS_ADR and len(ops) == 2 and ops[1][0] == "imm":
@@ -473,7 +547,10 @@ class Resolver:
                     c = _shift(c, ops[2][2], ops[2][3]) if isinstance(c, int) else None
                 else:
                     c = None
-                if isinstance(a, int) and isinstance(c, int):
+                if isinstance(a, tuple) and a[0] == "sp" and isinstance(c, int):
+                    cs = c - (1 << 32) if c & 0x80000000 else c
+                    v = ("sp", a[1] + cs if iid == A.ARM_INS_ADD else a[1] - cs)
+                elif isinstance(a, int) and isinstance(c, int):
                     v = (a + c) & MASK if iid == A.ARM_INS_ADD else (a - c) & MASK
                     if rec and (ops[1][1] == "pc" or (ops[2][0] == "reg" and ops[2][1] == "pc")
                                 or a == self.got or c == self.got):
@@ -489,6 +566,12 @@ class Resolver:
             for r in i.regs_w:
                 self._set(st, r, None, i)
         if k in ("call_direct", "call_indirect"):
+            lows = [st[r][1] for r in ("r0", "r1", "r2", "r3")
+                    if isinstance(st.get(r), tuple) and st[r][0] == "sp"]
+            if lows:
+                lo = min(lows)
+                for key in [x for x in st if isinstance(x, tuple) and x[0] == "stk" and x[1] >= lo]:
+                    del st[key]
             for r in CALL_CLOBBER:
                 st.pop(r, None)
         return st
@@ -508,13 +591,23 @@ class Resolver:
         if i.id in (A.ARM_INS_BLX, A.ARM_INS_BX):
             r = i.ops[0][1]
             v = st.get(r)
-            if isinstance(v, tuple):
+            if isinstance(v, tuple) and v[0] == "imp":
                 return r, {"import": v[1]}
+            if isinstance(v, tuple):
+                return r, None
             return r, ({"addr": v} if isinstance(v, int) else None)
         mem = next((o for o in i.ops if o[0] == "mem"), None)
         if mem is not None:
             base, index, disp = mem[1], mem[2], mem[3]
             expr = f"[{base}" + (f"+{index}" if index else "") + (f"+0x{disp:x}" if disp > 0 else (f"-0x{-disp:x}" if disp < 0 else "")) + "]"
+            fo = self._frame_off(st, i, mem)
+            if fo is not None:
+                v = st.get(("stk", fo))
+                if isinstance(v, int):
+                    return expr, {"frame_slot": fo, "addr": v}
+                if isinstance(v, tuple) and v[0] == "imp":
+                    return expr, {"frame_slot": fo, "import": v[1]}
+                return expr, None
             ea = self._eff_addr(st, i, mem)
             if ea is not None:
                 sec = self._const_word_sec(ea)

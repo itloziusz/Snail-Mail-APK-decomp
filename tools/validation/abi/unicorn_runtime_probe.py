@@ -123,7 +123,9 @@ def main():
 
     # 1. chained VMLA
     print("[1] v7a tVector::Dot (0x%x): VMLA chain, compare with 2-rounding and fused models" % v7a.syms["_ZN7tVector3DotERKS_S1_"])
-    vecs = [((1.0 + 2 ** -23, 1.0, 0.0), (1.0 - 2 ** -23, -1.0, 0.0)),
+    e = 2 ** -23
+    vecs = [((1.0 + e, 1.0 + e, 0.0), (1.0 - e, -(1.0 - e), 0.0)),  # same inputs as c/fpcontract_demo.c
+            ((1.0 + e, 1.0, 0.0), (1.0 - e, -1.0, 0.0)),
             ((0.1, 0.2, 0.3), (0.3, 0.2, 0.1)),
             ((16777217.0, 3.0, 1e-8), (16777215.0, -3.0, 1e8))]
     for a, b in vecs:

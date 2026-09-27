@@ -232,7 +232,7 @@
   ],
   "evidence": [
    "EV-JNI-0015",
-   "EV-JNI-0067"
+   "EV-JNI-0065"
   ],
   "confidence": "likely"
  },
@@ -316,7 +316,8 @@
   ],
   "evidence": [
    "EV-JNI-0024",
-   "EV-JNI-0025"
+   "EV-JNI-0025",
+   "EV-JNI-0070"
   ],
   "confidence": "established"
  },
@@ -903,7 +904,7 @@
    "EV-JNI-0012",
    "EV-JNI-0014",
    "EV-JNI-0015",
-   "EV-JNI-0064"
+   "EV-JNI-0063"
   ],
   "confidence": "established"
  },
@@ -1007,7 +1008,7 @@
    "EV-JNI-0012",
    "EV-JNI-0014",
    "EV-JNI-0015",
-   "EV-JNI-0068"
+   "EV-JNI-0066"
   ],
   "confidence": "established"
  },
@@ -1214,7 +1215,7 @@
    "EV-JNI-0012",
    "EV-JNI-0014",
    "EV-JNI-0015",
-   "EV-JNI-0068"
+   "EV-JNI-0066"
   ],
   "confidence": "established"
  },
@@ -1317,7 +1318,7 @@
    "EV-JNI-0012",
    "EV-JNI-0014",
    "EV-JNI-0015",
-   "EV-JNI-0069"
+   "EV-JNI-0067"
   ],
   "confidence": "established"
  },
@@ -1631,7 +1632,8 @@
    "EV-JNI-0015",
    "EV-JNI-0032",
    "EV-JNI-0033",
-   "EV-JNI-0034"
+   "EV-JNI-0034",
+   "EV-JNI-0064"
   ],
   "confidence": "established"
  },
@@ -1687,7 +1689,8 @@
    "EV-JNI-0015",
    "EV-JNI-0032",
    "EV-JNI-0033",
-   "EV-JNI-0034"
+   "EV-JNI-0034",
+   "EV-JNI-0064"
   ],
   "confidence": "established"
  },
@@ -2295,7 +2298,7 @@
   "evidence": [
    "EV-JNI-0033",
    "EV-JNI-0034",
-   "EV-JNI-0065"
+   "EV-JNI-0064"
   ],
   "confidence": "likely"
  },
@@ -2318,7 +2321,7 @@
   "port_guidance": "Queue input events to the GL thread (GLSurfaceView.queueEvent or a lock-free ring) and use atomics for flags.",
   "evidence": [
    "EV-JNI-0014",
-   "EV-JNI-0063"
+   "EV-JNI-0062"
   ],
   "confidence": "established"
  },
@@ -2343,7 +2346,8 @@
   "port_guidance": "No action for C/C++ prototypes on arm64 (AAPCS64 passes floats in v-registers); only relevant to hand-written glue or emulation.",
   "evidence": [
    "EV-JNI-0025",
-   "EV-JNI-0064"
+   "EV-JNI-0063",
+   "EV-JNI-0070"
   ],
   "confidence": "established"
  }

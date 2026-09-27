@@ -2425,7 +2425,91 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x1455c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1e4",
+"section": ".got"
+},
+{
+"site": "0x1455c",
+"kind": "addr",
+"via": "got",
+"addr": "0x9103c",
+"section": ".bss",
+"symbol": "gJavaObj",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14564",
+"kind": "read",
+"via": "reg",
+"addr": "0x9103c",
+"section": ".bss",
+"symbol": "gJavaObj",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14568",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0c4",
+"section": ".got"
+},
+{
+"site": "0x14568",
+"kind": "addr",
+"via": "got",
+"addr": "0x8b3f0",
+"section": ".data",
+"symbol": "gJAVAFunction",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14570",
+"kind": "read",
+"via": "reg",
+"addr": "0x8b4b0",
+"section": ".data",
+"symbol": "gJAVAFunction+0xc0",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x145ac",
+"kind": "read",
+"via": "reg",
+"addr": "0x91038",
+"section": ".bss",
+"symbol": "gJavaEnv",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x145f0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b310",
+"section": ".got"
+},
+{
+"site": "0x145f0",
+"kind": "addr",
+"via": "got",
+"addr": "0x91038",
+"section": ".bss",
+"symbol": "gJavaEnv",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x145f4",
+"kind": "read",
+"via": "reg",
+"addr": "0x91038",
+"section": ".bss",
+"symbol": "gJavaEnv",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14608",
 "kind": "read",
 "via": "reg",
 "addr": "0x91038",
@@ -3251,7 +3335,91 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x14a84",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1e4",
+"section": ".got"
+},
+{
+"site": "0x14a84",
+"kind": "addr",
+"via": "got",
+"addr": "0x9103c",
+"section": ".bss",
+"symbol": "gJavaObj",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14a8c",
+"kind": "read",
+"via": "reg",
+"addr": "0x9103c",
+"section": ".bss",
+"symbol": "gJavaObj",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14a90",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0c4",
+"section": ".got"
+},
+{
+"site": "0x14a90",
+"kind": "addr",
+"via": "got",
+"addr": "0x8b3f0",
+"section": ".data",
+"symbol": "gJAVAFunction",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14a98",
+"kind": "read",
+"via": "reg",
+"addr": "0x8b4a4",
+"section": ".data",
+"symbol": "gJAVAFunction+0xb4",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x14ad4",
+"kind": "read",
+"via": "reg",
+"addr": "0x91038",
+"section": ".bss",
+"symbol": "gJavaEnv",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14b18",
+"kind": "read",
+"via": "got",
+"addr": "0x8b310",
+"section": ".got"
+},
+{
+"site": "0x14b18",
+"kind": "addr",
+"via": "got",
+"addr": "0x91038",
+"section": ".bss",
+"symbol": "gJavaEnv",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14b1c",
+"kind": "read",
+"via": "reg",
+"addr": "0x91038",
+"section": ".bss",
+"symbol": "gJavaEnv",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x14b30",
 "kind": "read",
 "via": "reg",
 "addr": "0x91038",
@@ -11592,6 +11760,31 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x1bc7c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a4",
+"section": ".got"
+},
+{
+"site": "0x1bc7c",
+"kind": "addr",
+"via": "got",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1bc80",
+"kind": "read",
+"via": "reg",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x1bd48",
 "kind": "read",
 "via": "got",
@@ -11617,6 +11810,31 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x1bd58",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a4",
+"section": ".got"
+},
+{
+"site": "0x1bd58",
+"kind": "addr",
+"via": "got",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1bd60",
+"kind": "read",
+"via": "reg",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x1bd70",
 "kind": "read",
 "via": "reg",
@@ -11632,6 +11850,15 @@
 "addr": "0x91024",
 "section": ".bss",
 "symbol": "gDatFP",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1bd8c",
+"kind": "read",
+"via": "reg",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -11675,6 +11902,31 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x1be4c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a4",
+"section": ".got"
+},
+{
+"site": "0x1be4c",
+"kind": "addr",
+"via": "got",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1be58",
+"kind": "read",
+"via": "reg",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x1be68",
 "kind": "read",
 "via": "reg",
@@ -11690,6 +11942,15 @@
 "addr": "0x91024",
 "section": ".bss",
 "symbol": "gDatFP",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1be84",
+"kind": "read",
+"via": "reg",
+"addr": "0x10144c",
+"section": ".bss",
+"symbol": "gDat",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -12598,6 +12859,30 @@
 "addr": "0x81488",
 "section": ".rodata",
 "string": "Vertex Index Array"
+},
+{
+"site": "0x1da5c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8146c",
+"section": ".rodata",
+"string": "Obj Vertex array"
+},
+{
+"site": "0x1da6c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8149c",
+"section": ".rodata",
+"string": "Obj VertexUV"
+},
+{
+"site": "0x1dab4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x814ac",
+"section": ".rodata",
+"string": "Vertex Inded Array"
 }
 ],
 "indirect_calls": [],
@@ -12674,6 +12959,13 @@
 "section": ".got"
 },
 {
+"site": "0x1e030",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
 "site": "0x1e060",
 "kind": "addr",
 "via": "gotoff",
@@ -12688,6 +12980,31 @@
 "addr": "0x814f8",
 "section": ".rodata",
 "string": "SAVE:Texturenum=%i\n"
+},
+{
+"site": "0x1e5b8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x1e5b8",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1e5bc",
+"kind": "read",
+"via": "reg",
+"addr": "0x8cc6c",
+"section": ".bss",
+"symbol": "gObjectList+0x10",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x1e814",
@@ -13013,7 +13330,80 @@
 {
 "addr": "0x1f530",
 "name": "_ZN8cRObject11RequestAnimEiP8cRBodPosfi",
-"refs": [],
+"refs": [
+{
+"site": "0x1f5cc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x816c0",
+"section": ".rodata",
+"string": "Object Animation KeyFrames"
+},
+{
+"site": "0x1f5ec",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x816dc",
+"section": ".rodata",
+"string": "Object Anim KeyFrame Vertices"
+},
+{
+"site": "0x1f69c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x816c0",
+"section": ".rodata",
+"string": "Object Animation KeyFrames"
+},
+{
+"site": "0x1f6c8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x815b4",
+"section": ".rodata",
+"string": "Object Animation"
+},
+{
+"site": "0x1f6ec",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x815c8",
+"section": ".rodata",
+"string": "Object Animation Frame array"
+},
+{
+"site": "0x1f790",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x815e8",
+"section": ".rodata",
+"string": "Object Animation Frame"
+},
+{
+"site": "0x1f7a0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8171c",
+"section": ".rodata",
+"string": "RequestAnim Dodgy Tween %f\n"
+},
+{
+"site": "0x1f7ac",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x816fc",
+"section": ".rodata",
+"string": "Object Animation Frame Vertices"
+},
+{
+"site": "0x1fa38",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81694",
+"section": ".rodata",
+"string": "Anim tween Vertices don't match Frame %i"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 15
@@ -13138,7 +13528,208 @@
 {
 "addr": "0x1fc4c",
 "name": "_ZN8cRObject9CalcEdgesEv",
-"refs": [],
+"refs": [
+{
+"site": "0x1fca0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1ec",
+"section": ".got"
+},
+{
+"site": "0x1fca0",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fca8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b118",
+"section": ".got"
+},
+{
+"site": "0x1fca8",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd0",
+"section": ".bss",
+"symbol": "gEdgeStore",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fcac",
+"kind": "write",
+"via": "reg",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fcb8",
+"kind": "write",
+"via": "reg",
+"addr": "0x10efd0",
+"section": ".bss",
+"symbol": "gEdgeStore",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fd4c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1ec",
+"section": ".got"
+},
+{
+"site": "0x1fd4c",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fd50",
+"kind": "read",
+"via": "reg",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fd74",
+"kind": "read",
+"via": "got",
+"addr": "0x8b118",
+"section": ".got"
+},
+{
+"site": "0x1fd74",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd0",
+"section": ".bss",
+"symbol": "gEdgeStore",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fd78",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1ec",
+"section": ".got"
+},
+{
+"site": "0x1fd78",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fd7c",
+"kind": "read",
+"via": "reg",
+"addr": "0x10efd0",
+"section": ".bss",
+"symbol": "gEdgeStore",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fd80",
+"kind": "read",
+"via": "reg",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fdf4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1ec",
+"section": ".got"
+},
+{
+"site": "0x1fdf4",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fdf8",
+"kind": "write",
+"via": "reg",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fe08",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1ec",
+"section": ".got"
+},
+{
+"site": "0x1fe08",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fe0c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b118",
+"section": ".got"
+},
+{
+"site": "0x1fe0c",
+"kind": "addr",
+"via": "got",
+"addr": "0x10efd0",
+"section": ".bss",
+"symbol": "gEdgeStore",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fe14",
+"kind": "read",
+"via": "reg",
+"addr": "0x10efd4",
+"section": ".bss",
+"symbol": "gEdgeCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x1fe18",
+"kind": "read",
+"via": "reg",
+"addr": "0x10efd0",
+"section": ".bss",
+"symbol": "gEdgeStore",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 3
@@ -13190,12 +13781,44 @@
 "string": "Anim Face Quand Normals"
 },
 {
+"site": "0x20148",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x20148",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x201b8",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x817c0",
 "section": ".rodata",
 "string": "CFQN GLVertexArray->IndexArrayCount/3=%i\n"
+},
+{
+"site": "0x202ac",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x202ac",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
 }
 ],
 "indirect_calls": [],
@@ -15200,6 +15823,31 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x21e5c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b3c0",
+"section": ".got"
+},
+{
+"site": "0x21e5c",
+"kind": "addr",
+"via": "got",
+"addr": "0x122034",
+"section": ".bss",
+"symbol": "FontPrintBufferIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21e78",
+"kind": "read",
+"via": "reg",
+"addr": "0x122034",
+"section": ".bss",
+"symbol": "FontPrintBufferIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x21ed0",
 "kind": "read",
 "via": "got",
@@ -15213,6 +15861,90 @@
 "addr": "0x111434",
 "section": ".bss",
 "symbol": "FontPrintBufferText",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21f14",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f8",
+"section": ".got"
+},
+{
+"site": "0x21f14",
+"kind": "addr",
+"via": "got",
+"addr": "0x122038",
+"section": ".bss",
+"symbol": "FontPrintIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21f18",
+"kind": "read",
+"via": "got",
+"addr": "0x8b3c0",
+"section": ".got"
+},
+{
+"site": "0x21f18",
+"kind": "addr",
+"via": "got",
+"addr": "0x122034",
+"section": ".bss",
+"symbol": "FontPrintBufferIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21f24",
+"kind": "read",
+"via": "reg",
+"addr": "0x122038",
+"section": ".bss",
+"symbol": "FontPrintIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21f28",
+"kind": "write",
+"via": "reg",
+"addr": "0x122034",
+"section": ".bss",
+"symbol": "FontPrintBufferIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21f30",
+"kind": "write",
+"via": "reg",
+"addr": "0x122038",
+"section": ".bss",
+"symbol": "FontPrintIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21f4c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b3c0",
+"section": ".got"
+},
+{
+"site": "0x21f4c",
+"kind": "addr",
+"via": "got",
+"addr": "0x122034",
+"section": ".bss",
+"symbol": "FontPrintBufferIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x21f50",
+"kind": "write",
+"via": "reg",
+"addr": "0x122034",
+"section": ".bss",
+"symbol": "FontPrintBufferIndex",
 "symbol_type": "STT_OBJECT"
 }
 ],
@@ -15348,6 +16080,29 @@
 "refs": [
 {
 "site": "0x2219c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x22318",
+"kind": "read",
+"via": "got",
+"addr": "0x8b178",
+"section": ".got"
+},
+{
+"site": "0x22318",
+"kind": "addr",
+"via": "got",
+"addr": "0x10f20c",
+"section": ".bss",
+"symbol": "RFont",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x223e0",
 "kind": "read",
 "via": "got",
 "addr": "0x8b0e4",
@@ -15678,7 +16433,90 @@
 {
 "addr": "0x22920",
 "name": "_Z13FontPrintRealP16cFontPrintBuffer",
-"refs": [],
+"refs": [
+{
+"site": "0x229d8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b178",
+"section": ".got"
+},
+{
+"site": "0x229d8",
+"kind": "addr",
+"via": "got",
+"addr": "0x10f20c",
+"section": ".bss",
+"symbol": "RFont",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22a48",
+"kind": "read",
+"via": "got",
+"addr": "0x8b178",
+"section": ".got"
+},
+{
+"site": "0x22a48",
+"kind": "addr",
+"via": "got",
+"addr": "0x10f20c",
+"section": ".bss",
+"symbol": "RFont",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22a58",
+"kind": "read",
+"via": "got",
+"addr": "0x8b298",
+"section": ".got"
+},
+{
+"site": "0x22a58",
+"kind": "addr",
+"via": "got",
+"addr": "0x12203c",
+"section": ".bss",
+"symbol": "FontWibbleX",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22a5c",
+"kind": "read",
+"via": "reg",
+"addr": "0x12203c",
+"section": ".bss",
+"symbol": "FontWibbleX",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22aa4",
+"kind": "read",
+"via": "reg",
+"addr": "0x12203c",
+"section": ".bss",
+"symbol": "FontWibbleX",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22bd4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b178",
+"section": ".got"
+},
+{
+"site": "0x22bd4",
+"kind": "addr",
+"via": "got",
+"addr": "0x10f20c",
+"section": ".bss",
+"symbol": "RFont",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 12
@@ -15818,6 +16656,31 @@
 "string": "SetNumber:"
 },
 {
+"site": "0x22e74",
+"kind": "read",
+"via": "got",
+"addr": "0x8b35c",
+"section": ".got"
+},
+{
+"site": "0x22e74",
+"kind": "addr",
+"via": "got",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22e78",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x22e90",
 "kind": "read",
 "via": "got",
@@ -15831,6 +16694,85 @@
 "addr": "0x10f20c",
 "section": ".bss",
 "symbol": "RFont",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22eb0",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22ee4",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22f18",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22f54",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22f8c",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22fd0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b35c",
+"section": ".got"
+},
+{
+"site": "0x22fd0",
+"kind": "addr",
+"via": "got",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22fd4",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x22fe4",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -15863,6 +16805,40 @@
 "addr": "0x8cc70",
 "section": ".bss",
 "symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2305c",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x230bc",
+"kind": "read",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x230c0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x230d0",
+"kind": "write",
+"via": "reg",
+"addr": "0x10f208",
+"section": ".bss",
+"symbol": "FontCount",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -16134,7 +17110,24 @@
 {
 "addr": "0x244c8",
 "name": "_Z20ObjectProcTilePillarP8cRObjectiffPcf",
-"refs": [],
+"refs": [
+{
+"site": "0x24630",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x24630",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 10
@@ -16564,7 +17557,24 @@
 {
 "addr": "0x25da0",
 "name": "_Z19ObjectProcTileFloorP8cRObjectPc",
-"refs": [],
+"refs": [
+{
+"site": "0x25df4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x25df4",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 8
@@ -16692,7 +17702,40 @@
 {
 "addr": "0x26b94",
 "name": "_Z20ObjectProcScapeHelixP8cRObjectiifffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x26dd4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x26dd4",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x26ed4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x26ed4",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 8
@@ -16708,7 +17751,24 @@
 {
 "addr": "0x27028",
 "name": "_Z22ObjectProcScapeVirtualP8cRObjectiiiffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x271d8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x271d8",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [
 {
@@ -16723,7 +17783,40 @@
 {
 "addr": "0x27370",
 "name": "_Z21ObjectProcScapeColumnP8cRObjectiiiffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x2757c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2757c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x27670",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x27670",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 7
@@ -16731,7 +17824,24 @@
 {
 "addr": "0x27724",
 "name": "_Z15ObjectProcFenceP8cRObjectPcS1_S1_",
-"refs": [],
+"refs": [
+{
+"site": "0x27940",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x27940",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 13
@@ -16739,7 +17849,24 @@
 {
 "addr": "0x27c14",
 "name": "_Z18ObjectProcTileWallP8cRObjectPcS1_S1_",
-"refs": [],
+"refs": [
+{
+"site": "0x27e20",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x27e20",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 8
@@ -16877,7 +18004,40 @@
 {
 "addr": "0x28554",
 "name": "_Z21ObjectProcScapeTunnelP8cRObjectiiiffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x287e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x287e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x288d0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x288d0",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 8
@@ -16885,7 +18045,40 @@
 {
 "addr": "0x2896c",
 "name": "_Z18ObjectProcScapeFlyP8cRObjectiiiffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x28b7c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x28b7c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x28c78",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x28c78",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 8
@@ -16893,7 +18086,72 @@
 {
 "addr": "0x28d30",
 "name": "_Z23ObjectProcScapeIceWaterP8cRObjectiiifPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x28f74",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x28f74",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2909c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2909c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2915c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2915c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x291fc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x291fc",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 12
@@ -16901,7 +18159,40 @@
 {
 "addr": "0x292a8",
 "name": "_Z26ObjectProcScapeAcceleratorP8cRObjectiiiffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x29604",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x29604",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x296ec",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x296ec",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 15
@@ -16909,7 +18200,40 @@
 {
 "addr": "0x29774",
 "name": "_Z20ObjectProcScapeMetalP8cRObjectiiiffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x299bc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x299bc",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x29aa0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x29aa0",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 15
@@ -16917,7 +18241,40 @@
 {
 "addr": "0x29d74",
 "name": "_Z19ObjectProcScapeSandP8cRObjectiiifPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x2a064",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2a064",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2a148",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2a148",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 10
@@ -16925,7 +18282,40 @@
 {
 "addr": "0x2a218",
 "name": "_Z21ObjectProcScapeSchoolP8cRObjectiiifPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x2a504",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2a504",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2a5f0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2a5f0",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 14
@@ -16941,7 +18331,24 @@
 {
 "addr": "0x2a858",
 "name": "_Z18ObjectProcScapeIceP8cRObjectiiifPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x2ab7c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2ab7c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 10
@@ -16949,7 +18356,40 @@
 {
 "addr": "0x2acd0",
 "name": "_Z19ObjectProcScapeCaveP8cRObjectiiiffPcS1_",
-"refs": [],
+"refs": [
+{
+"site": "0x2b020",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2b020",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2b108",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2b108",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 12
@@ -17014,6 +18454,45 @@
 "via": "got",
 "addr": "0x8b0e4",
 "section": ".got"
+},
+{
+"site": "0x2bbd0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2bbd0",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2bcd4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x819b4",
+"section": ".rodata",
+"string": "Movie %s Frames %i\n"
+},
+{
+"site": "0x2bcf0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x2bd14",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81998",
+"section": ".rodata",
+"string": "Cannot find movie frames\n"
 }
 ],
 "indirect_calls": [],
@@ -17023,7 +18502,16 @@
 {
 "addr": "0x2bd68",
 "name": "_Z18ObjectProcSimplifyP8cRObject",
-"refs": [],
+"refs": [
+{
+"site": "0x2c050",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x819c8",
+"section": ".rodata",
+"string": "Vertex pairs %i\n"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 2
@@ -17055,7 +18543,32 @@
 {
 "addr": "0x2c410",
 "name": "_Z23ObjectProcSimplifyFacesP8cRObject",
-"refs": [],
+"refs": [
+{
+"site": "0x2c45c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x819dc",
+"section": ".rodata",
+"string": "Gotcha %i %i %i %i == %i %i %i %i\n"
+},
+{
+"site": "0x2c554",
+"kind": "read",
+"via": "got",
+"addr": "0x8b128",
+"section": ".got"
+},
+{
+"site": "0x2c554",
+"kind": "addr",
+"via": "got",
+"addr": "0x23480",
+"section": ".text",
+"symbol": "_Z23ObjectProcVertexComparePKvS0_",
+"symbol_type": "STT_FUNC"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 3
@@ -17127,6 +18640,53 @@
 "addr": "0x81a68",
 "section": ".rodata",
 "string": "/"
+},
+{
+"site": "0x2c8d0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x2c914",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81a24",
+"section": ".rodata",
+"string": "[VERTEX START]"
+},
+{
+"site": "0x2c93c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81a34",
+"section": ".rodata",
+"string": "[VERTEX END]"
+},
+{
+"site": "0x2ca10",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81a44",
+"section": ".rodata",
+"string": "[FACEQUAD START]"
+},
+{
+"site": "0x2cb98",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x2cb98",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
 }
 ],
 "indirect_calls": [],
@@ -17576,6 +19136,13 @@
 "string": "Incompatible Sprite Anim Filename %s"
 },
 {
+"site": "0x2d4c8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
 "site": "0x2d540",
 "kind": "read",
 "via": "got",
@@ -17589,6 +19156,22 @@
 "addr": "0x8cc70",
 "section": ".bss",
 "symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2d554",
+"kind": "read",
+"via": "got",
+"addr": "0x8b31c",
+"section": ".got"
+},
+{
+"site": "0x2d554",
+"kind": "addr",
+"via": "got",
+"addr": "0x14cff4",
+"section": ".bss",
+"symbol": "gSpriteReference",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -17616,6 +19199,22 @@
 "string": "Too many Sprite References - Increase RSPRITE_REFERENCE_MAX(%i) in RSprite.h"
 },
 {
+"site": "0x2d630",
+"kind": "read",
+"via": "got",
+"addr": "0x8b31c",
+"section": ".got"
+},
+{
+"site": "0x2d630",
+"kind": "addr",
+"via": "got",
+"addr": "0x14cff4",
+"section": ".bss",
+"symbol": "gSpriteReference",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x2d6a0",
 "kind": "addr",
 "via": "gotoff",
@@ -17630,6 +19229,22 @@
 "addr": "0x81b14",
 "section": ".rodata",
 "string": "PingPong:yes"
+},
+{
+"site": "0x2d714",
+"kind": "read",
+"via": "got",
+"addr": "0x8b31c",
+"section": ".got"
+},
+{
+"site": "0x2d714",
+"kind": "addr",
+"via": "got",
+"addr": "0x14cff4",
+"section": ".bss",
+"symbol": "gSpriteReference",
+"symbol_type": "STT_OBJECT"
 }
 ],
 "indirect_calls": [],
@@ -17719,6 +19334,37 @@
 "via": "got",
 "addr": "0x8b0e4",
 "section": ".got"
+},
+{
+"site": "0x2da1c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x2da7c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83f54",
+"section": ".rodata",
+"string": "txt"
+},
+{
+"site": "0x2dafc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81b24",
+"section": ".rodata",
+"string": "Sprite Set"
+},
+{
+"site": "0x2db38",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81b30",
+"section": ".rodata",
+"string": "Sprites/"
 }
 ],
 "indirect_calls": [],
@@ -18855,6 +20501,15 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x2f198",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x2f1c0",
 "kind": "read",
 "via": "got",
@@ -18897,6 +20552,15 @@
 },
 {
 "site": "0x2f1ec",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2f208",
 "kind": "read",
 "via": "reg",
 "addr": "0x14e9a4",
@@ -19291,6 +20955,909 @@
 "addr": "0x81be4",
 "section": ".rodata",
 "string": "GameInit3\n"
+},
+{
+"site": "0x2f730",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81bf0",
+"section": ".rodata",
+"string": "Objects/World00/Surface0.png"
+},
+{
+"site": "0x2f748",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2f748",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2f878",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c10",
+"section": ".rodata",
+"string": "pillar1.x"
+},
+{
+"site": "0x2f8b8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2f8b8",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2f8e4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c1c",
+"section": ".rodata",
+"string": "pillar2.x"
+},
+{
+"site": "0x2f91c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2f91c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2f94c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c28",
+"section": ".rodata",
+"string": "pillar3.x"
+},
+{
+"site": "0x2f984",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2f984",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2f9b4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c34",
+"section": ".rodata",
+"string": "pillar4.x"
+},
+{
+"site": "0x2f9ec",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2f9ec",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2fa1c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c40",
+"section": ".rodata",
+"string": "pillar5.x"
+},
+{
+"site": "0x2fa54",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2fa54",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2fa84",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c4c",
+"section": ".rodata",
+"string": "pillar6.x"
+},
+{
+"site": "0x2fabc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2fabc",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2faec",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c58",
+"section": ".rodata",
+"string": "pillar7.x"
+},
+{
+"site": "0x2fb24",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2fb24",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2fb54",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c64",
+"section": ".rodata",
+"string": "pillar8.x"
+},
+{
+"site": "0x2fbc4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x2fbc4",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x2fbec",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c70",
+"section": ".rodata",
+"string": "Objects/Universe/Ramp.tga"
+},
+{
+"site": "0x2fc78",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81bf0",
+"section": ".rodata",
+"string": "Objects/World00/Surface0.png"
+},
+{
+"site": "0x300c4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c8c",
+"section": ".rodata",
+"string": "Tramp.x"
+},
+{
+"site": "0x30120",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c94",
+"section": ".rodata",
+"string": "Objects/Universe/Hole.tga"
+},
+{
+"site": "0x30170",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81cb0",
+"section": ".rodata",
+"string": "Objects/Lazer"
+},
+{
+"site": "0x30218",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x30218",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x30244",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81cc0",
+"section": ".rodata",
+"string": "Objects/TrampRing"
+},
+{
+"site": "0x302e0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x302e0",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x30318",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81cd4",
+"section": ".rodata",
+"string": "salt.x"
+},
+{
+"site": "0x303b4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81cdc",
+"section": ".rodata",
+"string": "postofficestop.x"
+},
+{
+"site": "0x303b8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x303b8",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x30584",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81cf0",
+"section": ".rodata",
+"string": "Test:"
+},
+{
+"site": "0x3059c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x841b0",
+"section": ".rodata",
+"string": ":"
+},
+{
+"site": "0x3063c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x3063c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x306a4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81d0c",
+"section": ".rodata",
+"string": "turbo-move-000.x"
+},
+{
+"site": "0x306e4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81d20",
+"section": ".rodata",
+"string": "turbo-bobalong-000.x"
+},
+{
+"site": "0x30718",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81d38",
+"section": ".rodata",
+"string": "turbo-lookbackleft-000.x"
+},
+{
+"site": "0x30754",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81d54",
+"section": ".rodata",
+"string": "turbo-lookbackright-000.x"
+},
+{
+"site": "0x3078c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81d70",
+"section": ".rodata",
+"string": "turbo-fall-000.x"
+},
+{
+"site": "0x307c4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81d84",
+"section": ".rodata",
+"string": "turbo-damaged-000.x"
+},
+{
+"site": "0x307f8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81d98",
+"section": ".rodata",
+"string": "turbo-intoshell-000.x"
+},
+{
+"site": "0x3082c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81db0",
+"section": ".rodata",
+"string": "turbo-skidstop-000.x"
+},
+{
+"site": "0x30860",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81dc8",
+"section": ".rodata",
+"string": "turbo-talk-000.x"
+},
+{
+"site": "0x3088c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81ddc",
+"section": ".rodata",
+"string": "TurboHotSpots.x"
+},
+{
+"site": "0x30948",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x30948",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x30974",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81dec",
+"section": ".rodata",
+"string": "jetpack-base-000.x"
+},
+{
+"site": "0x309d4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81e00",
+"section": ".rodata",
+"string": "jetpack-draw-000.x"
+},
+{
+"site": "0x30b48",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81e14",
+"section": ".rodata",
+"string": "blasterleft-base-000.x"
+},
+{
+"site": "0x30bb4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81e2c",
+"section": ".rodata",
+"string": "blasterleft-draw-000.x"
+},
+{
+"site": "0x30be8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81e44",
+"section": ".rodata",
+"string": "blasterleft-fire-000.x"
+},
+{
+"site": "0x30c1c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81e5c",
+"section": ".rodata",
+"string": "Laserleft-base-000.x"
+},
+{
+"site": "0x30c4c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81e74",
+"section": ".rodata",
+"string": "Laserleft-draw-000.x"
+},
+{
+"site": "0x30ce0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x30ce0",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x30d10",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81e8c",
+"section": ".rodata",
+"string": "blasterRight-base-000.x"
+},
+{
+"site": "0x30d88",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81ea4",
+"section": ".rodata",
+"string": "blasterRight-draw-000.x"
+},
+{
+"site": "0x30dc0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81ebc",
+"section": ".rodata",
+"string": "blasterRight-fire-000.x"
+},
+{
+"site": "0x30df8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81ed4",
+"section": ".rodata",
+"string": "Laserright-base-000.x"
+},
+{
+"site": "0x30e2c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81eec",
+"section": ".rodata",
+"string": "Laserright-draw-000.x"
+},
+{
+"site": "0x30ec0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x30ec0",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x30ef4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81f04",
+"section": ".rodata",
+"string": "blasterTop-base-000.x"
+},
+{
+"site": "0x30f6c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81f1c",
+"section": ".rodata",
+"string": "blasterTop-draw-000.x"
+},
+{
+"site": "0x30fa0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81f34",
+"section": ".rodata",
+"string": "blasterTop-fire-000.x"
+},
+{
+"site": "0x30fdc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81f4c",
+"section": ".rodata",
+"string": "rocketlauncher-base-000.x"
+},
+{
+"site": "0x31010",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81f68",
+"section": ".rodata",
+"string": "rocketlauncher-draw-000.x"
+},
+{
+"site": "0x310bc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x310bc",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x310c0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81f84",
+"section": ".rodata",
+"string": "x/snail-turbo.tga"
+},
+{
+"site": "0x310f0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81f98",
+"section": ".rodata",
+"string": "x/snail-turbo-damage.tga"
+},
+{
+"site": "0x3111c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81fb4",
+"section": ".rodata",
+"string": "x/snail-turbo-invincible.tga"
+},
+{
+"site": "0x3113c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x3113c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x31170",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81fd4",
+"section": ".rodata",
+"string": "invincible-base-000.x"
+},
+{
+"site": "0x311b4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81fec",
+"section": ".rodata",
+"string": "rocket-base-000.x"
+},
+{
+"site": "0x311cc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82000",
+"section": ".rodata",
+"string": "Objects/VapourLazer"
+},
+{
+"site": "0x31274",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x31274",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x31278",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81bf0",
+"section": ".rodata",
+"string": "Objects/World00/Surface0.png"
+},
+{
+"site": "0x3128c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82014",
+"section": ".rodata",
+"string": "Objects/VapourLazer/Lazer.tga"
+},
+{
+"site": "0x312a0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82034",
+"section": ".rodata",
+"string": "Objects/World00/Worm.png"
+},
+{
+"site": "0x312f8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81c70",
+"section": ".rodata",
+"string": "Objects/Universe/Ramp.tga"
+},
+{
+"site": "0x31374",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82050",
+"section": ".rodata",
+"string": "Objects/World00/Surface1.png"
+},
+{
+"site": "0x31380",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82070",
+"section": ".rodata",
+"string": "Objects/World00/Surface2.png"
+},
+{
+"site": "0x31394",
+"kind": "read",
+"via": "reg",
+"addr": "0x81bf0",
+"section": ".rodata",
+"string": "Objects/World00/Surface0.png"
+},
+{
+"site": "0x313a0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x820b0",
+"section": ".rodata",
+"string": "Objects/World00/Surface4.png"
+},
+{
+"site": "0x313ac",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82090",
+"section": ".rodata",
+"string": "Objects/World00/Surface3.png"
+},
+{
+"site": "0x313c8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x820d0",
+"section": ".rodata",
+"string": "Objects/World00/Surface5.png"
+},
+{
+"site": "0x313d4",
+"kind": "read",
+"via": "reg",
+"addr": "0x82050",
+"section": ".rodata",
+"string": "Objects/World00/Surface1.png"
+},
+{
+"site": "0x313e8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x820f0",
+"section": ".rodata",
+"string": "Objects/World00/Surface6.png"
+},
+{
+"site": "0x31428",
+"kind": "read",
+"via": "reg",
+"addr": "0x82070",
+"section": ".rodata",
+"string": "Objects/World00/Surface2.png"
+},
+{
+"site": "0x31444",
+"kind": "read",
+"via": "reg",
+"addr": "0x82090",
+"section": ".rodata",
+"string": "Objects/World00/Surface3.png"
+},
+{
+"site": "0x31460",
+"kind": "read",
+"via": "reg",
+"addr": "0x820b0",
+"section": ".rodata",
+"string": "Objects/World00/Surface4.png"
+},
+{
+"site": "0x3147c",
+"kind": "read",
+"via": "reg",
+"addr": "0x820d0",
+"section": ".rodata",
+"string": "Objects/World00/Surface5.png"
+},
+{
+"site": "0x3149c",
+"kind": "read",
+"via": "reg",
+"addr": "0x820f0",
+"section": ".rodata",
+"string": "Objects/World00/Surface6.png"
+},
+{
+"site": "0x314d8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82110",
+"section": ".rodata",
+"string": "Objects/Barrier"
+},
+{
+"site": "0x31570",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82120",
+"section": ".rodata",
+"string": "Objects/Universe/Fringe.tga"
+},
+{
+"site": "0x31658",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x31658",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x31694",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x317cc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81cf8",
+"section": ".rodata",
+"string": "turbo-base-000.x"
 }
 ],
 "indirect_calls": [],
@@ -20074,6 +22641,55 @@
 "addr": "0x827b8",
 "section": ".rodata",
 "string": "GameInit4\n"
+},
+{
+"site": "0x32494",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x32494",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x32520",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x32520",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x32524",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x32614",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x827c4",
+"section": ".rodata",
+"string": "List ADDend"
 }
 ],
 "indirect_calls": [],
@@ -20083,7 +22699,224 @@
 {
 "addr": "0x32660",
 "name": "_ZN6cRGame9LoadPathsEv",
-"refs": [],
+"refs": [
+{
+"site": "0x326e0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x3271c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x827d0",
+"section": ".rodata",
+"string": "path generation start\n"
+},
+{
+"site": "0x327d8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x327d8",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x328a4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81bf0",
+"section": ".rodata",
+"string": "Objects/World00/Surface0.png"
+},
+{
+"site": "0x329dc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82120",
+"section": ".rodata",
+"string": "Objects/Universe/Fringe.tga"
+},
+{
+"site": "0x378ac",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82034",
+"section": ".rodata",
+"string": "Objects/World00/Worm.png"
+},
+{
+"site": "0x39f0c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x827e8",
+"section": ".rodata",
+"string": "Data/O_LOOPTHELOOP.smo"
+},
+{
+"site": "0x39f28",
+"kind": "read",
+"via": "got",
+"addr": "0x8b188",
+"section": ".got"
+},
+{
+"site": "0x39f28",
+"kind": "addr",
+"via": "got",
+"addr": "0x8bd48",
+"section": ".data",
+"symbol": "gPathNames",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x39f2c",
+"kind": "read",
+"via": "reg",
+"addr": "0x8bd48",
+"section": ".data",
+"symbol": "gPathNames",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x39f5c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82834",
+"section": ".rodata",
+"string": "%s_m"
+},
+{
+"site": "0x39f60",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8283c",
+"section": ".rodata",
+"string": "%s_f"
+},
+{
+"site": "0x39f64",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82844",
+"section": ".rodata",
+"string": "%s_mf"
+},
+{
+"site": "0x39fd4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8284c",
+"section": ".rodata",
+"string": "path generation end\n"
+},
+{
+"site": "0x39fe4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x3a010",
+"kind": "read",
+"via": "got",
+"addr": "0x8b188",
+"section": ".got"
+},
+{
+"site": "0x3a010",
+"kind": "addr",
+"via": "got",
+"addr": "0x8bd48",
+"section": ".data",
+"symbol": "gPathNames",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a014",
+"kind": "read",
+"via": "reg",
+"addr": "0x8bd48",
+"section": ".data",
+"symbol": "gPathNames",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a034",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82810",
+"section": ".rodata",
+"string": "Data/O_%s_f.smo"
+},
+{
+"site": "0x3a048",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x814e8",
+"section": ".rodata",
+"string": "Data/O_%s.smo"
+},
+{
+"site": "0x3a04c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82820",
+"section": ".rodata",
+"string": "Data/O_%s_mf.smo"
+},
+{
+"site": "0x3a054",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82800",
+"section": ".rodata",
+"string": "Data/O_%s_m.smo"
+},
+{
+"site": "0x3a19c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x3a19c",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a1d4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x3a1d4",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 22
@@ -20378,7 +23211,203 @@
 {
 "addr": "0x3a724",
 "name": "_ZN6cRGame6RenderEv",
-"refs": [],
+"refs": [
+{
+"site": "0x3a758",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82870",
+"section": ".rodata",
+"string": "Render Skip %i"
+},
+{
+"site": "0x3a794",
+"kind": "read",
+"via": "got",
+"addr": "0x8b15c",
+"section": ".got"
+},
+{
+"site": "0x3a794",
+"kind": "addr",
+"via": "got",
+"addr": "0x90e3d",
+"section": ".bss",
+"symbol": "G0SwapBufferRequest",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a798",
+"kind": "write",
+"via": "reg",
+"addr": "0x90e3d",
+"section": ".bss",
+"symbol": "G0SwapBufferRequest",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a8d8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x3a8d8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a8dc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b158",
+"section": ".got"
+},
+{
+"site": "0x3a8dc",
+"kind": "addr",
+"via": "got",
+"addr": "0x8ca9c",
+"section": ".data",
+"symbol": "gAndroidOrientation",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a8e0",
+"kind": "read",
+"via": "reg",
+"addr": "0x8ca9c",
+"section": ".data",
+"symbol": "gAndroidOrientation",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a8e4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3a918",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82890",
+"section": ".rodata",
+"string": "Loose Sprite scene viewport"
+},
+{
+"site": "0x3a928",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82880",
+"section": ".rodata",
+"string": "DEBUG RENDER\n"
+},
+{
+"site": "0x3abe8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1e8",
+"section": ".got"
+},
+{
+"site": "0x3abe8",
+"kind": "addr",
+"via": "got",
+"addr": "0x154b6c",
+"section": ".bss",
+"symbol": "gBodZList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3ad28",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x3ad28",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3ad68",
+"kind": "read",
+"via": "got",
+"addr": "0x8b244",
+"section": ".got"
+},
+{
+"site": "0x3ad68",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9ac",
+"section": ".bss",
+"symbol": "ZBuffer",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3adcc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b208",
+"section": ".got"
+},
+{
+"site": "0x3adcc",
+"kind": "addr",
+"via": "got",
+"addr": "0x15476c",
+"section": ".bss",
+"symbol": "ZBufferIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3af04",
+"kind": "read",
+"via": "got",
+"addr": "0x8b208",
+"section": ".got"
+},
+{
+"site": "0x3af04",
+"kind": "addr",
+"via": "got",
+"addr": "0x15476c",
+"section": ".bss",
+"symbol": "ZBufferIndex",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3af38",
+"kind": "read",
+"via": "got",
+"addr": "0x8b208",
+"section": ".got"
+},
+{
+"site": "0x3af38",
+"kind": "addr",
+"via": "got",
+"addr": "0x15476c",
+"section": ".bss",
+"symbol": "ZBufferIndex",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 17
@@ -20426,6 +23455,22 @@
 "addr": "0x828ac",
 "section": ".rodata",
 "string": "Debug Bod AI"
+},
+{
+"site": "0x3b1d0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x3b1d0",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
 }
 ],
 "indirect_calls": [
@@ -20858,6 +23903,38 @@
 "section": ".bss",
 "symbol": "gObjectList",
 "symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3ca04",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x3ca04",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3cbf4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x3cbf4",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
 }
 ],
 "indirect_calls": [],
@@ -20942,6 +24019,126 @@
 "addr": "0x3d70c",
 "name": "_ZN17cRPathFollowGoldy8TraverseEfR7tVectorPS0_",
 "refs": [
+{
+"site": "0x3d8a8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b17c",
+"section": ".got"
+},
+{
+"site": "0x3d8a8",
+"kind": "addr",
+"via": "got",
+"addr": "0x37880c",
+"section": ".bss",
+"symbol": "gVoiceManager",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d8cc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x3d8cc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d8d0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d8e8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d918",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d974",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x3d974",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d978",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d990",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d9c0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3d9f4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3da44",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
 {
 "site": "0x3dc64",
 "kind": "read",
@@ -21082,7 +24279,51 @@
 {
 "addr": "0x3e318",
 "name": "_ZN6cRPath6SearchEP10cRSubGoldy7tVectorS2_S2_P8cRSubLoc",
-"refs": [],
+"refs": [
+{
+"site": "0x3e750",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x3e750",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3e754",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3e76c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x3e7fc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 4
@@ -21615,12 +24856,146 @@
 "string": "Back"
 },
 {
+"site": "0x49a20",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x49a20",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49a28",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49a88",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
+"site": "0x49ac0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49afc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x49afc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49b14",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49b74",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
+"site": "0x49bb8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49cdc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49d68",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49e1c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x49e1c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x49e34",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x49eb8",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x82f2c",
 "section": ".rodata",
 "string": "Watch Best Trial"
+},
+{
+"site": "0x49ed8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x49f00",
@@ -21656,12 +25031,30 @@
 "string": "{"
 },
 {
+"site": "0x49f8c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x49ff8",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x82f44",
 "section": ".rodata",
 "string": "["
+},
+{
+"site": "0x4a008",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x4a070",
@@ -21672,12 +25065,30 @@
 "string": "]"
 },
 {
+"site": "0x4a080",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x4a0ec",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x82f48",
 "section": ".rodata",
 "string": "}"
+},
+{
+"site": "0x4a134",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x4a208",
@@ -22590,7 +26001,135 @@
 {
 "addr": "0x4aea4",
 "name": "_ZN8cRGalaxy4OpenEi",
-"refs": [],
+"refs": [
+{
+"site": "0x4aed8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x4aef4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b23c",
+"section": ".got"
+},
+{
+"site": "0x4aef4",
+"kind": "addr",
+"via": "got",
+"addr": "0x8bfd4",
+"section": ".data",
+"symbol": "gUniverse0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x4affc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x4affc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x4b000",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x4b028",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82f80",
+"section": ".rodata",
+"string": "Galaxy/_Galaxy.txt"
+},
+{
+"site": "0x4b058",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x841b0",
+"section": ".rodata",
+"string": ":"
+},
+{
+"site": "0x4b068",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82ffc",
+"section": ".rodata",
+"string": "StarNumber="
+},
+{
+"site": "0x4b078",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x847c4",
+"section": ".rodata",
+"string": "="
+},
+{
+"site": "0x4b088",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83008",
+"section": ".rodata",
+"string": "LEVEL %i MISSING"
+},
+{
+"site": "0x4b0a8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82fac",
+"section": ".rodata",
+"string": "Galaxy%i:"
+},
+{
+"site": "0x4b2a4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x4b2e0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82f94",
+"section": ".rodata",
+"string": "Galaxy/_GalaxyPro.txt"
+},
+{
+"site": "0x4b368",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82fe0",
+"section": ".rodata",
+"string": "missing \" in _Galaxy.txt"
+},
+{
+"site": "0x4b380",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82fb8",
+"section": ".rodata",
+"string": "Cannot find Galaxy %i in _Galaxy.txt"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 30
@@ -27611,6 +31150,15 @@
 "string": "Select Speed"
 },
 {
+"site": "0x5432c",
+"kind": "read",
+"via": "reg",
+"addr": "0x90f34",
+"section": ".bss",
+"symbol": "gConfig+0x40",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x54368",
 "kind": "read",
 "via": "reg",
@@ -28827,6 +32375,47 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x56074",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x56074",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56088",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x560a0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x560b8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
 "site": "0x560c0",
 "kind": "addr",
 "via": "gotoff",
@@ -28835,12 +32424,57 @@
 "string": "mainmenu"
 },
 {
+"site": "0x560c8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x560dc",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x82148",
 "section": ".rodata",
 "string": "Menubg.txt"
+},
+{
+"site": "0x560e4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5610c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56120",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5612c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x56184",
@@ -28859,12 +32493,305 @@
 "string": "Replay"
 },
 {
+"site": "0x56230",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x56230",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56248",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56334",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x56334",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56338",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5639c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
+"site": "0x563c0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x563e4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56470",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x56470",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56474",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x564d8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
+"site": "0x564ec",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56514",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56638",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x56638",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56640",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5669c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82f10",
+"section": ".rodata",
+"string": "Back"
+},
+{
+"site": "0x566ac",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56704",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83524",
+"section": ".rodata",
+"string": "Challenge Scores"
+},
+{
+"site": "0x56818",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5688c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
+"site": "0x568b4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x568c4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5695c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x5695c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56960",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x569c4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
+"site": "0x569d8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56a00",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56a88",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x56a88",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56a94",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x56b00",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x83554",
 "section": ".rodata",
 "string": "Postal High Scores"
+},
+{
+"site": "0x56b18",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x56b5c",
@@ -28875,6 +32802,56 @@
 "string": "Enter your name here!"
 },
 {
+"site": "0x56b88",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x56b88",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56b8c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56be8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x835b0",
+"section": ".rodata",
+"string": "Cancel"
+},
+{
+"site": "0x56c08",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56c64",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x835b8",
+"section": ".rodata",
+"string": "Submit"
+},
+{
 "site": "0x56ce0",
 "kind": "addr",
 "via": "gotoff",
@@ -28883,12 +32860,62 @@
 "string": "Pro High Scores"
 },
 {
+"site": "0x56cf4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x56d6c",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x83578",
 "section": ".rodata",
 "string": "Challenge High Scores"
+},
+{
+"site": "0x56d84",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56dc4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x56dc4",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x56e08",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x56e08",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
 }
 ],
 "indirect_calls": [],
@@ -29503,6 +33530,31 @@
 "string": "Postal Adventure"
 },
 {
+"site": "0x576c0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x576c0",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x576c4",
+"kind": "read",
+"via": "reg",
+"addr": "0x90fc4",
+"section": ".bss",
+"symbol": "gConfig+0xd0",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x576dc",
 "kind": "read",
 "via": "got",
@@ -29552,12 +33604,37 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x5776c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x5776c",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x57774",
 "kind": "read",
 "via": "reg",
 "addr": "0x14e9a4",
 "section": ".bss",
 "symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5777c",
+"kind": "read",
+"via": "reg",
+"addr": "0x90fd4",
+"section": ".bss",
+"symbol": "gConfig+0xe0",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -29626,6 +33703,31 @@
 "addr": "0x14e9a4",
 "section": ".bss",
 "symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x579f0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x579f0",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x579f4",
+"kind": "read",
+"via": "reg",
+"addr": "0x90fb4",
+"section": ".bss",
+"symbol": "gConfig+0xc0",
 "symbol_type": "STT_OBJECT"
 }
 ],
@@ -30915,6 +35017,21 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x59044",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83834",
+"section": ".rodata",
+"string": "introtext"
+},
+{
+"site": "0x59054",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x834b8",
+"section": ".rodata"
+},
+{
 "site": "0x59060",
 "kind": "read",
 "via": "reg",
@@ -30922,6 +35039,14 @@
 "section": ".bss",
 "symbol": "Game",
 "symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x59078",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83840",
+"section": ".rodata",
+"string": "SpaceRed.txt"
 },
 {
 "site": "0x59080",
@@ -30951,12 +35076,37 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x590f4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x590f4",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x590fc",
 "kind": "read",
 "via": "reg",
 "addr": "0x14e9a4",
 "section": ".bss",
 "symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x59100",
+"kind": "read",
+"via": "reg",
+"addr": "0x90f10",
+"section": ".bss",
+"symbol": "gConfig+0x1c",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -30967,6 +35117,127 @@
 "section": ".bss",
 "symbol": "Game",
 "symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5919c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83850",
+"section": ".rodata",
+"string": "Text Start:"
+},
+{
+"site": "0x591bc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x841b0",
+"section": ".rodata",
+"string": ":"
+},
+{
+"site": "0x591dc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8385c",
+"section": ".rodata",
+"string": "Text End:"
+},
+{
+"site": "0x59230",
+"kind": "read",
+"via": "got",
+"addr": "0x8b380",
+"section": ".got"
+},
+{
+"site": "0x59230",
+"kind": "addr",
+"via": "got",
+"addr": "0x10fc34",
+"section": ".bss",
+"symbol": "RFont3D",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x59298",
+"kind": "read",
+"via": "got",
+"addr": "0x8b380",
+"section": ".got"
+},
+{
+"site": "0x59298",
+"kind": "addr",
+"via": "got",
+"addr": "0x10fc34",
+"section": ".bss",
+"symbol": "RFont3D",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5936c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b380",
+"section": ".got"
+},
+{
+"site": "0x5936c",
+"kind": "addr",
+"via": "got",
+"addr": "0x10fc34",
+"section": ".bss",
+"symbol": "RFont3D",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x59444",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x59444",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x59448",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81bc8",
+"section": ".rodata",
+"string": "List ADD"
+},
+{
+"site": "0x5948c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x59690",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83868",
+"section": ".rodata",
+"string": "Duration:"
+},
+{
+"site": "0x596a4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x841b0",
+"section": ".rodata",
+"string": ":"
 }
 ],
 "indirect_calls": [
@@ -32551,6 +36822,31 @@
 "addr": "0x122050",
 "section": ".bss",
 "symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5b0d4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x5b0d4",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5b0d8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
 "symbol_type": "STT_OBJECT"
 }
 ],
@@ -34541,6 +38837,200 @@
 "section": ".bss",
 "symbol": "Game",
 "symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5efa0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x5efa0",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5efa4",
+"kind": "read",
+"via": "reg",
+"addr": "0x90f10",
+"section": ".bss",
+"symbol": "gConfig+0x1c",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f03c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x5f03c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f04c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f050",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83afc",
+"section": ".rodata",
+"string": "Used %i fringe bods\n"
+},
+{
+"site": "0x5f1b8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x5f1b8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f1c4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f1e4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f260",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x5f260",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f26c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f27c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f2fc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x5f2fc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f308",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f328",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f3a0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x5f3a0",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f3ac",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5f3cc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 }
 ],
 "indirect_calls": [],
@@ -34854,7 +39344,56 @@
 {
 "addr": "0x5fa10",
 "name": "_ZN9cRSubRing4InitEi",
-"refs": [],
+"refs": [
+{
+"site": "0x5fb90",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x5fb90",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5fbd0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x5fbd0",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x5fc10",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x5fc10",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 8
@@ -35011,6 +39550,22 @@
 "addr": "0x90f10",
 "section": ".bss",
 "symbol": "gConfig+0x1c",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x601f4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x601f4",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
 "symbol_type": "STT_OBJECT"
 }
 ],
@@ -35788,7 +40343,24 @@
 {
 "addr": "0x62000",
 "name": "_ZN10cRSubHover4JetsEv",
-"refs": [],
+"refs": [
+{
+"site": "0x62220",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x62220",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 15
@@ -36437,7 +41009,304 @@
 {
 "addr": "0x63d5c",
 "name": "_ZN9cRSubGame12PlaceParcelsEv",
-"refs": [],
+"refs": [
+{
+"site": "0x63da8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b164",
+"section": ".got"
+},
+{
+"site": "0x63da8",
+"kind": "addr",
+"via": "got",
+"addr": "0x2626a8",
+"section": ".bss",
+"symbol": "gGroup0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x63db4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x63db4",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x63ee4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x63ee4",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x63f50",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x63f50",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6404c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b164",
+"section": ".got"
+},
+{
+"site": "0x6404c",
+"kind": "addr",
+"via": "got",
+"addr": "0x2626a8",
+"section": ".bss",
+"symbol": "gGroup0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x640e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b164",
+"section": ".got"
+},
+{
+"site": "0x640e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x2626a8",
+"section": ".bss",
+"symbol": "gGroup0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64154",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x64154",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64228",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83c14",
+"section": ".rodata",
+"string": "Parcel Allocation could fail in %s.  Add more parcel Sets"
+},
+{
+"site": "0x64260",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83c50",
+"section": ".rodata",
+"string": "Parcel Allocation could fail in %s. Add more 0 parcels "
+},
+{
+"site": "0x64278",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83c88",
+"section": ".rodata",
+"string": "Duplicate Parcel Request in %s."
+},
+{
+"site": "0x642b8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82d7c",
+"section": ".rodata",
+"string": "P1"
+},
+{
+"site": "0x642cc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x642cc",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64394",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x64394",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64418",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x64418",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64440",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x64440",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x644d8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b32c",
+"section": ".got"
+},
+{
+"site": "0x644d8",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c6a8",
+"section": ".bss",
+"symbol": "gGroup",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64530",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82d90",
+"section": ".rodata",
+"string": "P2"
+},
+{
+"site": "0x6453c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83c88",
+"section": ".rodata",
+"string": "Duplicate Parcel Request in %s."
+},
+{
+"site": "0x64580",
+"kind": "read",
+"via": "got",
+"addr": "0x8b164",
+"section": ".got"
+},
+{
+"site": "0x64580",
+"kind": "addr",
+"via": "got",
+"addr": "0x2626a8",
+"section": ".bss",
+"symbol": "gGroup0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64600",
+"kind": "read",
+"via": "got",
+"addr": "0x8b164",
+"section": ".got"
+},
+{
+"site": "0x64600",
+"kind": "addr",
+"via": "got",
+"addr": "0x2626a8",
+"section": ".bss",
+"symbol": "gGroup0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x646b0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b164",
+"section": ".got"
+},
+{
+"site": "0x646b0",
+"kind": "addr",
+"via": "got",
+"addr": "0x2626a8",
+"section": ".bss",
+"symbol": "gGroup0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x64710",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83ca8",
+"section": ".rodata",
+"string": "Did not generate required Parcels(%i) in %s"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 17
@@ -38761,6 +43630,38 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x698e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b338",
+"section": ".got"
+},
+{
+"site": "0x698e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x15a8d8",
+"section": ".bss",
+"symbol": "gLocColourLookupFloor",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x69908",
+"kind": "read",
+"via": "got",
+"addr": "0x8b210",
+"section": ".got"
+},
+{
+"site": "0x69908",
+"kind": "addr",
+"via": "got",
+"addr": "0x15ac28",
+"section": ".bss",
+"symbol": "gLocColourLookupSlide",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x69914",
 "kind": "read",
 "via": "got",
@@ -38822,6 +43723,54 @@
 "addr": "0x15b968",
 "section": ".bss",
 "symbol": "gLocColourLookupEmpty",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x69948",
+"kind": "read",
+"via": "got",
+"addr": "0x8b238",
+"section": ".got"
+},
+{
+"site": "0x69948",
+"kind": "addr",
+"via": "got",
+"addr": "0x15bcb8",
+"section": ".bss",
+"symbol": "gLocColourLookupPath",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x69958",
+"kind": "read",
+"via": "got",
+"addr": "0x8b258",
+"section": ".got"
+},
+{
+"site": "0x69958",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c008",
+"section": ".bss",
+"symbol": "gLocColourLookupPathWorm",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x69974",
+"kind": "read",
+"via": "got",
+"addr": "0x8b27c",
+"section": ".got"
+},
+{
+"site": "0x69974",
+"kind": "addr",
+"via": "got",
+"addr": "0x15c358",
+"section": ".bss",
+"symbol": "gLocColourLookupPathWarp",
 "symbol_type": "STT_OBJECT"
 }
 ],
@@ -40815,6 +45764,31 @@
 "name": "_ZN9cRSubGame4InitEv",
 "refs": [
 {
+"site": "0x6dfc8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6dfc8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6dfe4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x6e064",
 "kind": "addr",
 "via": "gotoff",
@@ -40829,6 +45803,116 @@
 "addr": "0x83e48",
 "section": ".rodata",
 "string": "***TODO*** Score last\n"
+},
+{
+"site": "0x6e0dc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6e0dc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e0e0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e148",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86b48",
+"section": ".rodata",
+"string": "0"
+},
+{
+"site": "0x6e1bc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6e1bc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e1c8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e1e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6e1e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e1ec",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e2b8",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e384",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e430",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x6e600",
@@ -40854,12 +45938,55 @@
 "section": ".rodata"
 },
 {
+"site": "0x6e680",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6e680",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x6e684",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x82148",
 "section": ".rodata",
 "string": "Menubg.txt"
+},
+{
+"site": "0x6e688",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e694",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e6bc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x6e79c",
@@ -41041,7 +46168,764 @@
 {
 "addr": "0x6e88c",
 "name": "_ZN9cRSubGame10BuildLevelEv",
-"refs": [],
+"refs": [
+{
+"site": "0x6e974",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6e974",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6e978",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6ea6c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83e7c",
+"section": ".rodata",
+"string": "Track (%s) too long, Maximum Length %i"
+},
+{
+"site": "0x6ec68",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83eac",
+"section": ".rodata",
+"string": "Segtra"
+},
+{
+"site": "0x6ec80",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83ecc",
+"section": ".rodata",
+"string": "TrackError:%c in Segment %s\n"
+},
+{
+"site": "0x6f3fc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f3fc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f400",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f430",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f430",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f43c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f48c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f48c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f498",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f4ec",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f4ec",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f4f4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f530",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f530",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f53c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f574",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f574",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f578",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f5ac",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f5ac",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f5b4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f5e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f5e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f5f0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f754",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f754",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f75c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f790",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f790",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f798",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f7cc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f7cc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f7d4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f804",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f804",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f810",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f844",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f844",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f84c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f87c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f87c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f888",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f904",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f904",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f908",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f938",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f938",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f944",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f98c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f98c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f998",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f9c8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6f9c8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6f9d4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fa34",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6fa34",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fa40",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fa80",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6fa80",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fa88",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fc2c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x6fc2c",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fc30",
+"kind": "read",
+"via": "reg",
+"addr": "0x90f10",
+"section": ".bss",
+"symbol": "gConfig+0x1c",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fc60",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6fc60",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fc68",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fcbc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6fcbc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fccc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fe48",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6fe48",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fe50",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fe98",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6fe98",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fea0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6feec",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6feec",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6fef0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6ff3c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x6ff3c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x6ff40",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70004",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83e74",
+"section": ".rodata",
+"string": "Seed"
+},
+{
+"site": "0x7004c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83eec",
+"section": ".rodata",
+"string": "Track Length %i\n"
+},
+{
+"site": "0x70068",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83eb4",
+"section": ".rodata",
+"string": "Negative Segment Length"
+},
+{
+"site": "0x701b0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83ea4",
+"section": ".rodata",
+"string": "Segdif"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [
 {
@@ -41056,7 +46940,190 @@
 {
 "addr": "0x701d0",
 "name": "_ZN9cRSubGame11SmoothTrackEv",
-"refs": [],
+"refs": [
+{
+"site": "0x70358",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70358",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7036c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x703e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x703e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70438",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70438",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70490",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70490",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x704a4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x705c8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x705c8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x705d4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7064c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x7064c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70658",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x706d0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x706d0",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x706dc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70754",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70754",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7075c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [
 {
@@ -41071,7 +47138,208 @@
 {
 "addr": "0x7077c",
 "name": "_ZN9cRSubGame16SlideSmoothTrackEv",
-"refs": [],
+"refs": [
+{
+"site": "0x70990",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70990",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70994",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70a04",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70a04",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70a20",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70b20",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70b20",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70b24",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70b94",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70b94",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70bb0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70c5c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70c5c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70c64",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70ce0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70ce0",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70cfc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70da4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70da4",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70dac",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70e28",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x70e28",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x70e44",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 2
@@ -41154,7 +47422,108 @@
 {
 "addr": "0x7111c",
 "name": "_ZN9cRSubGame13CondenseTrackEv",
-"refs": [],
+"refs": [
+{
+"site": "0x7137c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x7137c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x71394",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x71500",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x71500",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7150c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7163c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x7163c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7164c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x71718",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x71718",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7172c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 2
@@ -41766,6 +48135,485 @@
 "via": "got",
 "addr": "0x8b0e4",
 "section": ".got"
+},
+{
+"site": "0x72300",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x72370",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x72370",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x72374",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7239c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x7239c",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x723a0",
+"kind": "read",
+"via": "reg",
+"addr": "0x90f34",
+"section": ".bss",
+"symbol": "gConfig+0x40",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x723a8",
+"kind": "read",
+"via": "reg",
+"addr": "0x90f3c",
+"section": ".bss",
+"symbol": "gConfig+0x48",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x72638",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83fb8",
+"section": ".rodata",
+"string": "R2"
+},
+{
+"site": "0x72654",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83fb4",
+"section": ".rodata",
+"string": "S"
+},
+{
+"site": "0x72688",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82bdc",
+"section": ".rodata",
+"string": "G"
+},
+{
+"site": "0x72a8c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x72a8c",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x72a90",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x72ff8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81198",
+"section": ".rodata",
+"string": "G3"
+},
+{
+"site": "0x7325c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83220",
+"section": ".rodata",
+"string": "R"
+},
+{
+"site": "0x73318",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x73318",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7331c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x733c0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x733c0",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x733c4",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73428",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x73428",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x734a8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x734a8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x734ac",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x734e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x734e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x734f0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73588",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x73588",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7358c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x735e8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83fa8",
+"section": ".rodata",
+"string": "Speed: %i%%"
+},
+{
+"site": "0x736b8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83f88",
+"section": ".rodata",
+"string": "Player: %s"
+},
+{
+"site": "0x736ec",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83f74",
+"section": ".rodata",
+"string": "Replay: Challenge"
+},
+{
+"site": "0x736f0",
+"kind": "read",
+"via": "reg",
+"addr": "0x83f74",
+"section": ".rodata",
+"string": "Replay: Challenge"
+},
+{
+"site": "0x73768",
+"kind": "read",
+"via": "got",
+"addr": "0x8b284",
+"section": ".got"
+},
+{
+"site": "0x73768",
+"kind": "addr",
+"via": "got",
+"addr": "0x122050",
+"section": ".bss",
+"symbol": "gRSpriteManager",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x737dc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x81194",
+"section": ".rodata",
+"string": "G2"
+},
+{
+"site": "0x7391c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x7391c",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73920",
+"kind": "write",
+"via": "reg",
+"addr": "0x90f98",
+"section": ".bss",
+"symbol": "gConfig+0xa4",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7394c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x7394c",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73950",
+"kind": "write",
+"via": "reg",
+"addr": "0x90f98",
+"section": ".bss",
+"symbol": "gConfig+0xa4",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x739d4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83f94",
+"section": ".rodata",
+"string": "Difficulty: %i%%"
+},
+{
+"site": "0x739fc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b364",
+"section": ".got"
+},
+{
+"site": "0x739fc",
+"kind": "addr",
+"via": "got",
+"addr": "0x90ef4",
+"section": ".bss",
+"symbol": "gConfig",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73a08",
+"kind": "write",
+"via": "reg",
+"addr": "0x90f98",
+"section": ".bss",
+"symbol": "gConfig+0xa4",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73a64",
+"kind": "read",
+"via": "got",
+"addr": "0x8b31c",
+"section": ".got"
+},
+{
+"site": "0x73a64",
+"kind": "addr",
+"via": "got",
+"addr": "0x14cff4",
+"section": ".bss",
+"symbol": "gSpriteReference",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73a6c",
+"kind": "read",
+"via": "reg",
+"addr": "0x14d1a4",
+"section": ".bss",
+"symbol": "gSpriteReference+0x1b0",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73a74",
+"kind": "read",
+"via": "reg",
+"addr": "0x14d1b0",
+"section": ".bss",
+"symbol": "gSpriteReference+0x1bc",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73a98",
+"kind": "read",
+"via": "reg",
+"addr": "0x14d1ac",
+"section": ".bss",
+"symbol": "gSpriteReference+0x1b8",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73aa0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14d1a8",
+"section": ".bss",
+"symbol": "gSpriteReference+0x1b4",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x73ad4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83f60",
+"section": ".rodata",
+"string": "Replay: Time Trial"
+},
+{
+"site": "0x73ad8",
+"kind": "read",
+"via": "reg",
+"addr": "0x83f60",
+"section": ".rodata",
+"string": "Replay: Time Trial"
 }
 ],
 "indirect_calls": [
@@ -42013,6 +48861,22 @@
 "string": "Data/SegmentsDir.txt"
 },
 {
+"site": "0x73d9c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x841a0",
+"section": ".rodata",
+"string": "Segments/%s"
+},
+{
+"site": "0x73dc0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x841ac",
+"section": ".rodata",
+"string": "Data:"
+},
+{
 "site": "0x73ea4",
 "kind": "read",
 "via": "got",
@@ -42132,6 +48996,70 @@
 "string": "Path="
 },
 {
+"site": "0x74050",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1c4",
+"section": ".got"
+},
+{
+"site": "0x74050",
+"kind": "addr",
+"via": "got",
+"addr": "0x36f01c",
+"section": ".bss",
+"symbol": "gDirectory",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x74058",
+"kind": "read",
+"via": "got",
+"addr": "0x8b2b4",
+"section": ".got"
+},
+{
+"site": "0x74058",
+"kind": "addr",
+"via": "got",
+"addr": "0x37701c",
+"section": ".bss",
+"symbol": "gSegmentText",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x74070",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x841a0",
+"section": ".rodata",
+"string": "Segments/%s"
+},
+{
+"site": "0x740a0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83634",
+"section": ".rodata",
+"string": "ID:"
+},
+{
+"site": "0x74118",
+"kind": "read",
+"via": "got",
+"addr": "0x8b2b4",
+"section": ".got"
+},
+{
+"site": "0x74118",
+"kind": "addr",
+"via": "got",
+"addr": "0x37701c",
+"section": ".bss",
+"symbol": "gSegmentText",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x7411c",
 "kind": "addr",
 "via": "gotoff",
@@ -42146,6 +49074,22 @@
 "addr": "0x842d8",
 "section": ".rodata",
 "string": "'"
+},
+{
+"site": "0x74174",
+"kind": "read",
+"via": "got",
+"addr": "0x8b2b4",
+"section": ".got"
+},
+{
+"site": "0x74174",
+"kind": "addr",
+"via": "got",
+"addr": "0x37701c",
+"section": ".bss",
+"symbol": "gSegmentText",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x74178",
@@ -42186,6 +49130,13 @@
 "addr": "0x841d8",
 "section": ".rodata",
 "string": "Unexpected end of file in Segment %s\n"
+},
+{
+"site": "0x74324",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
 },
 {
 "site": "0x7441c",
@@ -42237,6 +49188,14 @@
 "string": "Velocity="
 },
 {
+"site": "0x74558",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x847c4",
+"section": ".rodata",
+"string": "="
+},
+{
 "site": "0x74610",
 "kind": "addr",
 "via": "gotoff",
@@ -42284,6 +49243,14 @@
 "section": ".bss",
 "symbol": "Game",
 "symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x747bc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x84340",
+"section": ".rodata",
+"string": "Ring=None"
 },
 {
 "site": "0x747d8",
@@ -42356,6 +49323,22 @@
 "addr": "0x84198",
 "section": ".rodata",
 "string": "*.txt"
+},
+{
+"site": "0x74984",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1c4",
+"section": ".got"
+},
+{
+"site": "0x74984",
+"kind": "addr",
+"via": "got",
+"addr": "0x36f01c",
+"section": ".bss",
+"symbol": "gDirectory",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x749b8",
@@ -42478,12 +49461,28 @@
 "string": "Data:\n"
 },
 {
+"site": "0x74b60",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x843ec",
+"section": ".rodata",
+"string": "@@@@@@@@@@\n"
+},
+{
 "site": "0x74b80",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x843f8",
 "section": ".rodata",
 "string": "@\n"
+},
+{
+"site": "0x74bec",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x843ec",
+"section": ".rodata",
+"string": "@@@@@@@@@@\n"
 },
 {
 "site": "0x74c00",
@@ -43068,6 +50067,14 @@
 "string": "Message="
 },
 {
+"site": "0x758ec",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8477c",
+"section": ".rodata",
+"string": "Segment Message"
+},
+{
 "site": "0x75958",
 "kind": "addr",
 "via": "gotoff",
@@ -43284,12 +50291,27 @@
 "string": "Cannot find sample %s in %s"
 },
 {
+"site": "0x75f7c",
+"kind": "read",
+"via": "reg",
+"addr": "0x84744",
+"section": ".rodata",
+"string": "Padding.txt"
+},
+{
 "site": "0x75fd0",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x84764",
 "section": ".rodata",
 "string": "Need \" after Message="
+},
+{
+"site": "0x75fe0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
 },
 {
 "site": "0x7601c",
@@ -44422,6 +51444,14 @@
 "string": "}"
 },
 {
+"site": "0x77388",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x85f44",
+"section": ".rodata",
+"string": "Set:"
+},
+{
 "site": "0x773e8",
 "kind": "addr",
 "via": "gotoff",
@@ -44484,6 +51514,13 @@
 "addr": "0x86014",
 "section": ".rodata",
 "string": "Frequency:"
+},
+{
+"site": "0x77670",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
 },
 {
 "site": "0x77694",
@@ -44678,7 +51715,99 @@
 {
 "addr": "0x77da8",
 "name": "_ZN7cRWorld3AddEP8cRSubLoc",
-"refs": [],
+"refs": [
+{
+"site": "0x77ec8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x77ec8",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x77ecc",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x77fac",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83230",
+"section": ".rodata",
+"string": "List remove NEXTBOD"
+},
+{
+"site": "0x77fc4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x83224",
+"section": ".rodata",
+"string": "List remove"
+},
+{
+"site": "0x780bc",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x780bc",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x780c0",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x78120",
+"kind": "read",
+"via": "got",
+"addr": "0x8b1f0",
+"section": ".got"
+},
+{
+"site": "0x78120",
+"kind": "addr",
+"via": "got",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x78154",
+"kind": "read",
+"via": "reg",
+"addr": "0x14e9a4",
+"section": ".bss",
+"symbol": "Game",
+"symbol_type": "STT_OBJECT"
+}
+],
 "indirect_calls": [],
 "indirect_jumps": [],
 "literal_loads": 11
@@ -44819,6 +51948,13 @@
 "name": "_ZN9cRDirectX4LoadEPcP8cRObjecti",
 "refs": [
 {
+"site": "0x78778",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
 "site": "0x787a0",
 "kind": "addr",
 "via": "gotoff",
@@ -44867,12 +52003,28 @@
 "string": "Mesh "
 },
 {
+"site": "0x78870",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82f40",
+"section": ".rodata",
+"string": "{"
+},
+{
 "site": "0x78884",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x860f4",
 "section": ".rodata",
 "string": "MeshMaterialList "
+},
+{
+"site": "0x788a4",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82f40",
+"section": ".rodata",
+"string": "{"
 },
 {
 "site": "0x788e8",
@@ -44889,6 +52041,14 @@
 "addr": "0x86178",
 "section": ".rodata",
 "string": "MeshTextureCoords "
+},
+{
+"site": "0x7891c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82f40",
+"section": ".rodata",
+"string": "{"
 },
 {
 "site": "0x78944",
@@ -44929,6 +52089,141 @@
 "addr": "0x86234",
 "section": ".rodata",
 "string": "X/snail-turbo.tga"
+},
+{
+"site": "0x78b00",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x78b00",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x78c64",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86248",
+"section": ".rodata",
+"string": "MeshMaterialList"
+},
+{
+"site": "0x78c84",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x82f40",
+"section": ".rodata",
+"string": "{"
+},
+{
+"site": "0x78cb8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86278",
+"section": ".rodata",
+"string": "No MeshMaterialList face number is not equal to Mesh face number in %s"
+},
+{
+"site": "0x78cc8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
+"site": "0x78cf8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8625c",
+"section": ".rodata",
+"string": "No MeshMaterialList { in %s"
+},
+{
+"site": "0x78d10",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x862c0",
+"section": ".rodata",
+"string": "Direct X Materiallist"
+},
+{
+"site": "0x78d28",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x862d8",
+"section": ".rodata",
+"string": "MaterialNumber=%i\n"
+},
+{
+"site": "0x78d4c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86340",
+"section": ".rodata",
+"string": "\""
+},
+{
+"site": "0x78d68",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x8632c",
+"section": ".rodata",
+"string": "Sprites/debug.tga"
+},
+{
+"site": "0x78d7c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86300",
+"section": ".rodata",
+"string": "No TextureFilename for Material %i in %s"
+},
+{
+"site": "0x78da0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x862ec",
+"section": ".rodata",
+"string": "TextureFilename "
+},
+{
+"site": "0x78e38",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x78e38",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x78f08",
+"kind": "read",
+"via": "got",
+"addr": "0x8b254",
+"section": ".got"
+},
+{
+"site": "0x78f08",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc70",
+"section": ".bss",
+"symbol": "gTextureList",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x78f60",
@@ -45139,6 +52434,13 @@
 "string": "Mode:Pingpong"
 },
 {
+"site": "0x7937c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
+},
+{
 "site": "0x793c4",
 "kind": "addr",
 "via": "gotoff",
@@ -45229,12 +52531,28 @@
 "string": "\t\t1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000;;\n"
 },
 {
+"site": "0x795dc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x864c4",
+"section": ".rodata",
+"string": "\t}\n"
+},
+{
 "site": "0x79600",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x864c8",
 "section": ".rodata",
 "string": "\tMesh {\n"
+},
+{
+"site": "0x79614",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x864d4",
+"section": ".rodata",
+"string": "\t\t%i;\n"
 },
 {
 "site": "0x7963c",
@@ -45261,6 +52579,14 @@
 "string": ";\n"
 },
 {
+"site": "0x796e8",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x864d4",
+"section": ".rodata",
+"string": "\t\t%i;\n"
+},
+{
 "site": "0x79710",
 "kind": "addr",
 "via": "gotoff",
@@ -45283,6 +52609,14 @@
 "addr": "0x864d8",
 "section": ".rodata",
 "string": ";\n"
+},
+{
+"site": "0x797cc",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x864c4",
+"section": ".rodata",
+"string": "\t}\n"
 },
 {
 "site": "0x797e4",
@@ -49580,6 +56914,22 @@
 "string": " Achievement %i VALID"
 },
 {
+"site": "0x7d5e8",
+"kind": "read",
+"via": "got",
+"addr": "0x8b39c",
+"section": ".got"
+},
+{
+"site": "0x7d5e8",
+"kind": "addr",
+"via": "got",
+"addr": "0x380aa4",
+"section": ".bss",
+"symbol": "gOFOData",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x7d5ec",
 "kind": "addr",
 "via": "gotoff",
@@ -49619,6 +56969,14 @@
 "section": ".data",
 "symbol": "gOFORef",
 "symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7d648",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86760",
+"section": ".rodata",
+"string": "******************"
 },
 {
 "site": "0x7d68c",
@@ -49925,12 +57283,44 @@
 "symbol_type": "STT_OBJECT"
 },
 {
+"site": "0x7d8d0",
+"kind": "read",
+"via": "got",
+"addr": "0x8b11c",
+"section": ".got"
+},
+{
+"site": "0x7d8d0",
+"kind": "addr",
+"via": "got",
+"addr": "0x37cb60",
+"section": ".bss",
+"symbol": "OFID",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x7d8fc",
 "kind": "read",
 "via": "reg",
 "addr": "0x8cae4",
 "section": ".data",
 "symbol": "gOFORef",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7d918",
+"kind": "read",
+"via": "got",
+"addr": "0x8b39c",
+"section": ".got"
+},
+{
+"site": "0x7d918",
+"kind": "addr",
+"via": "got",
+"addr": "0x380aa4",
+"section": ".bss",
+"symbol": "gOFOData",
 "symbol_type": "STT_OBJECT"
 },
 {
@@ -50033,6 +57423,22 @@
 "string": ":OFOLoad"
 },
 {
+"site": "0x7d9f4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b39c",
+"section": ".got"
+},
+{
+"site": "0x7d9f4",
+"kind": "addr",
+"via": "got",
+"addr": "0x380aa4",
+"section": ".bss",
+"symbol": "gOFOData",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x7d9fc",
 "kind": "read",
 "via": "got",
@@ -50072,6 +57478,22 @@
 "addr": "0x868d8",
 "section": ".rodata",
 "string": "  Searching OFUSer %s "
+},
+{
+"site": "0x7da8c",
+"kind": "read",
+"via": "got",
+"addr": "0x8b388",
+"section": ".got"
+},
+{
+"site": "0x7da8c",
+"kind": "addr",
+"via": "got",
+"addr": "0x3837a4",
+"section": ".bss",
+"symbol": "gOFUser",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x7daa8",
@@ -50157,12 +57579,69 @@
 "string": "Found %i OfUsers"
 },
 {
+"site": "0x7db08",
+"kind": "read",
+"via": "got",
+"addr": "0x8b388",
+"section": ".got"
+},
+{
+"site": "0x7db08",
+"kind": "addr",
+"via": "got",
+"addr": "0x3837a4",
+"section": ".bss",
+"symbol": "gOFUser",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7db0c",
+"kind": "read",
+"via": "reg",
+"addr": "0x3837a4",
+"section": ".bss",
+"symbol": "gOFUser",
+"symbol_type": "STT_OBJECT"
+},
+{
 "site": "0x7db1c",
 "kind": "addr",
 "via": "gotoff",
 "addr": "0x8693c",
 "section": ".rodata",
 "string": ":OFO Adding %s OFO Data"
+},
+{
+"site": "0x7db28",
+"kind": "read",
+"via": "got",
+"addr": "0x8b39c",
+"section": ".got"
+},
+{
+"site": "0x7db28",
+"kind": "addr",
+"via": "got",
+"addr": "0x380aa4",
+"section": ".bss",
+"symbol": "gOFOData",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7db70",
+"kind": "read",
+"via": "got",
+"addr": "0x8b388",
+"section": ".got"
+},
+{
+"site": "0x7db70",
+"kind": "addr",
+"via": "got",
+"addr": "0x3837a4",
+"section": ".bss",
+"symbol": "gOFUser",
+"symbol_type": "STT_OBJECT"
 },
 {
 "site": "0x7db80",
@@ -50875,6 +58354,14 @@
 "section": ".got"
 },
 {
+"site": "0x7e01c",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86968",
+"section": ".rodata",
+"string": "ofhighscores.txt"
+},
+{
 "site": "0x7e03c",
 "kind": "addr",
 "via": "gotoff",
@@ -51069,6 +58556,21 @@
 "section": ".bss",
 "symbol": "OFHighScoreNumber",
 "symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7e1d0",
+"kind": "addr",
+"via": "gotoff",
+"addr": "0x86968",
+"section": ".rodata",
+"string": "ofhighscores.txt"
+},
+{
+"site": "0x7e1e4",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
 },
 {
 "site": "0x7e204",
@@ -51267,6 +58769,13 @@
 "addr": "0x86968",
 "section": ".rodata",
 "string": "ofhighscores.txt"
+},
+{
+"site": "0x7e388",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0e4",
+"section": ".got"
 }
 ],
 "indirect_calls": [],
@@ -52217,6 +59726,22 @@
 "addr": "0x37c9cd",
 "section": ".bss",
 "symbol": "gLoadingBar+0x35",
+"symbol_type": "STT_OBJECT"
+},
+{
+"site": "0x7ed00",
+"kind": "read",
+"via": "got",
+"addr": "0x8b0a0",
+"section": ".got"
+},
+{
+"site": "0x7ed00",
+"kind": "addr",
+"via": "got",
+"addr": "0x8cc5c",
+"section": ".bss",
+"symbol": "gObjectList",
 "symbol_type": "STT_OBJECT"
 }
 ],

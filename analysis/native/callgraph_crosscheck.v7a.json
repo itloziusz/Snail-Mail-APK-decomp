@@ -1,0 +1,29 @@
+{
+ "binary": "v7a",
+ "binary_sha256": "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466",
+ "capstone_edges": 3099,
+ "ghidra_edges": 3096,
+ "common": 3096,
+ "only_capstone": [
+  {
+   "caller": "0x14c74",
+   "caller_name": "_Z14PfmLoadFileDatPviiiitt",
+   "callee": "0x13ac4",
+   "callee_name": "free@plt"
+  },
+  {
+   "caller": "0x1b6b8",
+   "caller_name": "_Z16RShellMemoryFreePv",
+   "callee": "0x13ac4",
+   "callee_name": "free@plt"
+  },
+  {
+   "caller": "0x7acfc",
+   "caller_name": "_Z11G0SetColourP12tColourSmall",
+   "callee": "0x13a94",
+   "callee_name": "glColor4f@plt"
+  }
+ ],
+ "only_ghidra": [],
+ "ghidra_unresolved_computed_calls": 78
+}

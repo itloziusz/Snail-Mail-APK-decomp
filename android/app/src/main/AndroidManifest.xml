@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Port manifest. Differences from the original (work/apktool/AndroidManifest.xml)
+  and why (docs/PLATFORM_BOUNDARIES.md, "Android shell"):
+   * package comes from the Gradle namespace; applicationId is the distinct
+     dev id com.sandlotgames.snailmail.port (set in app/build.gradle.kts);
+   * OpenFeint activities, INTERNET, ACCESS_NETWORK_STATE and GET_ACCOUNTS
+     removed: they only served the defunct OpenFeint SDK;
+   * WRITE_EXTERNAL_STORAGE removed: the game's Java file callbacks use
+     app-private Context.openFileOutput/openFileInput only (ADRenderer.JAVASaveFile etc.);
+   * android:exported is mandatory for launcher activities since API 31;
+   * configChanges gains screenSize|smallestScreenSize|screenLayout so a
+     targetSdk>=13 app keeps the original "no restart" behaviour on rotation /
+     resize (the original targeted SDK 6, where orientation alone sufficed);
+   * NoActionBar.Fullscreen theme reproduces requestWindowFeature(NO_TITLE)
+     + FLAG_FULLSCREEN, which the Activity still calls as in the original.
+  debuggable/extractNativeLibs are derived by AGP from the build type and
+  packaging.jniLibs.useLegacyPackaging=false (native libs stay in the APK).
+  allowBackup=false: TODO decide; the original (2011) defaulted to true.
+  Kept: GLES 1.1 feature, accelerometer + touchscreen required, WAKE_LOCK
+  (SnailMailActivity wake lock), VIBRATE (ADRenderer.JAVAVibrate), landscape.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="auto">
+
+    <uses-feature android:glEsVersion="0x00010001" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="true" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <application
+        android:name="com.sandlotgames.snailmail.SnailMailApplication"
+        android:allowBackup="false"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
+        <activity
+            android:name="com.sandlotgames.snailmail.SnailMailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
