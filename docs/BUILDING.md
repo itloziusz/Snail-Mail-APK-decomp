@@ -244,3 +244,26 @@ the outputs above in the evidence ledger before claiming
 
 All read `work/apk_unzip/…` (populate with `tools/inventory/setup_workspace.sh`)
 and never modify inputs.
+
+## 8. Ahead-of-time translated game (Pass 2)
+
+```sh
+tools/inventory/setup_workspace.sh                       # original APK -> work/
+python3 tools/aot/arm2c.py --elf work/apk_unzip/lib/armeabi-v7a/libsnailmail.so --out aot/generated
+cmake -S . -B build-game -DCMAKE_BUILD_TYPE=Release
+cmake --build build-game --target snailmail_host snailmail_ref -j
+# play (offscreen, PNG every 60 frames); input script format in host/main.c
+build-game/aot/snailmail_host --frames 3000 --shot-every 60 --out shots --input in.txt
+# differential vs the ORIGINAL ARM32 code (Unicorn 2 from the pip wheel)
+build-game/aot/snailmail_host --headless --frames 6000 --input in.txt --gltrace aot.txt
+build-game/aot/snailmail_ref  --headless --frames 6000 --input in.txt --gltrace ref.txt
+cmp aot.txt ref.txt
+# AArch64 (qemu-user test harness)
+python3 tools/aot/fetch_arm64_host_deps.py work/arm64-deps
+cmake -S . -B build-a64-game -DCMAKE_TOOLCHAIN_FILE=cmake/aarch64-linux-gnu.toolchain.cmake \
+  -DPNG_LIBRARY=$PWD/work/arm64-deps/sysroot/usr/lib/aarch64-linux-gnu/libpng16.a ... (see PORTING_STATUS)
+qemu-aarch64 -L /usr/aarch64-linux-gnu build-a64-game/aot/snailmail_host --headless ...
+# arm64-only APK containing the translated game
+tools/android_build/build_dev_apk.sh        # SM_APK_VARIANT=aot (default)
+```
+

@@ -1,5 +1,38 @@
 # Porting status
 
+## Pass 2 — 2026-09-27: the game runs natively
+
+**The complete game logic runs as natively compiled code**, through the
+ahead-of-time translation described in `docs/ARCHITECTURE.md` Revision 2.
+Validation so far is on a Linux host and on AArch64 under qemu-user. **It has
+not been run on an Android device.**
+
+| Check | Result |
+|---|---|
+| Translation | 1,173/1,173 functions of v7a `e43bc913…a466`. 44 unsupported sites, all in the libgcc exception unwinder, which the game never reaches. |
+| Host run: x86-64, GLES1-on-GLES2 offscreen | Sandlot and Alpha72 splashes, loading screen, intro crawl, main menu, mode menu, Tutorial level: steering, packages, asteroids, turrets, sound and music requests. No fatal diagnostics. |
+| Differential vs the original ARM32 code (Unicorn 2) | 6,000 frames: **identical GL traces** (2,213,927 calls incl. data hashes) and identical save files. Unicorn executed 196 M original instructions in the first 1,600 frames. |
+| AArch64 execution (GCC 13 cross-build, qemu-aarch64 test harness) | Same 6,000 frames: GL trace and save files identical to the original. |
+| Android APK (`tools/android_build/build_dev_apk.sh`, AOT variant) | Built. `libsnailmail.so` is ELF64 AArch64 with 16 KiB alignment, 3.1 MB and 91 allowlisted imports. The APK signature verifies with v1, v2 and v3. |
+| Device run | **NOT RUN.** No device is available. |
+| Cost of game logic (headless, this Xeon) | ≈0.12 ms CPU per frame; 27 MiB peak RSS. |
+
+Known risks on a device:
+
+* **Toolchain.** The APK was built without the NDK, using stub libraries and
+  hand-written headers (`tools/android_build/ndkless`).
+* **Real GLES1 driver.** Behaviour on real GLES1 drivers is unverified.
+* **4 GiB reservation.** The virtual reservation must succeed.
+* **`FileDescriptor` access.** It goes through `ParcelFileDescriptor.dup`,
+  which leaks one fd per `onCreate`.
+* **Audio after `onStop`/`onRestart`.** It may be silent (original behaviour,
+  hypothesis).
+* **Default random seed.** `rand48` uses bionic's default seed (hypothesis).
+
+---
+
+## Pass 1
+
 Pass 1 — 2026-09-27. Reference binary `v7a` = `lib/armeabi-v7a/libsnailmail.so`,
 SHA-256 `e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466`, from
 APK SHA-256 `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
