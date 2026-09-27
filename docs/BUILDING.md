@@ -136,6 +136,32 @@ cmake -S android/app/src/main/cpp -B $S/build -DANDROID_ABI=arm64-v8a \
 cmake --build $S/build && python3 tools/validation/platform/check_elf_alignment.py $S/build/libsnailmail.so
 ```
 
+### 3a. NDK-less development APK (what was actually built in this pass)
+
+Because the Gradle route above is blocked here, `tools/android_build/build_dev_apk.sh`
+builds the same app from the same sources with tools that are reachable:
+
+| Step | Tool | Notes |
+|---|---|---|
+| native `libsnailmail.so` | host clang 18 + ld.lld, `--target=aarch64-linux-android24` | `tools/android_build/ndkless/build_so.py`: links against stub `libc.so`/`liblog.so` generated from `ndkless/symbols/*.txt` (the NDK's own stub-library technique) and the minimal headers in `ndkless/include/`; then **verifies** ELF64 AArch64, PT_LOAD ≥ 16 KiB, no TEXTREL, NEEDED ⊆ stubs, every import allowlisted |
+| Java → DEX | `javac -source 8 -target 8` against Ubuntu's `android-sdk-platform-23` `android.jar`; `dalvik-exchange` (dx 10.0.0) `--min-sdk-version=23` | the shell has no lambdas, so no desugaring is needed |
+| resources/assets | Debian `aapt` | `--rename-manifest-package com.sandlotgames.snailmail.port`, minSdk 23, targetSdk 35, `--debug-mode`; `asm.mp3`, `.ogg`, `resources.arsc` stored |
+| alignment | `tools/android_build/zipalign16k.py` | `.so` data at 16 KiB, other stored entries at 4 B, using zipalign's `0xD935` extra field so apksigner keeps it |
+| signing | Ubuntu `apksigner` 0.9 | v1+v2+v3 (v1 because minSdk 23 < 24), local debug key in `work/android_build/keys/` (never committed) |
+| checks | `apksigner verify`, `check_elf_alignment.py`, `aapt dump badging`, entry-storage asserts | all run by the script |
+
+```sh
+tools/inventory/setup_workspace.sh      # needs original/com.sandlotgames.snailmail-1.00.apk
+tools/android_build/build_dev_apk.sh    # -> work/android_build/out/snailmail-port-arm64-dev.apk
+```
+
+Limitations: the stub-library/minimal-header approach is a stop-gap. It
+removes the NDK's safety net of complete, versioned headers. That risk is
+contained by the import allowlist and `-Werror=implicit-function-declaration`,
+but the build must move to the pinned NDK (§3) as soon as it is reachable.
+The APK contains the original game's assets extracted from the owner-supplied
+APK and must not be redistributed.
+
 ## 4. 16 KB page-size and 64-bit-only verification
 
 `tools/validation/platform/check_elf_alignment.py FILE...` accepts `.so`

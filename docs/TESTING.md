@@ -63,5 +63,22 @@ absent.
 
 ## Current inventory
 
-See the "Tests performed" section of `docs/PORTING_STATUS.md` for the
-commands actually run in each pass and their results.
+| CTest name | What it checks | Evidence level |
+|---|---|---|
+| `assets.rhash` | `cRHash` hash, add, search, chains, uninit | unit |
+| `assets.archive_synthetic` | directory parser incl. malformed inputs | unit |
+| `assets.archive_real` | all 734 records of the real archive (SKIP if absent) | structural |
+| `assets.extractor_fixture` | deterministic extractor on the synthetic fixture | unit |
+| `platform.dat_synthetic` | `sm_dat` at an odd start offset; range/IO/arg errors close the fd | unit |
+| `platform.dat_real_apk` | `asm.mp3` read from inside the original APK at its zip data offset, cross-checked with the extracted file (SKIP if absent) | structural |
+| `platform.elf_alignment_selftest` | 16 KiB ELF/APK checker catches good and bad inputs | tool self-test |
+| `platform.shell_parity` | Java shell natives/callbacks/exports vs original smali and v7a (SKIP if absent) | contract |
+| `integration.jni_bridge` | unmodified `jni_bridge.cpp` with a fake JNIEnv: `JNIDatInit` end to end, loud failure of unreconstructed entry points (SKIP if absent) | integration |
+
+Outside CTest:
+- `tests/differential/assets/run_diff.py` compares against the original ARM32
+  code. Latest result: `tests/differential/assets/result.json`, 17,894
+  comparisons, 0 mismatches.
+- `tools/android_build/build_dev_apk.sh` checks the packaging.
+
+`docs/PORTING_STATUS.md` records the commands run in each pass and their results.
