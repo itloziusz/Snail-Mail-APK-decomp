@@ -8,10 +8,11 @@
 #          original assets from work/apk_unzip/assets (tools/inventory/setup_workspace.sh)
 # Output:  work/android_build/out/snailmail-port-arm64-dev.apk  (gitignored)
 #
-# What the APK is: the original managed shell (minus OpenFeint) + a genuine
-# AArch64 libsnailmail.so containing ONLY the reconstructed modules. Every
-# unreconstructed native entry point throws IllegalStateException, so the app
-# stops at nativeInit. It is NOT a playable port.
+# Variants (SM_APK_VARIANT):
+#   aot (default): the original managed shell (minus OpenFeint) + an AArch64
+#     libsnailmail.so containing the ahead-of-time translation of ALL original
+#     game code (tools/aot/arm2c.py) and the AOT runtime - the playable port.
+#   bridge: only the hand-reconstructed modules + fail-loudly JNI bridge.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
@@ -32,14 +33,31 @@ done
 rm -rf "$OUT/app" "$OUT/out"
 mkdir -p "$OUT/app/classes" "$OUT/app/pkg/lib/arm64-v8a" "$OUT/out" "$OUT/keys"
 
-echo "== native (arm64-v8a, NDK-less)"
-python3 tools/android_build/ndkless/build_so.py \
-  --out "$OUT/app/pkg/lib/arm64-v8a/libsnailmail.so" --workdir "$OUT/app/obj" \
-  --lib libc --lib liblog \
-  -I reconstructed/assets/include -I reconstructed/platform/include \
-  android/app/src/main/cpp/jni_bridge.cpp \
-  reconstructed/assets/src/rhash.c reconstructed/assets/src/asm_archive.c \
-  reconstructed/platform/src/dat.c
+VARIANT="${SM_APK_VARIANT:-aot}"
+if [ "$VARIANT" = "aot" ]; then
+  echo "== translate original ARM32 code (tools/aot/arm2c.py)"
+  ORIG_SO=work/apk_unzip/lib/armeabi-v7a/libsnailmail.so
+  if [ ! -f aot/generated/aot_table.c ] || ! grep -q "$(sha256sum "$ORIG_SO" | cut -d' ' -f1)" aot/generated/aot_table.c; then
+    python3 tools/aot/arm2c.py --elf "$ORIG_SO" --out aot/generated
+  fi
+  echo "== native (arm64-v8a, NDK-less): AOT runtime + translated game"
+  python3 tools/android_build/ndkless/build_so.py \
+    --out "$OUT/app/pkg/lib/arm64-v8a/libsnailmail.so" --workdir "$OUT/app/obj" \
+    --lib libc --lib libm --lib liblog --lib libGLESv1_CM \
+    -I aot/runtime -I aot/generated -D SM_NDKLESS_GLES_DECLS \
+    --nowarn-prefix aot/generated \
+    aot/runtime/aot_core.c aot/runtime/aot_libc.c aot/runtime/aot_gl.c aot/runtime/aot_jni.c \
+    aot/runtime/aot_android.c aot/generated/aot_table.c aot/generated/aot_funcs_*.c
+else
+  echo "== native (arm64-v8a, NDK-less): reconstructed modules + JNI bridge (fails at nativeInit)"
+  python3 tools/android_build/ndkless/build_so.py \
+    --out "$OUT/app/pkg/lib/arm64-v8a/libsnailmail.so" --workdir "$OUT/app/obj" \
+    --lib libc --lib liblog \
+    -I reconstructed/assets/include -I reconstructed/platform/include \
+    android/app/src/main/cpp/jni_bridge.cpp \
+    reconstructed/assets/src/rhash.c reconstructed/assets/src/asm_archive.c \
+    reconstructed/platform/src/dat.c
+fi
 
 echo "== java -> dex"
 javac -nowarn -source 8 -target 8 -bootclasspath "$ANDROID_JAR" -Xlint:-options \

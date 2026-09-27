@@ -36,13 +36,16 @@ def run(cmd):
     subprocess.run([str(c) for c in cmd], check=True)
 
 
-def read_allowlist(lib):
-    names = []
+def read_allowlist(lib, with_kind=False):
+    """Allowed symbol names; a line "data NAME" marks a data object."""
+    out = []
     for line in (HERE / "symbols" / f"{lib}.txt").read_text().splitlines():
         line = line.strip()
-        if line and not line.startswith("#"):
-            names.append(line)
-    return names
+        if not line or line.startswith("#"):
+            continue
+        kind, name = ("data", line[5:].strip()) if line.startswith("data ") else ("func", line)
+        out.append((kind, name) if with_kind else name)
+    return out
 
 
 def jdk_include():
@@ -54,7 +57,8 @@ def jdk_include():
 
 def build_stub(lib, target, workdir):
     src = workdir / f"stub_{lib}.c"
-    src.write_text("".join(f"void {n}(void) {{}}\n" for n in read_allowlist(lib)))
+    src.write_text("".join(f"char {n}[16];\n" if k == "data" else f"void {n}(void) {{}}\n"
+                           for k, n in read_allowlist(lib, with_kind=True)))
     out = workdir / f"{lib}.so"
     # Stub bodies are never executed (the device's real library is loaded by
     # soname), so their C signatures are irrelevant: silence builtin checks.
@@ -118,6 +122,10 @@ def main():
     ap.add_argument("--lib", action="append", default=[], help="stub lib to link, e.g. libc")
     ap.add_argument("-I", dest="incs", action="append", default=[])
     ap.add_argument("-D", dest="defs", action="append", default=[])
+    ap.add_argument("--nowarn-prefix", action="append", default=[],
+                    help="sources under this path are generated: compile with -w")
+    ap.add_argument("-j", dest="jobs", type=int, default=os.cpu_count() or 1)
+    ap.add_argument("-X", dest="extra", action="append", default=[], help="extra compiler flag")
     ap.add_argument("sources", nargs="+")
     a = ap.parse_args()
 
@@ -134,12 +142,27 @@ def main():
               "-fno-strict-aliasing", "-fvisibility=hidden",
               "-Wall", "-Wextra", "-Werror=implicit-function-declaration"]
     common += [f"-I{i}" for i in a.incs] + [f"-D{d}" for d in a.defs]
-    objs = []
+    common += a.extra
+    jobs = []
     for i, src in enumerate(a.sources):
-        obj = work / f"{i:02d}_{pathlib.Path(src).stem}.o"
-        extra = ["-std=c11"] if src.endswith(".c") else ["-std=c++17", "-fno-exceptions", "-fno-rtti"]
-        run(["clang"] + common + extra + ["-c", src, "-o", obj])
-        objs.append(obj)
+        obj = work / f"{i:03d}_{pathlib.Path(src).stem}.o"
+        extra = ["-std=gnu11"] if src.endswith(".c") else ["-std=c++17", "-fno-exceptions", "-fno-rtti"]
+        if any(os.path.abspath(src).startswith(os.path.abspath(p)) for p in a.nowarn_prefix):
+            extra = extra + ["-w"]
+        jobs.append((["clang"] + common + extra + ["-c", src, "-o", str(obj)], obj))
+    import concurrent.futures
+    with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as ex:
+        results = list(ex.map(lambda j: subprocess.run([str(x) for x in j[0]], capture_output=True, text=True), jobs))
+    failed = False
+    for (cmd, obj), r in zip(jobs, results):
+        if r.stderr:
+            sys.stderr.write(r.stderr)
+        if r.returncode != 0:
+            print("FAILED:", " ".join(str(x) for x in cmd))
+            failed = True
+    if failed:
+        sys.exit(1)
+    objs = [obj for _, obj in jobs]
     stubs = [build_stub(lib, target, work) for lib in a.lib]
     run(["clang", f"--target={target}", "-shared", "-nostdlib", "-fuse-ld=lld",
          "-Wl,-soname,libsnailmail.so", f"-Wl,-z,max-page-size={PAGE}",

@@ -7,7 +7,6 @@
 #define _GNU_SOURCE
 #include <errno.h>
 #include <math.h>
-#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,6 +14,7 @@
 #include <unistd.h>
 
 #include "aot_host.h"
+#include "aot_platform.h"
 
 uint32_t aot_rtdata_alloc(uint32_t n);
 void *aot_thread_java_ctx(void);
@@ -52,21 +52,21 @@ FATAL_IMP(__stack_chk_guard)
 #define MAX_FILES 64
 static FILE *g_files[MAX_FILES];
 static uint32_t g_file_guest[MAX_FILES];
-static pthread_mutex_t g_io_lock = PTHREAD_MUTEX_INITIALIZER;
+static aot_lock g_io_lock = AOT_LOCK_INIT;
 
 static uint32_t file_register(FILE *f)
 {
     int i;
-    pthread_mutex_lock(&g_io_lock);
+    aot_lock_acquire(&g_io_lock);
     for (i = 3; i < MAX_FILES; ++i) {
         if (!g_files[i]) {
             g_files[i] = f;
             if (!g_file_guest[i]) g_file_guest[i] = aot_rtdata_alloc(16);
-            pthread_mutex_unlock(&g_io_lock);
+            aot_lock_release(&g_io_lock);
             return g_file_guest[i];
         }
     }
-    pthread_mutex_unlock(&g_io_lock);
+    aot_lock_release(&g_io_lock);
     aot_fatal("too many open guest FILEs");
 }
 
@@ -380,9 +380,9 @@ IMP(fclose)
         c->r[0] = 0;
         return;
     }
-    pthread_mutex_lock(&g_io_lock);
+    aot_lock_acquire(&g_io_lock);
     g_files[slot] = NULL;
-    pthread_mutex_unlock(&g_io_lock);
+    aot_lock_release(&g_io_lock);
     c->r[0] = (uint32_t)fclose(f);
 }
 IMP(fread)
@@ -486,19 +486,19 @@ IMP(tanf) { retf(c, tanf(argf(c, 0))); }
  * (2011, BSD-derived) uses X = 0x1234ABCD330E (__rand48_seed) - HYPOTHESIS,
  * see docs/ABI_PORTING.md; glibc would start from 0. */
 static uint64_t g_x48 = 0x1234ABCD330Eull;
-static pthread_mutex_t g_rand_lock = PTHREAD_MUTEX_INITIALIZER;
+static aot_lock g_rand_lock = AOT_LOCK_INIT;
 IMP(srand48)
 {
-    pthread_mutex_lock(&g_rand_lock);
+    aot_lock_acquire(&g_rand_lock);
     g_x48 = (((uint64_t)c->r[0]) << 16 | 0x330Eu) & 0xFFFFFFFFFFFFull;
-    pthread_mutex_unlock(&g_rand_lock);
+    aot_lock_release(&g_rand_lock);
 }
 IMP(lrand48)
 {
-    pthread_mutex_lock(&g_rand_lock);
+    aot_lock_acquire(&g_rand_lock);
     g_x48 = (0x5DEECE66Dull * g_x48 + 0xBu) & 0xFFFFFFFFFFFFull;
     c->r[0] = (uint32_t)(g_x48 >> 17);
-    pthread_mutex_unlock(&g_rand_lock);
+    aot_lock_release(&g_rand_lock);
 }
 
 /* ---------------------------------------------------------------- qsort
@@ -605,18 +605,18 @@ IMP(qsort)
 }
 
 /* ---------------------------------------------------------------- C++ runtime */
-static pthread_mutex_t g_guard_lock = PTHREAD_MUTEX_INITIALIZER;
+static aot_lock g_guard_lock = AOT_LOCK_INIT;
 IMP(__cxa_guard_acquire)
 {
-    pthread_mutex_lock(&g_guard_lock);
+    aot_lock_acquire(&g_guard_lock);
     c->r[0] = (AOT_LD8(c->r[0]) & 1u) ? 0u : 1u;
-    pthread_mutex_unlock(&g_guard_lock);
+    aot_lock_release(&g_guard_lock);
 }
 IMP(__cxa_guard_release)
 {
-    pthread_mutex_lock(&g_guard_lock);
+    aot_lock_acquire(&g_guard_lock);
     AOT_ST32(c->r[0], 1u);
-    pthread_mutex_unlock(&g_guard_lock);
+    aot_lock_release(&g_guard_lock);
 }
 IMP(__stack_chk_fail) { aot_fatal("guest stack protector tripped (lr %08x)", c->r[14]); }
 FATAL_IMP(__cxa_begin_cleanup)

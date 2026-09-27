@@ -5,8 +5,9 @@
  */
 #define _GNU_SOURCE
 #include <errno.h>
-#include <pthread.h>
+#ifndef __ANDROID__
 #include <signal.h>
+#endif
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +16,7 @@
 #include <unistd.h>
 
 #include "aot_host.h"
+#include "aot_platform.h"
 
 uint8_t *aot_mem;
 const aot_config *aot_cfg;
@@ -22,7 +24,7 @@ uint64_t aot_calls_executed;
 
 static aot_config g_cfg;
 static int g_inited;
-static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
+static aot_lock g_lock = AOT_LOCK_INIT;
 static size_t g_page;
 static const uint64_t k_reserve = (1ull << 32) + (1ull << 20); /* 4 GiB + slack for straddling accesses */
 
@@ -81,6 +83,7 @@ void aot_trace_enter(aot_cpu *c, uint32_t addr)
 }
 #endif
 
+#ifndef __ANDROID__
 static void fault_handler(int sig, siginfo_t *si, void *uc)
 {
     (void)uc;
@@ -109,6 +112,9 @@ void aot_install_fault_handler(void)
     sigaction(SIGSEGV, &sa, NULL);
     sigaction(SIGBUS, &sa, NULL);
 }
+#else
+void aot_install_fault_handler(void) {}
+#endif
 
 /* ---------------------------------------------------------------- memory */
 static void commit(uint32_t lo, uint64_t hi)
@@ -125,14 +131,14 @@ static uint32_t g_rtdata_next = AOT_RTDATA_BASE;
 static uint32_t rtdata_alloc(uint32_t n)
 {
     uint32_t p;
-    pthread_mutex_lock(&g_lock);
+    aot_lock_acquire(&g_lock);
     p = (g_rtdata_next + 15u) & ~15u;
     if (p + n > AOT_RTDATA_BASE + AOT_RTDATA_SIZE) {
-        pthread_mutex_unlock(&g_lock);
+        aot_lock_release(&g_lock);
         aot_fatal("runtime data area exhausted");
     }
     g_rtdata_next = p + n;
-    pthread_mutex_unlock(&g_lock);
+    aot_lock_release(&g_lock);
     memset(aot_mem + p, 0, n);
     return p;
 }
@@ -157,13 +163,13 @@ uint32_t aot_malloc(uint32_t size)
     if (k > 30) {
         return 0;
     }
-    pthread_mutex_lock(&g_lock);
+    aot_lock_acquire(&g_lock);
     if (g_free[k]) {
         b = g_free[k];
         g_free[k] = AOT_LD32(b + 8u);
     } else {
         if ((uint64_t)g_heap_top + (1ull << k) > AOT_HEAP_END) {
-            pthread_mutex_unlock(&g_lock);
+            aot_lock_release(&g_lock);
             return 0;
         }
         b = g_heap_top;
@@ -176,7 +182,7 @@ uint32_t aot_malloc(uint32_t size)
     }
     AOT_ST32(b, HEAP_MAGIC | k);
     AOT_ST32(b + 4u, size);
-    pthread_mutex_unlock(&g_lock);
+    aot_lock_release(&g_lock);
     return b + 8u;
 }
 
@@ -195,11 +201,11 @@ void aot_free(uint32_t p)
         aot_fatal("free() of corrupt or foreign block %08x (header %08x)", p, hdr);
     }
     k = hdr & 0xFFu;
-    pthread_mutex_lock(&g_lock);
+    aot_lock_acquire(&g_lock);
     AOT_ST32(b, HEAP_MAGIC | 0x8000u | k); /* mark free */
     AOT_ST32(p, g_free[k]);
     g_free[k] = b;
-    pthread_mutex_unlock(&g_lock);
+    aot_lock_release(&g_lock);
 }
 
 uint32_t aot_heap_block_size(uint32_t p)
@@ -271,27 +277,33 @@ uint32_t aot_symbol_addr(const char *name)
 }
 
 /* ---------------------------------------------------------------- threads */
-static __thread aot_cpu *t_cpu;
-static __thread void *t_java_ctx;
-static __thread uint32_t t_env;
+typedef struct {
+    aot_cpu *cpu;
+    void *java_ctx;
+    uint32_t env;
+} thread_state;
+static aot_tls g_tls = AOT_TLS_INIT;
 static uint32_t g_next_stack = AOT_STACK_BASE;
 uint32_t aot_jni_new_env(void);
 
 aot_cpu *aot_thread_enter(void *java_ctx)
 {
+    thread_state *t;
     if (!g_inited) {
         aot_fatal("aot_thread_enter before aot_init");
     }
-    if (!t_cpu) {
+    t = (thread_state *)aot_tls_get(&g_tls);
+    if (!t) {
         aot_cpu *c = (aot_cpu *)calloc(1, sizeof *c);
         uint32_t lo;
-        if (!c) {
+        t = (thread_state *)calloc(1, sizeof *t);
+        if (!c || !t) {
             aot_fatal("out of host memory");
         }
-        pthread_mutex_lock(&g_lock);
+        aot_lock_acquire(&g_lock);
         lo = g_next_stack;
         g_next_stack += AOT_STACK_SIZE;
-        pthread_mutex_unlock(&g_lock);
+        aot_lock_release(&g_lock);
         if (g_next_stack > 0xF0000000u) {
             aot_fatal("too many guest threads");
         }
@@ -300,19 +312,28 @@ aot_cpu *aot_thread_enter(void *java_ctx)
         c->stack_lo = lo + 0x10000u;
         c->stack_hi = lo + AOT_STACK_SIZE;
         c->r[13] = c->stack_hi;
-        t_cpu = c;
-        t_env = aot_jni_new_env();
+        t->cpu = c;
+        t->env = aot_jni_new_env();
+        aot_tls_set(&g_tls, t);
     }
-    t_java_ctx = java_ctx;
-    return t_cpu;
+    t->java_ctx = java_ctx;
+    return t->cpu;
 }
 
-void *aot_thread_java_ctx(void) { return t_java_ctx; }
-uint32_t aot_thread_guest_env(void) { return t_env; }
+void *aot_thread_java_ctx(void)
+{
+    thread_state *t = (thread_state *)aot_tls_get(&g_tls);
+    return t ? t->java_ctx : NULL;
+}
+uint32_t aot_thread_guest_env(void)
+{
+    thread_state *t = (thread_state *)aot_tls_get(&g_tls);
+    return t ? t->env : 0;
+}
 
 /* Optional alternative CPU backend (analysis only): when set, guest calls are
  * executed by it instead of the translated functions. Used by the reference
- * runner (tools/validation/arm32_ref/game_ref.py), which executes the ORIGINAL
+ * runner (tools/validation/arm32_ref/game_ref.c), which executes the ORIGINAL
  * ARM32 instructions in Unicorn against this same runtime. Never set in
  * shipping builds. */
 aot_invoke_backend_fn aot_invoke_backend;
@@ -368,17 +389,17 @@ uint32_t aot_handle_new(void *obj, int owned)
     if (!obj) {
         return 0;
     }
-    pthread_mutex_lock(&g_lock);
+    aot_lock_acquire(&g_lock);
     for (i = 1; i < AOT_HANDLE_MAX / 4u; ++i) {
         if (!g_handles[i].used) {
             g_handles[i].used = 1;
             g_handles[i].obj = obj;
             g_handles[i].owned = owned;
-            pthread_mutex_unlock(&g_lock);
+            aot_lock_release(&g_lock);
             return AOT_HANDLE_BASE + 4u * i;
         }
     }
-    pthread_mutex_unlock(&g_lock);
+    aot_lock_release(&g_lock);
     aot_fatal("guest object handle table full");
 }
 
@@ -429,10 +450,10 @@ void aot_handle_release(void *java_ctx, uint32_t h)
     if (g_handles[i].owned) {
         aot_cfg->java->delete_ref(java_ctx, g_handles[i].obj);
     }
-    pthread_mutex_lock(&g_lock);
+    aot_lock_acquire(&g_lock);
     g_handles[i].used = 0;
     g_handles[i].obj = NULL;
-    pthread_mutex_unlock(&g_lock);
+    aot_lock_release(&g_lock);
 }
 
 /* ---------------------------------------------------------------- init */
@@ -459,7 +480,13 @@ int aot_init(const aot_config *cfg)
     }
     g_cfg = *cfg;
     aot_cfg = &g_cfg;
+#ifdef __ANDROID__
+    /* Commit granularity: a multiple of every Android page size (4 KiB and
+     * 16 KiB); every guest region boundary is >= 64 KiB aligned. */
+    g_page = 16384;
+#else
     g_page = (size_t)sysconf(_SC_PAGESIZE);
+#endif
     if (sizeof(void *) < 8) {
         aot_fatal("the AOT runtime needs a 64-bit host (4 GiB guest reservation)");
     }
