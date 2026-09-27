@@ -16,6 +16,15 @@ pacer, adaptive FOV, HUD alignment, and Display page in this revision still
 need hands-on device testing. The first downloadable APK is therefore marked
 as an experimental preview; see `RELEASE_NOTES_v0.1.0.md`.
 
+Local verification of this revision: eight available host checks passed with
+ASan/UBSan (`LSAN_OPTIONS=detect_leaks=0`, because LeakSanitizer cannot inspect
+processes in this sandbox); the optional shell-parity check was skipped because
+apktool output was absent. The Clang host runner booted 6,000 frames without a
+fatal diagnostic at 800×480 and at 2400×1080 with adaptive settings. Mesa
+GLES2 offscreen renders at 1600×900 reached the main menu, then touch input
+opened Options and the new Display page. These are host checks, not Android
+device validation or a new differential trace against the original binary.
+
 ## Pass 2 — 2026-09-27: the game runs natively
 
 **The complete game logic runs as natively compiled code**, through the
