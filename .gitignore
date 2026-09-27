@@ -1,0 +1,28 @@
+# Proprietary original inputs: never committed. See original/README.md.
+/original/*
+!/original/README.md
+
+# Local working copies (extracted APK, decompiler output, Ghidra projects).
+/work/
+
+# Bulk generated exports that embed decompiled proprietary code. Regenerate
+# with the scripts under tools/. Indices/manifests live elsewhere and ARE tracked.
+/analysis/native/generated/
+/analysis/assets/extracted/
+
+# Build outputs
+/build/
+/build-*/
+**/build/
+**/.cxx/
+**/.gradle/
+*.o
+*.a
+*.so
+*.apk
+*.aab
+*.keystore
+*.jks
+local.properties
+__pycache__/
+*.pyc
