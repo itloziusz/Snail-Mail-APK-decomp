@@ -1,45 +1,61 @@
-# Snail Mail — evidence-driven decompilation and native arm64-v8a port
+# Snail Mail for Android ARM64
 
-This project reconstructs Sandlot Games' *Snail Mail* for Android
-(`com.sandlotgames.snailmail` 1.00, 2011) from the owner-supplied APK. The goal
-is a port whose game code runs as native AArch64 machine code, with no ARM32
-emulation, translation or 32-bit fallback in the shipped app.
+An experimental 64-bit Android port of Sandlot Games' *Snail Mail*. The game
+logic from the original Android release is translated ahead of time into native
+AArch64 code, while the Android shell retains the game's Java and JNI contract.
+The APK contains only `arm64-v8a` native code and renders through a GLES 2
+implementation of the game's GLES 1 calls.
 
-**Status: ARM64 preview.** The ahead-of-time translated game reaches playable
-gameplay in the host runner, and an arm64-v8a Android APK can be built from the
-owner's original APK. The latest display and GLES2 changes still need an
-on-device verification pass. See [`docs/PORTING_STATUS.md`](docs/PORTING_STATUS.md)
-and [`RELEASE_NOTES_v0.1.0.md`](RELEASE_NOTES_v0.1.0.md).
+## Current release
 
-| Document | Contents |
-|---|---|
-| [`docs/PORTING_STATUS.md`](docs/PORTING_STATUS.md) | what is done, tested, failed, not run; next action |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | decision: native source reconstruction; module and render boundaries |
-| [`docs/BOOT_CHAIN.md`](docs/BOOT_CHAIN.md) | launch → JNI → AppInit state machine → fixed-step frame loop |
-| [`docs/APK_AUDIT.md`](docs/APK_AUDIT.md), [`docs/JNI_MAP.json`](docs/JNI_MAP.json) | manifest, DEX, signing, dependency graph, full JNI contract |
-| [`docs/ASSET_FORMATS.md`](docs/ASSET_FORMATS.md) | `assets/asm.mp3` archive format, recovered from consuming code |
-| [`docs/NATIVE_ANALYSIS.md`](docs/NATIVE_ANALYSIS.md) | ELF/Ghidra pipeline, function index, coverage denominators |
-| [`docs/PLATFORM_BOUNDARIES.md`](docs/PLATFORM_BOUNDARIES.md), [`docs/ABI_PORTING.md`](docs/ABI_PORTING.md) | GL/audio/input/time/file boundaries; ARM32→AArch64 semantic risks |
-| [`docs/BUILDING.md`](docs/BUILDING.md), [`docs/TESTING.md`](docs/TESTING.md) | builds (host, AArch64/qemu, Android, NDK-less dev APK); test policy |
-| [`docs/HISTORICAL_LEADS.md`](docs/HISTORICAL_LEADS.md), [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md) | verification of earlier claims; shared conventions |
+**v0.1.0 is an installable preview.** It appears on the launcher as **Snail
+Mail 64-bit** with the original icon. It installs under
+`com.sandlotgames.snailmail.port.preview`, so it can coexist with the original
+game and earlier port test builds. The shell requests immersive full screen,
+including the navigation bar, and limits drawing to the game's intended 60 Hz
+pace. The in-game Display page adds settings for modern screen shapes.
 
-Layout: `original/` (immutable inputs, not committed), `analysis/` (indices and
-manifests; bulk decompiler/extractor output is gitignored), `tools/`
-(analysis-only scripts), `reconstructed/` (hand-written, shipping-candidate C),
-`android/` (app shell), `tests/`.
+The owner reported that an earlier ARM64 build ran on a Galaxy S24+. The latest
+GLES 2, display, navigation bar, and launcher changes have been built and
+checked locally, but have not yet been confirmed on a physical device. See
+[release notes](RELEASE_NOTES_v0.1.0.md) and the
+[porting status](docs/PORTING_STATUS.md) for specific test results and limits.
 
-Quick start:
+## Build the preview APK
+
+You need your own copy of the original Android 1.00 APK. Place it at
+`original/com.sandlotgames.snailmail-1.00.apk`. The build extracts its game
+assets and launcher icons locally; those files and signing keys are excluded
+from this repository.
+
+On a Linux machine with the tools described in [building](docs/BUILDING.md):
 
 ```sh
-tools/bootstrap/bootstrap_tools.sh          # pinned JADX, apktool, Ghidra
-tools/inventory/setup_workspace.sh          # needs original/com.sandlotgames.snailmail-1.00.apk
-cmake -S . -B build-host -DSM_SANITIZE=ON && cmake --build build-host && ctest --test-dir build-host
-cmake -S . -B build-a64 -DCMAKE_TOOLCHAIN_FILE=cmake/aarch64-linux-gnu.toolchain.cmake \
-  && cmake --build build-a64 && ctest --test-dir build-a64
-SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=3 \
-  SM_APP_ID=com.sandlotgames.snailmail.port.preview tools/android_build/build_dev_apk.sh
-                                             # arm64-only preview APK
+tools/inventory/setup_workspace.sh
+JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=3 \
+  SM_APP_ID=com.sandlotgames.snailmail.port.preview \
+  tools/android_build/build_dev_apk.sh
 ```
 
-No proprietary APK, extracted media, decompiled code dumps or signing keys are
-committed.
+The signed APK is written to
+`work/android_build/out/snailmail-port-arm64-gles2.apk`. This development build
+uses a locally generated key. To update an installed preview without losing
+its app data, sign the next APK with the same key and increase its version code.
+The Gradle project in `android/` is a separate development path; the published
+preview was built with the script above.
+
+## How the port works
+
+The original ARM32 game functions are translated to C ahead of time by
+`tools/aot/arm2c.py` and compiled into `libsnailmail.so` for AArch64. The
+`aot/runtime/` layer handles calls into Android and the original asset archive.
+`reconstructed/rendering/` maps the needed fixed-function graphics calls to
+GLES 2. QEMU and Unicorn are used for local verification only; neither is
+included in the APK.
+
+The project also contains reference analysis, unit and differential tests, and
+an Android shell. Start with [architecture](docs/ARCHITECTURE.md),
+[building](docs/BUILDING.md), and [testing](docs/TESTING.md) for details.
+
+This is an independent preservation and compatibility project. *Snail Mail*
+and its original artwork and assets belong to their respective rights holders.
