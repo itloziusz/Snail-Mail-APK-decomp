@@ -66,7 +66,8 @@ dalvik-exchange --dex --min-sdk-version="$MIN_SDK" --output="$OUT/app/pkg/classe
 
 echo "== resources + assets (asm.mp3 and .ogg stored uncompressed: openFd requires it)"
 # The Gradle manifest takes its package from the namespace; aapt needs it inline.
-sed 's|<manifest xmlns:android="http://schemas.android.com/apk/res/android"|<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.sandlotgames.snailmail" android:versionCode="1" android:versionName="1.00-port-dev"|' \
+VC="${SM_VERSION_CODE:-2}"
+sed "s|<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"|<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"com.sandlotgames.snailmail\" android:versionCode=\"$VC\" android:versionName=\"1.00-port-dev$VC\"|" \
   android/app/src/main/AndroidManifest.xml > "$OUT/app/AndroidManifest.xml"
 aapt package -f --debug-mode \
   --min-sdk-version "$MIN_SDK" --target-sdk-version "$TARGET_SDK" \
