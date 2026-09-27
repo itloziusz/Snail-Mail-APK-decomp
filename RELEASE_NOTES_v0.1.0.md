@@ -17,12 +17,13 @@ original APK out of the repository. Build locally with:
 # Place the original package at original/com.sandlotgames.snailmail-1.00.apk
 tools/inventory/setup_workspace.sh
 JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=3 \
+  SM_VERSION_NAME=0.1.0 \
   SM_APP_ID=com.sandlotgames.snailmail.port.preview \
   tools/android_build/build_dev_apk.sh
 ```
 
-The output is `work/android_build/out/snailmail-port-arm64-gles2.apk` (SHA-256 `8016d49196f13b85361a765245d494135c95deb33c3d57f1084f9098ed68c294`). Its
-application version is `1.00-port-gles2-dev3` and it uses the same local debug signing
+The output is `work/android_build/out/snailmail-port-arm64-gles2.apk` (SHA-256 `3bec67c224f52ff687969cdf36f97cb47d38506043ab98637d8c12f8e76c23df`). Its
+application version is `0.1.0` and it uses the same local debug signing
 key. The owner reported gameplay running on a Galaxy S24+ with an earlier
 version; the latest display settings and pacing changes have not been verified
 on a physical device. Treat this as an experimental build and keep a copy of
