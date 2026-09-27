@@ -300,8 +300,11 @@ class Emitter:
 
     def wrap_cond(self, cond, stmts):
         if cond == 14:
+            # own block: temporaries are per instruction, and a label may precede it
+            self.emit("    {")
             for s in stmts:
-                self.emit("    " + s)
+                self.emit("        " + s)
+            self.emit("    }")
         else:
             self.emit("    if (%s) {" % COND_C[cond])
             for s in stmts:
@@ -799,7 +802,9 @@ class Emitter:
         return self.wrap_cond(cond, st)
 
     def vfp(self, a, w, cond):
-        if (w >> 25) & 7 == 6:
+        # 110 space: loads/stores, except the 64-bit core<->VFP transfers
+        # (VMOV rt, rt2, dm / sm, sm1; bits 27:21 = 1100010), which capstone decodes.
+        if (w >> 25) & 7 == 6 and (w & 0x0FE00000) != 0x0C400000:
             return self.vfp_ldst_raw(a, w, cond)
         code = struct.pack("<I", w)
         ins = list(self.md.disasm(code, a))

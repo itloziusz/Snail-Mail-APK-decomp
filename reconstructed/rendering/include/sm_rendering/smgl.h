@@ -50,6 +50,15 @@ int smgl_get_matrix(sm_GLenum mode, sm_GLfloat out[16]);
 /* Current depth (>= 1) of the named stack, or -1 for an unknown mode. */
 int smgl_get_stack_depth(sm_GLenum mode);
 
+/* Emulator-held state that has no GLES2 counterpart (glGetIntegerv /
+ * glIsEnabled are not imported by the game; this is for tests and tools).
+ * pname: GL_MATRIX_MODE (0x0BA0), GL_SHADE_MODEL (0x0B54), the four GLES 1.1
+ * hint targets, GL_TEXTURE_ENV_MODE, GL_FOG_MODE, GL_TEXTURE_BINDING_2D
+ * (0x8069), or an emulated enable: GL_TEXTURE_2D, GL_FOG, GL_ALPHA_TEST,
+ * GL_MULTISAMPLE and the five client arrays (value 0/1).
+ * Returns 0, or -1 for a pname the emulator does not hold. */
+int smgl_get_tracked(sm_GLenum pname, sm_GLint *out);
+
 /* Diagnostics: each category is logged to stderr once per entry point and
  * counted every time it occurs. */
 typedef enum smgl_diag {
@@ -64,7 +73,6 @@ typedef enum smgl_diag {
     SMGL_DIAG_ALPHA_TEST_DRAW,      /* draw with GL_ALPHA_TEST enabled (func is ALWAYS) */
     SMGL_DIAG_UNSUPPORTED_CAP,      /* glEnable of lighting/clip planes/etc. (ignored) */
     SMGL_DIAG_UNSUPPORTED_TEXENV,   /* texenv pname/mode not emulated */
-    SMGL_DIAG_UNSUPPORTED_PARAM,    /* other state the emulator does not implement */
     SMGL_DIAG_TEX_INCOMPLETE,       /* texturing enabled with incomplete texture */
     SMGL_DIAG_TEX_NPOT,             /* non-power-of-two texture image */
     SMGL_DIAG_GENERATE_MIPMAP,      /* GL_GENERATE_MIPMAP emulated with glGenerateMipmap */
@@ -110,6 +118,9 @@ const char *smgl_diag_name(smgl_diag d);
 #define SMGL_GL_POINT_SMOOTH_HINT 0x0C51
 #define SMGL_GL_LINE_SMOOTH_HINT 0x0C52
 #define SMGL_GL_FOG_HINT 0x0C54
+#define SMGL_GL_SHADE_MODEL 0x0B54
+#define SMGL_GL_MATRIX_MODE 0x0BA0
+#define SMGL_GL_TEXTURE_BINDING_2D 0x8069
 #define SMGL_GL_FLAT 0x1D00
 #define SMGL_GL_SMOOTH 0x1D01
 #define SMGL_GL_MODELVIEW 0x1700
