@@ -26,3 +26,7 @@
 local.properties
 __pycache__/
 *.pyc
+
+# AOT translation output: embeds the original binary's code semantics and data
+# bytes. Regenerate locally with tools/aot/arm2c.py; never commit.
+/aot/generated/
