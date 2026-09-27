@@ -179,7 +179,7 @@ SM_APK_VARIANT=aot-gles2 tools/android_build/build_dev_apk.sh
 | GL backend (`aot/runtime/aot_android.c`) | `libGLESv1_CM` function table | `smgl_backend()` (`-DSM_GL_EMULATE_GLES1`), with `reconstructed/rendering/src/smgl.c` and `smgl_math.c` linked in |
 | `DT_NEEDED` | libc, libm, liblog, libGLESv1_CM | libc, libm, liblog, libGLESv2 |
 | manifest `glEsVersion` | `0x00010001` | `0x00020000` |
-| `versionCode` default (`SM_VERSION_CODE`) / `versionName` | 2 / `1.00-port-devN` | 3 / `1.00-port-gles2-devN` |
+| `versionCode` default (`SM_VERSION_CODE`) / `versionName` | 2 / `1.00-port-devN` | 5 / `1.00-port-gles2-devN` |
 
 * **Context loss.** GLSurfaceView calls `onSurfaceCreated` for every new EGL
   context, for example after `onPause` has destroyed the old one. That call
@@ -309,4 +309,3 @@ qemu-aarch64 -L /usr/aarch64-linux-gnu build-a64-game/aot/snailmail_host --headl
 # arm64-only APK containing the translated game
 tools/android_build/build_dev_apk.sh        # SM_APK_VARIANT=aot (default)
 ```
-

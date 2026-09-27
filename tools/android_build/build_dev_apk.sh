@@ -20,13 +20,14 @@
 #     sources) and libsnailmail.so renders through the GLES1-on-GLES2
 #     emulation of reconstructed/rendering (smgl) on libGLESv2 instead of
 #     libGLESv1_CM. Same applicationId and debug key, so the two replace each
-#     other; versionCode defaults to 4 (aot: 2).
+#     other; versionCode defaults to 5 (aot: 2).
 #   bridge: only the hand-reconstructed modules + fail-loudly JNI bridge.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 ANDROID_JAR="${ANDROID_JAR:-/usr/lib/android-sdk/platforms/android-23/android.jar}"
 OUT="$ROOT/work/android_build"
+EXTRACTED="${SM_EXTRACTED_DIR:-work/apk_unzip}"
 KS="$OUT/keys/debug.keystore"   # local debug key, never committed
 MIN_SDK=23
 TARGET_SDK=35
@@ -38,7 +39,7 @@ fi
 VARIANT="${SM_APK_VARIANT:-aot}"
 case "$VARIANT" in
   aot|bridge) APK="$OUT/out/snailmail-port-arm64-dev.apk"; VC="${SM_VERSION_CODE:-2}"; VNAME="1.00-port-dev$VC" ;;
-  aot-gles2) APK="$OUT/out/snailmail-port-arm64-gles2.apk"; VC="${SM_VERSION_CODE:-4}"; VNAME="1.00-port-gles2-dev$VC" ;;
+  aot-gles2) APK="$OUT/out/snailmail-port-arm64-gles2.apk"; VC="${SM_VERSION_CODE:-5}"; VNAME="1.00-port-gles2-dev$VC" ;;
   *) echo "unknown SM_APK_VARIANT=$VARIANT (expected aot, aot-gles2 or bridge)"; exit 1 ;;
 esac
 VNAME="${SM_VERSION_NAME:-$VNAME}"
@@ -47,9 +48,9 @@ for t in clang ld.lld javac dalvik-exchange aapt apksigner keytool python3; do
   command -v "$t" >/dev/null || { echo "missing tool: $t"; exit 1; }
 done
 [ -f "$ANDROID_JAR" ] || { echo "missing $ANDROID_JAR (apt install android-sdk-platform-23)"; exit 1; }
-[ -f work/apk_unzip/assets/asm.mp3 ] || { echo "run tools/inventory/setup_workspace.sh first"; exit 1; }
+[ -f "$EXTRACTED/assets/asm.mp3" ] || { echo "missing extracted asm.mp3 (run tools/inventory/setup_workspace.sh)"; exit 1; }
 for density in ldpi mdpi hdpi; do
-  [ -f "work/apk_unzip/res/drawable-$density/icon.png" ] || {
+  [ -f "$EXTRACTED/res/drawable-$density/icon.png" ] || {
     echo "missing original drawable-$density/icon.png (run tools/inventory/setup_workspace.sh)"
     exit 1
   }
@@ -60,12 +61,12 @@ rm -f "$APK" "$APK.idsig"   # the other variant's APK is kept
 mkdir -p "$OUT/app/classes" "$OUT/app/pkg/lib/arm64-v8a" "$OUT/out" "$OUT/keys"
 for density in ldpi mdpi hdpi; do
   mkdir -p "$OUT/app/res/drawable-$density"
-  cp "work/apk_unzip/res/drawable-$density/icon.png" "$OUT/app/res/drawable-$density/icon.png"
+  cp "$EXTRACTED/res/drawable-$density/icon.png" "$OUT/app/res/drawable-$density/icon.png"
 done
 
 if [ "$VARIANT" = "aot" ] || [ "$VARIANT" = "aot-gles2" ]; then
   echo "== translate original ARM32 code (tools/aot/arm2c.py)"
-  ORIG_SO=work/apk_unzip/lib/armeabi-v7a/libsnailmail.so
+  ORIG_SO="$EXTRACTED/lib/armeabi-v7a/libsnailmail.so"
   if [ ! -f aot/generated/aot_table.c ] || ! grep -q "$(sha256sum "$ORIG_SO" | cut -d' ' -f1)" aot/generated/aot_table.c \
      || [ tools/aot/arm2c.py -nt aot/generated/aot_table.c ] || [ tools/aot/hooks.txt -nt aot/generated/aot_table.c ]; then
     python3 tools/aot/arm2c.py --elf "$ORIG_SO" --out aot/generated
@@ -161,7 +162,7 @@ fi
 aapt package -f --debug-mode \
   --min-sdk-version "$MIN_SDK" --target-sdk-version "$TARGET_SDK" \
   --rename-manifest-package "$APP_ID" \
-  -M "$OUT/app/AndroidManifest.xml" -S "$OUT/app/res" -S android/app/src/main/res -A work/apk_unzip/assets \
+  -M "$OUT/app/AndroidManifest.xml" -S "$OUT/app/res" -S android/app/src/main/res -A "$EXTRACTED/assets" \
   -I "$ANDROID_JAR" -0 arsc -0 mp3 -0 ogg -F "$OUT/app/unaligned.apk"
 
 python3 - "$OUT/app/unaligned.apk" "$OUT/app/pkg" <<'PY'

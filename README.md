@@ -6,44 +6,29 @@ AArch64 code, while the Android shell retains the game's Java and JNI contract.
 The APK contains only `arm64-v8a` native code and renders through a GLES 2
 implementation of the game's GLES 1 calls.
 
-## Current release
+## Build from your original APK
 
-**v0.1.0 is an installable preview.** It appears on the launcher as **Snail
-Mail** with the original icon. It installs under
-`com.sandlotgames.snailmail.port.preview`, so it can coexist with the original
-game and earlier port test builds. The shell requests immersive full screen,
-including the navigation bar, and limits drawing to the game's intended 60 Hz
-pace. The in-game Display page adds settings for modern screen shapes.
-
-The owner reported that an earlier ARM64 build ran on a Galaxy S24+. The latest
-GLES 2, display, navigation bar, and launcher changes have been built and
-checked locally, but have not yet been confirmed on a physical device. See
-[release notes](RELEASE_NOTES_v0.1.0.md) and the
-[porting status](docs/PORTING_STATUS.md) for specific test results and limits.
-
-## Build the preview APK
-
-You need your own copy of the original Android 1.00 APK. Place it at
-`original/com.sandlotgames.snailmail-1.00.apk`. The build extracts its game
-assets and launcher icons locally; those files and signing keys are excluded
-from this repository.
-
-On a Linux machine with the tools described in [building](docs/BUILDING.md):
+The port has a Python build tool that accepts the original Snail Mail Android
+1.00 APK directly. It verifies the known input, extracts it temporarily,
+compiles the native AArch64 game code, and produces a signed APK. The original
+APK, game assets, and signing key are excluded from this repository.
 
 ```sh
-tools/inventory/setup_workspace.sh
-JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=4 \
-  SM_VERSION_NAME=0.1.0 \
-  SM_APP_ID=com.sandlotgames.snailmail.port.preview \
-  tools/android_build/build_dev_apk.sh
+.venv/bin/python tools/android_build/build_from_original.py \
+  /path/to/com.sandlotgames.snailmail-1.00.apk \
+  --output SnailMail-ARM64-v0.1.1.apk
 ```
 
-The signed APK is written to
-`work/android_build/out/snailmail-port-arm64-gles2.apk`. This development build
-uses a locally generated key. To update an installed preview without losing
-its app data, sign the next APK with the same key and increase its version code.
-The Gradle project in `android/` is a separate development path; the published
-preview was built with the script above.
+Follow the [step-by-step build tutorial](docs/BUILD_FROM_ORIGINAL.md) for
+prerequisites, installation, update signing, and verification. The app appears
+as **Snail Mail** with the original launcher icon. It installs under
+`com.sandlotgames.snailmail.port.preview` alongside the original game.
+
+The port includes the GLES 2 renderer, 60 Hz presentation pacing, adaptive
+Display settings, immersive full screen, and time-based smoothing for the
+accelerometer tilt controls. The owner reported that an earlier ARM64 build
+ran on a Galaxy S24+. The newest controls and display changes still need
+hands-on device verification; see [porting status](docs/PORTING_STATUS.md).
 
 ## How the port works
 

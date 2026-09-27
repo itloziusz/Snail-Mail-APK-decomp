@@ -4,23 +4,28 @@
 
 The `aot-gles2` branch at `6de0c2b` was built from the reference APK whose
 SHA-256 is `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
-The updated versionCode 4 APK has SHA-256
-`fd9f5f5b45f44d9ca67e7794f6de5977521f0361b27097df5b3c9680312fd9fc`.
+The locally rebuilt versionCode 5 APK has SHA-256
+`4e5389ea12aec6bfbb075b10eb3e65dfe93329515a5464d1a14fe5ed27ede5d0`.
 `apksigner verify` passed for v1, v2, and v3; the ELF/APK checker passed
 arm64-v8a only, stored native library, 16 KiB alignment, and no text
 relocations. `aapt` reports package `com.sandlotgames.snailmail.port.preview`,
 minSdk 23, targetSdk 35, and GLES 2.0. This build uses a local debug key.
 The unique preview package ID avoids signature conflicts with older test
 installs of `com.sandlotgames.snailmail.port`; those installs retain their data.
-Version code 4 also hides the navigation bar via immersive mode and uses the original launcher icon staged from the owner's APK. Its launcher label is “Snail Mail”. The earlier
+Version code 5 also hides the navigation bar via immersive mode and uses the original launcher icon staged from the owner's APK. Its launcher label is “Snail Mail”. The earlier
 `FLAG_FULLSCREEN` setting only hid the status bar. The request is reapplied on
 resume and window focus; this has been compiled and packaged, but not observed
 on a device yet.
 
+The Java accelerometer listener now filters tilt by elapsed sensor time: a
+70 ms time constant reduces small jitter, while a 28 ms time constant responds
+to larger deliberate turns. It resets after a 500 ms sensor gap. This compiled
+in the APK but has not yet been assessed for steering feel on a phone.
+
 This verifies a build artifact, not a device run. The GLES2 renderer, 60 Hz
 pacer, adaptive FOV, HUD alignment, and Display page in this revision still
-need hands-on device testing. The first downloadable APK is therefore marked
-as an experimental preview; see `RELEASE_NOTES_v0.1.0.md`.
+need hands-on device testing. The local build remains experimental; see
+`docs/BUILD_FROM_ORIGINAL.md` for a reproducible build from the original APK.
 
 Local verification of this revision: eight available host checks passed with
 ASan/UBSan (`LSAN_OPTIONS=detect_leaks=0`, because LeakSanitizer cannot inspect
