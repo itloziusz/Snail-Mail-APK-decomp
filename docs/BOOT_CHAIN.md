@@ -117,15 +117,15 @@ If a name is not in the archive, the game falls back to real files via `PfmLoadF
 | `nativeDone` | `0x1555c` | `appDeinit()` (`bx lr`) then tail-calls `importGLDeinit()` (`bx lr`) | — | no-op |
 | `JNIResourceManagerInvalidate` | `0x142fc` | `cRResourceManager::Invalidate(&gResourceManager)`: every used entry's state=1, and `gLoadingBar+0x35`=1 (`0x37c9cd`) | W `gResourceManager`, `gLoadingBar` | The actual reload only starts once the manager state becomes non-zero (`ReInit`) |
 
-`InitGL` (`0x7ab84`) sets up GL state and a shared index buffer. Its calls, all established:
+`InitGL` (`0x7ab84`) sets up GL state and a shared index buffer. Its calls, all established from the operands at `0x7ac00`–`0x7acd8`:
 
 1. Builds a 6-index-per-quad table for 256 quads in `RShellMemoryScratch()`.
-2. Uploads it: `glGenBuffers(1, &gSpriteIndexArrayVBO)`, `glBindBuffer(GL_ELEMENT_ARRAY_BUFFER?)`, `glBufferData(0xC00 bytes)`, unbind. Ghidra shows the target and usage constants as string addresses. The raw operands still need to be read from the disassembly.
-3. `glEnable(0xBD0 GL_DITHER)`, `glEnable(0x809D GL_MULTISAMPLE)`, `glShadeModel(GL_SMOOTH)`.
-4. `glClearColor(0,0,0,0)`, `glClearDepthf(1)`.
-5. `glEnable(GL_DEPTH_TEST)`, `glDepthFunc(GL_LEQUAL 0x203)`, `glDepthRangef(0,1)`.
-6. `glHint(PERSPECTIVE_CORRECTION, FASTEST)`, `glHint(POINT_SMOOTH, FASTEST)`.
-7. `glDisable(GL_FOG 0xBC0)`, `glColor4f(1,1,1,1)`.
+2. Uploads it: `glGenBuffers(1, &gSpriteIndexArrayVBO)`, `glBindBuffer(0x8893 GL_ELEMENT_ARRAY_BUFFER)`, `glBufferData(0x8893, 0xC00, table, 0x88E4 GL_STATIC_DRAW)`, then unbind.
+3. `glEnable(0x0BD0 GL_DITHER)`, `glEnable(0x809D GL_MULTISAMPLE)`, `glShadeModel(0x1D00 GL_FLAT)`.
+4. `glClearColor(0,0,0,0)`, `glClearDepthf(1.0)`.
+5. `glEnable(0x0B71 GL_DEPTH_TEST)`, `glDepthFunc(0x0203 GL_LEQUAL)`, `glDepthRangef(0,1)`.
+6. `glHint(0x0C50 GL_PERSPECTIVE_CORRECTION_HINT, 0x1101 GL_FASTEST)`, `glHint(0x0C52 GL_LINE_SMOOTH_HINT, GL_FASTEST)`.
+7. `glDisable(0x0BC0 GL_ALPHA_TEST)`, `glColor4f(1,1,1,1)`.
 
 It also resets `gBindTextureRefLast` and `gG0BlendMode` to −1. The platform worker owns the GL census.
 
@@ -241,8 +241,8 @@ Source: `elf_audit.v7a.json`, `xrefs.v7a.json` (EV-NAT-0024).
 
 | entry | addr | behaviour | gating |
 |---|---|---|---|
-| `JNIMouseEvent(action, x, y?)` | `0x14318` | Scales x by `640/gG0DeviceScreenWidth`, giving a virtual 640-wide space. Action 0 = press (`ClickiPhone` + `ClickOn`), 1 = move/hold, other = release (`ClickOff`); the target is `cRMouse` at `Game+0x228`. The Ghidra argument rendering is unreliable here, so re-derive from the disassembly. | returns unless `gGameValid` |
-| `JNIKey(keycode)` | `0x13d78` | Maps Android keycodes to DirectInput scancodes: letters `+0x44` and digits `+0x29` go through `cKeyPad::ConvertCode`; 0x3e→0x39 (space), 0x43→0x0e (backspace), 0x42→0x1c (enter). `KeySet` fires only when `*(Game+0xbf0) == 2`. | **no `Game` null check** (**likely**, from pseudocode; verify in disassembly) |
+| `JNIMouseEvent(action, x, y?)` | `0x14318` | Scales x by `640.0/gG0DeviceScreenWidth`, giving a virtual 640-wide space (established). From the pseudocode (**likely**): action 0 → `cRMouse::ClickiPhone` + `ClickOn`; action 1 → `ClickiPhone` only when `*(Game+0x718fc)==2`, then `ClickOn`; any other action → `ClickOff`. The target is `cRMouse` at `Game+0x228`. The argument rendering is unreliable, so re-derive from the disassembly. | returns unless `gGameValid` |
+| `JNIKey(keycode)` | `0x13d78` | Android keycode → ASCII → scancode: A–Z (29..54) `+0x44` gives 'a'..'z', and 0–9 (7..16) `+0x29` gives '0'..'9', both passed through `cKeyPad::ConvertCode(Game+0xbf0)`. Fixed mappings: 0x3e→0x39 (space), 0x43→0x0e (backspace), 0x42→0x1c (enter); these are DirectInput `DIK_*` values. `KeySet(code)` fires only when `*(Game+0xbf0) == 2`. For any other keycode, the path `0x13db4`→`0x13e04` calls `KeySet(r4)` with `r4` never written: the value is whatever the JNI caller left in the callee-saved register. This is an original bug (established); a port must pick a defined behaviour. | **no `Game` null check**: `0x13db8`–`0x13dc0` and `0x13dd8`–`0x13de4` dereference `Game` untested (established) |
 | `JNIAccelerometer(x,y,z)` | `0x142bc` | `cAccelerometer::Input(Game+0xbd4, x, y, z)` | returns if `Game == 0` |
 | `JNIDebug` | `0x13b44` | returns 0 | — |
 | `JNIOFOInit(str)` | `0x7d81c` | tail-calls `OFONewUser` | — |

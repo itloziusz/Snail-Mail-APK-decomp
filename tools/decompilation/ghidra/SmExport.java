@@ -189,7 +189,21 @@ public class SmExport extends GhidraScript {
 
         DecompInterface ifc = new DecompInterface();
         DecompileOptions opts = new DecompileOptions();
-        opts.grabFromProgram(currentProgram);
+        // "Analysis.Infer constant pointers" is turned off: with the image based
+        // at 0, GL enums / sizes / time constants are otherwise printed as
+        // pointers into .dynstr (e.g. glBindBuffer("UnInit", ...)).
+        String inferConstPtr = "default(true)";
+        try {
+            ghidra.framework.options.ToolOptions fieldOpts = new ghidra.framework.options.ToolOptions("Listing Fields");
+            ghidra.framework.options.ToolOptions toolOpts = new ghidra.framework.options.ToolOptions("Decompiler");
+            opts.registerOptions(fieldOpts, toolOpts, currentProgram);
+            toolOpts.setBoolean("Analysis.Infer constant pointers", false);
+            opts.grabFromToolAndProgram(fieldOpts, toolOpts, currentProgram);
+            inferConstPtr = "false";
+        } catch (Exception e) {
+            opts.grabFromProgram(currentProgram);
+            inferConstPtr = "default(true); could not override: " + e;
+        }
         ifc.setOptions(opts);
         ifc.toggleCCode(true);
         ifc.toggleSyntaxTree(true);
@@ -370,6 +384,7 @@ public class SmExport extends GhidraScript {
           .append(",\n  \"calling_convention_changed_functions\": ").append(ccChanged)
           .append(",\n  \"calling_convention_failures\": [").append(String.join(", ", ccFailures)).append("]")
           .append(",\n  \"operand_refs_removed_below_exec_start\": ").append(refsRemoved)
+          .append(",\n  \"decompiler_infer_constant_pointers\": ").append(q(inferConstPtr))
           .append(",\n  \"decompile_timeout_s\": ").append(timeout)
           .append(",\n  \"functions_processed\": ").append(processed)
           .append(",\n  \"thunks\": ").append(thunks)

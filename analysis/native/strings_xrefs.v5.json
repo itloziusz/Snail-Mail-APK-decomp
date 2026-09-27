@@ -20,7 +20,7 @@
     {"addr": "0x8e20", "block": ".dynstr", "value": "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject", "refs": []},
     {"addr": "0x8e4e", "block": ".dynstr", "value": "gJavaEnv", "refs": []},
     {"addr": "0x8e57", "block": ".dynstr", "value": "gJavaObj", "refs": []},
-    {"addr": "0x8e60", "block": ".dynstr", "value": "gJavaClass", "refs": [{"from": "0x4efa4", "function": "0x4e844", "function_name": "cRGalaxy::Init2", "type": "DATA"}, {"from": "0x4f014", "function": "0x4e844", "function_name": "cRGalaxy::Init2", "type": "DATA"}, {"from": "0x4f174", "function": "0x4e844", "function_name": "cRGalaxy::Init2", "type": "DATA"}, {"from": "0x4f17c", "function": "0x4e844", "function_name": "cRGalaxy::Init2", "type": "DATA"}, {"from": "0x4f1cc", "function": "0x4e844", "function_name": "cRGalaxy::Init2", "type": "PARAM"}, {"from": "0x4f1d0", "function": "0x4e844", "function_name": "cRGalaxy::Init2", "type": "DATA"}, {"from": "0x4f6d0", "function": "0x4f5ac", "function_name": "cRGalaxy::UnInit", "type": "DATA"}, {"from": "0x4f80c", "function": "0x4f6e8", "function_name": "cRGalaxy::AI", "type": "DATA"}, {"from": "0x4f93c", "function": "0x4f6e8", "function_name": "cRGalaxy::AI", "type": "DATA"}, {"from": "0x4fb48", "function": "0x4f6e8", "function_name": "cRGalaxy::AI", "type": "DATA"}]},
+    {"addr": "0x8e60", "block": ".dynstr", "value": "gJavaClass", "refs": []},
     {"addr": "0x8e6b", "block": ".dynstr", "value": "gJAVAFunction", "refs": []},
     {"addr": "0x8e79", "block": ".dynstr", "value": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIKey", "refs": []},
     {"addr": "0x8eb0", "block": ".dynstr", "value": "_Z6KeySeth", "refs": []},
@@ -1144,7 +1144,7 @@
     {"addr": "0xfc75", "block": ".dynstr", "value": "_ZN15cRFringeManager4InitEv", "refs": []},
     {"addr": "0xfc91", "block": ".dynstr", "value": "_ZN21cRSubTrampRingManager7AddRingEP8cRSubLoc", "refs": []},
     {"addr": "0xfcbf", "block": ".dynstr", "value": "_ZN10cRRowModel2AIEv", "refs": []},
-    {"addr": "0xfcd4", "block": ".dynstr", "value": "_ZN10cRSubLazer4KillEv", "refs": [{"from": "0x68370", "function": "0x682d4", "function_name": "cRSubGame::CameraAI", "type": "DATA"}]},
+    {"addr": "0xfcd4", "block": ".dynstr", "value": "_ZN10cRSubLazer4KillEv", "refs": []},
     {"addr": "0xfceb", "block": ".dynstr", "value": "_ZN8cRSubLoc6RemoveEv", "refs": []},
     {"addr": "0xfd01", "block": ".dynstr", "value": "_ZN15cRFringeManager9GetFringeEv", "refs": []},
     {"addr": "0xfd22", "block": ".dynstr", "value": "_ZN15cRParcelManager3NewEv", "refs": []},
@@ -1152,7 +1152,7 @@
     {"addr": "0xfd68", "block": ".dynstr", "value": "_ZN14cRSubTrampRing2AIEv", "refs": []},
     {"addr": "0xfd81", "block": ".dynstr", "value": "_ZN8cRBanner2AIEv", "refs": []},
     {"addr": "0xfd93", "block": ".dynstr", "value": "_ZN9cRSubGame8CalcRateEv", "refs": []},
-    {"addr": "0xfdac", "block": ".dynstr", "value": "_ZN6cRNuke2AIEv", "refs": [{"from": "0x626c4", "function": "0x62588", "function_name": "cRSubGame::ReSet", "type": "DATA"}, {"from": "0x6274c", "function": "0x62588", "function_name": "cRSubGame::ReSet", "type": "DATA"}, {"from": "0x720d0", "function": "0x72018", "function_name": "cRSubGame::Complete", "type": "DATA"}, {"from": "0x762f0", "function": "0x7622c", "function_name": "cRSubGame::BuildLevel", "type": "DATA"}]},
+    {"addr": "0xfdac", "block": ".dynstr", "value": "_ZN6cRNuke2AIEv", "refs": []},
     {"addr": "0xfdbc", "block": ".dynstr", "value": "_ZN6cRNuke4InitEv", "refs": []},
     {"addr": "0xfdce", "block": ".dynstr", "value": "_ZN13cRSubRingStar6ShowerEP10cRSubGoldy", "refs": []},
     {"addr": "0xfdf6", "block": ".dynstr", "value": "_ZN13cRSubRingStar2AIEv", "refs": []},
@@ -4328,5 +4328,5 @@
     {"addr": "0x9555", "block": ".strtab", "value": "_ZTV8cRBodPos", "refs": []}
   ],
   "count": 4323,
-  "count_referenced": 842
+  "count_referenced": 839
 }
