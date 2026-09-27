@@ -126,6 +126,9 @@ def main():
                     help="sources under this path are generated: compile with -w")
     ap.add_argument("-j", dest="jobs", type=int, default=os.cpu_count() or 1)
     ap.add_argument("-X", dest="extra", action="append", default=[], help="extra compiler flag")
+    ap.add_argument("--file-flag", action="append", default=[], metavar="PATH=FLAG",
+                    help="extra compiler flag only for sources at/under PATH (e.g. a variant's -D); "
+                         "other sources keep their flags, so their cached objects stay valid")
     ap.add_argument("sources", nargs="+")
     a = ap.parse_args()
 
@@ -143,12 +146,22 @@ def main():
               "-Wall", "-Wextra", "-Werror=implicit-function-declaration"]
     common += [f"-I{i}" for i in a.incs] + [f"-D{d}" for d in a.defs]
     common += a.extra
+    file_flags = []
+    for ff in a.file_flag:
+        path, sep, flag = ff.partition("=")
+        if not sep or not path or not flag:
+            sys.exit(f"--file-flag needs PATH=FLAG, got {ff!r}")
+        if not os.path.exists(path):
+            sys.exit(f"--file-flag path does not exist: {path}")
+        file_flags.append((os.path.abspath(path), flag))
     jobs = []
     for i, src in enumerate(a.sources):
         obj = work / f"{i:03d}_{pathlib.Path(src).stem}.o"
         extra = ["-std=gnu11"] if src.endswith(".c") else ["-std=c++17", "-fno-exceptions", "-fno-rtti"]
         if any(os.path.abspath(src).startswith(os.path.abspath(p)) for p in a.nowarn_prefix):
             extra = extra + ["-w", "-g0"]  # generated: no warnings, no debug info (size/time)
+        src_abs = os.path.abspath(src)
+        extra = extra + [f for p, f in file_flags if src_abs == p or src_abs.startswith(p + os.sep)]
         jobs.append((["clang"] + common + extra + ["-c", src, "-o", str(obj)], obj))
     # incremental: skip objects newer than their source with identical flags
     def up_to_date(cmd, obj):

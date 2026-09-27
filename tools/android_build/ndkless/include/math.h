@@ -20,6 +20,8 @@ double sqrt(double);
 float sqrtf(float);
 double tan(double);
 float tanf(float);
+/* bionic defines the classification macros on the compiler builtins */
+#define isfinite(x) __builtin_isfinite(x)
 #ifdef __cplusplus
 }
 #endif

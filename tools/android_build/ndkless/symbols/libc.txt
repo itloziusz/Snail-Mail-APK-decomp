@@ -58,6 +58,8 @@ ftello
 fputc
 fprintf
 strerror
+getenv
+vfprintf
 data stdout
 data stderr
 data stdin

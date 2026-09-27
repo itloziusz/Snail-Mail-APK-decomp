@@ -28,6 +28,7 @@ int snprintf(char* buf, size_t n, const char* fmt, ...) __attribute__((__format_
 int sprintf(char* buf, const char* fmt, ...) __attribute__((__format__(printf, 2, 3)));
 int vsnprintf(char* buf, size_t n, const char* fmt, va_list ap) __attribute__((__format__(printf, 3, 0)));
 int vsprintf(char* buf, const char* fmt, va_list ap) __attribute__((__format__(printf, 2, 0)));
+int vfprintf(FILE* f, const char* fmt, va_list ap) __attribute__((__format__(printf, 2, 0)));
 #ifdef __cplusplus
 }
 #endif

@@ -10,7 +10,10 @@
  *    docs/JNI_MAP.json hazard); objects are deduplicated with IsSameObject.
  *    java.io.FileDescriptor.descriptor (a non-SDK field) is served through
  *    public API: ParcelFileDescriptor.dup(fd).detachFd().
- *  - The GL backend is the device's real GLES 1.1 (libGLESv1_CM).
+ *  - The GL backend is the device's real GLES 1.1 (libGLESv1_CM), or, when
+ *    built with -DSM_GL_EMULATE_GLES1 (APK variant aot-gles2, whose
+ *    GLSurfaceView requests a GLES 2 context), the GLES1-on-GLES2 emulation
+ *    of reconstructed/rendering (smgl) on libGLESv2.
  */
 #include <jni.h>
 #include <android/log.h>
@@ -20,7 +23,9 @@
 #include "aot_host.h"
 #include "aot_platform.h"
 
-#ifdef SM_NDKLESS_GLES_DECLS
+#ifdef SM_GL_EMULATE_GLES1
+#include "sm_rendering/smgl.h"
+#elif defined(SM_NDKLESS_GLES_DECLS)
 #include "sm_gles1_decls.h"
 #else
 #include <GLES/gl.h>
@@ -29,6 +34,32 @@
 #define TAG "SnailMail"
 
 /* ---------------------------------------------------------------- GL backend */
+#ifdef SM_GL_EMULATE_GLES1
+static void log_smgl(const char *line) { __android_log_write(ANDROID_LOG_WARN, TAG, line); }
+
+/* GLSurfaceView calls onSurfaceCreated (-> nativeInit the first time in the
+ * process, nativeReInit afterwards) on the GL thread exactly when it has
+ * created a NEW EGL context, e.g. after onPause destroyed the previous one.
+ * The emulator's program, shaders, uniform locations and texture records of
+ * an earlier context are invalid then: forget them without GL calls, and
+ * rebuild everything in the new context before the guest issues its first GL
+ * call. smgl_init() also resets all emulated GLES 1.1 state (matrix stacks,
+ * enables, client arrays, current colour, fog, texenv, hints) to the
+ * defaults of a fresh GLES 1.1 context; everything else lives in the GLES2
+ * context itself and starts at its (identical) defaults. */
+static void gl_context_created(void)
+{
+    smgl_set_log_sink(log_smgl);
+    smgl_context_lost();
+    if (smgl_init() != 0) {
+        __android_log_print(ANDROID_LOG_ERROR, TAG,
+                            "smgl_init failed: GLES1-on-GLES2 emulation unavailable, GL calls are ignored");
+    } else {
+        __android_log_print(ANDROID_LOG_INFO, TAG, "GLES1-on-GLES2 emulation initialised in the new GL context");
+    }
+}
+#define GL_BACKEND() smgl_backend()
+#else
 static void g_BufferData(sm_GLenum t, sm_GLsizeiptr s, const void *d, sm_GLenum u) { glBufferData(t, s, d, u); }
 static const sm_gl_backend g_gles1 = {
     .BindBuffer = glBindBuffer, .BindTexture = glBindTexture, .BlendFunc = glBlendFunc,
@@ -45,6 +76,8 @@ static const sm_gl_backend g_gles1 = {
     .TexEnvf = glTexEnvf, .TexImage2D = glTexImage2D, .TexParameteri = glTexParameteri,
     .Translatef = glTranslatef, .VertexPointer = glVertexPointer, .Viewport = glViewport,
 };
+#define GL_BACKEND() (&g_gles1)
+#endif
 
 /* ---------------------------------------------------------------- Java bridge */
 static int g_fd_field_sentinel;
@@ -207,7 +240,7 @@ static aot_cpu *enter(JNIEnv *env)
         if (!aot_initialized()) {
             static aot_config cfg;
             cfg.java = &g_java;
-            cfg.gl = &g_gles1;
+            cfg.gl = GL_BACKEND();
             cfg.files_dir = NULL;
             cfg.log = android_log;
             aot_init(&cfg);
@@ -288,6 +321,9 @@ JNIEXPORT void JNICALL Java_com_sandlotgames_snailmail_ADRenderer_nativeInit(JNI
 {
     aot_cpu *c = enter(env);
     uint32_t ret_;
+#ifdef SM_GL_EMULATE_GLES1
+    gl_context_created();
+#endif
     CALL(PKG "ADRenderer_nativeInit", ENV_AND(thiz));
     (void)ret_;
 }
@@ -295,6 +331,9 @@ JNIEXPORT void JNICALL Java_com_sandlotgames_snailmail_ADRenderer_nativeReInit(J
 {
     aot_cpu *c = enter(env);
     uint32_t ret_;
+#ifdef SM_GL_EMULATE_GLES1
+    gl_context_created();
+#endif
     CALL(PKG "ADRenderer_nativeReInit", ENV_AND(thiz));
     (void)ret_;
 }

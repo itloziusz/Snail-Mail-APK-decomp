@@ -150,6 +150,7 @@ typedef struct smgl_state {
 static smgl_state st;
 static unsigned long g_diag_count[SMGL_DIAG__COUNT];
 static unsigned char g_diag_logged[SMGL_DIAG__COUNT][SMGL_FN__SLOTS];
+static void (*g_log_sink)(const char *line);
 
 /* ------------------------------------------------------------------------ */
 /* Diagnostics and errors.                                                    */
@@ -165,10 +166,28 @@ static void diag(smgl_diag d, int fn, const char *fmt, ...)
     g_diag_logged[d][fn] = 1;
     va_list ap;
     va_start(ap, fmt);
-    fprintf(stderr, "smgl: [%s] %s: ", k_diag_names[d], k_fn_names[fn]);
-    vfprintf(stderr, fmt, ap);
-    fprintf(stderr, " [logged once per entry point]\n");
+    if (g_log_sink != NULL) {
+        char line[1536]; /* fits a 1024-byte shader info log */
+        int n = snprintf(line, sizeof line, "smgl: [%s] %s: ", k_diag_names[d], k_fn_names[fn]);
+        if (n > 0 && (size_t)n < sizeof line) {
+            int m = vsnprintf(line + n, sizeof line - (size_t)n, fmt, ap);
+            if (m > 0) {
+                n = ((size_t)(n + m) < sizeof line) ? n + m : (int)sizeof line - 1;
+            }
+            snprintf(line + n, sizeof line - (size_t)n, " [logged once per entry point]");
+        }
+        g_log_sink(line);
+    } else {
+        fprintf(stderr, "smgl: [%s] %s: ", k_diag_names[d], k_fn_names[fn]);
+        vfprintf(stderr, fmt, ap);
+        fprintf(stderr, " [logged once per entry point]\n");
+    }
     va_end(ap);
+}
+
+void smgl_set_log_sink(void (*sink)(const char *line))
+{
+    g_log_sink = sink;
 }
 
 static const char *gl_error_name(GLenum e)
@@ -550,6 +569,20 @@ void smgl_shutdown(void)
     free(st.tex);
     st.tex = NULL;
     st.tex_count = st.tex_cap = 0;
+    st.initialized = 0;
+}
+
+void smgl_context_lost(void)
+{
+    /* The names belong to a destroyed context: deleting them in the next
+     * context would at best raise GL_INVALID_VALUE and at worst delete that
+     * context's objects of the same name. Texture records describe objects
+     * that died with the context. smgl_init() resets everything else. */
+    st.program = st.vs = st.fs = 0;
+    free(st.tex);
+    st.tex = NULL;
+    st.tex_count = st.tex_cap = 0;
+    st.bound_tex = 0;
     st.initialized = 0;
 }
 

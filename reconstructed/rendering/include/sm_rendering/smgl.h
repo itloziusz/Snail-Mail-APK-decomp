@@ -29,12 +29,31 @@ const sm_gl_backend *smgl_backend(void);
 
 /* Compile/link the shader and reset all emulated state to the GLES 1.1
  * defaults. Requires a current GLES2+ context. Returns 0 on success, -1 on
- * failure (diagnostic on stderr). Calling it again re-initialises. */
+ * failure (diagnostic on stderr). Calling it again re-initialises: the
+ * objects of the previous call are deleted in the CURRENT context first, so
+ * after a context loss call smgl_context_lost() before smgl_init(). */
 int smgl_init(void);
 
 /* Delete the GL objects created by smgl_init (context must still be current)
  * and free the emulator's bookkeeping. */
 void smgl_shutdown(void);
+
+/* The context that smgl_init ran in has been destroyed (Android: the
+ * GLSurfaceView EGL context is recreated after onPause, and every GL object
+ * name of the old context is invalid). Forget the program, shaders, uniform
+ * locations and texture bookkeeping WITHOUT issuing any GL call, and stop
+ * accepting entry points (they are ignored with SMGL_DIAG_NOT_INITIALIZED)
+ * until smgl_init() runs in the new context. That smgl_init() then resets
+ * every emulated GLES 1.1 state (matrix stacks, matrix mode, enables, client
+ * arrays, current colour, texenv, fog, hints, shade model, pack alignment)
+ * to the values a freshly created GLES 1.1 context has. No-op when not
+ * initialised. */
+void smgl_context_lost(void);
+
+/* Route diagnostics to `sink` (one line per call, no trailing newline)
+ * instead of stderr, e.g. to logcat on Android where stderr is discarded.
+ * NULL restores stderr. */
+void smgl_set_log_sink(void (*sink)(const char *line));
 
 /* ---- Introspection (not part of the GLES 1.1 import surface) ---- */
 
