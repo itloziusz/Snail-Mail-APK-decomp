@@ -5,7 +5,7 @@
 The `aot-gles2` branch at `6de0c2b` was built from the reference APK whose
 SHA-256 is `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
 The branded versionCode 3 APK has SHA-256
-`8016d49196f13b85361a765245d494135c95deb33c3d57f1084f9098ed68c294`.
+`3bec67c224f52ff687969cdf36f97cb47d38506043ab98637d8c12f8e76c23df`.
 `apksigner verify` passed for v1, v2, and v3; the ELF/APK checker passed
 arm64-v8a only, stored native library, 16 KiB alignment, and no text
 relocations. `aapt` reports package `com.sandlotgames.snailmail.port.preview`,
