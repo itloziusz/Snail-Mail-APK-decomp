@@ -22,17 +22,40 @@ These tools produced the evidence:
 * `classes.py`
 * Ghidra 11.4.2 pseudocode in `analysis/native/generated/decomp/v7a/`. This is regenerable, used only as a reading aid, and every claim was checked against the disassembly.
 
-## Managed side (to be merged)
+## Managed side (merged from `docs/APK_AUDIT.md` §10)
 
-> Placeholder. The JNI/managed worker owns this section (docs/APK_AUDIT.md,
-> docs/JNI_MAP.json); the lead will merge it here. The native trace below only
-> assumes the call order stated in the task brief:
-> `SnailMailActivity` static init → `System.loadLibrary("snailmail")`;
-> `onCreate` → `JNIDatInit(fd, start, len)` for `assets/asm.mp3`;
-> renderer `onSurfaceCreated` → `nativeInit` (first surface) or
-> `nativeReInit` + `JNIAudioInit` (later surfaces); `onSurfaceChanged` →
-> `nativeResize(w,h)`; `onDrawFrame` → `nativeRender(pauseFlag)`.
-> Items the managed side must confirm are marked **[MANAGED?]** below.
+Full detail, smali line references and evidence IDs are in `docs/APK_AUDIT.md`
+§10 and `docs/JNI_MAP.json`. Thread identities follow Android framework
+semantics and are **likely**; call order inside each thread is **established**
+from smali.
+
+| # | Thread | Step | Native effect | Confidence |
+|---|---|---|---|---|
+| M1 | main | `SnailMailApplication.onCreate` → `OpenFeint.initialize(...)` | none (library not loaded yet) | established |
+| M2 | main | `SnailMailActivity.<clinit>` → `System.loadLibrary("snailmail")` | dynamic linker runs 11 `.init_array` constructors (§0.a); no `JNI_OnLoad` | established |
+| M3 | main | `onCreate`: `JNIDebug()` (returns 0), wake lock, fullscreen, `new ADGLSurfaceView` → `setRenderer` (GL thread started), `setContentView`, `new SoundPool(8,3,0)` | — | established (order) |
+| M4 | main | `onCreate`: `openFd("asm.mp3")` → **`JNIDatInit(fd,(int)start,(int)len)`** | §1 | established |
+| M5 | main | `onCreate`: accelerometer registered (`SENSOR_DELAY_FASTEST`, never unregistered) | `JNIAccelerometer` calls begin | established |
+| M6 | main | `onResume` → `mGLView.onResume()`, wake lock acquire; surface created after the window is laid out | — | likely (framework) |
+| M7 | GL | `onSurfaceCreated`, first in process → **`nativeInit`**; later → **`nativeReInit`** (+ no-op `JNIAudioInit` after a fresh `onCreate`) | §2 | established (branching), likely (thread) |
+| M8 | GL | `onSurfaceChanged(w,h)` → **`nativeResize`** | §2 | established |
+| M9 | GL | `onDrawFrame` → **`nativeRender(HasFocus ? 0 : 1)`** every frame (`RENDERMODE_CONTINUOUSLY`) | §3 | established |
+| M10 | main | `onPause`: `mGLView.onPause()`, wake lock release, **`JNIResourceManagerInvalidate`**, music pause | marks resources for reload (§3.3) | established |
+| M11 | main | `onStop`: `SoundPool.release()`, **`JNIDatUnInit`** (no-op); `onRestart`: new `SoundPool`, no `JNIDatInit` | archive stays open for process lifetime | established |
+
+Ordering conclusions:
+
+* `JNIDatInit` (M4) completes before `nativeInit` (M7): **likely**. The surface
+  cannot exist until `onCreate`/`onResume` have returned on the main thread. The
+  app itself does no synchronisation.
+* `nativeReInit` cannot precede the first `nativeRender`: **likely**.
+  `onSurfaceCreated`, `onSurfaceChanged` and `onDrawFrame` run in one GLThread
+  loop iteration.
+* `nativeReInit` can still run **before `Game` is allocated**. `AppInit`
+  allocates `Game` only in `gAppState` 0, after `G0StartBlackCount` (= 2) black
+  frames. If the surface is recreated within those first frames, `nativeReInit`
+  writes `*(Game+0x718b4)` with `Game == NULL`. This is a **hypothesis** about a
+  narrow start-up crash in the original; it is not observed.
 
 ## 0. Load time (dynamic linker)
 
@@ -70,12 +93,12 @@ Two further facts about static state:
 Arguments, established from register use:
 
 * `r0` = `JNIEnv*`
-* `r1` = `this` (the Activity)
+* `r1` = `jclass`
 * `r2` = `java.io.FileDescriptor` object
 * `r3` = start offset, 32-bit. It is stored to `gJavaAssetStart`.
 * `[sp]` = length, 32-bit. It is stored to `gJavaAssetLength`.
 
-Because `r3` is used as a 32-bit value, the Java parameters are `int`, not `long`. **[MANAGED?]** Confirm the Java signature.
+This agrees with the JNI worker's `docs/JNI_MAP.json`, which lists `JNIDatInit` as `private static native` with descriptor `(Ljava/io/FileDescriptor;II)V`. The same file gives `nativeRender` the descriptor `(I)V`.
 
 The steps, all established (EV-NAT-0010):
 
@@ -110,7 +133,7 @@ If a name is not in the archive, the game falls back to real files via `PfmLoadF
 |---|---|---|---|---|
 | `nativeInit` | `0x15650` | `JAVA_RegisterFunctions(env, thiz)` (`0x13ca4`); `cRResourceManager::Init(&gResourceManager)` (`0x7e8b4`: count=0, 1200 entries ×0x8c, entry state=0, manager state=0, flag `+0x29048`=0); `G0StartBlackCount = 2` | W `gJavaEnv`, `gJavaObj`, `gJavaClass`, `gJAVAFunction[*].methodID`, `gResourceManager`, `G0StartBlackCount` | none native. It does **not** call `importGLInit`/`appInit`; game init is deferred into the per-frame `AppInit` state machine |
 | `JAVA_RegisterFunctions` | `0x13ca4` | Caches env and thiz; `GetObjectClass` (`+0x7c`); `GetMethodID` (`+0x84`) for 26 entries of `gJAVAFunction` (`0x8b3f0`, 12-byte records `{methodID, name, sig}`), entries 0–25 `JAVALoadSample … JAVAVibrate`. For example, `JAVATime` is at `+0x114` and `JAVATimeHi` at `+0x120`. | as above | Called on every surface creation, so the cached `JNIEnv*` is refreshed per GL thread |
-| `nativeReInit` | `0x155f0` | `JAVA_RegisterFunctions`; `InitGL()` (`0x7ab84`); `cRResourceManager::ReInit(&gResourceManager)` (`0x7ed5c`: splash setup, `Invalidate` = every entry state 1, manager state=1, flag=1); `Game->[+0x718b4] = 4`; `G0StartBlackCount = 2` | R `Game`; W `gResourceManager`, `G0StartBlackCount`, `*(Game+0x718b4)` | `Game != NULL`. There is no null check, so a `nativeReInit` before `AppInit` state 0 has run would fault. That is a **hypothesis**, **[MANAGED?]**: whether the Java side can call it that early |
+| `nativeReInit` | `0x155f0` | `JAVA_RegisterFunctions`; `InitGL()` (`0x7ab84`); `cRResourceManager::ReInit(&gResourceManager)` (`0x7ed5c`: splash setup, `Invalidate` = every entry state 1, manager state=1, flag=1); `Game->[+0x718b4] = 4`; `G0StartBlackCount = 2` | R `Game`; W `gResourceManager`, `G0StartBlackCount`, `*(Game+0x718b4)` | `Game != NULL`. There is no null check, so a `nativeReInit` before `AppInit` state 0 has run would fault. That is a **hypothesis**, see Managed side: reachable only if the surface is recreated during the first black frames (**hypothesis**) |
 | `JNIAudioInit` | `0x13ad0` | `bx lr` (no-op) | — | — |
 | `nativeResize(w,h)` | `0x1556c` | `wprintf(...)` (no-op); `gG0DeviceScreenWidth = gG0ScreenWidth = (float)w`; `gG0DeviceScreenHeight = gG0ScreenHeight = (float)h`. No GL call here; `G0Render` issues `glViewport` every frame | W the four screen floats | Must precede `AppInit` state 0, because `RShellInit` reads `gG0ScreenWidth/Height`. GLSurfaceView guarantees `onSurfaceChanged` before the first `onDrawFrame` (**likely**) |
 | `nativePause` | `0x15500` | NDK San Angeles sample leftover: toggles `_ZL12sDemoStopped`, stores `_getTime()` (gettimeofday, ms) in `sTimeStopped` or adjusts `sTimeOffset`. All three statics are referenced only here, in both resolvers (EV-NAT-0015) | R/W `sDemoStopped`, `sTimeStopped`, `sTimeOffset` | **No effect on the game** (established: no other readers). Pausing works through the `pauseFlag` argument of `nativeRender` |
@@ -173,7 +196,7 @@ All established from the disassembly at `0x15690`–`0x15834` (EV-NAT-0021, 0022
 
 * If `pause != 0` and the auto-quit counter `*(Game+0x718b4)` is 0, set it to 4. `cRQuit::AI` (`0x5f50c`) turns a positive counter into an injected `KeySet(1)`, which is DirectInput `DIK_ESCAPE`, so the game opens its in-game quit/pause menu (**likely**).
 * `Game->f44 = Game->f3c; Game->f3c = Game->f40`, two floats with an open meaning.
-* Clock: `T = GetTime()` (`0x7d110`, a tail branch to `JAVATime` `0x14118`). That function combines the Java `JAVATime()` (low 32 bits) and `JAVATimeHi()` (high 32 bits) of `System.nanoTime()` (smali `ADRenderer.smali:982-1013`, **[MANAGED?]**) and divides by 1000 with `__aeabi_uldivmod`. **Units: microseconds, monotonic.** `gettimeofday` is used only by the dead `_getTime`/`nativePause` path.
+* Clock: `T = GetTime()` (`0x7d110`, a tail branch to `JAVATime` `0x14118`). That function combines the Java `JAVATime()` (low 32 bits) and `JAVATimeHi()` (high 32 bits) of `System.nanoTime()` (smali `ADRenderer.smali:982-1013`: `JAVATime` stores `System.nanoTime()` and returns `long-to-int`; `JAVATimeHi` returns `(int)(JTime >> 32)` via `shr-long`, **established**, EV-JNI) and divides by 1000 with `__aeabi_uldivmod`. **Units: microseconds, monotonic.** `gettimeofday` is used only by the dead `_getTime`/`nativePause` path.
 * Fixed step `S = 0x411A = 16666 µs` (60 Hz), with `L = gTimeLast` (u64). Number of updates `n` and new `gTimeLast`:
 
   | condition | n | new `gTimeLast` |

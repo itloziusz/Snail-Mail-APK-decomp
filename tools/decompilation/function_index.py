@@ -345,6 +345,25 @@ def build(binname):
         r["callees"], r["tailcallees"], r["imports_called"] = [], [], [r["import"]] if r["import"] else []
         r["indirect_call_sites"] = 0
         r["indirect_jump_sites"] = 1  # ldr pc, [ip, #..]! through the GOT
+    # evidence IDs: attach every ledger entry whose `location` names an address
+    # inside a function of this binary (e.g. "v7a:0x15244-0x15490")
+    ev_path = smelf.REPO / "analysis/evidence/native.jsonl"
+    if ev_path.exists():
+        ranges = sorted((int(r["addr"], 16), int(r["addr"], 16) + max(r["size"], 1), r) for r in records + plt_records)
+        rstarts = [x[0] for x in ranges]
+        for line in ev_path.read_text().splitlines():
+            if not line.strip():
+                continue
+            e = json.loads(line)
+            for m in re.finditer(rf"\b{binname}:(0x[0-9a-fA-F]+)", e.get("location", "")):
+                va = int(m.group(1), 16)
+                k = bisect.bisect_right(rstarts, va) - 1
+                if k >= 0 and ranges[k][0] <= va < ranges[k][1]:
+                    ev = ranges[k][2]["evidence"]
+                    if e["id"] not in ev:
+                        ev.append(e["id"])
+        for r in records + plt_records:
+            r["evidence"].sort()
     all_recs = sorted(records + plt_records, key=lambda r: int(r["addr"], 16))
 
     # ---------------------------------------------------------------- summary
