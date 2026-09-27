@@ -15,7 +15,6 @@ typedef ptrdiff_t GLsizeiptr;
 #ifdef __cplusplus
 extern "C" {
 #endif
-return glname(params);
 void glBindBuffer(GLenum target, GLuint buffer);
 void glBindTexture(GLenum target, GLuint texture);
 void glBlendFunc(GLenum sfactor, GLenum dfactor);

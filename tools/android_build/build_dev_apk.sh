@@ -30,7 +30,7 @@ done
 [ -f "$ANDROID_JAR" ] || { echo "missing $ANDROID_JAR (apt install android-sdk-platform-23)"; exit 1; }
 [ -f work/apk_unzip/assets/asm.mp3 ] || { echo "run tools/inventory/setup_workspace.sh first"; exit 1; }
 
-rm -rf "$OUT/app" "$OUT/out"
+rm -rf "$OUT/app" "$OUT/out"   # objects are cached in $OUT/obj-*
 mkdir -p "$OUT/app/classes" "$OUT/app/pkg/lib/arm64-v8a" "$OUT/out" "$OUT/keys"
 
 VARIANT="${SM_APK_VARIANT:-aot}"
@@ -42,7 +42,7 @@ if [ "$VARIANT" = "aot" ]; then
   fi
   echo "== native (arm64-v8a, NDK-less): AOT runtime + translated game"
   python3 tools/android_build/ndkless/build_so.py \
-    --out "$OUT/app/pkg/lib/arm64-v8a/libsnailmail.so" --workdir "$OUT/app/obj" \
+    --out "$OUT/app/pkg/lib/arm64-v8a/libsnailmail.so" --workdir "$OUT/obj-aot" \
     --lib libc --lib libm --lib liblog --lib libGLESv1_CM \
     -I aot/runtime -I aot/generated -D SM_NDKLESS_GLES_DECLS \
     --nowarn-prefix aot/generated \

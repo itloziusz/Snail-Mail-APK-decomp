@@ -148,18 +148,28 @@ def main():
         obj = work / f"{i:03d}_{pathlib.Path(src).stem}.o"
         extra = ["-std=gnu11"] if src.endswith(".c") else ["-std=c++17", "-fno-exceptions", "-fno-rtti"]
         if any(os.path.abspath(src).startswith(os.path.abspath(p)) for p in a.nowarn_prefix):
-            extra = extra + ["-w"]
+            extra = extra + ["-w", "-g0"]  # generated: no warnings, no debug info (size/time)
         jobs.append((["clang"] + common + extra + ["-c", src, "-o", str(obj)], obj))
+    # incremental: skip objects newer than their source with identical flags
+    def up_to_date(cmd, obj):
+        stamp = obj.with_suffix(".cmd")
+        src = cmd[-3]
+        return (obj.exists() and stamp.exists() and stamp.read_text() == " ".join(map(str, cmd))
+                and obj.stat().st_mtime >= os.path.getmtime(src))
+    todo = [(c, o) for c, o in jobs if not up_to_date(c, o)]
+    print(f"compiling {len(todo)} of {len(jobs)} sources ({a.jobs} jobs)", flush=True)
     import concurrent.futures
     with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as ex:
-        results = list(ex.map(lambda j: subprocess.run([str(x) for x in j[0]], capture_output=True, text=True), jobs))
+        results = list(ex.map(lambda j: subprocess.run([str(x) for x in j[0]], capture_output=True, text=True), todo))
     failed = False
-    for (cmd, obj), r in zip(jobs, results):
+    for (cmd, obj), r in zip(todo, results):
         if r.stderr:
             sys.stderr.write(r.stderr)
         if r.returncode != 0:
             print("FAILED:", " ".join(str(x) for x in cmd))
             failed = True
+        else:
+            obj.with_suffix(".cmd").write_text(" ".join(map(str, cmd)))
     if failed:
         sys.exit(1)
     objs = [obj for _, obj in jobs]
