@@ -7,8 +7,10 @@ import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.view.View;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
@@ -82,6 +84,7 @@ public class SnailMailActivity extends Activity {
         getWindow().setFlags(1024, 1024); // WindowManager.LayoutParams.FLAG_FULLSCREEN
         this.mGLView = new ADGLSurfaceView(this);
         setContentView(this.mGLView);
+        hideSystemBars();
         // PORT-CHANGE: port options (screen fit, FOV, refresh); applies the
         // display mode for the refresh setting (60 Hz by default, see
         // ADGLSurfaceView).
@@ -159,6 +162,7 @@ public class SnailMailActivity extends Activity {
     protected void onResume() {
         wprintf("*** OnResume");
         super.onResume();
+        hideSystemBars();
         this.mGLView.onResume();
         this.wl.acquire();
     }
@@ -167,5 +171,38 @@ public class SnailMailActivity extends Activity {
     public void onWindowFocusChanged(boolean hasFocus) {
         HasFocus = hasFocus;
         super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemBars();
+        }
+    }
+
+    /** Fullscreen window flags hide the status bar, but not the phone's navigation bar. */
+    private void hideSystemBars() {
+        View decor = getWindow().getDecorView();
+        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+
+        // The fallback APK compiles against android-23, so API 30's
+        // WindowInsetsController is reached reflectively. On modern devices
+        // it controls both bars, including gesture navigation. A swipe may
+        // reveal them transiently, then the system hides them again.
+        if (Build.VERSION.SDK_INT >= 30) {
+            try {
+                Object controller = View.class.getMethod("getWindowInsetsController").invoke(decor);
+                if (controller != null) {
+                    Class<?> type = Class.forName("android.view.WindowInsets$Type");
+                    int bars = ((Integer) type.getMethod("systemBars").invoke(null)).intValue();
+                    Class<?> api = Class.forName("android.view.WindowInsetsController");
+                    api.getMethod("setSystemBarsBehavior", int.class).invoke(controller, 2);
+                    api.getMethod("hide", int.class).invoke(controller, bars);
+                }
+            } catch (ReflectiveOperationException e) {
+                android.util.Log.w("SnailMailPort", "Modern immersive mode unavailable", e);
+            }
+        }
     }
 }
