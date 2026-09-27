@@ -71,8 +71,12 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
     output = args.output.expanduser().resolve()
     if not apk.is_file() or not zipfile.is_zipfile(apk):
         raise ValueError("the input must be an Android APK file")
-    if output == apk or output == BUILT_APK:
-        raise ValueError("output must not overwrite the original APK or the builder's intermediate APK")
+    if output == apk:
+        raise ValueError("output must not overwrite the original APK")
+    if output.suffix.lower() != ".apk":
+        raise ValueError("output must be an .apk file")
+    if output.is_relative_to(REPO / "work/android_build"):
+        raise ValueError("output must be outside the builder's working directory")
     if args.version_code < 1 or args.version_code > 2_100_000_000:
         raise ValueError("--version-code must be a positive Android version code")
     if not re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*(\.[A-Za-z_][A-Za-z_0-9]*)+", args.app_id):
@@ -80,11 +84,6 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]*", args.version_name):
         raise ValueError("--version-name must contain only letters, numbers, dots, underscores, plus or minus")
 
-    actual = sha256(apk)
-    if actual != ORIGINAL_SHA256:
-        raise ValueError(f"unsupported original APK: SHA-256 {actual}; expected {ORIGINAL_SHA256}")
-
-    emit(f"Verified original APK: {actual}")
     work = REPO / "work"
     work.mkdir(exist_ok=True)
     # The native object cache, app staging directory, and intermediate APK are
@@ -95,7 +94,17 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
         emit("Build lock acquired")
         with tempfile.TemporaryDirectory(prefix="snailmail-apk-", dir=work) as temp:
             extracted = Path(temp)
-            extract_original(apk, extracted)
+            # Read the original only once. A user moving or changing the
+            # selected file cannot swap it between verification and extraction.
+            snapshot = extracted / "original.apk"
+            shutil.copyfile(apk, snapshot)
+            actual = sha256(snapshot)
+            if actual != ORIGINAL_SHA256:
+                raise ValueError(f"unsupported original APK: SHA-256 {actual}; expected {ORIGINAL_SHA256}")
+            emit(f"Verified original APK: {actual}")
+            source_dir = extracted / "source"
+            source_dir.mkdir()
+            extract_original(snapshot, source_dir)
             env = os.environ.copy()
             if not env.get("JAVA_HOME"):
                 javac = shutil.which("javac")
@@ -104,7 +113,7 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
                 env["JAVA_HOME"] = str(Path(javac).resolve().parent.parent)
             env.update(SM_APK_VARIANT="aot-gles2", SM_APP_ID=args.app_id,
                        SM_VERSION_CODE=str(args.version_code), SM_VERSION_NAME=args.version_name,
-                       SM_EXTRACTED_DIR=str(extracted))
+                       SM_EXTRACTED_DIR=str(source_dir))
             with subprocess.Popen([str(REPO / "tools/android_build/build_dev_apk.sh")],
                                   cwd=REPO, env=env, stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT, text=True, bufsize=1) as process:
@@ -135,7 +144,7 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -
 
 
 def browse_and_build(args: argparse.Namespace) -> int:
-    """Choose the original and destination with desktop dialogs, then build."""
+    """Run the desktop builder with file browsing and build progress."""
     try:
         import queue
         import threading
@@ -146,74 +155,163 @@ def browse_and_build(args: argparse.Namespace) -> int:
         raise RuntimeError("a desktop with Tkinter is required for the file picker; "
                            "pass the original APK path on the command line instead") from error
 
-    root.withdraw()
-    selected = filedialog.askopenfilename(
-        parent=root, title="Select your original Snail Mail Android 1.00 APK",
-        filetypes=[("Android APK", "*.apk"), ("All files", "*")])
-    if not selected:
-        root.destroy()
-        return 0
-    destination = filedialog.asksaveasfilename(
-        parent=root, title="Save the new ARM64 APK", defaultextension=".apk",
-        initialfile="SnailMail-ARM64-v0.1.1.apk",
-        filetypes=[("Android APK", "*.apk")])
-    if not destination:
-        root.destroy()
-        return 0
-    args.original_apk, args.output = Path(selected), Path(destination)
     root.title("Snail Mail ARM64 Builder")
-    root.geometry("760x440")
+    root.geometry("820x560")
     frame = ttk.Frame(root, padding=12)
     frame.pack(fill="both", expand=True)
-    ttk.Label(frame, text="Building Snail Mail for ARM64…").pack(anchor="w")
-    ttk.Label(frame, text=f"Original: {selected}", wraplength=730).pack(anchor="w")
-    ttk.Label(frame, text=f"Output: {destination}", wraplength=730).pack(anchor="w")
+    frame.columnconfigure(1, weight=1)
+    frame.rowconfigure(5, weight=1)
+
+    original_value = tk.StringVar(value=str(args.original_apk or ""))
+    output_value = tk.StringVar(value=str(args.output))
+    version_code_value = tk.StringVar(value=str(args.version_code))
+    version_name_value = tk.StringVar(value=args.version_name)
+    status_value = tk.StringVar(value="Select your original APK, then build.")
+    suggested_name = f"SnailMail-ARM64-v{args.version_name}.apk"
+
+    def update_suggested_output(*_unused: object) -> None:
+        nonlocal suggested_name
+        version = version_name_value.get()
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]*", version):
+            return
+        new_name = f"SnailMail-ARM64-v{version}.apk"
+        current = Path(output_value.get())
+        if current.name == suggested_name:
+            output_value.set(str(current.with_name(new_name)))
+        suggested_name = new_name
+
+    version_name_value.trace_add("write", update_suggested_output)
+
+    ttk.Label(frame, text="Original Android 1.00 APK").grid(row=0, column=0, sticky="w", pady=4)
+    original_entry = ttk.Entry(frame, textvariable=original_value)
+    original_entry.grid(row=0, column=1, sticky="ew", padx=8)
+
+    def choose_original() -> None:
+        selected = filedialog.askopenfilename(
+            parent=root, title="Select your original Snail Mail Android 1.00 APK",
+            filetypes=[("Android APK", "*.apk"), ("All files", "*")])
+        if selected:
+            original_value.set(selected)
+
+    original_button = ttk.Button(frame, text="Browse…", command=choose_original)
+    original_button.grid(row=0, column=2)
+
+    ttk.Label(frame, text="New APK").grid(row=1, column=0, sticky="w", pady=4)
+    output_entry = ttk.Entry(frame, textvariable=output_value)
+    output_entry.grid(row=1, column=1, sticky="ew", padx=8)
+
+    def choose_output() -> None:
+        current = Path(output_value.get().strip() or "SnailMail-ARM64-v0.1.1.apk").expanduser()
+        selected = filedialog.asksaveasfilename(
+            parent=root, title="Save the new ARM64 APK", defaultextension=".apk",
+            initialfile=current.name, filetypes=[("Android APK", "*.apk")])
+        if selected:
+            output_value.set(selected)
+
+    output_button = ttk.Button(frame, text="Browse…", command=choose_output)
+    output_button.grid(row=1, column=2)
+
+    ttk.Label(frame, text="Version code").grid(row=2, column=0, sticky="w", pady=4)
+    code_entry = ttk.Entry(frame, textvariable=version_code_value, width=12)
+    code_entry.grid(row=2, column=1, sticky="w", padx=8)
+    ttk.Label(frame, text="Increase this to update an installed build.").grid(row=2, column=2, sticky="w")
+    ttk.Label(frame, text="Version name").grid(row=3, column=0, sticky="w", pady=4)
+    name_entry = ttk.Entry(frame, textvariable=version_name_value, width=20)
+    name_entry.grid(row=3, column=1, sticky="w", padx=8)
+
+    controls = [original_entry, original_button, output_entry, output_button, code_entry, name_entry]
+    actions = ttk.Frame(frame)
+    actions.grid(row=4, column=0, columnspan=3, sticky="ew", pady=(8, 4))
+    ttk.Label(actions, textvariable=status_value).pack(side="left")
+    progress = ttk.Progressbar(actions, mode="indeterminate", length=120)
+    progress.pack(side="right", padx=(8, 0))
+
     log = scrolledtext.ScrolledText(frame, state="disabled", height=20)
-    log.pack(fill="both", expand=True, pady=(10, 0))
+    log.grid(row=5, column=0, columnspan=3, sticky="nsew", pady=(6, 8))
     messages: queue.Queue[tuple[str, str]] = queue.Queue()
-    finished = False
+    building = False
     exit_status = 0
 
     def close_window() -> None:
-        if finished:
-            root.destroy()
-        else:
+        if building:
             messagebox.showinfo("Build in progress", "Wait for the APK build to finish.", parent=root)
+        else:
+            root.destroy()
 
     root.protocol("WM_DELETE_WINDOW", close_window)
 
-    def worker() -> None:
+    def worker(selected_args: argparse.Namespace) -> None:
         try:
-            result = build(args, lambda line: messages.put(("log", line)))
-        except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError) as error:
+            result = build(selected_args, lambda line: messages.put(("log", line)))
+        except Exception as error:
             messages.put(("error", str(error)))
         else:
             messages.put(("done", str(result)))
 
     def show_progress() -> None:
-        nonlocal finished, exit_status
-        while not messages.empty():
-            kind, value = messages.get_nowait()
+        nonlocal building, exit_status
+        while True:
+            try:
+                kind, value = messages.get_nowait()
+            except queue.Empty:
+                break
             if kind == "log":
                 log.configure(state="normal")
                 log.insert("end", value + "\n")
                 log.see("end")
                 log.configure(state="disabled")
-            elif kind == "error":
-                finished = True
-                exit_status = 1
-                root.title("Snail Mail ARM64 Builder — failed")
-                messagebox.showerror("Build failed", value, parent=root)
             else:
-                finished = True
-                root.title("Snail Mail ARM64 Builder — complete")
-                messagebox.showinfo("Build complete", f"New APK saved at:\n{value}", parent=root)
-        if not finished:
+                building = False
+                progress.stop()
+                build_button.configure(state="normal")
+                for control in controls:
+                    control.configure(state="normal")
+                if kind == "error":
+                    exit_status = 1
+                    status_value.set("Build failed. See the log and try again.")
+                    log.configure(state="normal")
+                    log.insert("end", "ERROR: " + value + "\n")
+                    log.configure(state="disabled")
+                    messagebox.showerror("Build failed", value, parent=root)
+                else:
+                    exit_status = 0
+                    status_value.set(f"APK saved: {value}")
+                    messagebox.showinfo("Build complete", f"New APK saved at:\n{value}", parent=root)
+        if building:
             root.after(100, show_progress)
 
-    root.deiconify()
-    threading.Thread(target=worker, daemon=True).start()
-    root.after(100, show_progress)
+    def start_build() -> None:
+        nonlocal building, exit_status
+        if building:
+            return
+        try:
+            selected_args = argparse.Namespace(
+                original_apk=Path(original_value.get().strip()) if original_value.get().strip() else None,
+                output=Path(output_value.get().strip()),
+                version_code=int(version_code_value.get().strip()),
+                version_name=version_name_value.get().strip(), app_id=args.app_id)
+            if not output_value.get().strip():
+                raise ValueError("choose a destination for the new APK")
+            if selected_args.original_apk is None:
+                raise ValueError("choose your original Snail Mail Android 1.00 APK")
+        except ValueError as error:
+            messagebox.showerror("Check build settings", str(error), parent=root)
+            return
+        exit_status = 0
+        log.configure(state="normal")
+        log.delete("1.0", "end")
+        log.configure(state="disabled")
+        building = True
+        status_value.set("Building… this can take several minutes on a clean checkout.")
+        build_button.configure(state="disabled")
+        for control in controls:
+            control.configure(state="disabled")
+        progress.start(10)
+        threading.Thread(target=worker, args=(selected_args,), daemon=True).start()
+        root.after(100, show_progress)
+
+    build_button = ttk.Button(actions, text="Build APK", command=start_build)
+    build_button.pack(side="right")
     root.mainloop()
     return exit_status
 
