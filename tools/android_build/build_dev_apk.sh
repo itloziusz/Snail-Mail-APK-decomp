@@ -30,7 +30,11 @@ OUT="$ROOT/work/android_build"
 KS="$OUT/keys/debug.keystore"   # local debug key, never committed
 MIN_SDK=23
 TARGET_SDK=35
-APP_ID=com.sandlotgames.snailmail.port
+APP_ID="${SM_APP_ID:-com.sandlotgames.snailmail.port}"
+if [[ ! "$APP_ID" =~ ^[a-zA-Z_][a-zA-Z_0-9]*(\.[a-zA-Z_][a-zA-Z_0-9]*)+$ ]]; then
+  echo "invalid SM_APP_ID=$APP_ID"
+  exit 1
+fi
 VARIANT="${SM_APK_VARIANT:-aot}"
 case "$VARIANT" in
   aot|bridge) APK="$OUT/out/snailmail-port-arm64-dev.apk"; VC="${SM_VERSION_CODE:-2}"; VNAME="1.00-port-dev$VC" ;;
