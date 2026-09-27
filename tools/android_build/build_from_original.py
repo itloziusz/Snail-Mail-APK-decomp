@@ -60,8 +60,10 @@ def extract_original(apk: Path, target: Path) -> None:
         archive.extractall(target)
 
 
-def build(args: argparse.Namespace, emit: Callable[[str], None] = print) -> Path:
+def build(args: argparse.Namespace, emit: Callable[[str], None] | None = None) -> Path:
     """Build from a selected APK; emit progress to the CLI or the GUI."""
+    if emit is None:
+        emit = lambda line: print(line, flush=True)
     if args.original_apk is None:
         raise ValueError("select the original Snail Mail Android 1.00 APK")
     apk = args.original_apk.expanduser().resolve(strict=True)
@@ -104,16 +106,23 @@ def build(args: argparse.Namespace, emit: Callable[[str], None] = print) -> Path
                 emit(line.rstrip("\n"))
             if process.wait() != 0:
                 raise RuntimeError("Android build failed; see the log above")
-        output.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(BUILT_APK, output)
-    badging = subprocess.check_output(["aapt", "dump", "badging", str(output)], text=True)
+    badging = subprocess.check_output(["aapt", "dump", "badging", str(BUILT_APK)], text=True)
     package = re.search(r"^package: name='([^']+)' versionCode='(\d+)' versionName='([^']+)'", badging, re.M)
     label = re.search(r"^application-label:'([^']+)'", badging, re.M)
     if not package or package.groups() != (args.app_id, str(args.version_code), args.version_name):
         raise RuntimeError("built APK package or version does not match the requested identity")
     if not label or label.group(1) != "Snail Mail":
         raise RuntimeError("built APK launcher name is not Snail Mail")
-    subprocess.run(["apksigner", "verify", str(output)], check=True)
+    subprocess.run(["apksigner", "verify", str(BUILT_APK)], check=True)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=".snailmail-", suffix=".apk", dir=output.parent)
+    os.close(descriptor)
+    try:
+        shutil.copyfile(BUILT_APK, temporary)
+        os.replace(temporary, output)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
     emit(f"Built {output}\nSHA-256 {sha256(output)}\nInstalled name: Snail Mail")
     return output
 
