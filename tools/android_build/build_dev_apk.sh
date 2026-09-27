@@ -41,6 +41,7 @@ case "$VARIANT" in
   aot-gles2) APK="$OUT/out/snailmail-port-arm64-gles2.apk"; VC="${SM_VERSION_CODE:-3}"; VNAME="1.00-port-gles2-dev$VC" ;;
   *) echo "unknown SM_APK_VARIANT=$VARIANT (expected aot, aot-gles2 or bridge)"; exit 1 ;;
 esac
+VNAME="${SM_VERSION_NAME:-$VNAME}"
 
 for t in clang ld.lld javac dalvik-exchange aapt apksigner keytool python3; do
   command -v "$t" >/dev/null || { echo "missing tool: $t"; exit 1; }
