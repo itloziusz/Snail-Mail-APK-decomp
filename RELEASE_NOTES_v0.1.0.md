@@ -3,8 +3,12 @@
 This is the first installable preview of the native ARM64 port. The game code
 is translated ahead of time and compiled into `lib/arm64-v8a/libsnailmail.so`.
 The APK uses the GLES1-on-GLES2 renderer, 60 Hz presentation pacing, and the
-new adaptive display settings. It installs as
-`com.sandlotgames.snailmail.port`, alongside the original game.
+new adaptive display settings. The corrected download installs as
+`com.sandlotgames.snailmail.port.preview`, alongside the original game and
+earlier `com.sandlotgames.snailmail.port` test builds. It avoids the signing
+conflict that can produce the generic “App not installed” error when an older
+test build used a different debug key. The existing test build and its save
+files are left alone.
 
 The APK contains the assets from the owner's original 1.00 package. Keep the
 original APK out of the repository. Build locally with:
@@ -12,12 +16,13 @@ original APK out of the repository. Build locally with:
 ```sh
 # Place the original package at original/com.sandlotgames.snailmail-1.00.apk
 tools/inventory/setup_workspace.sh
-JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=5 \
+JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=1 \
+  SM_APP_ID=com.sandlotgames.snailmail.port.preview \
   tools/android_build/build_dev_apk.sh
 ```
 
 The output is `work/android_build/out/snailmail-port-arm64-gles2.apk`. Its
-application version is `1.00-port-gles2-dev5` and it uses a local debug signing
+application version is `1.00-port-gles2-dev1` and it uses a local debug signing
 key. The owner reported gameplay running on a Galaxy S24+ with an earlier
 version; the latest display settings and pacing changes have not been verified
 on a physical device. Treat this as an experimental build and keep a copy of
