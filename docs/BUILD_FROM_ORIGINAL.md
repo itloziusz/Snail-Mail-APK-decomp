@@ -50,6 +50,10 @@ For terminal-only systems or automation, pass the original APK path directly:
 In terminal mode, the default output is `SnailMail-ARM64-v0.1.1.apk` in the
 current directory. In the desktop mode, choose the destination in the save
 dialog.
+If two Python builder windows or commands run from the same checkout, they
+wait for a repository build lock so their shared native cache and intermediate
+APK cannot overwrite one another. Run the Python entry point for concurrent
+builds; direct calls to the lower-level shell script do not use this lock.
 The installed app is **Snail Mail**, package
 `com.sandlotgames.snailmail.port.preview`, version name `0.1.1`, version code
 `5`. It contains only `arm64-v8a` native code, the original icon and assets,
@@ -105,3 +109,9 @@ invalid package or version values were rejected. A failed input validation
 left an existing output file untouched. The desktop file dialogs were not run
 in the headless build environment; the command-line route and the compiled
 Android listener were tested there.
+
+Two simultaneous Python builds with different version codes (9 and 10) also
+finished with their own requested identities and valid launcher labels. A
+headless Tkinter harness exercised the desktop picker control flow for a
+successful build, a failed build, and a canceled file selection; a real
+graphical session is still needed to check the appearance of the dialogs.
