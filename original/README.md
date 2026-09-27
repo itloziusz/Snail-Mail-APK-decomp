@@ -13,3 +13,6 @@ embedded signing certificate is recorded in analysis/apk/inventory.json).
 Everything under this directory except this README is gitignored. Treat the
 files as read-only (`chmod 0444`). All analysis runs on copies under `work/`
 created by `tools/inventory/setup_workspace.sh`.
+
+For the user-facing Python builder, you can instead select the original APK
+from any location; see `docs/BUILD_FROM_ORIGINAL.md`.
