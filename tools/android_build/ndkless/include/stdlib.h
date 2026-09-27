@@ -11,6 +11,7 @@ __attribute__((__noreturn__)) void abort(void);
 int atoi(const char* s);
 double strtod(const char* s, char** end);
 long strtol(const char* s, char** end, int base);
+char* getenv(const char* name);
 void qsort(void* base, size_t count, size_t size, int (*cmp)(const void*, const void*));
 void srand48(long seed);
 long lrand48(void);

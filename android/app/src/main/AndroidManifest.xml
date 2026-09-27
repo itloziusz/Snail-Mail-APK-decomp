@@ -29,6 +29,14 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- The original registers the accelerometer with SENSOR_DELAY_FASTEST
+         (AccelerometerListener.start, rate 0). For targetSdk >= 31 Android caps
+         motion sensors at 200 Hz, and in DEBUGGABLE builds registerListener()
+         throws SecurityException without this normal (install-time) permission
+         (SystemSensorManager.enableSensor, CHANGE_ID_SAMPLING_RATE_SENSORS_PERMISSION).
+         That crashed the first dev APK in onCreate on Android 12+ devices.
+         Declaring it also keeps the original, uncapped sampling rate. -->
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
 
     <supports-screens
         android:anyDensity="true"

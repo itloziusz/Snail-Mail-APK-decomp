@@ -47,3 +47,19 @@ strtol
 vsnprintf
 vsprintf
 __errno
+mmap
+munmap
+mprotect
+pthread_key_create
+pthread_getspecific
+pthread_setspecific
+fseeko
+ftello
+fputc
+fprintf
+strerror
+getenv
+vfprintf
+data stdout
+data stderr
+data stdin

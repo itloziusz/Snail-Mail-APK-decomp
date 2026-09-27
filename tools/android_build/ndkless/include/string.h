@@ -17,6 +17,7 @@ char* strcat(char* dst, const char* src);
 char* strchr(const char* s, int c);
 char* strrchr(const char* s, int c);
 char* strstr(const char* h, const char* n);
+char* strerror(int err);
 #ifdef __cplusplus
 }
 #endif

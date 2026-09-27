@@ -162,6 +162,46 @@ but the build must move to the pinned NDK (§3) as soon as it is reachable.
 The APK contains the original game's assets extracted from the owner-supplied
 APK and must not be redistributed.
 
+### 3b. APK variant `aot-gles2` (GLES 1.1 emulated on GLES 2.0)
+
+A fallback for devices whose GLES 1.1 driver misbehaves. The default `aot`
+variant renders through the device's `libGLESv1_CM`, and the quality of that
+driver is unverified on current GPUs such as the Xclipse 940 in the Galaxy S24+.
+
+```sh
+SM_APK_VARIANT=aot-gles2 tools/android_build/build_dev_apk.sh
+# -> work/android_build/out/snailmail-port-arm64-gles2.apk (the aot APK next to it is kept)
+```
+
+| | `aot` (default) | `aot-gles2` |
+|---|---|---|
+| EGL context | GLSurfaceView default (ES 1) | ES 2: `setEGLContextClientVersion(2)` is inserted before `setRenderer` in a copy of the Java sources (`work/android_build/app/java`). The committed sources are not changed |
+| GL backend (`aot/runtime/aot_android.c`) | `libGLESv1_CM` function table | `smgl_backend()` (`-DSM_GL_EMULATE_GLES1`), with `reconstructed/rendering/src/smgl.c` and `smgl_math.c` linked in |
+| `DT_NEEDED` | libc, libm, liblog, libGLESv1_CM | libc, libm, liblog, libGLESv2 |
+| manifest `glEsVersion` | `0x00010001` | `0x00020000` |
+| `versionCode` default (`SM_VERSION_CODE`) / `versionName` | 2 / `1.00-port-devN` | 3 / `1.00-port-gles2-devN` |
+
+* **Context loss.** GLSurfaceView calls `onSurfaceCreated` for every new EGL
+  context, for example after `onPause` has destroyed the old one. That call
+  reaches `nativeInit` the first time and `nativeReInit` afterwards. In this
+  variant both JNI wrappers call `smgl_context_lost()` and then `smgl_init()`
+  on the GL thread before the translated function runs. The first call forgets
+  the dead context's program, uniform locations and texture records without
+  making any GL call. The second rebuilds them and resets the emulated GLES 1.1
+  state to the defaults of a fresh context.
+* **Logs.** smgl diagnostics, such as a shader compile log, go to logcat
+  (`adb logcat -s SnailMail`) instead of stderr.
+* **Installing.** Both variants have the same applicationId and debug key, so
+  each installs over the other. To install a lower `versionCode`, use
+  `adb install -r -d` (the build is debuggable) or set a higher `SM_VERSION_CODE`.
+* **Build details.** Both variants share the object cache
+  `work/android_build/obj-aot`. Only `aot_android.c` and smgl get per-variant
+  flags (`build_so.py --file-flag PATH=FLAG`), so switching variants recompiles
+  one file. `ndkless/include/GLES2/gl2.h` declares only the GLES 2.0 subset that
+  smgl uses, with values copied from the Khronos header, and
+  `ndkless/symbols/libGLESv2.txt` allowlists it. clang turns smgl's `sinf`+`cosf`
+  into `sincosf`, so `sincosf` is on the libm allowlist.
+
 ## 4. 16 KB page-size and 64-bit-only verification
 
 `tools/validation/platform/check_elf_alignment.py FILE...` accepts `.so`
@@ -244,3 +284,29 @@ the outputs above in the evidence ledger before claiming
 
 All read `work/apk_unzip/…` (populate with `tools/inventory/setup_workspace.sh`)
 and never modify inputs.
+
+## 8. Ahead-of-time translated game (Pass 2)
+
+```sh
+tools/inventory/setup_workspace.sh                       # original APK -> work/
+python3 tools/aot/arm2c.py --elf work/apk_unzip/lib/armeabi-v7a/libsnailmail.so --out aot/generated
+cmake -S . -B build-game -DCMAKE_BUILD_TYPE=Release
+cmake --build build-game --target snailmail_host snailmail_ref -j
+# play (offscreen, PNG every 60 frames); input script format in host/main.c
+build-game/aot/snailmail_host --frames 3000 --shot-every 60 --out shots --input in.txt
+# simulated display rate: the virtual clock advances 1/N s per drawn frame
+# (default 60). --hz 120 reproduces the unpaced 2x speed on 120 Hz panels.
+build-game/aot/snailmail_host --hz 120 --frames 1560 --shot-every 120 --out shots120
+# differential vs the ORIGINAL ARM32 code (Unicorn 2 from the pip wheel)
+build-game/aot/snailmail_host --headless --frames 6000 --input in.txt --gltrace aot.txt
+build-game/aot/snailmail_ref  --headless --frames 6000 --input in.txt --gltrace ref.txt
+cmp aot.txt ref.txt
+# AArch64 (qemu-user test harness)
+python3 tools/aot/fetch_arm64_host_deps.py work/arm64-deps
+cmake -S . -B build-a64-game -DCMAKE_TOOLCHAIN_FILE=cmake/aarch64-linux-gnu.toolchain.cmake \
+  -DPNG_LIBRARY=$PWD/work/arm64-deps/sysroot/usr/lib/aarch64-linux-gnu/libpng16.a ... (see PORTING_STATUS)
+qemu-aarch64 -L /usr/aarch64-linux-gnu build-a64-game/aot/snailmail_host --headless ...
+# arm64-only APK containing the translated game
+tools/android_build/build_dev_apk.sh        # SM_APK_VARIANT=aot (default)
+```
+

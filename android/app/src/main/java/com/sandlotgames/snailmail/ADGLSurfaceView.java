@@ -2,8 +2,12 @@ package com.sandlotgames.snailmail;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
+import android.view.Choreographer;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -12,9 +16,33 @@ import android.view.inputmethod.InputMethodManager;
  * OpenGL ES 1.x context, matching the GLES 1.1 imports of libsnailmail.so.
  * Input mapping is unchanged: MotionEvent ACTION_DOWN(0)->0, ACTION_UP(1)->2,
  * ACTION_MOVE(2)->1; all other actions (incl. pointer up/down) ignored.
+ *
+ * PORT-CHANGE: 60 Hz presentation. appRender (v7a:0x15690) runs at least one
+ * 16,666 us simulation step for every frame GLSurfaceView draws
+ * (docs/BOOT_CHAIN.md 3.2), so the original assumes a display of about 60 Hz.
+ * On a 120 Hz display the game ran twice as fast. The game's timing code is
+ * unchanged; the shell restores the frame rate it was written for:
+ *   1. PortSettings asks the window for the 60 Hz display mode;
+ *   2. surfaceCreated() declares the surface as fixed-rate 60 fps content
+ *      (Surface.setFrameRate, Android 11+);
+ *   3. FramePacer draws on vsync, but never twice within MIN_FRAME_INTERVAL_NS,
+ *      in case the system keeps a faster refresh rate anyway.
+ * On a 60 Hz display every vsync is drawn, as in the original. The 120 Hz and
+ * VRR port options (PortSettings) draw every vsync instead; native code then
+ * interpolates between the game's 60 Hz steps.
  */
 class ADGLSurfaceView extends GLSurfaceView {
     ADRenderer mRenderer;
+
+    // One 60 Hz period minus 2 ms of tolerance for vsync timestamp jitter.
+    // Below half of a 120 Hz vsync period (4.17 ms), so on a 120 Hz display
+    // exactly every second vsync is drawn.
+    private static final long MIN_FRAME_INTERVAL_NS = 16666667L - 2000000L;
+    // Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE (API 30).
+    private static final int FRAME_RATE_COMPATIBILITY_FIXED_SOURCE = 1;
+
+    private final FramePacer mPacer = new FramePacer();
+    private int mRefresh = PortSettings.REFRESH_60;
 
     // (IFF)V -- native scales x by 640/deviceWidth, y by 480/deviceHeight
     // (v7a:0x14318-0x14370).
@@ -31,6 +59,9 @@ class ADGLSurfaceView extends GLSurfaceView {
         // TODO(port): EGL config is GLSurfaceView's default chooser (as original);
         // verify depth-buffer size on modern devices (docs/PLATFORM_BOUNDARIES.md).
         setRenderer(this.mRenderer);
+        // PORT-CHANGE: frames are requested by FramePacer (see class comment);
+        // the original used GLSurfaceView's default RENDERMODE_CONTINUOUSLY.
+        setRenderMode(RENDERMODE_WHEN_DIRTY);
         requestFocus();
         setFocusableInTouchMode(true);
     }
@@ -104,6 +135,85 @@ class ADGLSurfaceView extends GLSurfaceView {
                 return true;
             default:
                 return true;
+        }
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        super.surfaceCreated(holder);
+        applyFrameRate(holder.getSurface());
+    }
+
+    /** PortSettings.REFRESH_*; UI thread. */
+    void setPresentation(int refresh) {
+        mRefresh = refresh;
+        mPacer.mMinIntervalNs = refresh == PortSettings.REFRESH_60 ? MIN_FRAME_INTERVAL_NS : 0L;
+        Surface s = getHolder().getSurface();
+        if (s != null && s.isValid()) {
+            applyFrameRate(s);
+        }
+    }
+
+    // Surface.setFrameRate(float, int) is API 30; the shell compiles against
+    // android-23, so it is looked up by reflection. Best effort: at 60 Hz the
+    // FramePacer still limits presentation. 0 clears the vote (VRR: the system
+    // chooses).
+    private void applyFrameRate(Surface surface) {
+        if (Build.VERSION.SDK_INT < 30) {
+            return;
+        }
+        float rate = mRefresh == PortSettings.REFRESH_60 ? 60.0f
+                : mRefresh == PortSettings.REFRESH_120 ? 120.0f : 0.0f;
+        try {
+            Surface.class.getMethod("setFrameRate", float.class, int.class)
+                    .invoke(surface, rate, FRAME_RATE_COMPATIBILITY_FIXED_SOURCE);
+        } catch (Exception e) {
+            // ignored, see above
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPacer.start();
+    }
+
+    @Override
+    public void onPause() {
+        mPacer.stop();
+        super.onPause();
+    }
+
+    /** Requests one render per vsync, at most one per mMinIntervalNs. Main thread only. */
+    private final class FramePacer implements Choreographer.FrameCallback {
+        private boolean mRunning;
+        private long mLastFrameNs;
+        long mMinIntervalNs = MIN_FRAME_INTERVAL_NS;
+
+        void start() {
+            if (mRunning) {
+                return;
+            }
+            mRunning = true;
+            mLastFrameNs = 0;
+            Choreographer.getInstance().postFrameCallback(this);
+        }
+
+        void stop() {
+            mRunning = false;
+            Choreographer.getInstance().removeFrameCallback(this);
+        }
+
+        @Override
+        public void doFrame(long frameTimeNanos) {
+            if (!mRunning) {
+                return;
+            }
+            if (mLastFrameNs == 0 || frameTimeNanos - mLastFrameNs >= mMinIntervalNs) {
+                mLastFrameNs = frameTimeNanos;
+                requestRender();
+            }
+            Choreographer.getInstance().postFrameCallback(this);
         }
     }
 }

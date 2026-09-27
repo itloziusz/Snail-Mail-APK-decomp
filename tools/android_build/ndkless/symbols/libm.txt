@@ -16,3 +16,10 @@ sqrt
 sqrtf
 tan
 tanf
+# Not called by name: clang -O2 fuses sinf(x)+cosf(x) into sincosf (smgl_math.c,
+# aot-gles2 variant), as in an NDK build. Exported by bionic libm (LIBC).
+sincosf
+# aot/port (display adaptation: FOV and 2D layout)
+atanf
+fmaxf
+fminf

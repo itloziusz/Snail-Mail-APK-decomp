@@ -36,13 +36,16 @@ def run(cmd):
     subprocess.run([str(c) for c in cmd], check=True)
 
 
-def read_allowlist(lib):
-    names = []
+def read_allowlist(lib, with_kind=False):
+    """Allowed symbol names; a line "data NAME" marks a data object."""
+    out = []
     for line in (HERE / "symbols" / f"{lib}.txt").read_text().splitlines():
         line = line.strip()
-        if line and not line.startswith("#"):
-            names.append(line)
-    return names
+        if not line or line.startswith("#"):
+            continue
+        kind, name = ("data", line[5:].strip()) if line.startswith("data ") else ("func", line)
+        out.append((kind, name) if with_kind else name)
+    return out
 
 
 def jdk_include():
@@ -54,7 +57,8 @@ def jdk_include():
 
 def build_stub(lib, target, workdir):
     src = workdir / f"stub_{lib}.c"
-    src.write_text("".join(f"void {n}(void) {{}}\n" for n in read_allowlist(lib)))
+    src.write_text("".join(f"char {n}[16];\n" if k == "data" else f"void {n}(void) {{}}\n"
+                           for k, n in read_allowlist(lib, with_kind=True)))
     out = workdir / f"{lib}.so"
     # Stub bodies are never executed (the device's real library is loaded by
     # soname), so their C signatures are irrelevant: silence builtin checks.
@@ -118,6 +122,13 @@ def main():
     ap.add_argument("--lib", action="append", default=[], help="stub lib to link, e.g. libc")
     ap.add_argument("-I", dest="incs", action="append", default=[])
     ap.add_argument("-D", dest="defs", action="append", default=[])
+    ap.add_argument("--nowarn-prefix", action="append", default=[],
+                    help="sources under this path are generated: compile with -w")
+    ap.add_argument("-j", dest="jobs", type=int, default=os.cpu_count() or 1)
+    ap.add_argument("-X", dest="extra", action="append", default=[], help="extra compiler flag")
+    ap.add_argument("--file-flag", action="append", default=[], metavar="PATH=FLAG",
+                    help="extra compiler flag only for sources at/under PATH (e.g. a variant's -D); "
+                         "other sources keep their flags, so their cached objects stay valid")
     ap.add_argument("sources", nargs="+")
     a = ap.parse_args()
 
@@ -134,12 +145,47 @@ def main():
               "-fno-strict-aliasing", "-fvisibility=hidden",
               "-Wall", "-Wextra", "-Werror=implicit-function-declaration"]
     common += [f"-I{i}" for i in a.incs] + [f"-D{d}" for d in a.defs]
-    objs = []
+    common += a.extra
+    file_flags = []
+    for ff in a.file_flag:
+        path, sep, flag = ff.partition("=")
+        if not sep or not path or not flag:
+            sys.exit(f"--file-flag needs PATH=FLAG, got {ff!r}")
+        if not os.path.exists(path):
+            sys.exit(f"--file-flag path does not exist: {path}")
+        file_flags.append((os.path.abspath(path), flag))
+    jobs = []
     for i, src in enumerate(a.sources):
-        obj = work / f"{i:02d}_{pathlib.Path(src).stem}.o"
-        extra = ["-std=c11"] if src.endswith(".c") else ["-std=c++17", "-fno-exceptions", "-fno-rtti"]
-        run(["clang"] + common + extra + ["-c", src, "-o", obj])
-        objs.append(obj)
+        obj = work / f"{i:03d}_{pathlib.Path(src).stem}.o"
+        extra = ["-std=gnu11"] if src.endswith(".c") else ["-std=c++17", "-fno-exceptions", "-fno-rtti"]
+        if any(os.path.abspath(src).startswith(os.path.abspath(p)) for p in a.nowarn_prefix):
+            extra = extra + ["-w", "-g0"]  # generated: no warnings, no debug info (size/time)
+        src_abs = os.path.abspath(src)
+        extra = extra + [f for p, f in file_flags if src_abs == p or src_abs.startswith(p + os.sep)]
+        jobs.append((["clang"] + common + extra + ["-c", src, "-o", str(obj)], obj))
+    # incremental: skip objects newer than their source with identical flags
+    def up_to_date(cmd, obj):
+        stamp = obj.with_suffix(".cmd")
+        src = cmd[-3]
+        return (obj.exists() and stamp.exists() and stamp.read_text() == " ".join(map(str, cmd))
+                and obj.stat().st_mtime >= os.path.getmtime(src))
+    todo = [(c, o) for c, o in jobs if not up_to_date(c, o)]
+    print(f"compiling {len(todo)} of {len(jobs)} sources ({a.jobs} jobs)", flush=True)
+    import concurrent.futures
+    with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as ex:
+        results = list(ex.map(lambda j: subprocess.run([str(x) for x in j[0]], capture_output=True, text=True), todo))
+    failed = False
+    for (cmd, obj), r in zip(todo, results):
+        if r.stderr:
+            sys.stderr.write(r.stderr)
+        if r.returncode != 0:
+            print("FAILED:", " ".join(str(x) for x in cmd))
+            failed = True
+        else:
+            obj.with_suffix(".cmd").write_text(" ".join(map(str, cmd)))
+    if failed:
+        sys.exit(1)
+    objs = [obj for _, obj in jobs]
     stubs = [build_stub(lib, target, work) for lib in a.lib]
     run(["clang", f"--target={target}", "-shared", "-nostdlib", "-fuse-ld=lld",
          "-Wl,-soname,libsnailmail.so", f"-Wl,-z,max-page-size={PAGE}",

@@ -5,8 +5,11 @@ This project reconstructs Sandlot Games' *Snail Mail* for Android
 is a port whose game code runs as native AArch64 machine code, with no ARM32
 emulation, translation or 32-bit fallback in the shipped app.
 
-**Status: foundation stage — the game does not run yet.** See
-[`docs/PORTING_STATUS.md`](docs/PORTING_STATUS.md).
+**Status: ARM64 preview.** The ahead-of-time translated game reaches playable
+gameplay in the host runner, and an arm64-v8a Android APK can be built from the
+owner's original APK. The latest display and GLES2 changes still need an
+on-device verification pass. See [`docs/PORTING_STATUS.md`](docs/PORTING_STATUS.md)
+and [`RELEASE_NOTES_v0.1.0.md`](RELEASE_NOTES_v0.1.0.md).
 
 | Document | Contents |
 |---|---|
@@ -33,7 +36,8 @@ tools/inventory/setup_workspace.sh          # needs original/com.sandlotgames.sn
 cmake -S . -B build-host -DSM_SANITIZE=ON && cmake --build build-host && ctest --test-dir build-host
 cmake -S . -B build-a64 -DCMAKE_TOOLCHAIN_FILE=cmake/aarch64-linux-gnu.toolchain.cmake \
   && cmake --build build-a64 && ctest --test-dir build-a64
-tools/android_build/build_dev_apk.sh        # arm64-only development APK (not playable)
+SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=5 tools/android_build/build_dev_apk.sh
+                                             # arm64-only preview APK
 ```
 
 No proprietary APK, extracted media, decompiled code dumps or signing keys are

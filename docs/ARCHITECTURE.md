@@ -1,5 +1,76 @@
 # Architecture decision: native ARM64 port of Snail Mail
 
+## Revision 2 (2026-09-27): AOT execution path, then incremental source replacement
+
+**Decision:** the playable port runs the original game logic through **static
+ahead-of-time translation**. `tools/aot/arm2c.py` converts every function of
+the original v7a binary to C at build time, and the C is compiled to AArch64
+like any other source. Hand-written source reconstruction (Revision 1 below)
+continues and will replace translated functions over time.
+
+**Why the decision changed:** the owner asked for a running game. Only 7 of
+1,114 functions were reconstructed. The translation covers all 1,173 functions
+now and is checked against the original machine code (below). The project
+rules allow AOT when it is "clearly justified and independently validated".
+
+**What runs on the device:**
+
+* **Translated code.** Each original function is a C function over an explicit
+  guest CPU state. Integer instructions are decoded from raw encodings so flags
+  and carry are exact. VMLA/VMLS/VNMLS keep two roundings (`-ffp-contract=off`),
+  and float-to-int conversion saturates as ARM does.
+* **Nothing executes at run time except compiled code.** No instruction is
+  decoded or translated at run time. Indirect branches and calls select an
+  already-compiled function from a static table (`aot_dispatch`). An unknown
+  target is a fatal diagnostic, never interpreted. No interpreter, JIT, QEMU or
+  ARM32 code is present.
+* **Guest memory.** A 4 GiB **virtual reservation** holds the original image,
+  heap and stacks at 32-bit guest addresses. Pages are committed only when used:
+  a gameplay run has a peak RSS of 27 MiB. Inside the window the original's
+  ILP32 layouts and pointer idioms are correct by construction (the in-place
+  directory pointers, the pointer in a Java `int`). Host pointers never enter
+  guest memory: Java objects are opaque 32-bit handles.
+* **Boundaries.** libc/libm/stdio (52 imports), GLES 1.x (45 imports) and JNI
+  (14 functions) are hand-written shims in `aot/runtime/`. They are the only
+  places where guest values become host values.
+* **Remaining unsupported sites.** 44 instructions are untranslatable, all in
+  the libgcc exception unwinder's VFP/WMMX save and restore. They are reachable
+  only when a C++ exception is thrown; this binary never throws. If reached,
+  they are fatal diagnostics.
+
+**Validation.** A reference runner (`tools/validation/arm32_ref/game_ref.c`,
+analysis only) executes the **original ARM32 instructions** in Unicorn. It uses
+the identical runtime, Java emulation, input script and virtual clock. For a
+6,000-frame run through the splash screens, intro, menus and tutorial gameplay:
+
+* The GL call traces are **byte-identical** between the original code in
+  Unicorn, the translated build on x86-64, and the translated build compiled as
+  AArch64 and run under qemu-aarch64. That is 2,213,927 calls, including hashes
+  of every uploaded texture, buffer and matrix.
+* The save files are identical.
+
+The reference runs are listed in `docs/PORTING_STATUS.md`.
+
+**Boundary with reconstructed source.** A reconstructed function may replace a
+translated one only when:
+
+1. it reads and writes guest state exclusively through the guest-memory
+   accessors (or replaces an entire subsystem, including every function that
+   touches its data), and
+2. the whole-game differential trace stays identical.
+
+Today `sm_assets` / `sm_platform` are validated equivalents and are not linked
+into the AOT build.
+
+**Rendering.** On Android the translated code calls the device's GLES 1.1. On
+hosts without GLES1 (Ubuntu Mesa), the GLES1-on-GLES2 layer in
+`reconstructed/rendering` is used. The Vulkan/Plume direction is unchanged: it
+would sit behind the same 45-entry `sm_gl_backend` interface.
+
+---
+
+## Revision 1 (superseded for the execution path, still the long-term direction)
+
 Status: **accepted for the next passes**; revisit if the evidence below changes.
 Reference binary: `v7a` (`lib/armeabi-v7a/libsnailmail.so`, SHA-256
 `e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466`).

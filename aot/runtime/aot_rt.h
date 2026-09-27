@@ -1,6 +1,6 @@
 /*
  * Runtime contract for the ahead-of-time translated game code
- * (tools/aot/arm2c.py -> aot/generated/*.c).
+ * (tools/aot/arm2c.py -> aot/generated/aot_funcs_NN.c).
  *
  * Execution model (docs/ARCHITECTURE.md "AOT execution path"):
  *  - Every original function is a C function `void F_xxxxxxxx(aot_cpu *c)`

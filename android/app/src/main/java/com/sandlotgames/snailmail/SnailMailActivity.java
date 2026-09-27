@@ -82,6 +82,10 @@ public class SnailMailActivity extends Activity {
         getWindow().setFlags(1024, 1024); // WindowManager.LayoutParams.FLAG_FULLSCREEN
         this.mGLView = new ADGLSurfaceView(this);
         setContentView(this.mGLView);
+        // PORT-CHANGE: port options (screen fit, FOV, refresh); applies the
+        // display mode for the refresh setting (60 Hz by default, see
+        // ADGLSurfaceView).
+        PortSettings.init(this);
         AudioInitFlag = true;
         wprintf("Sfx Init");
         // 8 streams, AudioManager.STREAM_MUSIC (3), srcQuality 0 -- as original.

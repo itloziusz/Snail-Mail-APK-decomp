@@ -37,6 +37,12 @@ foreach(dir ${SM_MODULE_DIRS})
   endif()
 endforeach()
 
+# Ahead-of-time translated game + runtime + host runner (after the modules, so
+# sm_rendering / sm_host_egl targets exist).
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/aot/CMakeLists.txt)
+  add_subdirectory(aot)
+endif()
+
 if(SM_BUILD_TESTS)
   find_package(Python3 COMPONENTS Interpreter)
   if(Python3_Interpreter_FOUND)

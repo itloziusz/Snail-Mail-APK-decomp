@@ -1,5 +1,96 @@
 # Porting status
 
+## Preview build — 2026-09-27
+
+The `aot-gles2` branch at `6de0c2b` was built from the reference APK whose
+SHA-256 is `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
+The resulting versionCode 5 APK has SHA-256
+`ee19481e3c621b86f5ef61d500e2c9bbe48141f5a43e9b54cb9a06055b52149e`.
+`apksigner verify` passed for v1, v2, and v3; the ELF/APK checker passed
+arm64-v8a only, stored native library, 16 KiB alignment, and no text
+relocations. `aapt` reports package `com.sandlotgames.snailmail.port`,
+minSdk 23, targetSdk 35, and GLES 2.0. This build uses a local debug key.
+
+This verifies a build artifact, not a device run. The GLES2 renderer, 60 Hz
+pacer, adaptive FOV, HUD alignment, and Display page in this revision still
+need hands-on device testing. The first downloadable APK is therefore marked
+as an experimental preview; see `RELEASE_NOTES_v0.1.0.md`.
+
+Local verification of this revision: eight available host checks passed with
+ASan/UBSan (`LSAN_OPTIONS=detect_leaks=0`, because LeakSanitizer cannot inspect
+processes in this sandbox); the optional shell-parity check was skipped because
+apktool output was absent. The Clang host runner booted 6,000 frames without a
+fatal diagnostic at 800×480 and at 2400×1080 with adaptive settings. Mesa
+GLES2 offscreen renders at 1600×900 reached the main menu, then touch input
+opened Options and the new Display page. These are host checks, not Android
+device validation or a new differential trace against the original binary.
+
+## Pass 2 — 2026-09-27: the game runs natively
+
+**The complete game logic runs as natively compiled code**, through the
+ahead-of-time translation described in `docs/ARCHITECTURE.md` Revision 2.
+It is validated on a Linux host and on AArch64 under qemu-user. The owner
+reports that it runs on a Galaxy S24+ (Exynos 2400, Xclipse GPU); see "Device
+reports" below. No device logs or captures from that run are in this repository.
+
+| Check | Result |
+|---|---|
+| Translation | 1,173/1,173 functions of v7a `e43bc913…a466`. 44 unsupported sites, all in the libgcc exception unwinder, which the game never reaches. |
+| Host run: x86-64, GLES1-on-GLES2 offscreen | Sandlot and Alpha72 splashes, loading screen, intro crawl, main menu, mode menu, Tutorial level: steering, packages, asteroids, turrets, sound and music requests. No fatal diagnostics. |
+| Differential vs the original ARM32 code (Unicorn 2) | 6,000 frames: **identical GL traces** (2,213,927 calls incl. data hashes) and identical save files. Unicorn executed 196 M original instructions in the first 1,600 frames. |
+| AArch64 execution (GCC 13 cross-build, qemu-aarch64 test harness) | Same 6,000 frames: GL trace and save files identical to the original. |
+| Android APK (`tools/android_build/build_dev_apk.sh`, AOT variant) | Built. `libsnailmail.so` is ELF64 AArch64 with 16 KiB alignment, 3.1 MB and 91 allowlisted imports. The APK signature verifies with v1, v2 and v3. |
+| Device run | **Owner report only:** Galaxy S24+ (Exynos 2400 / Xclipse), versionCode 2: "The game runs", but faster than normal. Not observed by this project; see below. |
+| Cost of game logic (headless, this Xeon) | ≈0.12 ms CPU per frame; 27 MiB peak RSS. |
+
+### Device reports (Galaxy S24+, Exynos 2400 / Xclipse GPU)
+
+These are the owner's reports. The project has no device logs, screenshots or
+frame captures from them.
+
+1. **versionCode 1: "Failed to launch".** Root cause (from the code, not a
+   device log): the shell targets SDK 35 and keeps the original
+   `registerListener(..., SENSOR_DELAY_FASTEST)`. On Android 12+, a debuggable
+   app that asks for more than 200 Hz without `HIGH_SAMPLING_RATE_SENSORS`
+   gets a `SecurityException` from `SystemSensorManager.enableSensor`, inside
+   `onCreate`. **Fix (versionCode 2):** declare the permission.
+2. **versionCode 2: "The game runs … Looks like it runs faster."** Root cause:
+   `appRender` (v7a:0x15690, `docs/BOOT_CHAIN.md` 3.2) runs **at least one**
+   16,666 µs update for every frame the GLSurfaceView draws. The S24+ panel
+   refreshes at up to 120 Hz, so the game ran about twice as fast.
+   * Reproduced on the host with the new `--hz` option (virtual display rate).
+   * An offline simulation of the `appRender` update table gives the same
+     result: 120.1 updates/s at 120 Hz against 60.2 at 60 Hz.
+
+   **Fix (versionCode 4, not yet confirmed on the device).** The shell
+   restores the 60 Hz presentation the game was written for, in three layers:
+   * `SnailMailActivity` requests the display's 60 Hz mode;
+   * the surface is declared as fixed-rate 60 fps content
+     (`Surface.setFrameRate`, Android 11+);
+   * a Choreographer pacer draws on vsync, but never twice within
+     14.67 ms (one 60 Hz period minus 2 ms).
+
+   The simulation with the pacer gives 60.2 updates/s at 120 Hz and 60.1 at
+   90 and 144 Hz, where the game's own catch-up steps cover the slower frame
+   rate. At 60 Hz every vsync is still drawn. The game's timing code and its
+   clock (`System.nanoTime`) are unchanged, and no speed multiplier is used.
+
+Known risks on a device:
+
+* **Toolchain.** The APK was built without the NDK, using stub libraries and
+  hand-written headers (`tools/android_build/ndkless`).
+* **Real GLES1 driver.** Behaviour on real GLES1 drivers is unverified.
+* **4 GiB reservation.** The virtual reservation must succeed.
+* **`FileDescriptor` access.** It goes through `ParcelFileDescriptor.dup`,
+  which leaks one fd per `onCreate`.
+* **Audio after `onStop`/`onRestart`.** It may be silent (original behaviour,
+  hypothesis).
+* **Default random seed.** `rand48` uses bionic's default seed (hypothesis).
+
+---
+
+## Pass 1
+
 Pass 1 — 2026-09-27. Reference binary `v7a` = `lib/armeabi-v7a/libsnailmail.so`,
 SHA-256 `e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466`, from
 APK SHA-256 `0d10908d50f2a8361d9bbd3c6c9bff025434fdfb49c0f2b97254a793fb0b29e7`.
