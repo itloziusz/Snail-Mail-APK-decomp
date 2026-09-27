@@ -310,9 +310,20 @@ aot_cpu *aot_thread_enter(void *java_ctx)
 void *aot_thread_java_ctx(void) { return t_java_ctx; }
 uint32_t aot_thread_guest_env(void) { return t_env; }
 
+/* Optional alternative CPU backend (analysis only): when set, guest calls are
+ * executed by it instead of the translated functions. Used by the reference
+ * runner (tools/validation/arm32_ref/game_ref.py), which executes the ORIGINAL
+ * ARM32 instructions in Unicorn against this same runtime. Never set in
+ * shipping builds. */
+aot_invoke_backend_fn aot_invoke_backend;
+
 uint32_t aot_invoke(aot_cpu *c, uint32_t addr, const uint32_t *args, int nargs, uint32_t *hi)
 {
-    aot_cpu saved = *c;
+    aot_cpu saved;
+    if (aot_invoke_backend) {
+        return aot_invoke_backend(c, addr, args, nargs, hi);
+    }
+    saved = *c;
     aot_fn fn = aot_lookup_function(addr);
     uint32_t sp, r0, r1;
     int i, nstack = nargs > 4 ? nargs - 4 : 0;

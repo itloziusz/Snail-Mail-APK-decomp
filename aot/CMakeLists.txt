@@ -49,10 +49,33 @@ if(NOT PNG_FOUND OR NOT JPEG_FOUND OR NOT ZLIB_FOUND)
   return()
 endif()
 set(SM_HOST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../host)
-add_executable(snailmail_host ${SM_HOST_DIR}/main.c ${SM_HOST_DIR}/java_emul.c ${SM_HOST_DIR}/null_gl.c)
+set(SM_HOST_SOURCES ${SM_HOST_DIR}/main.c ${SM_HOST_DIR}/java_emul.c ${SM_HOST_DIR}/null_gl.c)
+add_executable(snailmail_host ${SM_HOST_DIR}/host_main.c ${SM_HOST_SOURCES})
 target_include_directories(snailmail_host PRIVATE ${SM_HOST_DIR})
 target_link_libraries(snailmail_host PRIVATE sm_aot_game PNG::PNG JPEG::JPEG ZLIB::ZLIB)
 if(TARGET sm_rendering AND TARGET sm_host_egl)
   target_link_libraries(snailmail_host PRIVATE sm_rendering sm_host_egl)
   target_compile_definitions(snailmail_host PRIVATE SM_HOST_HAVE_GL=1)
+endif()
+
+# Analysis-only reference runner: the same driver + runtime, but guest code is
+# the ORIGINAL ARM32 machine code executed by Unicorn (tools/validation/
+# arm32_ref/game_ref.c). Never part of the shipping build.
+set(SM_UNICORN_DIR "" CACHE PATH "Unicorn 2 install (include/, lib/libunicorn.so.2); defaults to the pip wheel")
+if(NOT SM_UNICORN_DIR)
+  execute_process(COMMAND python3 -c "import unicorn,os;print(os.path.dirname(unicorn.__file__))"
+                  OUTPUT_VARIABLE SM_UNICORN_DIR OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
+endif()
+if(SM_UNICORN_DIR AND EXISTS ${SM_UNICORN_DIR}/include/unicorn/unicorn.h AND EXISTS ${SM_UNICORN_DIR}/lib/libunicorn.so.2)
+  add_executable(snailmail_ref EXCLUDE_FROM_ALL
+    ${CMAKE_CURRENT_SOURCE_DIR}/../tools/validation/arm32_ref/game_ref.c ${SM_HOST_SOURCES}
+    runtime/aot_core.c runtime/aot_libc.c runtime/aot_gl.c runtime/aot_jni.c
+    ${SM_AOT_GEN_SOURCES} ${SM_AOT_GENERATED}/aot_table.c)
+  target_include_directories(snailmail_ref PRIVATE ${SM_HOST_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/runtime
+                             ${SM_AOT_GENERATED} ${SM_UNICORN_DIR}/include)
+  target_link_libraries(snailmail_ref PRIVATE ${SM_UNICORN_DIR}/lib/libunicorn.so.2 Threads::Threads m
+                        PNG::PNG JPEG::JPEG ZLIB::ZLIB)
+  set_target_properties(snailmail_ref PROPERTIES BUILD_RPATH ${SM_UNICORN_DIR}/lib)
+else()
+  message(STATUS "aot: Unicorn 2 not found; snailmail_ref (reference runner) unavailable")
 endif()

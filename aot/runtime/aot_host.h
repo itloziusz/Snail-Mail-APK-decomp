@@ -90,6 +90,11 @@ uint32_t aot_thread_guest_env(void);
 uint32_t aot_invoke(aot_cpu *c, uint32_t addr, const uint32_t *args, int nargs, uint32_t *hi);
 uint32_t aot_symbol_addr(const char *name);   /* 0 if unknown */
 
+/* Analysis-only alternative CPU backend (see aot_core.c). */
+typedef uint32_t (*aot_invoke_backend_fn)(aot_cpu *c, uint32_t addr, const uint32_t *args, int nargs,
+                                          uint32_t *hi);
+extern aot_invoke_backend_fn aot_invoke_backend;
+
 /* object handles */
 uint32_t aot_handle_new(void *obj, int owned_global);
 uint32_t aot_handle_for_incoming(void *java_ctx, void *obj);  /* dedupes by is_same_object */

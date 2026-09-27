@@ -95,7 +95,7 @@ static uint32_t fbits(float f)
     return u;
 }
 
-int main(int argc, char **argv)
+int sm_host_run(int argc, char **argv)
 {
     const char *assets = "work/apk_unzip/assets", *files = NULL, *out = NULL, *script = NULL;
     const char *trace = NULL, *gltrace = NULL;
@@ -213,6 +213,7 @@ int main(int argc, char **argv)
 
     for (int frame = 0; frame < frames; ++frame) {
         int shot = shot_every > 0 && (frame + 1) % shot_every == 0;
+        (void)shot;
         for (int k = 0; k < g_nevents; ++k) {
             event *e = &g_events[k];
             if (e->frame != frame) continue;
