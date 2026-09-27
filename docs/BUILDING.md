@@ -94,7 +94,7 @@ cd android
 
 ```
 * Where:
-Build file '/home/user/Snail-Mail-APK-decomp/android/build.gradle.kts' line: 6
+Build file '<repo>/android/build.gradle.kts' line: 6
 * What went wrong:
 Plugin [id: 'com.android.application', version: '8.13.0', apply: false] was not found in any of the following sources:
 - Gradle Core Plugins (plugin is not in 'org.gradle' namespace)
@@ -136,10 +136,12 @@ cmake -S android/app/src/main/cpp -B $S/build -DANDROID_ABI=arm64-v8a \
 cmake --build $S/build && python3 tools/validation/platform/check_elf_alignment.py $S/build/libsnailmail.so
 ```
 
-### 3a. NDK-less development APK (what was actually built in this pass)
+### 3a. NDK-less ARM64 APK
 
-Because the Gradle route above is blocked here, `tools/android_build/build_dev_apk.sh`
-builds the same app from the same sources with tools that are reachable:
+The recommended user-facing entry point is the [Python builder](BUILD_FROM_ORIGINAL.md),
+which opens a file picker or accepts an APK path, then invokes
+`tools/android_build/build_dev_apk.sh`. The lower-level script builds from the
+same sources with tools that are reachable here:
 
 | Step | Tool | Notes |
 |---|---|---|
