@@ -29,11 +29,13 @@ absolute path. `JAVA_HOME` is detected from `javac` when it is unset.
 
 ## 2. Select the APK and build
 
-On a Linux desktop, run the builder without arguments. Choose your original
-APK in the first file dialog and the output location in the second. A progress
-window shows the build log and reports success or failure. The file chooser
-requires Tkinter and a graphical desktop session; the build itself runs on
-Linux, not on the phone.
+On a Linux desktop, run the builder without arguments. In its window, browse
+for your original APK and choose the new APK's destination. The version code
+and version name can be changed for installed updates; increase the version
+code when updating an existing install. Click **Build APK** to start. A
+progress indicator and log report the build, and the window can be used for
+another build when it finishes. The GUI requires Tkinter and a graphical
+desktop session; the build itself runs on Linux, not on the phone.
 
 ```sh
 .venv/bin/python tools/android_build/build_from_original.py
@@ -47,13 +49,18 @@ For terminal-only systems or automation, pass the original APK path directly:
   --output SnailMail-ARM64-v0.1.1.apk
 ```
 
-In terminal mode, the default output is `SnailMail-ARM64-v0.1.1.apk` in the
-current directory. In the desktop mode, choose the destination in the save
-dialog.
+The default output is `SnailMail-ARM64-v0.1.1.apk` in the current directory.
+In the desktop window, you can type another path or use **Browse…**.
 If two Python builder windows or commands run from the same checkout, they
 wait for a repository build lock so their shared native cache and intermediate
 APK cannot overwrite one another. Run the Python entry point for concurrent
 builds; direct calls to the lower-level shell script do not use this lock.
+
+The builder copies the selected original into a private temporary snapshot
+before checking its SHA-256 and extracting it. The destination must end in
+`.apk` and be outside `work/android_build`, which contains the intermediate
+APK and the local signing key.
+
 The installed app is **Snail Mail**, package
 `com.sandlotgames.snailmail.port.preview`, version name `0.1.1`, version code
 `5`. It contains only `arm64-v8a` native code, the original icon and assets,
@@ -115,3 +122,13 @@ finished with their own requested identities and valid launcher labels. A
 headless Tkinter harness exercised the desktop picker control flow for a
 successful build, a failed build, and a canceled file selection; a real
 graphical session is still needed to check the appearance of the dialogs.
+
+The expanded GUI was exercised with a headless Tkinter harness for browsing,
+build success, build failure, and missing input. Its widget layout still needs
+visual inspection on a Linux desktop.
+
+The snapshot build also passed the package, signature, and 16 KB alignment
+checks. Attempts to save over the signing key or inside the build workspace
+were rejected without changing the key. This verification cannot establish
+that the latest APK installs, renders, or handles tilt correctly on a physical
+Android device; those checks require a device run.
