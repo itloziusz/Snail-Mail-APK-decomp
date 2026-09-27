@@ -1,0 +1,2350 @@
+[
+ {
+  "id": "JNI-META",
+  "direction": "meta",
+  "schema": "snailmail.jni_map/1",
+  "binaries": {
+   "v7a": {
+    "path": "work/apk_unzip/lib/armeabi-v7a/libsnailmail.so",
+    "sha256": "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466"
+   },
+   "v5": {
+    "path": "work/apk_unzip/lib/armeabi/libsnailmail.so",
+    "sha256": "96dbeaeb20c60d687301ca769656727467371489db5e3ed744a93248bc8d8136"
+   }
+  },
+  "dex_sha256": "b430e061e63dba6860b8d2bf11d6840556a737bc816c82b59f7dd111ad2f7459",
+  "jni_function_table": "JNINativeInterface order per jni.h/JNI spec; index = byte offset/4 on 32-bit ARM (offset/8 on arm64). Offsets used by this binary: 0x18 FindClass(6), 0x54 NewGlobalRef(21), 0x5c DeleteLocalRef(23), 0x7c GetObjectClass(31), 0x84 GetMethodID(33), 0xc8 CallIntMethodV(50), 0xf8 CallVoidMethodV(62), 0x178 GetFieldID(94), 0x190 GetIntField(100), 0x29c NewStringUTF(167), 0x2a4 GetStringUTFChars(169), 0x2c0 NewByteArray(176), 0x320 GetByteArrayRegion(200), 0x340 SetByteArrayRegion(208). All high confidence (table rebuilt programmatically and spot-checked in tools/inventory/jni_native_scan.py).",
+  "binding": "Static name binding only: 18 Java_* exports, no JNI_OnLoad, no RegisterNatives call (slot 0x35c never used), no GetJavaVM/AttachCurrentThread.",
+  "cached_jni_state": {
+   "gJavaEnv": {
+    "v7a": "0x91038",
+    "v5": "0x9a330",
+    "meaning": "raw JNIEnv* of the thread that last ran nativeInit/nativeReInit (GL thread)"
+   },
+   "gJavaObj": {
+    "v7a": "0x9103c",
+    "v5": "0x9a334",
+    "meaning": "raw LOCAL reference to the ADRenderer instance (thiz of nativeInit/nativeReInit); never NewGlobalRef'd"
+   },
+   "gJavaClass": {
+    "v7a": "0x91034",
+    "v5": "0x9a32c",
+    "meaning": "raw LOCAL reference from GetObjectClass(thiz); only used inside JAVA_RegisterFunctions"
+   },
+   "gJAVAFunction": {
+    "v7a": "0x8b3f0",
+    "v5": "0x946e8",
+    "size": 324,
+    "meaning": "27 x {jmethodID id; const char* name; const char* sig}; entries 0-25 filled by GetMethodID, entry 26 is an empty sentinel"
+   }
+  },
+  "evidence": [
+   "EV-JNI-0006",
+   "EV-JNI-0007",
+   "EV-JNI-0008",
+   "EV-JNI-0009",
+   "EV-JNI-0013"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-SnailMailApplication.JNIOFInit",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/SnailMailApplication;",
+  "java_method": "JNIOFInit",
+  "descriptor": "()V",
+  "static": true,
+  "access": "PUBLIC STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/SnailMailApplication.smali:33",
+  "native_symbol": "Java_com_sandlotgames_snailmail_SnailMailApplication_JNIOFInit",
+  "v7a": "MISSING",
+  "v5": "MISSING",
+  "invoked_from": [],
+  "args": [
+   "JNIEnv* env"
+  ],
+  "returns": "void",
+  "thread": "n/a (never invoked)",
+  "native_side_behavior": "No native implementation exists in either binary (no Java_ export, no RegisterNatives). Invoking it would throw UnsatisfiedLinkError; the DEX never invokes it.",
+  "jobject_handling": "n/a",
+  "lifetime_notes": "n/a",
+  "arm64_hazards": [
+   "Port must not call it; keep the declaration unimplemented or drop it."
+  ],
+  "evidence": [
+   "EV-JNI-0006"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-SnailMailActivity.JNIDebug",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/SnailMailActivity;",
+  "java_method": "JNIDebug",
+  "descriptor": "()I",
+  "static": true,
+  "access": "PRIVATE STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:74",
+  "native_symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDebug",
+  "v7a": {
+   "addr": "0x13b44",
+   "size": 8
+  },
+  "v5": {
+   "addr": "0x1440c",
+   "size": 8
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:99"
+  ],
+  "args": [
+   "JNIEnv* env"
+  ],
+  "returns": "jint: always 0",
+  "thread": "Any thread that calls SnailMailActivity.wprintf: UI thread (lifecycle, input), GL thread (onSurfaceCreated/onDrawFrame/JAVA* methods), main thread OpenFeint callbacks.",
+  "native_side_behavior": "mov r0,#0; bx lr. Java wprintf prints only when JNIDebug()==1, so managed logging is permanently disabled. It is the first native call of a normal launch (wprintf in onCreate).",
+  "jobject_handling": "jclass unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [],
+  "evidence": [
+   "EV-JNI-0020",
+   "EV-JNI-0021"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-SnailMailActivity.JNIDatInit",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/SnailMailActivity;",
+  "java_method": "JNIDatInit",
+  "descriptor": "(Ljava/io/FileDescriptor;II)V",
+  "static": true,
+  "access": "PRIVATE STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:68",
+  "native_symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+  "v7a": {
+   "addr": "0x15244",
+   "size": 588
+  },
+  "v5": {
+   "addr": "0x15b30",
+   "size": 596
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:247"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jclass (unused)",
+   "java.io.FileDescriptor fd of the APK opened by AssetManager.openFd(\"asm.mp3\")",
+   "jint start = (int)AssetFileDescriptor.getStartOffset()",
+   "jint length = (int)AssetFileDescriptor.getLength()"
+  ],
+  "returns": "void",
+  "thread": "main/UI thread (Activity lifecycle / View input callback) - SnailMailActivity.onCreate, after setContentView and SoundPool creation",
+  "native_side_behavior": "FindClass(\"java/io/FileDescriptor\") -> NewGlobalRef(cls) -> GetFieldID(cls,\"descriptor\",\"I\") -> GetIntField(fd) -> dup() -> gJavaAssetFid=dupfd, gJavaAssetStart=start, gJavaAssetLength=length; gDatFP=fdopen(dupfd,\"rb\"); fseek(start); fread 244-byte header; gDat=RShellMemoryMalloc(hdr.u32[2]); fseek(start); fread directory; cRHash::Init(&gDatHash,count,DatHashGetString); for each 24-byte record rewrite u32 at +4 (name offset) into an absolute pointer and cRHash::Add(name,i). Finally DeleteLocalRef(cls) and DeleteLocalRef(globalRef) (sic).",
+  "jobject_handling": "fd jobject used only during the call; not cached. The dup()ed int fd and FILE* are cached (gJavaAssetFid/gDatFP).",
+  "lifetime_notes": "Archive stays open for the process lifetime (JNIDatUnInit does not close it). A second onCreate in the same process leaks the previous FILE*/fd/directory.",
+  "arm64_hazards": [
+   "Reflective read of private field FileDescriptor.descriptor via JNI (non-SDK field); port should use AAssetManager/AAsset_openFileDescriptor64 or ParcelFileDescriptor instead (hypothesis: greylisted on API 28+).",
+   "start/length truncated from long to int in Java (fine for this 12.6 MB APK).",
+   "Directory records store 32-bit absolute pointers in place of offsets: impossible with 64-bit pointers - keep offsets or a side table.",
+   "NewGlobalRef result released with DeleteLocalRef (JNI misuse; global ref leak)."
+  ],
+  "evidence": [
+   "EV-JNI-0016",
+   "EV-JNI-0017",
+   "EV-JNI-0018",
+   "EV-JNI-0023",
+   "EV-JNI-0059"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-SnailMailActivity.JNIDatUnInit",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/SnailMailActivity;",
+  "java_method": "JNIDatUnInit",
+  "descriptor": "()V",
+  "static": true,
+  "access": "PRIVATE STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:71",
+  "native_symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatUnInit",
+  "v7a": {
+   "addr": "0x13c70",
+   "size": 52
+  },
+  "v5": {
+   "addr": "0x1453c",
+   "size": 52
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:441"
+  ],
+  "args": [
+   "JNIEnv* env"
+  ],
+  "returns": "void",
+  "thread": "main/UI thread (Activity lifecycle / View input callback) - onStop",
+  "native_side_behavior": "Only two wprintf calls (native wprintf is a no-op). Does not close gDatFP or free gDat.",
+  "jobject_handling": "jclass unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [
+   "Do not 'fix' into a real close unless onRestart re-opens (onRestart never calls JNIDatInit)."
+  ],
+  "evidence": [
+   "EV-JNI-0019"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-SnailMailActivity.JNIOFOSave",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/SnailMailActivity;",
+  "java_method": "JNIOFOSave",
+  "descriptor": "()V",
+  "static": true,
+  "access": "PUBLIC STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:77",
+  "native_symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIOFOSave",
+  "v7a": {
+   "addr": "0x7d71c",
+   "size": 4
+  },
+  "v5": {
+   "addr": "0x85b24",
+   "size": 4
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:480"
+  ],
+  "args": [
+   "JNIEnv* env"
+  ],
+  "returns": "void",
+  "thread": "GL thread: only caller is ADRenderer.JAVAOpenFeintOpen(), which native code invokes from the GL thread (native->Java->native re-entry).",
+  "native_side_behavior": "b OFOSave: if gOFOValid -> gRegisterSaveFile(\"of.cfg\", gOFOData, 11520). Reaches JAVACSaveFile, i.e. uses the cached gJavaEnv/gJavaObj rather than its own env argument.",
+  "jobject_handling": "jclass unused; uses cached gJavaObj",
+  "lifetime_notes": "none",
+  "arm64_hazards": [
+   "Nested native frame uses a stale cached local ref (gJavaObj) instead of its own env/args."
+  ],
+  "evidence": [
+   "EV-JNI-0015",
+   "EV-JNI-0067"
+  ],
+  "confidence": "likely"
+ },
+ {
+  "id": "J2N-SnailMailActivity.JNIResourceManagerInvalidate",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/SnailMailActivity;",
+  "java_method": "JNIResourceManagerInvalidate",
+  "descriptor": "()V",
+  "static": true,
+  "access": "PRIVATE STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:80",
+  "native_symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIResourceManagerInvalidate",
+  "v7a": {
+   "addr": "0x142fc",
+   "size": 28
+  },
+  "v5": {
+   "addr": "0x14bd0",
+   "size": 28
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/SnailMailActivity.smali:321"
+  ],
+  "args": [
+   "JNIEnv* env"
+  ],
+  "returns": "void",
+  "thread": "main/UI thread (Activity lifecycle / View input callback) - onPause, after mGLView.onPause() and wl.release()",
+  "native_side_behavior": "cRResourceManager::Invalidate(&gResourceManager): gLoadingBar byte +0x35 = 1; every resource record (stride 140) gets +8 = 1. No GL and no JNI calls.",
+  "jobject_handling": "jclass unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [
+   "Writes state owned by the GL thread from the UI thread; relies on GLSurfaceView.onPause() having parked the GL thread (true for current AOSP; version-dependent on 2.x - hypothesis)."
+  ],
+  "evidence": [
+   "EV-JNI-0049",
+   "EV-JNI-0014"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADGLSurfaceView.JNIMouseEvent",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;",
+  "java_method": "JNIMouseEvent",
+  "descriptor": "(IFF)V",
+  "static": true,
+  "access": "PRIVATE STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:43",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIMouseEvent",
+  "v7a": {
+   "addr": "0x14318",
+   "size": 276
+  },
+  "v5": {
+   "addr": "0x14bec",
+   "size": 288
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:339",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:359",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:381"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jclass (unused)",
+   "jint type: 0=ACTION_DOWN, 1=ACTION_MOVE, 2=ACTION_UP (Java mapping)",
+   "jfloat x (MotionEvent.getX, view px)",
+   "jfloat y (MotionEvent.getY, view px)"
+  ],
+  "returns": "void",
+  "thread": "main/UI thread (Activity lifecycle / View input callback) - ADGLSurfaceView.onTouchEvent",
+  "native_side_behavior": "Returns unless gGameValid. X=x*640/gG0DeviceScreenWidth, Y=y*480/gG0DeviceScreenHeight. type 0: Game->mouse(+0x228).ClickiPhone(true,X,Y); ClickOn(). type 1: if *(int*)(Game+0x718fc)==2 ClickiPhone(true,X,Y); then ClickOn(). any other type: ClickOff() (no position).",
+  "jobject_handling": "jclass unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [
+   "softfp ABI on ARM32 (x in r3, y on stack); on arm64 floats arrive in s0/s1 - ordinary C prototypes suffice.",
+   "UI-thread writes to mouse state consumed by the GL thread (data race, unsynchronized in original).",
+   "ACTION_CANCEL/POINTER_* are ignored by Java: a cancelled gesture never produces type 2."
+  ],
+  "evidence": [
+   "EV-JNI-0024",
+   "EV-JNI-0025"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADGLSurfaceView.nativePause",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;",
+  "java_method": "nativePause",
+  "descriptor": "()V",
+  "static": true,
+  "access": "PRIVATE STATIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:46",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_nativePause",
+  "v7a": {
+   "addr": "0x15500",
+   "size": 92
+  },
+  "v5": {
+   "addr": "0x15df8",
+   "size": 92
+  },
+  "invoked_from": [],
+  "args": [
+   "JNIEnv* env"
+  ],
+  "returns": "void",
+  "thread": "n/a (never invoked from the DEX)",
+  "native_side_behavior": "Toggles an internal paused counter and accumulates paused wall time using gettimeofday milliseconds (_getTime).",
+  "jobject_handling": "jclass unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [],
+  "evidence": [
+   "EV-JNI-0048"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADGLSurfaceView.JNIKey",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;",
+  "java_method": "JNIKey",
+  "descriptor": "(I)V",
+  "static": false,
+  "access": "PUBLIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:51",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIKey",
+  "v7a": {
+   "addr": "0x13d78",
+   "size": 268
+  },
+  "v5": {
+   "addr": "0x1463c",
+   "size": 228
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:194",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:225",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:234",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:260",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADGLSurfaceView.smali:292"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (ADGLSurfaceView, unused)",
+   "jint Android keycode; Java only passes 7-16, 29-54, 62, 66, 67"
+  ],
+  "returns": "void",
+  "thread": "main/UI thread (Activity lifecycle / View input callback) - ADGLSurfaceView.onKeyDown (view must have focus)",
+  "native_side_behavior": "A-Z(29-54): cKeyPad::ConvertCode(Game+0xbf0,(char)(keycode+68)) i.e. 'a'..'z'; 0-9(7-16): ConvertCode((char)(keycode+41)) i.e. '0'..'9'; SPACE(62)->57, ENTER(66)->28, DEL(67)->14 (values equal DirectInput DIK_SPACE/DIK_RETURN/DIK_BACK - hypothesis on intent). KeySet(code) only when *(int*)(Game+0xbf0)==2, otherwise dropped.",
+  "jobject_handling": "thiz unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [
+   "Other keycodes would pass an uninitialised register to KeySet (unreachable from Java).",
+   "UI-thread write to engine key state read by GL thread."
+  ],
+  "evidence": [
+   "EV-JNI-0026",
+   "EV-JNI-0027"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-AccelerometerListener.JNIAccelerometer",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/AccelerometerListener;",
+  "java_method": "JNIAccelerometer",
+  "descriptor": "(FFF)V",
+  "static": false,
+  "access": "PUBLIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/AccelerometerListener.smali:134",
+  "native_symbol": "Java_com_sandlotgames_snailmail_AccelerometerListener_JNIAccelerometer",
+  "v7a": {
+   "addr": "0x142bc",
+   "size": 64
+  },
+  "v5": {
+   "addr": "0x14b90",
+   "size": 64
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/AccelerometerListener.smali:339"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (listener, unused)",
+   "jfloat -last_x",
+   "jfloat -last_y",
+   "jfloat +last_z (unit-normalised, low-pass alpha 0.3f)"
+  ],
+  "returns": "void",
+  "thread": "main thread - SensorManager.registerListener(listener, sensor, 0) without Handler delivers on the main Looper (framework contract)",
+  "native_side_behavior": "If Game != NULL: cAccelerometer::Input(Game+0xbd4, x, y, z).",
+  "jobject_handling": "thiz unused",
+  "lifetime_notes": "Listener is never unregistered (stop() never called): keeps firing while paused/stopped and a new listener is added per onCreate.",
+  "arm64_hazards": [
+   "Cross-thread write of accelerometer state (UI -> GL)."
+  ],
+  "evidence": [
+   "EV-JNI-0028",
+   "EV-JNI-0029"
+  ],
+  "confidence": "likely"
+ },
+ {
+  "id": "J2N-ADRenderer.JNIAudioInit",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JNIAudioInit",
+  "descriptor": "()V",
+  "static": false,
+  "access": "PRIVATE NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:44",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIAudioInit",
+  "v7a": {
+   "addr": "0x13ad0",
+   "size": 4
+  },
+  "v5": {
+   "addr": "0x14398",
+   "size": 4
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:1420"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (unused)"
+  ],
+  "returns": "void",
+  "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - onSurfaceCreated second+ time when AudioInitFlag is set",
+  "native_side_behavior": "bx lr (no-op).",
+  "jobject_handling": "unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [],
+  "evidence": [
+   "EV-JNI-0048",
+   "EV-JNI-0044"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADRenderer.nativeDone",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "nativeDone",
+  "descriptor": "()V",
+  "static": false,
+  "access": "PRIVATE NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:47",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeDone",
+  "v7a": {
+   "addr": "0x1555c",
+   "size": 16
+  },
+  "v5": {
+   "addr": "0x15e54",
+   "size": 16
+  },
+  "invoked_from": [],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (unused)"
+  ],
+  "returns": "void",
+  "thread": "n/a (never invoked from the DEX)",
+  "native_side_behavior": "appDeinit() and importGLDeinit(), both bx lr (no-op).",
+  "jobject_handling": "unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [],
+  "evidence": [
+   "EV-JNI-0048"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADRenderer.nativeInit",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "nativeInit",
+  "descriptor": "()V",
+  "static": false,
+  "access": "PRIVATE NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:50",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeInit",
+  "v7a": {
+   "addr": "0x15650",
+   "size": 60
+  },
+  "v5": {
+   "addr": "0x15f4c",
+   "size": 60
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:1385"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz = ADRenderer instance"
+  ],
+  "returns": "void",
+  "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - first onSurfaceCreated in the process (static SurfaceCreatedFirstTime)",
+  "native_side_behavior": "JAVA_RegisterFunctions(env, thiz): gJavaEnv=env, gJavaObj=thiz, gJavaClass=GetObjectClass(thiz), 26 x GetMethodID into gJAVAFunction; then cRResourceManager::Init(&gResourceManager); G0StartBlackCount=2.",
+  "jobject_handling": "CACHES env (raw JNIEnv*) and thiz/cls as RAW LOCAL REFERENCES in globals (no NewGlobalRef).",
+  "lifetime_notes": "gJavaObj/gJavaClass become invalid when nativeInit returns (JNI local-ref rules); they are reused by every later JAVA* callback. Worked on pre-ICS Dalvik (direct pointers); invalid under indirect-reference VMs.",
+  "arm64_hazards": [
+   "Must become NewGlobalRef (or pass env/obj explicitly) in the port.",
+   "gJavaEnv is only valid on the GL thread; any future callback from another thread must use JavaVM::GetEnv/AttachCurrentThread."
+  ],
+  "evidence": [
+   "EV-JNI-0008",
+   "EV-JNI-0009",
+   "EV-JNI-0011",
+   "EV-JNI-0044",
+   "EV-JNI-0045"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADRenderer.nativeReInit",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "nativeReInit",
+  "descriptor": "()V",
+  "static": false,
+  "access": "PRIVATE NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:53",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeReInit",
+  "v7a": {
+   "addr": "0x155f0",
+   "size": 96
+  },
+  "v5": {
+   "addr": "0x15eec",
+   "size": 96
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:1407"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz = ADRenderer instance"
+  ],
+  "returns": "void",
+  "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - every later onSurfaceCreated (new EGL context after pause, or new Activity in same process)",
+  "native_side_behavior": "JAVA_RegisterFunctions(env, thiz) (re-caches env/obj/method IDs); InitGL(); cRResourceManager::ReInit(&gResourceManager) (reloads textures through JAVAC_UnPng/UnJpg/UnZip, JAVACFileSize/FindFile/LoadFile); *(int*)(Game+0x718b4)=4; G0StartBlackCount=2.",
+  "jobject_handling": "Same caching as nativeInit.",
+  "lifetime_notes": "Same as nativeInit.",
+  "arm64_hazards": [
+   "Same as nativeInit."
+  ],
+  "evidence": [
+   "EV-JNI-0011",
+   "EV-JNI-0015",
+   "EV-JNI-0045"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADRenderer.nativeRender",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "nativeRender",
+  "descriptor": "(I)V",
+  "static": false,
+  "access": "PRIVATE NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:56",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeRender",
+  "v7a": {
+   "addr": "0x1549c",
+   "size": 36
+  },
+  "v5": {
+   "addr": "0x15d90",
+   "size": 40
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:1343"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (unused)",
+   "jint SystemPauseFlag: 1 when !SnailMailActivity.HasFocus"
+  ],
+  "returns": "void",
+  "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - every onDrawFrame (RENDERMODE_CONTINUOUSLY default)",
+  "native_side_behavior": "if (AppInit()) appRender(flag != 0). Main game tick; reaches all JAVA* callbacks and GL imports.",
+  "jobject_handling": "thiz unused (callbacks use cached gJavaObj)",
+  "lifetime_notes": "none",
+  "arm64_hazards": [
+   "HasFocus is a non-volatile static written on UI thread, read on GL thread."
+  ],
+  "evidence": [
+   "EV-JNI-0015",
+   "EV-JNI-0046"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADRenderer.nativeResize",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "nativeResize",
+  "descriptor": "(II)V",
+  "static": false,
+  "access": "PRIVATE NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:59",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeResize",
+  "v7a": {
+   "addr": "0x1556c",
+   "size": 132
+  },
+  "v5": {
+   "addr": "0x15e64",
+   "size": 136
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:1357"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (unused)",
+   "jint w",
+   "jint h"
+  ],
+  "returns": "void",
+  "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - onSurfaceChanged",
+  "native_side_behavior": "gG0DeviceScreenWidth = gG0ScreenWidth = (float)w; gG0DeviceScreenHeight = gG0ScreenHeight = (float)h.",
+  "jobject_handling": "thiz unused",
+  "lifetime_notes": "none",
+  "arm64_hazards": [],
+  "evidence": [
+   "EV-JNI-0047"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "J2N-ADRenderer.JNIOFOSubmitCB",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JNIOFOSubmitCB",
+  "descriptor": "(I)V",
+  "static": false,
+  "access": "PUBLIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:1313",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIOFOSubmitCB",
+  "v7a": {
+   "addr": "0x7d44c",
+   "size": 72
+  },
+  "v5": {
+   "addr": "0x8584c",
+   "size": 72
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer$1.smali:54",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer$1.smali:70"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (ADRenderer; unused)",
+   "jint CBOFOStatePtr: native pointer (&gOFOData[user].leaderboardState[i]) on success, 0 on failure"
+  ],
+  "returns": "void",
+  "thread": "main thread - OpenFeint Client posts request completions to a Handler created on the main thread (Client ctor runs inside OpenFeint.initialize from Application.onCreate)",
+  "native_side_behavior": "if (ptr) *(uint8_t*)ptr = 2; gOFOSaveFlag = 1.",
+  "jobject_handling": "thiz unused",
+  "lifetime_notes": "Pointer originates from GL-thread code and is dereferenced on the main thread.",
+  "arm64_hazards": [
+   "Native pointer round-tripped through a Java int: truncates on arm64.",
+   "Cross-thread byte write without synchronisation.",
+   "OpenFeint servers are defunct; native only submits when OFIsUserLoggedIn() is true, so this path is dormant."
+  ],
+  "evidence": [
+   "EV-JNI-0037",
+   "EV-JNI-0038",
+   "EV-JNI-0039",
+   "EV-JNI-0040",
+   "EV-JNI-0041"
+  ],
+  "confidence": "likely"
+ },
+ {
+  "id": "J2N-ADRenderer.JNIOFOUnlockCB",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JNIOFOUnlockCB",
+  "descriptor": "(I)V",
+  "static": false,
+  "access": "PUBLIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer.smali:1316",
+  "native_symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIOFOUnlockCB",
+  "v7a": {
+   "addr": "0x7d404",
+   "size": 72
+  },
+  "v5": {
+   "addr": "0x85804",
+   "size": 72
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer$2$1.smali:58",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer$2$1.smali:78",
+   "work/apktool/smali/com/sandlotgames/snailmail/ADRenderer$2.smali:99"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (ADRenderer; unused)",
+   "jint CBOFOStatePtr: native pointer (&gOFOData[user].achievementState[i]) on success/already-unlocked, 0 on unlock failure"
+  ],
+  "returns": "void",
+  "thread": "main thread (see JNIOFOSubmitCB)",
+  "native_side_behavior": "if (ptr) *(uint8_t*)ptr = 2; gOFOSaveFlag = 1.",
+  "jobject_handling": "thiz unused",
+  "lifetime_notes": "No callback at all when Achievement.load() fails (ADRenderer$2 lacks onFailure) - the state byte stays 1.",
+  "arm64_hazards": [
+   "Same pointer-in-int hazard as JNIOFOSubmitCB."
+  ],
+  "evidence": [
+   "EV-JNI-0037",
+   "EV-JNI-0038",
+   "EV-JNI-0039",
+   "EV-JNI-0040",
+   "EV-JNI-0041"
+  ],
+  "confidence": "likely"
+ },
+ {
+  "id": "J2N-MyOpenFeintDelegate.JNIOFOInit",
+  "direction": "java_to_native",
+  "java_class": "Lcom/sandlotgames/snailmail/MyOpenFeintDelegate;",
+  "java_method": "JNIOFOInit",
+  "descriptor": "(Ljava/lang/String;)V",
+  "static": false,
+  "access": "PUBLIC NATIVE",
+  "smali_declaration": "work/apktool/smali/com/sandlotgames/snailmail/MyOpenFeintDelegate.smali:19",
+  "native_symbol": "Java_com_sandlotgames_snailmail_MyOpenFeintDelegate_JNIOFOInit",
+  "v7a": {
+   "addr": "0x7d81c",
+   "size": 32
+  },
+  "v5": {
+   "addr": "0x85c24",
+   "size": 32
+  },
+  "invoked_from": [
+   "work/apktool/smali/com/sandlotgames/snailmail/MyOpenFeintDelegate.smali:40"
+  ],
+  "args": [
+   "JNIEnv* env",
+   "jobject thiz (MyOpenFeintDelegate; unused)",
+   "jstring CurrentUser.userID()"
+  ],
+  "returns": "void",
+  "thread": "main thread - OpenFeintDelegate.userLoggedIn is called from OpenFeint request completions (Handler on main thread)",
+  "native_side_behavior": "GetStringUTFChars(userID, NULL) (never released); OFONewUser(chars): strcpy(gOFUser, chars); strcpy(gConfig+240, gOFUser); gOFOLoadFlag = 1.",
+  "jobject_handling": "jstring chars leaked (no ReleaseStringUTFChars)",
+  "lifetime_notes": "Dormant today (login can never succeed against defunct servers).",
+  "arm64_hazards": [
+   "Unbounded strcpy of a server-supplied string into fixed buffers."
+  ],
+  "evidence": [
+   "EV-JNI-0042",
+   "EV-JNI-0041"
+  ],
+  "confidence": "likely"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVALoadSample",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVALoadSample",
+  "descriptor": "(Ljava/lang/String;)I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVALoadSample(Ljava/lang/String;)I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 0,
+   "table_offset": "0x0",
+   "v7a_entry_addr": "0x8b3f0",
+   "v5_entry_addr": "0x946e8"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z14JAVALoadSamplePc",
+   "prototype": "int JAVALoadSample(char* name)",
+   "v7a": {
+    "addr": "0x1495c",
+    "size": 136
+   },
+   "v5": {
+    "addr": "0x15244",
+    "size": 136
+   }
+  },
+  "native_callers": [
+   "PfmAudioLoadSample"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "NewStringUTF(name); CallIntMethod; DeleteLocalRef(str); return Java result.",
+  "java_side_behavior": "Opens assets/<name>.ogg with AssetManager.openFd and SoundPool.load(fd, off, len, 1); returns sample id or -1. AssetFileDescriptor never closed.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0053"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAPlaySample",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAPlaySample",
+  "descriptor": "(IF)I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPlaySample(IF)I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 1,
+   "table_offset": "0xc",
+   "v7a_entry_addr": "0x8b3fc",
+   "v5_entry_addr": "0x946f4"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z14JAVAPlaySampleif",
+   "prototype": "int JAVAPlaySample(int id, float vol)",
+   "v7a": {
+    "addr": "0x14230",
+    "size": 96
+   },
+   "v5": {
+    "addr": "0x14ae4",
+    "size": 112
+   }
+  },
+  "native_callers": [
+   "PfmAudioPlaySample (vol *= PfmSampleVolume)"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallIntMethod(id, (double)vol) - float promoted to double through C varargs, as CallIntMethodV expects.",
+  "java_side_behavior": "SoundPool.play(id, vol, vol, priority 1, loop 0, rate 1.0f) -> stream id.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0064"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAStopSample",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAStopSample",
+  "descriptor": "(I)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAStopSample(I)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 2,
+   "table_offset": "0x18",
+   "v7a_entry_addr": "0x8b408",
+   "v5_entry_addr": "0x94700"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z18PfmAudioStopSamplei",
+   "prototype": "void PfmAudioStopSample(int stream)",
+   "v7a": {
+    "addr": "0x14044",
+    "size": 68
+   },
+   "v5": {
+    "addr": "0x148e8",
+    "size": 76
+   }
+  },
+  "native_callers": [
+   "RShellSoundStopSample",
+   "RShellSoundStopLooped"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod(stream).",
+  "java_side_behavior": "SoundPool.stop(stream).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVASaveFile",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVASaveFile",
+  "descriptor": "(Ljava/lang/String;[BI)I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVASaveFile(Ljava/lang/String;[BI)I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 3,
+   "table_offset": "0x24",
+   "v7a_entry_addr": "0x8b414",
+   "v5_entry_addr": "0x9470c"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z13JAVACSaveFilePcPvi",
+   "prototype": "int JAVACSaveFile(char* name, void* data, int len)",
+   "v7a": {
+    "addr": "0x14858",
+    "size": 256
+   },
+   "v5": {
+    "addr": "0x15140",
+    "size": 256
+   }
+  },
+  "native_callers": [
+   "PfmSaveFile"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "arr=NewByteArray(len); SetByteArrayRegion(arr,0,len,data); str=NewStringUTF(name); r=CallIntMethod(str,arr,len); DeleteLocalRef(str); DeleteLocalRef(arr); return r!=0.",
+  "java_side_behavior": "Context.openFileOutput(name, MODE_PRIVATE).write(data,0,len); returns 1/0.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0068"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVADeleteFile",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVADeleteFile",
+  "descriptor": "(Ljava/lang/String;)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVADeleteFile(Ljava/lang/String;)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 4,
+   "table_offset": "0x30",
+   "v7a_entry_addr": "0x8b420",
+   "v5_entry_addr": "0x94718"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z15JAVACDeleteFilePc",
+   "prototype": "void JAVACDeleteFile(char* name)",
+   "v7a": {
+    "addr": "0x14eac",
+    "size": 128
+   },
+   "v5": {
+    "addr": "0x15798",
+    "size": 128
+   }
+  },
+  "native_callers": [
+   "PfmDeleteFile"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "NewStringUTF; CallVoidMethod; DeleteLocalRef.",
+  "java_side_behavior": "Context.deleteFile(name).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVALoadFile",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVALoadFile",
+  "descriptor": "(Ljava/lang/String;[BI)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVALoadFile(Ljava/lang/String;[BI)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 5,
+   "table_offset": "0x3c",
+   "v7a_entry_addr": "0x8b42c",
+   "v5_entry_addr": "0x94724"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z13JAVACLoadFilePcPv",
+   "prototype": "int JAVACLoadFile(char* name, void* dst)",
+   "v7a": {
+    "addr": "0x15038",
+    "size": 360
+   },
+   "v5": {
+    "addr": "0x15924",
+    "size": 360
+   }
+  },
+  "native_callers": [
+   "PfmLoadFile"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "size=JAVACFileSize(name); if 0 return 0; arr=NewByteArray(size); str=NewStringUTF(name); CallVoidMethod(str,arr,size); GetByteArrayRegion(arr,0,size,dst); DeleteLocalRef x2; return size.",
+  "java_side_behavior": "openFileInput(name).read(Data,0,length) - single read() call, short reads not retried.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAFindFile",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAFindFile",
+  "descriptor": "(Ljava/lang/String;)I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAFindFile(Ljava/lang/String;)I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 6,
+   "table_offset": "0x48",
+   "v7a_entry_addr": "0x8b438",
+   "v5_entry_addr": "0x94730"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z13JAVACFindFilePc",
+   "prototype": "int JAVACFindFile(char* name)",
+   "v7a": {
+    "addr": "0x147c8",
+    "size": 140
+   },
+   "v5": {
+    "addr": "0x150b0",
+    "size": 140
+   }
+  },
+  "native_callers": [
+   "PfmFindFile",
+   "PfmLoadFile"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "NewStringUTF; CallIntMethod; DeleteLocalRef; return r!=0.",
+  "java_side_behavior": "1 if openFileInput(name) succeeds, else 0.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAFileSize",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAFileSize",
+  "descriptor": "(Ljava/lang/String;)I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAFileSize(Ljava/lang/String;)I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 7,
+   "table_offset": "0x54",
+   "v7a_entry_addr": "0x8b444",
+   "v5_entry_addr": "0x9473c"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z13JAVACFileSizePc",
+   "prototype": "int JAVACFileSize(char* name)",
+   "v7a": {
+    "addr": "0x14fb0",
+    "size": 136
+   },
+   "v5": {
+    "addr": "0x1589c",
+    "size": 136
+   }
+  },
+  "native_callers": [
+   "PfmLoadFile",
+   "JAVACLoadFile"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "NewStringUTF; CallIntMethod; DeleteLocalRef.",
+  "java_side_behavior": "FileInputStream.available() of openFileInput(name), 0 on error.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0068"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVASetMusicVolume",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVASetMusicVolume",
+  "descriptor": "(F)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVASetMusicVolume(F)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 8,
+   "table_offset": "0x60",
+   "v7a_entry_addr": "0x8b450",
+   "v5_entry_addr": "0x94748"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z22PfmAudioSetMusicVolumef",
+   "prototype": "void PfmAudioSetMusicVolume(float v)",
+   "v7a": {
+    "addr": "0x14088",
+    "size": 92
+   },
+   "v5": {
+    "addr": "0x14934",
+    "size": 100
+   }
+  },
+  "native_callers": [
+   "RShellMusicVolume"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod((double)v).",
+  "java_side_behavior": "MusicVolume=v; MusicPlayer.setVolume(v,v) if playing.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAPlayMusic",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAPlayMusic",
+  "descriptor": "(Ljava/lang/String;)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPlayMusic(Ljava/lang/String;)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 9,
+   "table_offset": "0x6c",
+   "v7a_entry_addr": "0x8b45c",
+   "v5_entry_addr": "0x94754"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z17PfmAudioPlayMusicPc",
+   "prototype": "void PfmAudioPlayMusic(char* name)",
+   "v7a": {
+    "addr": "0x14f30",
+    "size": 128
+   },
+   "v5": {
+    "addr": "0x1581c",
+    "size": 128
+   }
+  },
+  "native_callers": [
+   "RShellMusicPlay"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "NewStringUTF; CallVoidMethod; DeleteLocalRef.",
+  "java_side_behavior": "new MediaPlayer on assets/<name>.ogg (openFd), prepare(), setLooping(true), setVolume(MusicVolume), start(). Previous MediaPlayer is not released here.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0069"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAStopMusic",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAStopMusic",
+  "descriptor": "()V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAStopMusic()V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 10,
+   "table_offset": "0x78",
+   "v7a_entry_addr": "0x8b468",
+   "v5_entry_addr": "0x94760"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z17PfmAudioStopMusicv",
+   "prototype": "void PfmAudioStopMusic()",
+   "v7a": {
+    "addr": "0x14004",
+    "size": 64
+   },
+   "v5": {
+    "addr": "0x148a8",
+    "size": 64
+   }
+  },
+  "native_callers": [
+   "RShellMusicStop"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod.",
+  "java_side_behavior": "MusicPlayer.stop(); release(); MusicPlayer=null.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAUnPauseMusic",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAUnPauseMusic",
+  "descriptor": "()V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnPauseMusic()V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 11,
+   "table_offset": "0x84",
+   "v7a_entry_addr": "0x8b474",
+   "v5_entry_addr": "0x9476c"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z20PfmAudioUnPauseMusicv",
+   "prototype": "void PfmAudioUnPauseMusic()",
+   "v7a": {
+    "addr": "0x13fc4",
+    "size": 64
+   },
+   "v5": {
+    "addr": "0x14868",
+    "size": 64
+   }
+  },
+  "native_callers": [
+   "RShellMusicUnPause"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod.",
+  "java_side_behavior": "MusicPlayer.start() if non-null.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAPauseMusic",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAPauseMusic",
+  "descriptor": "()V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPauseMusic()V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 12,
+   "table_offset": "0x90",
+   "v7a_entry_addr": "0x8b480",
+   "v5_entry_addr": "0x94778"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z18PfmAudioPauseMusicv",
+   "prototype": "void PfmAudioPauseMusic()",
+   "v7a": {
+    "addr": "0x13f84",
+    "size": 64
+   },
+   "v5": {
+    "addr": "0x14828",
+    "size": 64
+   }
+  },
+  "native_callers": [
+   "RShellMusicPause"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod.",
+  "java_side_behavior": "MusicPlayer.pause() if non-null.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAMusicRestart",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAMusicRestart",
+  "descriptor": "()V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAMusicRestart()V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 13,
+   "table_offset": "0x9c",
+   "v7a_entry_addr": "0x8b48c",
+   "v5_entry_addr": "0x94784"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z16JAVAMusicRestartv",
+   "prototype": "void JAVAMusicRestart()",
+   "v7a": {
+    "addr": "0x13f44",
+    "size": 64
+   },
+   "v5": {
+    "addr": "0x147e8",
+    "size": 64
+   }
+  },
+  "native_callers": [
+   "cRResourceManager::AI"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod.",
+  "java_side_behavior": "MusicPlayer.start() if non-null.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAUnZip",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAUnZip",
+  "descriptor": "([B[B)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnZip([B[B)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 14,
+   "table_offset": "0xa8",
+   "v7a_entry_addr": "0x8b498",
+   "v5_entry_addr": "0x94790"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z11JAVAC_UnZipPviS_i",
+   "prototype": "void JAVAC_UnZip(void* dst, int dstLen, void* src, int srcLen)",
+   "v7a": {
+    "addr": "0x14b60",
+    "size": 276
+   },
+   "v5": {
+    "addr": "0x1544c",
+    "size": 276
+   }
+  },
+  "native_callers": [
+   "PfmLoadFileDat (type 1)"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "a=NewByteArray(dstLen); b=NewByteArray(srcLen); SetByteArrayRegion(b,0,srcLen,src); CallVoidMethod(a,b); GetByteArrayRegion(a,0,dstLen,dst); DeleteLocalRef x2.",
+  "java_side_behavior": "ZipInputStream over src; inflates ONLY the first entry into dst (bytewise copy); all exceptions swallowed.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "Buffer sized by native (dstLen); Java truncates silently on overflow (exception swallowed)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0035",
+   "EV-JNI-0036"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAUnJpg",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAUnJpg",
+  "descriptor": "([B[B)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnJpg([B[B)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 15,
+   "table_offset": "0xb4",
+   "v7a_entry_addr": "0x8b4a4",
+   "v5_entry_addr": "0x9479c"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z11JAVAC_UnJpgPviS_iii",
+   "prototype": "void JAVAC_UnJpg(void* dst, int dstLen, void* src, int srcLen, int w, int h)",
+   "v7a": {
+    "addr": "0x149e8",
+    "size": 376
+   },
+   "v5": {
+    "addr": "0x152d0",
+    "size": 380
+   }
+  },
+  "native_callers": [
+   "PfmLoadFileDat (type 2)"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "a=NewByteArray(dstLen); b=NewByteArray(srcLen); SetByteArrayRegion(b,..src); CallVoidMethod(a,b); rowBytes=dstLen/h; for i<h: GetByteArrayRegion(a, i*rowBytes, rowBytes, dst+(h-1-i)*rowBytes) (vertical flip); DeleteLocalRef x2. w is unused.",
+  "java_side_behavior": "BitmapFactory.decodeByteArray(ARGB_8888, inDither) then copyPixelsToBuffer(ByteBuffer.wrap(dst)): RGBA byte order, premultiplied alpha (platform behaviour, likely).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "Output byte order RGBA + premultiplied alpha + bottom-up rows must be reproduced by any native decoder replacement.",
+   "decodeByteArray returning null -> NullPointerException left pending."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0032",
+   "EV-JNI-0033",
+   "EV-JNI-0034"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAUnPng",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAUnPng",
+  "descriptor": "([B[B)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnPng([B[B)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 16,
+   "table_offset": "0xc0",
+   "v7a_entry_addr": "0x8b4b0",
+   "v5_entry_addr": "0x947a8"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z11JAVAC_UnPngPviS_iii",
+   "prototype": "void JAVAC_UnPng(void* dst, int dstLen, void* src, int srcLen, int w, int h)",
+   "v7a": {
+    "addr": "0x144c0",
+    "size": 376
+   },
+   "v5": {
+    "addr": "0x14da4",
+    "size": 380
+   }
+  },
+  "native_callers": [
+   "PfmLoadFileDat (type 3)"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "Same as JAVAC_UnJpg (bottom-up row copy).",
+  "java_side_behavior": "Same as JAVAUnJpg; for PNG with alpha the premultiplication matters.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "Output byte order RGBA + premultiplied alpha + bottom-up rows must be reproduced by any native decoder replacement.",
+   "decodeByteArray returning null -> NullPointerException left pending."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0032",
+   "EV-JNI-0033",
+   "EV-JNI-0034"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAOpenFeintOpen",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAOpenFeintOpen",
+  "descriptor": "()V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintOpen()V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 17,
+   "table_offset": "0xcc",
+   "v7a_entry_addr": "0x8b4bc",
+   "v5_entry_addr": "0x947b4"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z17JAVAOpenFeintOpenv",
+   "prototype": "void JAVAOpenFeintOpen()",
+   "v7a": {
+    "addr": "0x13f04",
+    "size": 64
+   },
+   "v5": {
+    "addr": "0x147a8",
+    "size": 64
+   }
+  },
+  "native_callers": [
+   "OFOpen"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod.",
+  "java_side_behavior": "Calls native JNIOFOSave() (re-entrant) then Dashboard.open() (starts an Activity from the GL thread).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "Starts an Activity and re-enters native code from within a native frame."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAOpenFeintLastLoggedInUserID",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAOpenFeintLastLoggedInUserID",
+  "descriptor": "([B)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintLastLoggedInUserID([B)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 18,
+   "table_offset": "0xd8",
+   "v7a_entry_addr": "0x8b4c8",
+   "v5_entry_addr": "0x947c0"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+   "prototype": "void JAVAOpenFeintLastLoggedInUserID(char* out, int len)",
+   "v7a": {
+    "addr": "0x146c8",
+    "size": 256
+   },
+   "v5": {
+    "addr": "0x14fb0",
+    "size": 256
+   }
+  },
+  "native_callers": [
+   "OFGetHighScore",
+   "OFSetHighScore"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "arr=NewByteArray(len) (callers pass 64); CallVoidMethod(arr); GetByteArrayRegion(arr,0,len,out); DeleteLocalRef; if out[0] strcpy(gConfig+240,out) else strcpy(out,gConfig+240).",
+  "java_side_behavior": "Writes getCurrentUser().userID() bytes + NUL into the array with no bounds check (AIOOBE if >= len).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "Fixed 64-byte buffer sized by native; Java does not bound-check."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0043"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAOpenFeintSubmit",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAOpenFeintSubmit",
+  "descriptor": "(Ljava/lang/String;II)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintSubmit(Ljava/lang/String;II)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 19,
+   "table_offset": "0xe4",
+   "v7a_entry_addr": "0x8b4d4",
+   "v5_entry_addr": "0x947cc"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z19JAVAOpenFeintSubmitPcii",
+   "prototype": "void JAVAOpenFeintSubmit(char* leaderboard, int score, int statePtr)",
+   "v7a": {
+    "addr": "0x1442c",
+    "size": 148
+   },
+   "v5": {
+    "addr": "0x14d0c",
+    "size": 152
+   }
+  },
+  "native_callers": [
+   "OFAddArcade",
+   "OFAddArcadePro",
+   "OFAddChallenge",
+   "OFAddTimeTrial",
+   "OFOUpdate"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "NewStringUTF; CallVoidMethod(str, score, statePtr); DeleteLocalRef.",
+  "java_side_behavior": "new Score(score).submitTo(new Leaderboard(id), cb) - cb forwards statePtr (success) or 0 (failure) to JNIOFOSubmitCB on the main thread.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "jint carries a native pointer (truncation on arm64)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0037",
+   "EV-JNI-0038"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAOpenFeintUnlock",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAOpenFeintUnlock",
+  "descriptor": "(Ljava/lang/String;I)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintUnlock(Ljava/lang/String;I)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 20,
+   "table_offset": "0xf0",
+   "v7a_entry_addr": "0x8b4e0",
+   "v5_entry_addr": "0x947d8"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z19JAVAOpenFeintUnlockPci",
+   "prototype": "void JAVAOpenFeintUnlock(char* achievement, int statePtr)",
+   "v7a": {
+    "addr": "0x14638",
+    "size": 144
+   },
+   "v5": {
+    "addr": "0x14f20",
+    "size": 144
+   }
+  },
+  "native_callers": [
+   "OFAddAchievement",
+   "OFOUpdate"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "NewStringUTF; CallVoidMethod(str, statePtr); DeleteLocalRef.",
+  "java_side_behavior": "Achievement.load(cb2); cb2.onSuccess: unlock(cb3) or JNIOFOUnlockCB(statePtr) if already unlocked; cb3 -> JNIOFOUnlockCB(statePtr|0). No callback on load failure.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "jint carries a native pointer (truncation on arm64)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0037",
+   "EV-JNI-0038"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAOpenFeintIsUserLoggedIn",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAOpenFeintIsUserLoggedIn",
+  "descriptor": "()I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintIsUserLoggedIn()I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 21,
+   "table_offset": "0xfc",
+   "v7a_entry_addr": "0x8b4ec",
+   "v5_entry_addr": "0x947e4"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z27JAVAOpenFeintIsUserLoggedInv",
+   "prototype": "int JAVAOpenFeintIsUserLoggedIn()",
+   "v7a": {
+    "addr": "0x141e0",
+    "size": 80
+   },
+   "v5": {
+    "addr": "0x14a94",
+    "size": 80
+   }
+  },
+  "native_callers": [
+   "OFIsUserLoggedIn"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallIntMethod; return r!=0.",
+  "java_side_behavior": "OpenFeint.isUserLoggedIn() ? 1 : 0.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAOpenFeintIsOnline",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAOpenFeintIsOnline",
+  "descriptor": "()I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintIsOnline()I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 22,
+   "table_offset": "0x108",
+   "v7a_entry_addr": "0x8b4f8",
+   "v5_entry_addr": "0x947f0"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z21JAVAOpenFeintIsOnlinev",
+   "prototype": "int JAVAOpenFeintIsOnline()",
+   "v7a": {
+    "addr": "0x14190",
+    "size": 80
+   },
+   "v5": {
+    "addr": "0x14a44",
+    "size": 80
+   }
+  },
+  "native_callers": [
+   "OFIsOnline"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallIntMethod; return r!=0.",
+  "java_side_behavior": "OpenFeint.isNetworkConnected() ? 1 : 0 (ConnectivityManager, not server reachability).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVATime",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVATime",
+  "descriptor": "()I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVATime()I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 23,
+   "table_offset": "0x114",
+   "v7a_entry_addr": "0x8b504",
+   "v5_entry_addr": "0x947fc"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z8JAVATimev",
+   "prototype": "uint64_t JAVATime()",
+   "v7a": {
+    "addr": "0x14118",
+    "size": 120
+   },
+   "v5": {
+    "addr": "0x149cc",
+    "size": 120
+   }
+  },
+  "native_callers": [
+   "GetTime"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "lo=CallIntMethod(JAVATime); hi=CallIntMethod(JAVATimeHi); return (((uint64_t)hi<<32)|(uint32_t)lo)/1000 (__aeabi_uldivmod) -> microseconds from System.nanoTime().",
+  "java_side_behavior": "JAVATime: JTime=System.nanoTime(); return (int)JTime.",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "Two JNI calls + a Java static per timestamp; replace with clock_gettime(CLOCK_MONOTONIC) in the port."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0030",
+   "EV-JNI-0031"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVATimeHi",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVATimeHi",
+  "descriptor": "()I",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVATimeHi()I [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 24,
+   "table_offset": "0x120",
+   "v7a_entry_addr": "0x8b510",
+   "v5_entry_addr": "0x94808"
+  },
+  "jni_call": "CallIntMethodV via _JNIEnv::CallIntMethod",
+  "native_wrapper": {
+   "symbol": "_Z8JAVATimev",
+   "prototype": "uint64_t JAVATime()",
+   "v7a": {
+    "addr": "0x14118",
+    "size": 120
+   },
+   "v5": {
+    "addr": "0x149cc",
+    "size": 120
+   }
+  },
+  "native_callers": [
+   "GetTime"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "Second call inside JAVATime(), must follow JAVATime on the same thread.",
+  "java_side_behavior": "return (int)(JTime >> 32) (reads the static written by JAVATime).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere).",
+   "Non-atomic 2-call protocol through a static long; replace with clock_gettime."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015",
+   "EV-JNI-0030",
+   "EV-JNI-0031"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "N2J-ADRenderer.JAVAVibrate",
+  "direction": "native_to_java",
+  "java_class": "Lcom/sandlotgames/snailmail/ADRenderer;",
+  "java_method": "JAVAVibrate",
+  "descriptor": "(I)V",
+  "static": false,
+  "java_smali": [
+   "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAVibrate(I)V [PUBLIC]"
+  ],
+  "gJAVAFunction": {
+   "index": 25,
+   "table_offset": "0x12c",
+   "v7a_entry_addr": "0x8b51c",
+   "v5_entry_addr": "0x94814"
+  },
+  "jni_call": "CallVoidMethodV via _JNIEnv::CallVoidMethod",
+  "native_wrapper": {
+   "symbol": "_Z11JAVAVibratei",
+   "prototype": "void JAVAVibrate(int ms)",
+   "v7a": {
+    "addr": "0x13eb8",
+    "size": 68
+   },
+   "v5": {
+    "addr": "0x14754",
+    "size": 76
+   }
+  },
+  "native_callers": [
+   "PfmVibrate (300 ms)"
+  ],
+  "env_source": "gJavaEnv (cached by JAVA_RegisterFunctions in nativeInit/nativeReInit)",
+  "object_source": "gJavaObj (raw local ref to the ADRenderer instance from nativeInit/nativeReInit)",
+  "native_side_behavior": "CallVoidMethod(ms).",
+  "java_side_behavior": "Vibrator.vibrate((long)ms).",
+  "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
+  "arm64_hazards": [
+   "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
+   "Pending Java exceptions are never checked (no ExceptionCheck/ExceptionClear anywhere)."
+  ],
+  "evidence": [
+   "EV-JNI-0009",
+   "EV-JNI-0010",
+   "EV-JNI-0012",
+   "EV-JNI-0014",
+   "EV-JNI-0015"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "NFA-FileDescriptor.descriptor",
+  "direction": "native_field_access",
+  "java_class": "Ljava/io/FileDescriptor;",
+  "field": "descriptor",
+  "field_signature": "I",
+  "native_function": {
+   "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+   "v7a_sites": {
+    "FindClass": "0x15270",
+    "NewGlobalRef": "0x1528c",
+    "GetFieldID": "0x152b4",
+    "GetIntField": "0x152ec",
+    "DeleteLocalRef": [
+     "0x15428",
+     "0x1543c"
+    ]
+   },
+   "v5_sites": {
+    "FindClass": "0x15b5c",
+    "NewGlobalRef": "0x15b78",
+    "GetFieldID": "0x15ba0",
+    "GetIntField": "0x15bd8",
+    "DeleteLocalRef": [
+     "0x15d1c",
+     "0x15d30"
+    ]
+   }
+  },
+  "thread": "main/UI thread (Activity lifecycle / View input callback) (onCreate)",
+  "behavior": "Reads the raw int fd out of the FileDescriptor passed to JNIDatInit and dup()s it.",
+  "arm64_hazards": [
+   "Private-field reflection; replace with NDK AAsset APIs.",
+   "Global ref from NewGlobalRef deleted with DeleteLocalRef (leak/misuse)."
+  ],
+  "evidence": [
+   "EV-JNI-0016",
+   "EV-JNI-0017"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-01",
+  "direction": "hazard",
+  "title": "Cached JNIEnv* and raw local references",
+  "description": "gJavaEnv/gJavaObj/gJavaClass are captured from nativeInit/nativeReInit without NewGlobalRef and reused by all 26 callbacks in later native frames.",
+  "port_guidance": "Hold ADRenderer (or its replacement) in a NewGlobalRef, cache jclass as global ref, and obtain JNIEnv per call via JavaVM::GetEnv (or pass it down from the current JNI entry).",
+  "evidence": [
+   "EV-JNI-0008",
+   "EV-JNI-0011",
+   "EV-JNI-0012"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-02",
+  "direction": "hazard",
+  "title": "Native pointers carried in Java int",
+  "description": "JAVAOpenFeintSubmit(..., int CBOFOStatePtr) / JAVAOpenFeintUnlock(..., int) receive &gOFOData[...] and JNIOFOSubmitCB(int)/JNIOFOUnlockCB(int) dereference it as uint8_t*.",
+  "port_guidance": "Use jlong (or an index into gOFOData) in the port; the Java shell descriptors must change accordingly, or OpenFeint must be stubbed so the callbacks never fire.",
+  "evidence": [
+   "EV-JNI-0037",
+   "EV-JNI-0038",
+   "EV-JNI-0039"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-03",
+  "direction": "hazard",
+  "title": "FileDescriptor -> int fd extraction",
+  "description": "JNIDatInit reflects FileDescriptor.descriptor (private) and dup()s it.",
+  "port_guidance": "Use AAssetManager_open + AAsset_openFileDescriptor64 (off64_t start/length) or ParcelFileDescriptor.getFd()/detachFd().",
+  "evidence": [
+   "EV-JNI-0016"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-04",
+  "direction": "hazard",
+  "title": "AssetFileDescriptor offsets truncated to int",
+  "description": "getStartOffset()/getLength() are long-to-int'd before JNIDatInit; native stores them in 32-bit globals and fseek()s with long.",
+  "port_guidance": "Pass int64 (jlong/off64_t) and use fseeko/pread with 64-bit offsets.",
+  "evidence": [
+   "EV-JNI-0023",
+   "EV-JNI-0059"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-05",
+  "direction": "hazard",
+  "title": "Split 64-bit time",
+  "description": "System.nanoTime is returned as two jints (JAVATime low word, JAVATimeHi from a static long) and recombined natively into uint64 microseconds.",
+  "port_guidance": "Replace with clock_gettime(CLOCK_MONOTONIC) in native code; keep microsecond uint64 semantics (callers compare r0:r1).",
+  "evidence": [
+   "EV-JNI-0030",
+   "EV-JNI-0031"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-06",
+  "direction": "hazard",
+  "title": "Byte[] buffers sized by native code",
+  "description": "JAVAUnZip/UnJpg/UnPng/LoadFile/LastLoggedInUserID write into arrays whose size is chosen natively; overflow is either swallowed (UnZip) or leaves a pending exception (UnPng/UnJpg/UserID) that native never checks.",
+  "port_guidance": "Decode natively (zlib/libpng/libjpeg or stb) into caller-sized buffers with explicit length checks; if JNI is kept, add ExceptionCheck.",
+  "evidence": [
+   "EV-JNI-0033",
+   "EV-JNI-0035",
+   "EV-JNI-0043"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-07",
+  "direction": "hazard",
+  "title": "Pixel format contract of JAVAC_UnPng/UnJpg",
+  "description": "Rows are copied bottom-up into a buffer preceded by an 18-byte TGA header (32 bpp, descriptor 8); pixel bytes come from ARGB_8888 copyPixelsToBuffer (RGBA order, premultiplied).",
+  "port_guidance": "A native decoder must emit RGBA, premultiply alpha (to match original blending) and flip rows; validate against device captures.",
+  "evidence": [
+   "EV-JNI-0033",
+   "EV-JNI-0034",
+   "EV-JNI-0065"
+  ],
+  "confidence": "likely"
+ },
+ {
+  "id": "HZ-08",
+  "direction": "hazard",
+  "title": "32-bit pointers stored in archive directory",
+  "description": "JNIDatInit rewrites the u32 at +4 of each 24-byte directory record into an absolute pointer.",
+  "port_guidance": "Keep the offset and resolve on lookup, or build a separate char* table.",
+  "evidence": [
+   "EV-JNI-0018"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-09",
+  "direction": "hazard",
+  "title": "Cross-thread shared state without synchronisation",
+  "description": "UI thread (touch, key, sensor, onPause invalidate) and main-thread OpenFeint callbacks write engine globals read by the GL thread; Java statics HasFocus/AudioInitFlag are non-volatile.",
+  "port_guidance": "Queue input events to the GL thread (GLSurfaceView.queueEvent or a lock-free ring) and use atomics for flags.",
+  "evidence": [
+   "EV-JNI-0014",
+   "EV-JNI-0063"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-10",
+  "direction": "hazard",
+  "title": "JNI misuse that newer runtimes/CheckJNI reject",
+  "description": "DeleteLocalRef on a global ref (JNIDatInit), GetStringUTFChars without Release (JNIOFOInit), no exception checks, stale local refs.",
+  "port_guidance": "Fix in the port; run with -Xcheck:jni during validation.",
+  "evidence": [
+   "EV-JNI-0017",
+   "EV-JNI-0042",
+   "EV-JNI-0013"
+  ],
+  "confidence": "established"
+ },
+ {
+  "id": "HZ-11",
+  "direction": "hazard",
+  "title": "softfp float passing",
+  "description": "ARM32 JNI natives receive float args in core registers/stack (JNIMouseEvent x in r3, y on stack; JNIAccelerometer z on stack); varargs Call*Method pass float as double.",
+  "port_guidance": "No action for C/C++ prototypes on arm64 (AAPCS64 passes floats in v-registers); only relevant to hand-written glue or emulation.",
+  "evidence": [
+   "EV-JNI-0025",
+   "EV-JNI-0064"
+  ],
+  "confidence": "established"
+ }
+]

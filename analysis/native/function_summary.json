@@ -1,0 +1,159 @@
+{
+ "note": "per-binary summaries; see function_summary.<bin>.json for full gap lists",
+ "binaries": {
+  "v7a": {
+   "binary": "v7a",
+   "binary_sha256": "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466",
+   "denominators": {
+    "raw_defined_FUNC_symbols_symtab": 1183,
+    "raw_defined_FUNC_symbols_dynsym": 1158,
+    "unique_function_start_addresses": 1173,
+    "same_address_alias_groups": 9,
+    "zero_size_symbol_addresses": 11,
+    "plt_stubs": 94,
+    "note": "raw FUNC symbol counts include aliases and libgcc/EABI helpers; they are NOT a count of recovered game functions. Use by_category.game."
+   },
+   "by_category": {
+    "game": 1096,
+    "jni": 18,
+    "runtime": 59
+   },
+   "by_component_hint": {
+    "app_glue": 6,
+    "class_c": 22,
+    "engine_class_cR": 615,
+    "gl_wrapper": 5,
+    "java_bridge": 20,
+    "jni": 18,
+    "jni_header_inline": 2,
+    "object_proc": 66,
+    "openfeint": 10,
+    "osd_text": 4,
+    "other": 162,
+    "resource_archive": 15,
+    "rshell_platform": 67,
+    "runtime": 59,
+    "static_init": 11,
+    "type_t": 91
+   },
+   "runtime_rule": {
+    "libgcc_tail_start": "0x7ee30",
+    "runtime_outside_tail": [],
+    "runtime_by_position_only": []
+   },
+   "boundary_confidence": {
+    "heuristic": 11,
+    "symbol": 11,
+    "symbol+exidx": 1151
+   },
+   "functions_with_exidx_entry": 1151,
+   "exidx_entries_total": 1151,
+   "status_counts": {
+    "DECOMPILED": 1173,
+    "DISASSEMBLED": 1173,
+    "DISCOVERED": 1173
+   },
+   "ghidra_merge": {
+    "summary_file": "analysis/native/ghidra_export_summary.v7a.json",
+    "ghidra_functions_processed": 1360,
+    "ghidra_functions_without_elf_symbol": 92,
+    "ghidra_functions_without_elf_symbol_outside_plt": []
+   },
+   "text": {
+    "start": "0x13ad0",
+    "end": "0x80d64",
+    "size": 447124,
+    "bytes_covered_by_function_symbols": 447116,
+    "gap_count": 2,
+    "gap_bytes": 8
+   },
+   "instructions_decoded": 107385,
+   "invalid_decodes": 0,
+   "calls": {
+    "direct_call_edges_unique": 2483,
+    "tailcall_edges_unique": 285,
+    "indirect_call_sites": 78,
+    "indirect_call_sites_statically_resolved": 0,
+    "indirect_jump_sites": 46,
+    "switch_tables": 46
+   }
+  },
+  "v5": {
+   "binary": "v5",
+   "binary_sha256": "96dbeaeb20c60d687301ca769656727467371489db5e3ed744a93248bc8d8136",
+   "denominators": {
+    "raw_defined_FUNC_symbols_symtab": 1253,
+    "raw_defined_FUNC_symbols_dynsym": 1228,
+    "unique_function_start_addresses": 1214,
+    "same_address_alias_groups": 36,
+    "zero_size_symbol_addresses": 12,
+    "plt_stubs": 94,
+    "note": "raw FUNC symbol counts include aliases and libgcc/EABI helpers; they are NOT a count of recovered game functions. Use by_category.game."
+   },
+   "by_category": {
+    "game": 1096,
+    "jni": 18,
+    "runtime": 100
+   },
+   "by_component_hint": {
+    "app_glue": 6,
+    "class_c": 22,
+    "engine_class_cR": 615,
+    "gl_wrapper": 5,
+    "java_bridge": 20,
+    "jni": 18,
+    "jni_header_inline": 2,
+    "object_proc": 66,
+    "openfeint": 10,
+    "osd_text": 4,
+    "other": 162,
+    "resource_archive": 15,
+    "rshell_platform": 67,
+    "runtime": 100,
+    "static_init": 11,
+    "type_t": 91
+   },
+   "runtime_rule": {
+    "libgcc_tail_start": "0x87258",
+    "runtime_outside_tail": [],
+    "runtime_by_position_only": []
+   },
+   "boundary_confidence": {
+    "heuristic": 12,
+    "symbol": 51,
+    "symbol+exidx": 1151
+   },
+   "functions_with_exidx_entry": 1151,
+   "exidx_entries_total": 1151,
+   "status_counts": {
+    "DECOMPILED": 1214,
+    "DISASSEMBLED": 1214,
+    "DISCOVERED": 1214
+   },
+   "ghidra_merge": {
+    "summary_file": "analysis/native/ghidra_export_summary.v5.json",
+    "ghidra_functions_processed": 1402,
+    "ghidra_functions_without_elf_symbol": 93,
+    "ghidra_functions_without_elf_symbol_outside_plt": []
+   },
+   "text": {
+    "start": "0x14398",
+    "end": "0x89e58",
+    "size": 481984,
+    "bytes_covered_by_function_symbols": 481984,
+    "gap_count": 0,
+    "gap_bytes": 0
+   },
+   "instructions_decoded": 116938,
+   "invalid_decodes": 0,
+   "calls": {
+    "direct_call_edges_unique": 4005,
+    "tailcall_edges_unique": 286,
+    "indirect_call_sites": 78,
+    "indirect_call_sites_statically_resolved": 0,
+    "indirect_jump_sites": 46,
+    "switch_tables": 46
+   }
+  }
+ }
+}

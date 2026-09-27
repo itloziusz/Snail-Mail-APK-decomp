@@ -1,0 +1,7689 @@
+{
+ "schema": "gl_usage/1",
+ "generated_by": "tools/validation/platform/gl_census.py",
+ "binary": {
+  "label": "v7a",
+  "sha256": "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466",
+  "path": "work/apk_unzip/lib/armeabi-v7a/libsnailmail.so"
+ },
+ "cross_check": {
+  "label": "v5",
+  "sha256": "96dbeaeb20c60d687301ca769656727467371489db5e3ed744a93248bc8d8136",
+  "gl_call_counts": {
+   "glBindBuffer": 27,
+   "glBindTexture": 6,
+   "glBlendFunc": 5,
+   "glBufferData": 9,
+   "glClear": 3,
+   "glClearColor": 6,
+   "glClearDepthf": 2,
+   "glColor4f": 2,
+   "glCullFace": 1,
+   "glDeleteTextures": 6,
+   "glDepthFunc": 3,
+   "glDepthMask": 8,
+   "glDepthRangef": 4,
+   "glDisable": 9,
+   "glDisableClientState": 11,
+   "glDrawElements": 10,
+   "glEnable": 19,
+   "glEnableClientState": 14,
+   "glFinish": 1,
+   "glFogf": 1,
+   "glFogfv": 1,
+   "glFrustumf": 1,
+   "glGenBuffers": 7,
+   "glGenTextures": 5,
+   "glHint": 3,
+   "glLineWidth": 1,
+   "glLoadIdentity": 13,
+   "glMatrixMode": 20,
+   "glMultMatrixf": 2,
+   "glOrthof": 2,
+   "glPixelStorei": 2,
+   "glPopMatrix": 5,
+   "glPushMatrix": 4,
+   "glReadPixels": 1,
+   "glRotatef": 3,
+   "glScalef": 4,
+   "glScissor": 1,
+   "glShadeModel": 3,
+   "glTexCoordPointer": 15,
+   "glTexEnvf": 1,
+   "glTexImage2D": 4,
+   "glTexParameteri": 10,
+   "glTranslatef": 7,
+   "glVertexPointer": 18,
+   "glViewport": 3
+  }
+ },
+ "api_evidence": {
+  "manifest_glEsVersion": "0x00010001 (work/apktool/AndroidManifest.xml <uses-feature android:glEsVersion>)",
+  "DT_NEEDED": "libGLESv1_CM.so",
+  "imported_gl_functions": [
+   "glBindBuffer",
+   "glBindTexture",
+   "glBlendFunc",
+   "glBufferData",
+   "glClear",
+   "glClearColor",
+   "glClearDepthf",
+   "glColor4f",
+   "glCullFace",
+   "glDeleteTextures",
+   "glDepthFunc",
+   "glDepthMask",
+   "glDepthRangef",
+   "glDisable",
+   "glDisableClientState",
+   "glDrawElements",
+   "glEnable",
+   "glEnableClientState",
+   "glFinish",
+   "glFogf",
+   "glFogfv",
+   "glFrustumf",
+   "glGenBuffers",
+   "glGenTextures",
+   "glHint",
+   "glLineWidth",
+   "glLoadIdentity",
+   "glMatrixMode",
+   "glMultMatrixf",
+   "glOrthof",
+   "glPixelStorei",
+   "glPopMatrix",
+   "glPushMatrix",
+   "glReadPixels",
+   "glRotatef",
+   "glScalef",
+   "glScissor",
+   "glShadeModel",
+   "glTexCoordPointer",
+   "glTexEnvf",
+   "glTexImage2D",
+   "glTexParameteri",
+   "glTranslatef",
+   "glVertexPointer",
+   "glViewport"
+  ],
+  "not_imported_examples": [
+   "glColorPointer",
+   "glNormalPointer",
+   "glLightfv",
+   "glMaterialfv",
+   "glAlphaFunc",
+   "glTexSubImage2D",
+   "glCompressedTexImage2D",
+   "glColor4ub",
+   "glPointSize",
+   "glDrawArrays",
+   "glLoadMatrixf",
+   "glGetError",
+   "glGetString",
+   "glPolygonOffset",
+   "glStencilFunc",
+   "glTexEnvi",
+   "glTexParameterf",
+   "glActiveTexture",
+   "glClientActiveTexture",
+   "glBufferSubData",
+   "glDeleteBuffers",
+   "glColorMask"
+  ]
+ },
+ "method": [
+  "direct BL/B to gl* PLT stubs (see platform_imports.json)",
+  "forward constant propagation per function with block merges (armelf.ConstProp): mov/mvn/movw/movt, ldr literal, GOT loads, add/sub/orr/and/eor/bic/rsb/shifts, vldr/vmov transfers, str/stm/vstr to outgoing stack slots",
+  "softfp: float args are core-register/stack bit patterns, decoded as IEEE-754 binary32",
+  "caller_arg values are resolved one level up at every direct caller"
+ ],
+ "stats": {
+  "call_sites": 283,
+  "args_resolved": 440,
+  "args_unresolved_or_runtime": 185
+ },
+ "state_summary": {
+  "glEnable": {
+   "GL_BLEND": 1,
+   "GL_CULL_FACE": 1,
+   "GL_DEPTH_TEST": 4,
+   "GL_DITHER": 1,
+   "GL_FOG": 1,
+   "GL_MULTISAMPLE": 1,
+   "GL_SCISSOR_TEST": 1,
+   "GL_TEXTURE_2D": 9
+  },
+  "glDisable": {
+   "GL_ALPHA_TEST": 1,
+   "GL_BLEND": 2,
+   "GL_CULL_FACE": 2,
+   "GL_DEPTH_TEST": 3,
+   "GL_FOG": 1
+  },
+  "glEnableClientState": {
+   "GL_TEXTURE_COORD_ARRAY": 7,
+   "GL_VERTEX_ARRAY": 7
+  },
+  "glDisableClientState": {
+   "GL_COLOR_ARRAY": 1,
+   "GL_TEXTURE_COORD_ARRAY": 5,
+   "GL_VERTEX_ARRAY": 5
+  },
+  "glMatrixMode": {
+   "GL_MODELVIEW": 9,
+   "GL_PROJECTION": 5,
+   "GL_TEXTURE": 6
+  },
+  "glBlendFunc": {
+   "GL_ONE , GL_ONE": 1,
+   "GL_ONE_MINUS_DST_COLOR , GL_ONE_MINUS_SRC_ALPHA": 1,
+   "GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA": 1,
+   "GL_SRC_ALPHA , GL_SRC_COLOR": 1,
+   "GL_ZERO , GL_ONE_MINUS_SRC_ALPHA": 1
+  },
+  "glTexEnvf": {
+   "GL_TEXTURE_ENV , GL_TEXTURE_ENV_MODE , GL_MODULATE": 1
+  },
+  "glFogf": {
+   "GL_FOG_DENSITY , 0x3ca3d70a": 1
+  },
+  "glFogfv": {
+   "GL_FOG_COLOR": 1
+  },
+  "glDepthFunc": {
+   "GL_LEQUAL": 3
+  },
+  "glDepthMask": {
+   "GL_FALSE": 3,
+   "GL_TRUE": 5
+  },
+  "glDepthRangef": [
+   {
+    "site": "0x7ac8c",
+    "func": "_Z6InitGLv",
+    "zNear": [
+     0.0
+    ],
+    "zFar": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7c2c0",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "zNear": [
+     -0.004000000189989805
+    ],
+    "zFar": [
+     0.9959999918937683
+    ]
+   },
+   {
+    "site": "0x7c31c",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "zNear": [
+     0.0
+    ],
+    "zFar": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7c540",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "zNear": [
+     -1.0
+    ],
+    "zFar": [
+     1.0
+    ]
+   }
+  ],
+  "glClearDepthf": [
+   {
+    "site": "0x7ac70",
+    "func": "_Z6InitGLv",
+    "depth": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7adfc",
+    "func": "_Z8G0Renderv",
+    "depth": [
+     1.0
+    ]
+   }
+  ],
+  "glClearColor": [
+   {
+    "site": "0x79d28",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "red": [
+     0.0
+    ],
+    "green": [
+     0.0
+    ],
+    "blue": [
+     0.0
+    ],
+    "alpha": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7ab74",
+    "func": "_Z7G0Blackv",
+    "red": [
+     0.0
+    ],
+    "green": [
+     0.0
+    ],
+    "blue": [
+     0.0
+    ],
+    "alpha": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7ac68",
+    "func": "_Z6InitGLv",
+    "red": [
+     0.0
+    ],
+    "green": [
+     0.0
+    ],
+    "blue": [
+     0.0
+    ],
+    "alpha": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7adec",
+    "func": "_Z8G0Renderv",
+    "red": [
+     0.0
+    ],
+    "green": [
+     0.0
+    ],
+    "blue": [
+     0.0
+    ],
+    "alpha": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7c57c",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "red": [
+     0.0
+    ],
+    "green": [
+     0.0
+    ],
+    "blue": [
+     0.0
+    ],
+    "alpha": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7c634",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "red": "unresolved",
+    "green": "unresolved",
+    "blue": "unresolved",
+    "alpha": "unresolved"
+   }
+  ],
+  "glColor4f": [
+   {
+    "site": "0x7ace4",
+    "func": "_Z6InitGLv",
+    "red": [
+     1.0
+    ],
+    "green": [
+     1.0
+    ],
+    "blue": [
+     1.0
+    ],
+    "alpha": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7ad74",
+    "func": "_Z11G0SetColourP12tColourSmall",
+    "red": "unresolved",
+    "green": "unresolved",
+    "blue": "unresolved",
+    "alpha": "unresolved"
+   }
+  ],
+  "glCullFace": {
+   "GL_FRONT": 1
+  },
+  "glShadeModel": {
+   "GL_FLAT": 3
+  },
+  "glHint": {
+   "GL_FOG_HINT , GL_DONT_CARE": 1,
+   "GL_LINE_SMOOTH_HINT , GL_FASTEST": 1,
+   "GL_PERSPECTIVE_CORRECTION_HINT , GL_FASTEST": 1
+  },
+  "glPixelStorei": {
+   "GL_UNPACK_ALIGNMENT , 0x1": 2
+  },
+  "glTexImage2D": {
+   "GL_TEXTURE_2D , 0x0 , GL_RGB , 0x0 , GL_RGB , GL_UNSIGNED_BYTE": 1,
+   "GL_TEXTURE_2D , unresolved , GL_RGB , unresolved , GL_RGB , GL_UNSIGNED_BYTE": 1,
+   "GL_TEXTURE_2D , unresolved , GL_RGBA , unresolved , GL_RGBA , GL_UNSIGNED_BYTE": 1,
+   "GL_TEXTURE_2D , unresolved , unresolved , unresolved , unresolved , GL_UNSIGNED_BYTE": 1
+  },
+  "glTexParameteri": {
+   "GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR": 1,
+   "GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR": 3,
+   "GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_CLAMP_TO_EDGE": 1,
+   "GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT": 2,
+   "GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_CLAMP_TO_EDGE": 1,
+   "GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT": 2
+  },
+  "glBindBuffer": {
+   "GL_ARRAY_BUFFER": 12,
+   "GL_ELEMENT_ARRAY_BUFFER": 15
+  },
+  "glBufferData": {
+   "GL_ARRAY_BUFFER , GL_STATIC_DRAW": 5,
+   "GL_ELEMENT_ARRAY_BUFFER , GL_STATIC_DRAW": 4
+  },
+  "glDrawElements": {
+   "GL_LINES , GL_UNSIGNED_SHORT": 1,
+   "GL_TRIANGLES , GL_UNSIGNED_SHORT": 3,
+   "GL_TRIANGLE_STRIP , GL_UNSIGNED_SHORT": 6
+  },
+  "glVertexPointer": {
+   "0x3 , GL_FLOAT , 0x14": 8,
+   "0x3 , GL_FLOAT , unresolved": 4,
+   "0x3 , GL_SHORT , 0x0": 1,
+   "0x3 , GL_SHORT , 0xa": 3,
+   "0x3 , GL_SHORT , unresolved": 2
+  },
+  "glTexCoordPointer": {
+   "0x2 , GL_FLOAT , 0x14": 7,
+   "0x2 , GL_FLOAT , unresolved": 3,
+   "0x2 , GL_SHORT , 0xa": 3,
+   "0x2 , GL_SHORT , unresolved": 2
+  },
+  "glReadPixels": {
+   "GL_RGB , GL_UNSIGNED_BYTE": 1
+  },
+  "glClear": {
+   "GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT": 3
+  },
+  "glLineWidth": [
+   {
+    "site": "0x7c118",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "width": [
+     1.0
+    ]
+   }
+  ],
+  "glOrthof": [
+   {
+    "site": "0x79b7c",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "left": [
+     0.0
+    ],
+    "right": "unresolved",
+    "bottom": "unresolved",
+    "top": [
+     0.0
+    ],
+    "zNear": [
+     -1.0
+    ],
+    "zFar": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7c72c",
+    "func": "_Z17G0FontRenderStartv",
+    "left": [
+     0.0
+    ],
+    "right": "unresolved",
+    "bottom": "unresolved",
+    "top": [
+     0.0
+    ],
+    "zNear": [
+     -1.0
+    ],
+    "zFar": [
+     1.0
+    ]
+   }
+  ],
+  "glFrustumf": [
+   {
+    "site": "0x7b13c",
+    "func": "_Z14gluPerspectivefffff",
+    "left": "unresolved",
+    "right": "unresolved",
+    "bottom": "unresolved",
+    "top": "unresolved",
+    "zNear": "caller_arg",
+    "zFar": "caller_arg"
+   }
+  ],
+  "glRotatef": [
+   {
+    "site": "0x79bc8",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "angle": "unresolved",
+    "x": [
+     0.0
+    ],
+    "y": [
+     0.0
+    ],
+    "z": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7c4b4",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "angle": "unresolved",
+    "x": [
+     0.0
+    ],
+    "y": [
+     0.0
+    ],
+    "z": [
+     1.0
+    ]
+   },
+   {
+    "site": "0x7c798",
+    "func": "_Z17G0FontRenderStartv",
+    "angle": "unresolved",
+    "x": [
+     0.0
+    ],
+    "y": [
+     0.0
+    ],
+    "z": [
+     1.0
+    ]
+   }
+  ],
+  "glScalef": [
+   {
+    "site": "0x79c34",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7c810",
+    "func": "_Z17G0FontRenderStartv",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7cae8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "x": [
+     0.0078125
+    ],
+    "y": [
+     0.0078125
+    ],
+    "z": [
+     0.0078125
+    ]
+   },
+   {
+    "site": "0x7cde8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "x": [
+     0.0078125
+    ],
+    "y": [
+     0.0078125
+    ],
+    "z": [
+     0.0078125
+    ]
+   }
+  ],
+  "glTranslatef": [
+   {
+    "site": "0x79ba4",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x79c50",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7b0b4",
+    "func": "_Z9gluLookAtfffffffff",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": "unresolved"
+   },
+   {
+    "site": "0x7c764",
+    "func": "_Z17G0FontRenderStartv",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7c82c",
+    "func": "_Z17G0FontRenderStartv",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7ce0c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "x": "unresolved",
+    "y": "unresolved",
+    "z": [
+     0.0
+    ]
+   },
+   {
+    "site": "0x7cf1c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "x": "caller_arg",
+    "y": "caller_arg",
+    "z": [
+     0.0
+    ]
+   }
+  ]
+ },
+ "call_sites": {
+  "glBindBuffer": [
+   {
+    "addr": "0x79e10",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79e1c",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a894",
+    "func": "_Z14GLObjectVBOEndv",
+    "func_addr": "0x7a88c",
+    "kind": "b (tail call)",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a8a0",
+    "func": "_Z20G0RenderBufferUnInitv",
+    "func_addr": "0x7a898",
+    "kind": "b (tail call)",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a8d0",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a8f0",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a908",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a92c",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "b (tail call)",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a96c",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7aa18",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7aa80",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7ab04",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7ab40",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7ac1c",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "global_load",
+      "addr": "0x37cac8",
+      "symbol": "gSpriteIndexArrayVBO"
+     }
+    }
+   },
+   {
+    "addr": "0x7ac3c",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7aec8",
+    "func": "_Z18G0RenderBufferInitv",
+    "func_addr": "0x7ae24",
+    "kind": "b (tail call)",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "global_load",
+      "addr": "0x37cac8",
+      "symbol": "gSpriteIndexArrayVBO"
+     }
+    }
+   },
+   {
+    "addr": "0x7c95c",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "caller_arg",
+      "arg_index": 1,
+      "via_callers": [
+       {
+        "call_site": "0x2e344",
+        "caller": "_ZN10cRBackdrop6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c97c",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cd34",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cd58",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cd7c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cda0",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cdac",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7d020",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d030",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d078",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d09c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "buffer": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glBindTexture": [
+   {
+    "addr": "0x79d90",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "texture": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x79ea0",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "texture": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a048",
+    "func": "_ZN15cRSplashManager6SetBarEPc",
+    "func_addr": "0x79fc0",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "texture": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a160",
+    "func": "_ZN15cRSplashManager9SetSplashEPc",
+    "func_addr": "0x7a0d4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "texture": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7b1cc",
+    "func": "_Z13G0BindTexturei",
+    "func_addr": "0x7b184",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "texture": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7b338",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "texture": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glBlendFunc": [
+   {
+    "addr": "0x7b750",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "bl",
+    "args": {
+     "sfactor": {
+      "kind": "const",
+      "values": [
+       "0x302"
+      ],
+      "names": [
+       "GL_SRC_ALPHA"
+      ]
+     },
+     "dfactor": {
+      "kind": "const",
+      "values": [
+       "0x303"
+      ],
+      "names": [
+       "GL_ONE_MINUS_SRC_ALPHA"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b770",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "bl",
+    "args": {
+     "sfactor": {
+      "kind": "const",
+      "values": [
+       "0x302"
+      ],
+      "names": [
+       "GL_SRC_ALPHA"
+      ]
+     },
+     "dfactor": {
+      "kind": "const",
+      "values": [
+       "0x300"
+      ],
+      "names": [
+       "GL_SRC_COLOR"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b7a8",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "bl",
+    "args": {
+     "sfactor": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_ONE"
+      ]
+     },
+     "dfactor": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_ONE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b7b8",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "bl",
+    "args": {
+     "sfactor": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "names": [
+       "GL_ZERO"
+      ]
+     },
+     "dfactor": {
+      "kind": "const",
+      "values": [
+       "0x303"
+      ],
+      "names": [
+       "GL_ONE_MINUS_SRC_ALPHA"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b7c8",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "bl",
+    "args": {
+     "sfactor": {
+      "kind": "const",
+      "values": [
+       "0x307"
+      ],
+      "names": [
+       "GL_ONE_MINUS_DST_COLOR"
+      ]
+     },
+     "dfactor": {
+      "kind": "const",
+      "values": [
+       "0x303"
+      ],
+      "names": [
+       "GL_ONE_MINUS_SRC_ALPHA"
+      ]
+     }
+    }
+   }
+  ],
+  "glBufferData": [
+   {
+    "addr": "0x7a8e4",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "unresolved"
+     },
+     "data": {
+      "kind": "caller_arg",
+      "arg_index": 2,
+      "via_callers": [
+       {
+        "call_site": "0x2eb9c",
+        "caller": "_ZN10cRBackdrop7MakeVBOEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a91c",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x8"
+      ],
+      "int": [
+       8
+      ]
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a988",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "unresolved"
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a9dc",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "unresolved"
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7aa50",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "unresolved"
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7aaa8",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "unresolved"
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7aad4",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "unresolved"
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ab20",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8892"
+      ],
+      "names": [
+       "GL_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "unresolved"
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ac30",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x8893"
+      ],
+      "names": [
+       "GL_ELEMENT_ARRAY_BUFFER"
+      ]
+     },
+     "size": {
+      "kind": "const",
+      "values": [
+       "0xc00"
+      ],
+      "int": [
+       3072
+      ]
+     },
+     "data": {
+      "kind": "unresolved"
+     },
+     "usage": {
+      "kind": "const",
+      "values": [
+       "0x88e4"
+      ],
+      "names": [
+       "GL_STATIC_DRAW"
+      ]
+     }
+    }
+   }
+  ],
+  "glClear": [
+   {
+    "addr": "0x79d30",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "mask": {
+      "kind": "const",
+      "values": [
+       "0x4100"
+      ],
+      "names": [
+       "GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ab80",
+    "func": "_Z7G0Blackv",
+    "func_addr": "0x7ab60",
+    "kind": "b (tail call)",
+    "args": {
+     "mask": {
+      "kind": "const",
+      "values": [
+       "0x4100"
+      ],
+      "names": [
+       "GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ae04",
+    "func": "_Z8G0Renderv",
+    "func_addr": "0x7ad84",
+    "kind": "bl",
+    "args": {
+     "mask": {
+      "kind": "const",
+      "values": [
+       "0x4100"
+      ],
+      "names": [
+       "GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT"
+      ]
+     }
+    }
+   }
+  ],
+  "glClearColor": [
+   {
+    "addr": "0x79d28",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "red": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "green": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "blue": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "alpha": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ab74",
+    "func": "_Z7G0Blackv",
+    "func_addr": "0x7ab60",
+    "kind": "bl",
+    "args": {
+     "red": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "green": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "blue": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "alpha": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ac68",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "red": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "green": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "blue": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "alpha": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7adec",
+    "func": "_Z8G0Renderv",
+    "func_addr": "0x7ad84",
+    "kind": "bl",
+    "args": {
+     "red": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "green": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "blue": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "alpha": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c57c",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "red": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "green": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "blue": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "alpha": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c634",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "red": {
+      "kind": "unresolved"
+     },
+     "green": {
+      "kind": "unresolved"
+     },
+     "blue": {
+      "kind": "unresolved"
+     },
+     "alpha": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glClearDepthf": [
+   {
+    "addr": "0x7ac70",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "depth": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7adfc",
+    "func": "_Z8G0Renderv",
+    "func_addr": "0x7ad84",
+    "kind": "bl",
+    "args": {
+     "depth": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   }
+  ],
+  "glColor4f": [
+   {
+    "addr": "0x7ace4",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "b (tail call)",
+    "args": {
+     "red": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     },
+     "green": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     },
+     "blue": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     },
+     "alpha": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ad74",
+    "func": "_Z11G0SetColourP12tColourSmall",
+    "func_addr": "0x7acfc",
+    "kind": "b (tail call)",
+    "args": {
+     "red": {
+      "kind": "unresolved"
+     },
+     "green": {
+      "kind": "unresolved"
+     },
+     "blue": {
+      "kind": "unresolved"
+     },
+     "alpha": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glCullFace": [
+   {
+    "addr": "0x7c6bc",
+    "func": "_Z9G0SetCullb",
+    "func_addr": "0x7c668",
+    "kind": "b (tail call)",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x404"
+      ],
+      "names": [
+       "GL_FRONT"
+      ]
+     }
+    }
+   }
+  ],
+  "glDeleteTextures": [
+   {
+    "addr": "0x7a014",
+    "func": "_ZN15cRSplashManager6SetBarEPc",
+    "func_addr": "0x79fc0",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a03c",
+    "func": "_ZN15cRSplashManager6SetBarEPc",
+    "func_addr": "0x79fc0",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a204",
+    "func": "_ZN15cRSplashManager9SetSplashEPc",
+    "func_addr": "0x7a0d4",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a214",
+    "func": "_ZN15cRSplashManager9SetSplashEPc",
+    "func_addr": "0x7a0d4",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7b174",
+    "func": "_Z15G0RemoveTextureP9cRTexture",
+    "func_addr": "0x7b158",
+    "kind": "b (tail call)",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7b6a0",
+    "func": "_Z15G0TextureReLoadiPc",
+    "func_addr": "0x7b668",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glDepthFunc": [
+   {
+    "addr": "0x7ac80",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "func": {
+      "kind": "const",
+      "values": [
+       "0x203"
+      ],
+      "names": [
+       "GL_LEQUAL"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c094",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "func": {
+      "kind": "const",
+      "values": [
+       "0x203"
+      ],
+      "names": [
+       "GL_LEQUAL"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c528",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "func": {
+      "kind": "const",
+      "values": [
+       "0x203"
+      ],
+      "names": [
+       "GL_LEQUAL"
+      ]
+     }
+    }
+   }
+  ],
+  "glDepthMask": [
+   {
+    "addr": "0x79ae0",
+    "func": "_ZN15cRSplashManager9RenderEndEv",
+    "func_addr": "0x79ad8",
+    "kind": "bl",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_TRUE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79c88",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "names": [
+       "GL_FALSE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7adf4",
+    "func": "_Z8G0Renderv",
+    "func_addr": "0x7ad84",
+    "kind": "bl",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_TRUE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b764",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "b (tail call)",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "names": [
+       "GL_FALSE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b79c",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "b (tail call)",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_TRUE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7bfe0",
+    "func": "_Z15G0FontRenderEndv",
+    "func_addr": "0x7bfd4",
+    "kind": "bl",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_TRUE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c530",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_TRUE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c83c",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "flag": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "names": [
+       "GL_FALSE"
+      ]
+     }
+    }
+   }
+  ],
+  "glDepthRangef": [
+   {
+    "addr": "0x7ac8c",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "zNear": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "zFar": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c2c0",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "zNear": {
+      "kind": "const",
+      "values": [
+       "0xbb83126f"
+      ],
+      "float": [
+       -0.004000000189989805
+      ]
+     },
+     "zFar": {
+      "kind": "const",
+      "values": [
+       "0x3f7ef9db"
+      ],
+      "float": [
+       0.9959999918937683
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c31c",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "zNear": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "zFar": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c540",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "zNear": {
+      "kind": "const",
+      "values": [
+       "0xbf800000"
+      ],
+      "float": [
+       -1.0
+      ]
+     },
+     "zFar": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   }
+  ],
+  "glDisable": [
+   {
+    "addr": "0x79c90",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb71"
+      ],
+      "names": [
+       "GL_DEPTH_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79ca8",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb44"
+      ],
+      "names": [
+       "GL_CULL_FACE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7acac",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xbc0"
+      ],
+      "names": [
+       "GL_ALPHA_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b790",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xbe2"
+      ],
+      "names": [
+       "GL_BLEND"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c568",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb60"
+      ],
+      "names": [
+       "GL_FOG"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c6a0",
+    "func": "_Z9G0SetCullb",
+    "func_addr": "0x7c668",
+    "kind": "b (tail call)",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb44"
+      ],
+      "names": [
+       "GL_CULL_FACE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c844",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb71"
+      ],
+      "names": [
+       "GL_DEPTH_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c8d8",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb71"
+      ],
+      "names": [
+       "GL_DEPTH_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c8e4",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xbe2"
+      ],
+      "names": [
+       "GL_BLEND"
+      ]
+     }
+    }
+   }
+  ],
+  "glDisableClientState": [
+   {
+    "addr": "0x79af8",
+    "func": "_ZN15cRSplashManager9RenderEndEv",
+    "func_addr": "0x79ad8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79b04",
+    "func": "_ZN15cRSplashManager9RenderEndEv",
+    "func_addr": "0x79ad8",
+    "kind": "b (tail call)",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79e4c",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8076"
+      ],
+      "names": [
+       "GL_COLOR_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7af44",
+    "func": "_Z19G0RenderSprite3DEndv",
+    "func_addr": "0x7af28",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7af50",
+    "func": "_Z19G0RenderSprite3DEndv",
+    "func_addr": "0x7af28",
+    "kind": "b (tail call)",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c000",
+    "func": "_Z15G0FontRenderEndv",
+    "func_addr": "0x7bfd4",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c008",
+    "func": "_Z15G0FontRenderEndv",
+    "func_addr": "0x7bfd4",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c2d0",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c308",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c984",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c98c",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   }
+  ],
+  "glDrawElements": [
+   {
+    "addr": "0x79e68",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x5"
+      ],
+      "names": [
+       "GL_TRIANGLE_STRIP"
+      ]
+     },
+     "count": {
+      "kind": "const",
+      "values": [
+       "0x4"
+      ],
+      "int": [
+       4
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "const",
+      "values": [
+       "0x8ca1c"
+      ],
+      "pointers": [
+       {
+        "addr": "0x8ca1c",
+        "target": "gSplashSpriteIndexArray",
+        "section": ".data"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79f54",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x5"
+      ],
+      "names": [
+       "GL_TRIANGLE_STRIP"
+      ]
+     },
+     "count": {
+      "kind": "const",
+      "values": [
+       "0x4"
+      ],
+      "int": [
+       4
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "const",
+      "values": [
+       "0x8ca1c"
+      ],
+      "pointers": [
+       {
+        "addr": "0x8ca1c",
+        "target": "gSplashSpriteIndexArray",
+        "section": ".data"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7af1c",
+    "func": "_Z20G0RenderBufferRenderv",
+    "func_addr": "0x7aeec",
+    "kind": "b (tail call)",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x5"
+      ],
+      "names": [
+       "GL_TRIANGLE_STRIP"
+      ]
+     },
+     "count": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "pointers": [
+       {
+        "addr": "0x0",
+        "target": "?:0x0",
+        "section": null
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c300",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "names": [
+       "GL_LINES"
+      ]
+     },
+     "count": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7c970",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x5"
+      ],
+      "names": [
+       "GL_TRIANGLE_STRIP"
+      ]
+     },
+     "count": {
+      "kind": "caller_arg",
+      "arg_index": 2,
+      "via_callers": [
+       {
+        "call_site": "0x2e344",
+        "caller": "_ZN10cRBackdrop6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "pointers": [
+       {
+        "addr": "0x0",
+        "target": "?:0x0",
+        "section": null
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cc70",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x4"
+      ],
+      "names": [
+       "GL_TRIANGLES"
+      ]
+     },
+     "count": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cc90",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x4"
+      ],
+      "names": [
+       "GL_TRIANGLES"
+      ]
+     },
+     "count": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cd94",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x5"
+      ],
+      "names": [
+       "GL_TRIANGLE_STRIP"
+      ]
+     },
+     "count": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "pointers": [
+       {
+        "addr": "0x0",
+        "target": "?:0x0",
+        "section": null
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ceb4",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x5"
+      ],
+      "names": [
+       "GL_TRIANGLE_STRIP"
+      ]
+     },
+     "count": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cf9c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x4"
+      ],
+      "names": [
+       "GL_TRIANGLES"
+      ]
+     },
+     "count": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1403"
+      ],
+      "names": [
+       "GL_UNSIGNED_SHORT"
+      ]
+     },
+     "indices": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glEnable": [
+   {
+    "addr": "0x79ae8",
+    "func": "_ZN15cRSplashManager9RenderEndEv",
+    "func_addr": "0x79ad8",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb71"
+      ],
+      "names": [
+       "GL_DEPTH_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79c58",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79d80",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a024",
+    "func": "_ZN15cRSplashManager6SetBarEPc",
+    "func_addr": "0x79fc0",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a154",
+    "func": "_ZN15cRSplashManager9SetSplashEPc",
+    "func_addr": "0x7a0d4",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ac44",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xbd0"
+      ],
+      "names": [
+       "GL_DITHER"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ac4c",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0x809d"
+      ],
+      "names": [
+       "GL_MULTISAMPLE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ac78",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb71"
+      ],
+      "names": [
+       "GL_DEPTH_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b350",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b758",
+    "func": "_Z10G0SetBlendi",
+    "func_addr": "0x7b6f0",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xbe2"
+      ],
+      "names": [
+       "GL_BLEND"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7bfe8",
+    "func": "_Z15G0FontRenderEndv",
+    "func_addr": "0x7bfd4",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb71"
+      ],
+      "names": [
+       "GL_DEPTH_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c030",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c328",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c440",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xc11"
+      ],
+      "names": [
+       "GL_SCISSOR_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c520",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb71"
+      ],
+      "names": [
+       "GL_DEPTH_TEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c5cc",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c5f0",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb60"
+      ],
+      "names": [
+       "GL_FOG"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c6b0",
+    "func": "_Z9G0SetCullb",
+    "func_addr": "0x7c668",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xb44"
+      ],
+      "names": [
+       "GL_CULL_FACE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c834",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "cap": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     }
+    }
+   }
+  ],
+  "glEnableClientState": [
+   {
+    "addr": "0x79c98",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79ca0",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c2c8",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c310",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c5d4",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c5e8",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "b (tail call)",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c84c",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c854",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c920",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c928",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c9c4",
+    "func": "_Z21G0RenderSprite3DStartv",
+    "func_addr": "0x7c99c",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c9cc",
+    "func": "_Z21G0RenderSprite3DStartv",
+    "func_addr": "0x7c99c",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cbf8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8074"
+      ],
+      "names": [
+       "GL_VERTEX_ARRAY"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cc00",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "array": {
+      "kind": "const",
+      "values": [
+       "0x8078"
+      ],
+      "names": [
+       "GL_TEXTURE_COORD_ARRAY"
+      ]
+     }
+    }
+   }
+  ],
+  "glFinish": [
+   {
+    "addr": "0x7b180",
+    "func": "_Z8G0Finishv",
+    "func_addr": "0x7b180",
+    "kind": "b (tail call)",
+    "args": {}
+   }
+  ],
+  "glFogf": [
+   {
+    "addr": "0x7c610",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0xb62"
+      ],
+      "names": [
+       "GL_FOG_DENSITY"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x3ca3d70a"
+      ],
+      "float": [
+       0.019999999552965164
+      ]
+     }
+    }
+   }
+  ],
+  "glFogfv": [
+   {
+    "addr": "0x7c600",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0xb66"
+      ],
+      "names": [
+       "GL_FOG_COLOR"
+      ]
+     },
+     "params": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glFrustumf": [
+   {
+    "addr": "0x7b13c",
+    "func": "_Z14gluPerspectivefffff",
+    "func_addr": "0x7b0c8",
+    "kind": "bl",
+    "args": {
+     "left": {
+      "kind": "unresolved"
+     },
+     "right": {
+      "kind": "unresolved"
+     },
+     "bottom": {
+      "kind": "unresolved"
+     },
+     "top": {
+      "kind": "unresolved"
+     },
+     "zNear": {
+      "kind": "caller_arg",
+      "arg_index": 2,
+      "via_callers": [
+       {
+        "call_site": "0x7c4a0",
+        "caller": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+        "value": {
+         "kind": "const",
+         "values": [
+          "0x3e99999a"
+         ],
+         "float": [
+          0.30000001192092896
+         ]
+        }
+       }
+      ]
+     },
+     "zFar": {
+      "kind": "caller_arg",
+      "arg_index": 3,
+      "via_callers": [
+       {
+        "call_site": "0x7c4a0",
+        "caller": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+        "value": {
+         "kind": "const",
+         "values": [
+          "0x42500000"
+         ],
+         "float": [
+          52.0
+         ]
+        }
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "glGenBuffers": [
+   {
+    "addr": "0x7a8c4",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "buffers": {
+      "kind": "caller_arg",
+      "arg_index": 0,
+      "via_callers": [
+       {
+        "call_site": "0x2eb9c",
+        "caller": "_ZN10cRBackdrop7MakeVBOEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a8fc",
+    "func": "_Z13G0BackdropVBOPjiPtS_S0_",
+    "func_addr": "0x7a8a4",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "buffers": {
+      "kind": "caller_arg",
+      "arg_index": 3,
+      "via_callers": [
+       {
+        "call_site": "0x2eb9c",
+        "caller": "_ZN10cRBackdrop7MakeVBOEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a95c",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "buffers": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7aa00",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "buffers": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7aa70",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "buffers": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7aae8",
+    "func": "_Z11GLObjectVBOP8cRObject",
+    "func_addr": "0x7a930",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "buffers": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7ac10",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "buffers": {
+      "kind": "const",
+      "values": [
+       "0x37cac8"
+      ],
+      "pointers": [
+       {
+        "addr": "0x37cac8",
+        "target": "gSpriteIndexArrayVBO",
+        "section": ".bss"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "glGenTextures": [
+   {
+    "addr": "0x7a030",
+    "func": "_ZN15cRSplashManager6SetBarEPc",
+    "func_addr": "0x79fc0",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a14c",
+    "func": "_ZN15cRSplashManager9SetSplashEPc",
+    "func_addr": "0x7a0d4",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7b528",
+    "func": "_Z16G0TextureSetLoadi",
+    "func_addr": "0x7b4b8",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "global_load",
+      "addr": "0x8cc70",
+      "symbol": "gTextureList"
+     },
+     "textures": {
+      "kind": "global_load",
+      "addr": "0x37cac0",
+      "symbol": "_ZL11texNameList"
+     }
+    }
+   },
+   {
+    "addr": "0x7b5e8",
+    "func": "_Z18G0TextureSetReLoadv",
+    "func_addr": "0x7b5b0",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "global_load",
+      "addr": "0x8cc70",
+      "symbol": "gTextureList"
+     },
+     "textures": {
+      "kind": "global_load",
+      "addr": "0x37cac0",
+      "symbol": "_ZL11texNameList"
+     }
+    }
+   },
+   {
+    "addr": "0x7b6b0",
+    "func": "_Z15G0TextureReLoadiPc",
+    "func_addr": "0x7b668",
+    "kind": "bl",
+    "args": {
+     "n": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     },
+     "textures": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glHint": [
+   {
+    "addr": "0x7ac98",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xc50"
+      ],
+      "names": [
+       "GL_PERSPECTIVE_CORRECTION_HINT"
+      ]
+     },
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1101"
+      ],
+      "names": [
+       "GL_FASTEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7aca4",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xc52"
+      ],
+      "names": [
+       "GL_LINE_SMOOTH_HINT"
+      ]
+     },
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1101"
+      ],
+      "names": [
+       "GL_FASTEST"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c61c",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xc54"
+      ],
+      "names": [
+       "GL_FOG_HINT"
+      ]
+     },
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1100"
+      ],
+      "names": [
+       "GL_DONT_CARE"
+      ]
+     }
+    }
+   }
+  ],
+  "glLineWidth": [
+   {
+    "addr": "0x7c118",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "width": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   }
+  ],
+  "glLoadIdentity": [
+   {
+    "addr": "0x79b5c",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x79b88",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c458",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c4c0",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c700",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c738",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c748",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c9a8",
+    "func": "_Z21G0RenderSprite3DStartv",
+    "func_addr": "0x7c99c",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c9b8",
+    "func": "_Z21G0RenderSprite3DStartv",
+    "func_addr": "0x7c99c",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7cad8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7ccc8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7ccf8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7cdcc",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {}
+   }
+  ],
+  "glMatrixMode": [
+   {
+    "addr": "0x79af0",
+    "func": "_ZN15cRSplashManager9RenderEndEv",
+    "func_addr": "0x79ad8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1701"
+      ],
+      "names": [
+       "GL_PROJECTION"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79b58",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1701"
+      ],
+      "names": [
+       "GL_PROJECTION"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79b84",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7af38",
+    "func": "_Z19G0RenderSprite3DEndv",
+    "func_addr": "0x7af28",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7bff4",
+    "func": "_Z15G0FontRenderEndv",
+    "func_addr": "0x7bfd4",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1701"
+      ],
+      "names": [
+       "GL_PROJECTION"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c454",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1701"
+      ],
+      "names": [
+       "GL_PROJECTION"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c4bc",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c6f8",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1701"
+      ],
+      "names": [
+       "GL_PROJECTION"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c734",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1702"
+      ],
+      "names": [
+       "GL_TEXTURE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c740",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c9a4",
+    "func": "_Z21G0RenderSprite3DStartv",
+    "func_addr": "0x7c99c",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1702"
+      ],
+      "names": [
+       "GL_TEXTURE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c9b0",
+    "func": "_Z21G0RenderSprite3DStartv",
+    "func_addr": "0x7c99c",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cab4",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cad4",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1702"
+      ],
+      "names": [
+       "GL_TEXTURE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7caf0",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ccc4",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1702"
+      ],
+      "names": [
+       "GL_TEXTURE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ccd0",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ccf4",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1702"
+      ],
+      "names": [
+       "GL_TEXTURE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cd00",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1700"
+      ],
+      "names": [
+       "GL_MODELVIEW"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cdc8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1702"
+      ],
+      "names": [
+       "GL_TEXTURE"
+      ]
+     }
+    }
+   }
+  ],
+  "glMultMatrixf": [
+   {
+    "addr": "0x7b0a0",
+    "func": "_Z9gluLookAtfffffffff",
+    "func_addr": "0x7af54",
+    "kind": "bl",
+    "args": {
+     "m": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cbb0",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "m": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glOrthof": [
+   {
+    "addr": "0x79b7c",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "left": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "right": {
+      "kind": "unresolved"
+     },
+     "bottom": {
+      "kind": "unresolved"
+     },
+     "top": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "zNear": {
+      "kind": "const",
+      "values": [
+       "0xbf800000"
+      ],
+      "float": [
+       -1.0
+      ]
+     },
+     "zFar": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c72c",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "left": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "right": {
+      "kind": "unresolved"
+     },
+     "bottom": {
+      "kind": "unresolved"
+     },
+     "top": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "zNear": {
+      "kind": "const",
+      "values": [
+       "0xbf800000"
+      ],
+      "float": [
+       -1.0
+      ]
+     },
+     "zFar": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   }
+  ],
+  "glPixelStorei": [
+   {
+    "addr": "0x7b51c",
+    "func": "_Z16G0TextureSetLoadi",
+    "func_addr": "0x7b4b8",
+    "kind": "bl",
+    "args": {
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0xcf5"
+      ],
+      "names": [
+       "GL_UNPACK_ALIGNMENT"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b5d0",
+    "func": "_Z18G0TextureSetReLoadv",
+    "func_addr": "0x7b5b0",
+    "kind": "bl",
+    "args": {
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0xcf5"
+      ],
+      "names": [
+       "GL_UNPACK_ALIGNMENT"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x1"
+      ],
+      "int": [
+       1
+      ]
+     }
+    }
+   }
+  ],
+  "glPopMatrix": [
+   {
+    "addr": "0x7af3c",
+    "func": "_Z19G0RenderSprite3DEndv",
+    "func_addr": "0x7af28",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7bfec",
+    "func": "_Z15G0FontRenderEndv",
+    "func_addr": "0x7bfd4",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7bff8",
+    "func": "_Z15G0FontRenderEndv",
+    "func_addr": "0x7bfd4",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7cca8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7ccd4",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {}
+   }
+  ],
+  "glPushMatrix": [
+   {
+    "addr": "0x7c6fc",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c744",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7c9b4",
+    "func": "_Z21G0RenderSprite3DStartv",
+    "func_addr": "0x7c99c",
+    "kind": "bl",
+    "args": {}
+   },
+   {
+    "addr": "0x7cab8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {}
+   }
+  ],
+  "glReadPixels": [
+   {
+    "addr": "0x7bf90",
+    "func": "_Z17G0ReadFrameBufferPv",
+    "func_addr": "0x7bf24",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     },
+     "format": {
+      "kind": "const",
+      "values": [
+       "0x1907"
+      ],
+      "names": [
+       "GL_RGB"
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1401"
+      ],
+      "names": [
+       "GL_UNSIGNED_BYTE"
+      ]
+     },
+     "pixels": {
+      "kind": "caller_arg",
+      "arg_index": 0,
+      "via_callers": []
+     }
+    }
+   }
+  ],
+  "glRotatef": [
+   {
+    "addr": "0x79bc8",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "angle": {
+      "kind": "unresolved"
+     },
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c4b4",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "angle": {
+      "kind": "unresolved"
+     },
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c798",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "angle": {
+      "kind": "unresolved"
+     },
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x3f800000"
+      ],
+      "float": [
+       1.0
+      ]
+     }
+    }
+   }
+  ],
+  "glScalef": [
+   {
+    "addr": "0x79c34",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c810",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cae8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x3c000000"
+      ],
+      "float": [
+       0.0078125
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x3c000000"
+      ],
+      "float": [
+       0.0078125
+      ]
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x3c000000"
+      ],
+      "float": [
+       0.0078125
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cde8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x3c000000"
+      ],
+      "float": [
+       0.0078125
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x3c000000"
+      ],
+      "float": [
+       0.0078125
+      ]
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x3c000000"
+      ],
+      "float": [
+       0.0078125
+      ]
+     }
+    }
+   }
+  ],
+  "glScissor": [
+   {
+    "addr": "0x7c438",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glShadeModel": [
+   {
+    "addr": "0x7ac54",
+    "func": "_Z6InitGLv",
+    "func_addr": "0x7ab84",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1d00"
+      ],
+      "names": [
+       "GL_FLAT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b510",
+    "func": "_Z16G0TextureSetLoadi",
+    "func_addr": "0x7b4b8",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1d00"
+      ],
+      "names": [
+       "GL_FLAT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b5c4",
+    "func": "_Z18G0TextureSetReLoadv",
+    "func_addr": "0x7b5b0",
+    "kind": "bl",
+    "args": {
+     "mode": {
+      "kind": "const",
+      "values": [
+       "0x1d00"
+      ],
+      "names": [
+       "GL_FLAT"
+      ]
+     }
+    }
+   }
+  ],
+  "glTexCoordPointer": [
+   {
+    "addr": "0x79e44",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "const",
+      "values": [
+       "0x37ca7c"
+      ],
+      "pointers": [
+       {
+        "addr": "0x37ca7c",
+        "target": "gSplashSpriteVertexUVArray+0xc",
+        "section": ".bss"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79f40",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "const",
+      "values": [
+       "0x37ca7c"
+      ],
+      "pointers": [
+       {
+        "addr": "0x37ca7c",
+        "target": "gSplashSpriteVertexUVArray+0xc",
+        "section": ".bss"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7aeb0",
+    "func": "_Z18G0RenderBufferInitv",
+    "func_addr": "0x7ae24",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7c950",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cc48",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cd6c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7ce9c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0xa"
+      ],
+      "int": [
+       10
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cf08",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0xa"
+      ],
+      "int": [
+       10
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cf54",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cf84",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d00c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d064",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0xa"
+      ],
+      "int": [
+       10
+      ]
+     },
+     "pointer": {
+      "kind": "const",
+      "values": [
+       "0x6"
+      ],
+      "pointers": [
+       {
+        "addr": "0x6",
+        "target": "?:0x6",
+        "section": null
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7d0b0",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d0e0",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d108",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x2"
+      ],
+      "int": [
+       2
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "const",
+      "values": [
+       "0xc"
+      ],
+      "pointers": [
+       {
+        "addr": "0xc",
+        "target": "?:0xc",
+        "section": null
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "glTexEnvf": [
+   {
+    "addr": "0x7c5c4",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0x2300"
+      ],
+      "names": [
+       "GL_TEXTURE_ENV"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2200"
+      ],
+      "names": [
+       "GL_TEXTURE_ENV_MODE"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x46040000"
+      ],
+      "float": [
+       8448.0
+      ],
+      "names": [
+       "GL_MODULATE"
+      ]
+     }
+    }
+   }
+  ],
+  "glTexImage2D": [
+   {
+    "addr": "0x7a0ac",
+    "func": "_ZN15cRSplashManager6SetBarEPc",
+    "func_addr": "0x79fc0",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "level": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "internalformat": {
+      "kind": "const",
+      "values": [
+       "0x1907"
+      ],
+      "names": [
+       "GL_RGB"
+      ]
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     },
+     "border": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "format": {
+      "kind": "const",
+      "values": [
+       "0x1907"
+      ],
+      "names": [
+       "GL_RGB"
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1401"
+      ],
+      "names": [
+       "GL_UNSIGNED_BYTE"
+      ]
+     },
+     "pixels": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7a1d0",
+    "func": "_ZN15cRSplashManager9SetSplashEPc",
+    "func_addr": "0x7a0d4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "level": {
+      "kind": "unresolved"
+     },
+     "internalformat": {
+      "kind": "unresolved"
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     },
+     "border": {
+      "kind": "unresolved"
+     },
+     "format": {
+      "kind": "unresolved"
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1401"
+      ],
+      "names": [
+       "GL_UNSIGNED_BYTE"
+      ]
+     },
+     "pixels": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7b440",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "level": {
+      "kind": "unresolved"
+     },
+     "internalformat": {
+      "kind": "const",
+      "values": [
+       "0x1908"
+      ],
+      "names": [
+       "GL_RGBA"
+      ]
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     },
+     "border": {
+      "kind": "unresolved"
+     },
+     "format": {
+      "kind": "const",
+      "values": [
+       "0x1908"
+      ],
+      "names": [
+       "GL_RGBA"
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1401"
+      ],
+      "names": [
+       "GL_UNSIGNED_BYTE"
+      ]
+     },
+     "pixels": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7b474",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "level": {
+      "kind": "unresolved"
+     },
+     "internalformat": {
+      "kind": "const",
+      "values": [
+       "0x1907"
+      ],
+      "names": [
+       "GL_RGB"
+      ]
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     },
+     "border": {
+      "kind": "unresolved"
+     },
+     "format": {
+      "kind": "const",
+      "values": [
+       "0x1907"
+      ],
+      "names": [
+       "GL_RGB"
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1401"
+      ],
+      "names": [
+       "GL_UNSIGNED_BYTE"
+      ]
+     },
+     "pixels": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glTexParameteri": [
+   {
+    "addr": "0x7a0c4",
+    "func": "_ZN15cRSplashManager6SetBarEPc",
+    "func_addr": "0x79fc0",
+    "kind": "b (tail call)",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2801"
+      ],
+      "names": [
+       "GL_TEXTURE_MIN_FILTER"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2601"
+      ],
+      "names": [
+       "GL_LINEAR"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7a1e0",
+    "func": "_ZN15cRSplashManager9SetSplashEPc",
+    "func_addr": "0x7a0d4",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2801"
+      ],
+      "names": [
+       "GL_TEXTURE_MIN_FILTER"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2601"
+      ],
+      "names": [
+       "GL_LINEAR"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b1fc",
+    "func": "_Z13G0BindTexturei",
+    "func_addr": "0x7b184",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2802"
+      ],
+      "names": [
+       "GL_TEXTURE_WRAP_S"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x812f"
+      ],
+      "names": [
+       "GL_CLAMP_TO_EDGE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b210",
+    "func": "_Z13G0BindTexturei",
+    "func_addr": "0x7b184",
+    "kind": "b (tail call)",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2803"
+      ],
+      "names": [
+       "GL_TEXTURE_WRAP_T"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x812f"
+      ],
+      "names": [
+       "GL_CLAMP_TO_EDGE"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b220",
+    "func": "_Z13G0BindTexturei",
+    "func_addr": "0x7b184",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2802"
+      ],
+      "names": [
+       "GL_TEXTURE_WRAP_S"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2901"
+      ],
+      "names": [
+       "GL_REPEAT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b234",
+    "func": "_Z13G0BindTexturei",
+    "func_addr": "0x7b184",
+    "kind": "b (tail call)",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2803"
+      ],
+      "names": [
+       "GL_TEXTURE_WRAP_T"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2901"
+      ],
+      "names": [
+       "GL_REPEAT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b360",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2802"
+      ],
+      "names": [
+       "GL_TEXTURE_WRAP_S"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2901"
+      ],
+      "names": [
+       "GL_REPEAT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b370",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2803"
+      ],
+      "names": [
+       "GL_TEXTURE_WRAP_T"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2901"
+      ],
+      "names": [
+       "GL_REPEAT"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b380",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2800"
+      ],
+      "names": [
+       "GL_TEXTURE_MAG_FILTER"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2601"
+      ],
+      "names": [
+       "GL_LINEAR"
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b390",
+    "func": "_Z13G0TextureLoadii",
+    "func_addr": "0x7b24c",
+    "kind": "bl",
+    "args": {
+     "target": {
+      "kind": "const",
+      "values": [
+       "0xde1"
+      ],
+      "names": [
+       "GL_TEXTURE_2D"
+      ]
+     },
+     "pname": {
+      "kind": "const",
+      "values": [
+       "0x2801"
+      ],
+      "names": [
+       "GL_TEXTURE_MIN_FILTER"
+      ]
+     },
+     "param": {
+      "kind": "const",
+      "values": [
+       "0x2601"
+      ],
+      "names": [
+       "GL_LINEAR"
+      ]
+     }
+    }
+   }
+  ],
+  "glTranslatef": [
+   {
+    "addr": "0x79ba4",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79c50",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7b0b4",
+    "func": "_Z9gluLookAtfffffffff",
+    "func_addr": "0x7af54",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7c764",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7c82c",
+    "func": "_Z17G0FontRenderStartv",
+    "func_addr": "0x7c6c8",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ce0c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cf1c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "caller_arg",
+      "arg_index": 2,
+      "via_callers": [
+       {
+        "call_site": "0x3aae4",
+        "caller": "_ZN6cRGame6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       },
+       {
+        "call_site": "0x3ac24",
+        "caller": "_ZN6cRGame6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       },
+       {
+        "call_site": "0x3ac88",
+        "caller": "_ZN6cRGame6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     },
+     "y": {
+      "kind": "caller_arg",
+      "arg_index": 3,
+      "via_callers": [
+       {
+        "call_site": "0x3aae4",
+        "caller": "_ZN6cRGame6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       },
+       {
+        "call_site": "0x3ac24",
+        "caller": "_ZN6cRGame6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       },
+       {
+        "call_site": "0x3ac88",
+        "caller": "_ZN6cRGame6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     },
+     "z": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "float": [
+       0.0
+      ]
+     }
+    }
+   }
+  ],
+  "glVertexPointer": [
+   {
+    "addr": "0x79e30",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "const",
+      "values": [
+       "0x37ca70"
+      ],
+      "pointers": [
+       {
+        "addr": "0x37ca70",
+        "target": "gSplashSpriteVertexUVArray",
+        "section": ".bss"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x79f2c",
+    "func": "_ZN15cRSplashManager6RenderEf",
+    "func_addr": "0x79cf8",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "const",
+      "values": [
+       "0x37ca70"
+      ],
+      "pointers": [
+       {
+        "addr": "0x37ca70",
+        "target": "gSplashSpriteVertexUVArray",
+        "section": ".bss"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7ae98",
+    "func": "_Z18G0RenderBufferInitv",
+    "func_addr": "0x7ae24",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7c2ec",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7c348",
+    "func": "_Z12G0RenderToonP8cRObjectP7tMatrix",
+    "func_addr": "0x7c014",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7c93c",
+    "func": "_Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture",
+    "func_addr": "0x7c8b8",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "caller_arg",
+      "arg_index": 0,
+      "via_callers": [
+       {
+        "call_site": "0x2e344",
+        "caller": "_ZN10cRBackdrop6RenderEv",
+        "value": {
+         "kind": "unresolved"
+        }
+       }
+      ]
+     }
+    }
+   },
+   {
+    "addr": "0x7cc2c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cd48",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7ce80",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0xa"
+      ],
+      "int": [
+       10
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7ceec",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0xa"
+      ],
+      "int": [
+       10
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cf3c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cf6c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cfbc",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7cff0",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d050",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1402"
+      ],
+      "names": [
+       "GL_SHORT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0xa"
+      ],
+      "int": [
+       10
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d08c",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d0c8",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "unresolved"
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7d0f4",
+    "func": "_Z14G0RenderObjectP8cRObjectP7tMatrixffP12tColourSmallb",
+    "func_addr": "0x7c9dc",
+    "kind": "bl",
+    "args": {
+     "size": {
+      "kind": "const",
+      "values": [
+       "0x3"
+      ],
+      "int": [
+       3
+      ]
+     },
+     "type": {
+      "kind": "const",
+      "values": [
+       "0x1406"
+      ],
+      "names": [
+       "GL_FLOAT"
+      ]
+     },
+     "stride": {
+      "kind": "const",
+      "values": [
+       "0x14"
+      ],
+      "int": [
+       20
+      ]
+     },
+     "pointer": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ],
+  "glViewport": [
+   {
+    "addr": "0x79b50",
+    "func": "_ZN15cRSplashManager11RenderStartEv",
+    "func_addr": "0x79b08",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "y": {
+      "kind": "const",
+      "values": [
+       "0x0"
+      ],
+      "int": [
+       0
+      ]
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7add8",
+    "func": "_Z8G0Renderv",
+    "func_addr": "0x7ad84",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     }
+    }
+   },
+   {
+    "addr": "0x7c40c",
+    "func": "_Z14G0RenderCamerafffffP7tMatrixS0_bbff",
+    "func_addr": "0x7c364",
+    "kind": "bl",
+    "args": {
+     "x": {
+      "kind": "unresolved"
+     },
+     "y": {
+      "kind": "unresolved"
+     },
+     "width": {
+      "kind": "unresolved"
+     },
+     "height": {
+      "kind": "unresolved"
+     }
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,4243 @@
+{
+ "schema": "snailmail.jni_native_scan/1",
+ "jni_function_table": {
+  "entries": 233,
+  "note": "index = byte offset / 4 on 32-bit ARM"
+ },
+ "binaries": [
+  {
+   "tag": "v7a",
+   "path": "work/apk_unzip/lib/armeabi-v7a/libsnailmail.so",
+   "sha256": "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466",
+   "plt_header_size": 20,
+   "java_exports": [
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIAudioInit",
+     "addr": "0x13ad0",
+     "size": 4,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->JNIAudioInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 1,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDebug",
+     "addr": "0x13b44",
+     "size": 8,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIDebug()I",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 1,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatUnInit",
+     "addr": "0x13c70",
+     "size": 52,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIDatUnInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIKey",
+     "addr": "0x13d78",
+     "size": 268,
+     "java": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;->JNIKey(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 4,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_AccelerometerListener_JNIAccelerometer",
+     "addr": "0x142bc",
+     "size": 64,
+     "java": "Lcom/sandlotgames/snailmail/AccelerometerListener;->JNIAccelerometer(FFF)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 5,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIResourceManagerInvalidate",
+     "addr": "0x142fc",
+     "size": 28,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIResourceManagerInvalidate()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIMouseEvent",
+     "addr": "0x14318",
+     "size": 276,
+     "java": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;->JNIMouseEvent(IFF)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 7,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "addr": "0x15244",
+     "size": 588,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIDatInit(Ljava/io/FileDescriptor;II)V",
+     "direct_jni_calls": [
+      "DeleteLocalRef",
+      "FindClass",
+      "GetFieldID",
+      "GetIntField",
+      "NewGlobalRef"
+     ],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 6,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeRender",
+     "addr": "0x1549c",
+     "size": 36,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeRender(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z11JAVAC_UnJpgPviS_iii",
+      "_Z11JAVAC_UnPngPviS_iii",
+      "_Z11JAVAC_UnZipPviS_i",
+      "_Z13JAVACFileSizePc",
+      "_Z13JAVACFindFilePc",
+      "_Z13JAVACLoadFilePcPv",
+      "_Z13JAVACSaveFilePcPvi",
+      "_Z14JAVALoadSamplePc",
+      "_Z14JAVAPlaySampleif",
+      "_Z16JAVAMusicRestartv",
+      "_Z18PfmAudioPauseMusicv",
+      "_Z19JAVAOpenFeintSubmitPcii",
+      "_Z19JAVAOpenFeintUnlockPci",
+      "_Z20PfmAudioUnPauseMusicv",
+      "_Z22PfmAudioSetMusicVolumef",
+      "_Z27JAVAOpenFeintIsUserLoggedInv",
+      "_Z8JAVATimev"
+     ],
+     "reaches_gl_imports": [
+      "glBindBuffer",
+      "glBindTexture",
+      "glBlendFunc",
+      "glBufferData",
+      "glClear",
+      "glClearColor",
+      "glClearDepthf",
+      "glColor4f",
+      "glCullFace",
+      "glDeleteTextures",
+      "glDepthFunc",
+      "glDepthMask",
+      "glDepthRangef",
+      "glDisable",
+      "glDisableClientState",
+      "glDrawElements",
+      "glEnable",
+      "glEnableClientState",
+      "glFogf",
+      "glFogfv",
+      "glFrustumf",
+      "glGenBuffers",
+      "glGenTextures",
+      "glHint",
+      "glLineWidth",
+      "glLoadIdentity",
+      "glMatrixMode",
+      "glMultMatrixf",
+      "glOrthof",
+      "glPixelStorei",
+      "glPopMatrix",
+      "glPushMatrix",
+      "glRotatef",
+      "glScalef",
+      "glScissor",
+      "glShadeModel",
+      "glTexCoordPointer",
+      "glTexEnvf",
+      "glTexImage2D",
+      "glTexParameteri",
+      "glTranslatef",
+      "glVertexPointer",
+      "glViewport"
+     ],
+     "reachable_function_count": 433,
+     "reachable_indirect_call_sites": [
+      "_ZN13cRStarManager4InitEv@0x5b34c",
+      "_ZN6cRGame2AIEv@0x3b12c",
+      "_ZN6cRGame2AIEv@0x3b17c",
+      "_ZN6cRGame2AIEv@0x3b194",
+      "_ZN6cRHash6SearchEPc@0x7d1dc"
+     ]
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_nativePause",
+     "addr": "0x15500",
+     "size": 92,
+     "java": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;->nativePause()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeDone",
+     "addr": "0x1555c",
+     "size": 16,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeDone()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 3,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeResize",
+     "addr": "0x1556c",
+     "size": 132,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeResize(II)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeReInit",
+     "addr": "0x155f0",
+     "size": 96,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeReInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z11JAVAC_UnJpgPviS_iii",
+      "_Z11JAVAC_UnPngPviS_iii",
+      "_Z11JAVAC_UnZipPviS_i",
+      "_Z13JAVACFileSizePc",
+      "_Z13JAVACFindFilePc",
+      "_Z13JAVACLoadFilePcPv",
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "reaches_gl_imports": [
+      "glBindBuffer",
+      "glBindTexture",
+      "glBufferData",
+      "glClearColor",
+      "glClearDepthf",
+      "glColor4f",
+      "glDeleteTextures",
+      "glDepthFunc",
+      "glDepthMask",
+      "glDepthRangef",
+      "glDisable",
+      "glEnable",
+      "glEnableClientState",
+      "glGenBuffers",
+      "glGenTextures",
+      "glHint",
+      "glLoadIdentity",
+      "glMatrixMode",
+      "glOrthof",
+      "glRotatef",
+      "glScalef",
+      "glShadeModel",
+      "glTexImage2D",
+      "glTexParameteri",
+      "glTranslatef",
+      "glViewport"
+     ],
+     "reachable_function_count": 38,
+     "reachable_indirect_call_sites": [
+      "_ZN6cRHash6SearchEPc@0x7d1dc"
+     ]
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeInit",
+     "addr": "0x15650",
+     "size": 60,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 4,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIOFOUnlockCB",
+     "addr": "0x7d404",
+     "size": 72,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->JNIOFOUnlockCB(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIOFOSubmitCB",
+     "addr": "0x7d44c",
+     "size": 72,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->JNIOFOSubmitCB(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIOFOSave",
+     "addr": "0x7d71c",
+     "size": 4,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIOFOSave()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z13JAVACSaveFilePcPvi"
+     ],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 6,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_MyOpenFeintDelegate_JNIOFOInit",
+     "addr": "0x7d81c",
+     "size": 32,
+     "java": "Lcom/sandlotgames/snailmail/MyOpenFeintDelegate;->JNIOFOInit(Ljava/lang/String;)V",
+     "direct_jni_calls": [
+      "GetStringUTFChars"
+     ],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 3,
+     "reachable_indirect_call_sites": []
+    }
+   ],
+   "declared_natives_without_export": [
+    "Java_com_sandlotgames_snailmail_SnailMailApplication_JNIOFInit"
+   ],
+   "jni_globals": {
+    "gJavaEnv": {
+     "addr": "0x91038",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x8b310",
+      "got_offset": "0x400",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "loaded_by_count": 26
+    },
+    "gJavaObj": {
+     "addr": "0x9103c",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x8b1e4",
+      "got_offset": "0x2d4",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "loaded_by_count": 25
+    },
+    "gJavaClass": {
+     "addr": "0x91034",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x8b0e0",
+      "got_offset": "0x1d0",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "loaded_by_count": 1
+    },
+    "gJAVAFunction": {
+     "addr": "0x8b3f0",
+     "size": 324,
+     "section": ".data",
+     "got": {
+      "slot": "0x8b0c4",
+      "got_offset": "0x1b4",
+      "reloc_type": 23
+     },
+     "stored_by": [],
+     "loaded_by_count": 25
+    },
+    "gJavaAssetFid": {
+     "addr": "0x91028",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x8b1d8",
+      "got_offset": "0x2c8",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+     ],
+     "loaded_by_count": 0
+    },
+    "gJavaAssetStart": {
+     "addr": "0x9102c",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x8b198",
+      "got_offset": "0x288",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+     ],
+     "loaded_by_count": 1
+    },
+    "gJavaAssetLength": {
+     "addr": "0x91030",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x8b288",
+      "got_offset": "0x378",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+     ],
+     "loaded_by_count": 0
+    }
+   },
+   "gJAVAFunction": {
+    "addr": "0x8b3f0",
+    "size": 324,
+    "entries": [
+     {
+      "index": 0,
+      "entry_addr": "0x8b3f0",
+      "table_offset": "0x0",
+      "jmethodID_initial": "0x0",
+      "name": "JAVALoadSample",
+      "signature": "(Ljava/lang/String;)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVALoadSample(Ljava/lang/String;)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 1,
+      "entry_addr": "0x8b3fc",
+      "table_offset": "0xc",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAPlaySample",
+      "signature": "(IF)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPlaySample(IF)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 2,
+      "entry_addr": "0x8b408",
+      "table_offset": "0x18",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAStopSample",
+      "signature": "(I)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAStopSample(I)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 3,
+      "entry_addr": "0x8b414",
+      "table_offset": "0x24",
+      "jmethodID_initial": "0x0",
+      "name": "JAVASaveFile",
+      "signature": "(Ljava/lang/String;[BI)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVASaveFile(Ljava/lang/String;[BI)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 4,
+      "entry_addr": "0x8b420",
+      "table_offset": "0x30",
+      "jmethodID_initial": "0x0",
+      "name": "JAVADeleteFile",
+      "signature": "(Ljava/lang/String;)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVADeleteFile(Ljava/lang/String;)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 5,
+      "entry_addr": "0x8b42c",
+      "table_offset": "0x3c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVALoadFile",
+      "signature": "(Ljava/lang/String;[BI)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVALoadFile(Ljava/lang/String;[BI)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 6,
+      "entry_addr": "0x8b438",
+      "table_offset": "0x48",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAFindFile",
+      "signature": "(Ljava/lang/String;)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAFindFile(Ljava/lang/String;)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 7,
+      "entry_addr": "0x8b444",
+      "table_offset": "0x54",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAFileSize",
+      "signature": "(Ljava/lang/String;)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAFileSize(Ljava/lang/String;)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 8,
+      "entry_addr": "0x8b450",
+      "table_offset": "0x60",
+      "jmethodID_initial": "0x0",
+      "name": "JAVASetMusicVolume",
+      "signature": "(F)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVASetMusicVolume(F)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 9,
+      "entry_addr": "0x8b45c",
+      "table_offset": "0x6c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAPlayMusic",
+      "signature": "(Ljava/lang/String;)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPlayMusic(Ljava/lang/String;)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 10,
+      "entry_addr": "0x8b468",
+      "table_offset": "0x78",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAStopMusic",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAStopMusic()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 11,
+      "entry_addr": "0x8b474",
+      "table_offset": "0x84",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnPauseMusic",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnPauseMusic()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 12,
+      "entry_addr": "0x8b480",
+      "table_offset": "0x90",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAPauseMusic",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPauseMusic()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 13,
+      "entry_addr": "0x8b48c",
+      "table_offset": "0x9c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAMusicRestart",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAMusicRestart()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 14,
+      "entry_addr": "0x8b498",
+      "table_offset": "0xa8",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnZip",
+      "signature": "([B[B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnZip([B[B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 15,
+      "entry_addr": "0x8b4a4",
+      "table_offset": "0xb4",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnJpg",
+      "signature": "([B[B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnJpg([B[B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 16,
+      "entry_addr": "0x8b4b0",
+      "table_offset": "0xc0",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnPng",
+      "signature": "([B[B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnPng([B[B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 17,
+      "entry_addr": "0x8b4bc",
+      "table_offset": "0xcc",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintOpen",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintOpen()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 18,
+      "entry_addr": "0x8b4c8",
+      "table_offset": "0xd8",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintLastLoggedInUserID",
+      "signature": "([B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintLastLoggedInUserID([B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 19,
+      "entry_addr": "0x8b4d4",
+      "table_offset": "0xe4",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintSubmit",
+      "signature": "(Ljava/lang/String;II)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintSubmit(Ljava/lang/String;II)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 20,
+      "entry_addr": "0x8b4e0",
+      "table_offset": "0xf0",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintUnlock",
+      "signature": "(Ljava/lang/String;I)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintUnlock(Ljava/lang/String;I)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 21,
+      "entry_addr": "0x8b4ec",
+      "table_offset": "0xfc",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintIsUserLoggedIn",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintIsUserLoggedIn()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 22,
+      "entry_addr": "0x8b4f8",
+      "table_offset": "0x108",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintIsOnline",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintIsOnline()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 23,
+      "entry_addr": "0x8b504",
+      "table_offset": "0x114",
+      "jmethodID_initial": "0x0",
+      "name": "JAVATime",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVATime()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 24,
+      "entry_addr": "0x8b510",
+      "table_offset": "0x120",
+      "jmethodID_initial": "0x0",
+      "name": "JAVATimeHi",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVATimeHi()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 25,
+      "entry_addr": "0x8b51c",
+      "table_offset": "0x12c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAVibrate",
+      "signature": "(I)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAVibrate(I)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 26,
+      "entry_addr": "0x8b528",
+      "table_offset": "0x138",
+      "jmethodID_initial": "0x0",
+      "name": "",
+      "signature": "",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23
+     }
+    ]
+   },
+   "jnienv_call_sites": [
+    {
+     "func": "0x13ca4",
+     "func_name": "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject",
+     "site": "0x13cf4",
+     "offset": "0x7c",
+     "index": 31,
+     "jni": "GetObjectClass",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "JAVA_RegisterFunctions(_JNIEnv*, _jobject*)"
+    },
+    {
+     "func": "0x13ca4",
+     "func_name": "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject",
+     "site": "0x13d38",
+     "offset": "0x84",
+     "index": 33,
+     "jni": "GetMethodID",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVA_RegisterFunctions(_JNIEnv*, _jobject*)"
+    },
+    {
+     "func": "0x13e84",
+     "func_name": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "site": "0x13ea4",
+     "offset": "0xf8",
+     "index": 62,
+     "jni": "CallVoidMethodV",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "_JNIEnv::CallVoidMethod(_jobject*, _jmethodID*, ...)"
+    },
+    {
+     "func": "0x140e4",
+     "func_name": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "site": "0x14104",
+     "offset": "0xc8",
+     "index": 50,
+     "jni": "CallIntMethodV",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "_JNIEnv::CallIntMethod(_jobject*, _jmethodID*, ...)"
+    },
+    {
+     "func": "0x1442c",
+     "func_name": "_Z19JAVAOpenFeintSubmitPcii",
+     "site": "0x14460",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintSubmit(char*, int, int)"
+    },
+    {
+     "func": "0x1442c",
+     "func_name": "_Z19JAVAOpenFeintSubmitPcii",
+     "site": "0x144a4",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintSubmit(char*, int, int)"
+    },
+    {
+     "func": "0x144c0",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14504",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x144c0",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14520",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x144c0",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14548",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x144c0",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x145d8",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x144c0",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14604",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x144c0",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x1461c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14638",
+     "func_name": "_Z19JAVAOpenFeintUnlockPci",
+     "site": "0x14668",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintUnlock(char*, int)"
+    },
+    {
+     "func": "0x14638",
+     "func_name": "_Z19JAVAOpenFeintUnlockPci",
+     "site": "0x146ac",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintUnlock(char*, int)"
+    },
+    {
+     "func": "0x146c8",
+     "func_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x146f8",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "func": "0x146c8",
+     "func_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x14744",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "func": "0x146c8",
+     "func_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x1475c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "func": "0x147c8",
+     "func_name": "_Z13JAVACFindFilePc",
+     "site": "0x147f0",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFindFile(char*)"
+    },
+    {
+     "func": "0x147c8",
+     "func_name": "_Z13JAVACFindFilePc",
+     "site": "0x14834",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFindFile(char*)"
+    },
+    {
+     "func": "0x14858",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x14890",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x14858",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x148b8",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x14858",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x148d0",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x14858",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x1491c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x14858",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x14934",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x1495c",
+     "func_name": "_Z14JAVALoadSamplePc",
+     "site": "0x14984",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVALoadSample(char*)"
+    },
+    {
+     "func": "0x1495c",
+     "func_name": "_Z14JAVALoadSamplePc",
+     "site": "0x149c8",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVALoadSample(char*)"
+    },
+    {
+     "func": "0x149e8",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x14a2c",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x149e8",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x14a48",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x149e8",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x14a70",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x149e8",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x14b00",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x149e8",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x14b2c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x149e8",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x14b44",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14b60",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x14b98",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x14b60",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x14bb4",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x14b60",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x14bdc",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x14b60",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x14c28",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x14b60",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x14c40",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x14b60",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x14c58",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x14eac",
+     "func_name": "_Z15JAVACDeleteFilePc",
+     "site": "0x14ed4",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACDeleteFile(char*)"
+    },
+    {
+     "func": "0x14eac",
+     "func_name": "_Z15JAVACDeleteFilePc",
+     "site": "0x14f14",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACDeleteFile(char*)"
+    },
+    {
+     "func": "0x14f30",
+     "func_name": "_Z17PfmAudioPlayMusicPc",
+     "site": "0x14f58",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "PfmAudioPlayMusic(char*)"
+    },
+    {
+     "func": "0x14f30",
+     "func_name": "_Z17PfmAudioPlayMusicPc",
+     "site": "0x14f98",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "PfmAudioPlayMusic(char*)"
+    },
+    {
+     "func": "0x14fb0",
+     "func_name": "_Z13JAVACFileSizePc",
+     "site": "0x14fd8",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFileSize(char*)"
+    },
+    {
+     "func": "0x14fb0",
+     "func_name": "_Z13JAVACFileSizePc",
+     "site": "0x1501c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFileSize(char*)"
+    },
+    {
+     "func": "0x15038",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x15084",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15038",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x150a0",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15038",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x1510c",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15038",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x15130",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15038",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x15148",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15270",
+     "offset": "0x18",
+     "index": 6,
+     "jni": "FindClass",
+     "env_source": "arg0",
+     "string_args": {
+      "r1": "java/io/FileDescriptor"
+     },
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x1528c",
+     "offset": "0x54",
+     "index": 21,
+     "jni": "NewGlobalRef",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x152b4",
+     "offset": "0x178",
+     "index": 94,
+     "jni": "GetFieldID",
+     "env_source": "arg0",
+     "string_args": {
+      "r2": "descriptor",
+      "r3": "I"
+     },
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x152ec",
+     "offset": "0x190",
+     "index": 100,
+     "jni": "GetIntField",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15428",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x1543c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x7d81c",
+     "func_name": "Java_com_sandlotgames_snailmail_MyOpenFeintDelegate_JNIOFOInit",
+     "site": "0x7d830",
+     "offset": "0x2a4",
+     "index": 169,
+     "jni": "GetStringUTFChars",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_MyOpenFeintDelegate_JNIOFOInit"
+    }
+   ],
+   "helper_call_sites": [
+    {
+     "caller": "0x13eb8",
+     "caller_name": "_Z11JAVAVibratei",
+     "site": "0x13ee8",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x12c",
+     "java_method": "JAVAVibrate",
+     "java_signature": "(I)V",
+     "tail_call": true,
+     "caller_demangled": "JAVAVibrate(int)"
+    },
+    {
+     "caller": "0x13f04",
+     "caller_name": "_Z17JAVAOpenFeintOpenv",
+     "site": "0x13f30",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xcc",
+     "java_method": "JAVAOpenFeintOpen",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "JAVAOpenFeintOpen()"
+    },
+    {
+     "caller": "0x13f44",
+     "caller_name": "_Z16JAVAMusicRestartv",
+     "site": "0x13f70",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x9c",
+     "java_method": "JAVAMusicRestart",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "JAVAMusicRestart()"
+    },
+    {
+     "caller": "0x13f84",
+     "caller_name": "_Z18PfmAudioPauseMusicv",
+     "site": "0x13fb0",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x90",
+     "java_method": "JAVAPauseMusic",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioPauseMusic()"
+    },
+    {
+     "caller": "0x13fc4",
+     "caller_name": "_Z20PfmAudioUnPauseMusicv",
+     "site": "0x13ff0",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x84",
+     "java_method": "JAVAUnPauseMusic",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioUnPauseMusic()"
+    },
+    {
+     "caller": "0x14004",
+     "caller_name": "_Z17PfmAudioStopMusicv",
+     "site": "0x14030",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x78",
+     "java_method": "JAVAStopMusic",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioStopMusic()"
+    },
+    {
+     "caller": "0x14044",
+     "caller_name": "_Z18PfmAudioStopSamplei",
+     "site": "0x14074",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x18",
+     "java_method": "JAVAStopSample",
+     "java_signature": "(I)V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioStopSample(int)"
+    },
+    {
+     "caller": "0x14088",
+     "caller_name": "_Z22PfmAudioSetMusicVolumef",
+     "site": "0x140c8",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x60",
+     "java_method": "JAVASetMusicVolume",
+     "java_signature": "(F)V",
+     "tail_call": false,
+     "caller_demangled": "PfmAudioSetMusicVolume(float)"
+    },
+    {
+     "caller": "0x14118",
+     "caller_name": "_Z8JAVATimev",
+     "site": "0x14148",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x114",
+     "java_method": "JAVATime",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVATime()"
+    },
+    {
+     "caller": "0x14118",
+     "caller_name": "_Z8JAVATimev",
+     "site": "0x14160",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x120",
+     "java_method": "JAVATimeHi",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVATime()"
+    },
+    {
+     "caller": "0x14190",
+     "caller_name": "_Z21JAVAOpenFeintIsOnlinev",
+     "site": "0x141c0",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x108",
+     "java_method": "JAVAOpenFeintIsOnline",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintIsOnline()"
+    },
+    {
+     "caller": "0x141e0",
+     "caller_name": "_Z27JAVAOpenFeintIsUserLoggedInv",
+     "site": "0x14210",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xfc",
+     "java_method": "JAVAOpenFeintIsUserLoggedIn",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintIsUserLoggedIn()"
+    },
+    {
+     "caller": "0x14230",
+     "caller_name": "_Z14JAVAPlaySampleif",
+     "site": "0x14274",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xc",
+     "java_method": "JAVAPlaySample",
+     "java_signature": "(IF)I",
+     "tail_call": false,
+     "caller_demangled": "JAVAPlaySample(int, float)"
+    },
+    {
+     "caller": "0x1442c",
+     "caller_name": "_Z19JAVAOpenFeintSubmitPcii",
+     "site": "0x1448c",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xe4",
+     "java_method": "JAVAOpenFeintSubmit",
+     "java_signature": "(Ljava/lang/String;II)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintSubmit(char*, int, int)"
+    },
+    {
+     "caller": "0x144c0",
+     "caller_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14578",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xc0",
+     "java_method": "JAVAUnPng",
+     "java_signature": "([B[B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "caller": "0x14638",
+     "caller_name": "_Z19JAVAOpenFeintUnlockPci",
+     "site": "0x14694",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xf0",
+     "java_method": "JAVAOpenFeintUnlock",
+     "java_signature": "(Ljava/lang/String;I)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintUnlock(char*, int)"
+    },
+    {
+     "caller": "0x146c8",
+     "caller_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x14720",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xd8",
+     "java_method": "JAVAOpenFeintLastLoggedInUserID",
+     "java_signature": "([B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "caller": "0x147c8",
+     "caller_name": "_Z13JAVACFindFilePc",
+     "site": "0x14818",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x48",
+     "java_method": "JAVAFindFile",
+     "java_signature": "(Ljava/lang/String;)I",
+     "tail_call": false,
+     "caller_demangled": "JAVACFindFile(char*)"
+    },
+    {
+     "caller": "0x14858",
+     "caller_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x14900",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x24",
+     "java_method": "JAVASaveFile",
+     "java_signature": "(Ljava/lang/String;[BI)I",
+     "tail_call": false,
+     "caller_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "caller": "0x1495c",
+     "caller_name": "_Z14JAVALoadSamplePc",
+     "site": "0x149ac",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x0",
+     "java_method": "JAVALoadSample",
+     "java_signature": "(Ljava/lang/String;)I",
+     "tail_call": false,
+     "caller_demangled": "JAVALoadSample(char*)"
+    },
+    {
+     "caller": "0x149e8",
+     "caller_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x14aa0",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xb4",
+     "java_method": "JAVAUnJpg",
+     "java_signature": "([B[B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "caller": "0x14b60",
+     "caller_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x14c04",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xa8",
+     "java_method": "JAVAUnZip",
+     "java_signature": "([B[B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "caller": "0x14eac",
+     "caller_name": "_Z15JAVACDeleteFilePc",
+     "site": "0x14efc",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x30",
+     "java_method": "JAVADeleteFile",
+     "java_signature": "(Ljava/lang/String;)V",
+     "tail_call": false,
+     "caller_demangled": "JAVACDeleteFile(char*)"
+    },
+    {
+     "caller": "0x14f30",
+     "caller_name": "_Z17PfmAudioPlayMusicPc",
+     "site": "0x14f80",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x6c",
+     "java_method": "JAVAPlayMusic",
+     "java_signature": "(Ljava/lang/String;)V",
+     "tail_call": false,
+     "caller_demangled": "PfmAudioPlayMusic(char*)"
+    },
+    {
+     "caller": "0x14fb0",
+     "caller_name": "_Z13JAVACFileSizePc",
+     "site": "0x15000",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x54",
+     "java_method": "JAVAFileSize",
+     "java_signature": "(Ljava/lang/String;)I",
+     "tail_call": false,
+     "caller_demangled": "JAVACFileSize(char*)"
+    },
+    {
+     "caller": "0x15038",
+     "caller_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x150dc",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x3c",
+     "java_method": "JAVALoadFile",
+     "java_signature": "(Ljava/lang/String;[BI)V",
+     "tail_call": false,
+     "caller_demangled": "JAVACLoadFile(char*, void*)"
+    }
+   ],
+   "java_callback_wrappers": [
+    {
+     "addr": "0x13ca4",
+     "name": "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject",
+     "size": 212,
+     "direct_callers": [
+      "Java_com_sandlotgames_snailmail_ADRenderer_nativeInit",
+      "Java_com_sandlotgames_snailmail_ADRenderer_nativeReInit"
+     ],
+     "jni_calls": [
+      "GetMethodID",
+      "GetObjectClass"
+     ],
+     "java_methods": []
+    },
+    {
+     "addr": "0x13eb8",
+     "name": "_Z11JAVAVibratei",
+     "size": 68,
+     "direct_callers": [
+      "_Z10PfmVibratev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAVibrate"
+     ]
+    },
+    {
+     "addr": "0x13f04",
+     "name": "_Z17JAVAOpenFeintOpenv",
+     "size": 64,
+     "direct_callers": [
+      "_Z6OFOpenv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAOpenFeintOpen"
+     ]
+    },
+    {
+     "addr": "0x13f44",
+     "name": "_Z16JAVAMusicRestartv",
+     "size": 64,
+     "direct_callers": [
+      "_ZN17cRResourceManager2AIEv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAMusicRestart"
+     ]
+    },
+    {
+     "addr": "0x13f84",
+     "name": "_Z18PfmAudioPauseMusicv",
+     "size": 64,
+     "direct_callers": [
+      "_Z16RShellMusicPausev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAPauseMusic"
+     ]
+    },
+    {
+     "addr": "0x13fc4",
+     "name": "_Z20PfmAudioUnPauseMusicv",
+     "size": 64,
+     "direct_callers": [
+      "_Z18RShellMusicUnPausev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAUnPauseMusic"
+     ]
+    },
+    {
+     "addr": "0x14004",
+     "name": "_Z17PfmAudioStopMusicv",
+     "size": 64,
+     "direct_callers": [
+      "_Z15RShellMusicStopv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAStopMusic"
+     ]
+    },
+    {
+     "addr": "0x14044",
+     "name": "_Z18PfmAudioStopSamplei",
+     "size": 68,
+     "direct_callers": [
+      "_Z21RShellSoundStopLoopedi",
+      "_Z21RShellSoundStopSamplei"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAStopSample"
+     ]
+    },
+    {
+     "addr": "0x14088",
+     "name": "_Z22PfmAudioSetMusicVolumef",
+     "size": 92,
+     "direct_callers": [
+      "_Z17RShellMusicVolumef"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVASetMusicVolume"
+     ]
+    },
+    {
+     "addr": "0x14118",
+     "name": "_Z8JAVATimev",
+     "size": 120,
+     "direct_callers": [
+      "_Z7GetTimev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVATime",
+      "JAVATimeHi"
+     ]
+    },
+    {
+     "addr": "0x14190",
+     "name": "_Z21JAVAOpenFeintIsOnlinev",
+     "size": 80,
+     "direct_callers": [
+      "_Z10OFIsOnlinev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAOpenFeintIsOnline"
+     ]
+    },
+    {
+     "addr": "0x141e0",
+     "name": "_Z27JAVAOpenFeintIsUserLoggedInv",
+     "size": 80,
+     "direct_callers": [
+      "_Z16OFIsUserLoggedInv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAOpenFeintIsUserLoggedIn"
+     ]
+    },
+    {
+     "addr": "0x14230",
+     "name": "_Z14JAVAPlaySampleif",
+     "size": 96,
+     "direct_callers": [
+      "_Z18PfmAudioPlaySampleifff"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAPlaySample"
+     ]
+    },
+    {
+     "addr": "0x1442c",
+     "name": "_Z19JAVAOpenFeintSubmitPcii",
+     "size": 148,
+     "direct_callers": [
+      "_Z11OFAddArcadei",
+      "_Z14OFAddArcadeProi",
+      "_Z14OFAddChallengei",
+      "_Z14OFAddTimeTrialiiii",
+      "_Z9OFOUpdatev"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAOpenFeintSubmit"
+     ]
+    },
+    {
+     "addr": "0x144c0",
+     "name": "_Z11JAVAC_UnPngPviS_iii",
+     "size": 376,
+     "direct_callers": [
+      "_Z14PfmLoadFileDatPviiiitt"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVAUnPng"
+     ]
+    },
+    {
+     "addr": "0x14638",
+     "name": "_Z19JAVAOpenFeintUnlockPci",
+     "size": 144,
+     "direct_callers": [
+      "_Z16OFAddAchievementi",
+      "_Z9OFOUpdatev"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAOpenFeintUnlock"
+     ]
+    },
+    {
+     "addr": "0x146c8",
+     "name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "size": 256,
+     "direct_callers": [
+      "_Z14OFGetHighScorev",
+      "_Z14OFSetHighScorev"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray"
+     ],
+     "java_methods": [
+      "JAVAOpenFeintLastLoggedInUserID"
+     ]
+    },
+    {
+     "addr": "0x147c8",
+     "name": "_Z13JAVACFindFilePc",
+     "size": 140,
+     "direct_callers": [
+      "_Z11PfmFindFilePc",
+      "_Z11PfmLoadFilePcPvPi"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAFindFile"
+     ]
+    },
+    {
+     "addr": "0x14858",
+     "name": "_Z13JAVACSaveFilePcPvi",
+     "size": 256,
+     "direct_callers": [
+      "_Z11PfmSaveFilePcPvi"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewByteArray",
+      "NewStringUTF",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVASaveFile"
+     ]
+    },
+    {
+     "addr": "0x1495c",
+     "name": "_Z14JAVALoadSamplePc",
+     "size": 136,
+     "direct_callers": [
+      "_Z18PfmAudioLoadSamplePc"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVALoadSample"
+     ]
+    },
+    {
+     "addr": "0x149e8",
+     "name": "_Z11JAVAC_UnJpgPviS_iii",
+     "size": 376,
+     "direct_callers": [
+      "_Z14PfmLoadFileDatPviiiitt"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVAUnJpg"
+     ]
+    },
+    {
+     "addr": "0x14b60",
+     "name": "_Z11JAVAC_UnZipPviS_i",
+     "size": 276,
+     "direct_callers": [
+      "_Z14PfmLoadFileDatPviiiitt"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVAUnZip"
+     ]
+    },
+    {
+     "addr": "0x14eac",
+     "name": "_Z15JAVACDeleteFilePc",
+     "size": 128,
+     "direct_callers": [
+      "_Z13PfmDeleteFilePc"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVADeleteFile"
+     ]
+    },
+    {
+     "addr": "0x14f30",
+     "name": "_Z17PfmAudioPlayMusicPc",
+     "size": 128,
+     "direct_callers": [
+      "_Z15RShellMusicPlayPciS_"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAPlayMusic"
+     ]
+    },
+    {
+     "addr": "0x14fb0",
+     "name": "_Z13JAVACFileSizePc",
+     "size": 136,
+     "direct_callers": [
+      "_Z11PfmLoadFilePcPvPi",
+      "_Z13JAVACLoadFilePcPv"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAFileSize"
+     ]
+    },
+    {
+     "addr": "0x15038",
+     "name": "_Z13JAVACLoadFilePcPv",
+     "size": 360,
+     "direct_callers": [
+      "_Z11PfmLoadFilePcPvPi"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVALoadFile"
+     ]
+    }
+   ]
+  },
+  {
+   "tag": "v5",
+   "path": "work/apk_unzip/lib/armeabi/libsnailmail.so",
+   "sha256": "96dbeaeb20c60d687301ca769656727467371489db5e3ed744a93248bc8d8136",
+   "plt_header_size": 20,
+   "java_exports": [
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIAudioInit",
+     "addr": "0x14398",
+     "size": 4,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->JNIAudioInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 1,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDebug",
+     "addr": "0x1440c",
+     "size": 8,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIDebug()I",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 1,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatUnInit",
+     "addr": "0x1453c",
+     "size": 52,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIDatUnInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIKey",
+     "addr": "0x1463c",
+     "size": 228,
+     "java": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;->JNIKey(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 4,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_AccelerometerListener_JNIAccelerometer",
+     "addr": "0x14b90",
+     "size": 64,
+     "java": "Lcom/sandlotgames/snailmail/AccelerometerListener;->JNIAccelerometer(FFF)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 13,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIResourceManagerInvalidate",
+     "addr": "0x14bd0",
+     "size": 28,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIResourceManagerInvalidate()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIMouseEvent",
+     "addr": "0x14bec",
+     "size": 288,
+     "java": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;->JNIMouseEvent(IFF)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 13,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "addr": "0x15b30",
+     "size": 596,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIDatInit(Ljava/io/FileDescriptor;II)V",
+     "direct_jni_calls": [
+      "DeleteLocalRef",
+      "FindClass",
+      "GetFieldID",
+      "GetIntField",
+      "NewGlobalRef"
+     ],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 6,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeRender",
+     "addr": "0x15d90",
+     "size": 40,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeRender(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z11JAVAC_UnJpgPviS_iii",
+      "_Z11JAVAC_UnPngPviS_iii",
+      "_Z11JAVAC_UnZipPviS_i",
+      "_Z13JAVACFileSizePc",
+      "_Z13JAVACFindFilePc",
+      "_Z13JAVACLoadFilePcPv",
+      "_Z13JAVACSaveFilePcPvi",
+      "_Z14JAVALoadSamplePc",
+      "_Z14JAVAPlaySampleif",
+      "_Z16JAVAMusicRestartv",
+      "_Z18PfmAudioPauseMusicv",
+      "_Z19JAVAOpenFeintSubmitPcii",
+      "_Z19JAVAOpenFeintUnlockPci",
+      "_Z20PfmAudioUnPauseMusicv",
+      "_Z22PfmAudioSetMusicVolumef",
+      "_Z27JAVAOpenFeintIsUserLoggedInv",
+      "_Z8JAVATimev"
+     ],
+     "reaches_gl_imports": [
+      "glBindBuffer",
+      "glBindTexture",
+      "glBlendFunc",
+      "glBufferData",
+      "glClear",
+      "glClearColor",
+      "glClearDepthf",
+      "glColor4f",
+      "glCullFace",
+      "glDeleteTextures",
+      "glDepthFunc",
+      "glDepthMask",
+      "glDepthRangef",
+      "glDisable",
+      "glDisableClientState",
+      "glDrawElements",
+      "glEnable",
+      "glEnableClientState",
+      "glFogf",
+      "glFogfv",
+      "glFrustumf",
+      "glGenBuffers",
+      "glGenTextures",
+      "glHint",
+      "glLineWidth",
+      "glLoadIdentity",
+      "glMatrixMode",
+      "glMultMatrixf",
+      "glOrthof",
+      "glPixelStorei",
+      "glPopMatrix",
+      "glPushMatrix",
+      "glRotatef",
+      "glScalef",
+      "glScissor",
+      "glShadeModel",
+      "glTexCoordPointer",
+      "glTexEnvf",
+      "glTexImage2D",
+      "glTexParameteri",
+      "glTranslatef",
+      "glVertexPointer",
+      "glViewport"
+     ],
+     "reachable_function_count": 455,
+     "reachable_indirect_call_sites": [
+      "_ZN13cRStarManager4InitEv@0x615dc",
+      "_ZN6cRGame2AIEv@0x3dc20",
+      "_ZN6cRGame2AIEv@0x3dc70",
+      "_ZN6cRGame2AIEv@0x3dc88",
+      "_ZN6cRHash6SearchEPc@0x855e4"
+     ]
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADGLSurfaceView_nativePause",
+     "addr": "0x15df8",
+     "size": 92,
+     "java": "Lcom/sandlotgames/snailmail/ADGLSurfaceView;->nativePause()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeDone",
+     "addr": "0x15e54",
+     "size": 16,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeDone()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 3,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeResize",
+     "addr": "0x15e64",
+     "size": 136,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeResize(II)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 3,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeReInit",
+     "addr": "0x15eec",
+     "size": 96,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeReInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z11JAVAC_UnJpgPviS_iii",
+      "_Z11JAVAC_UnPngPviS_iii",
+      "_Z11JAVAC_UnZipPviS_i",
+      "_Z13JAVACFileSizePc",
+      "_Z13JAVACFindFilePc",
+      "_Z13JAVACLoadFilePcPv",
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "reaches_gl_imports": [
+      "glBindBuffer",
+      "glBindTexture",
+      "glBufferData",
+      "glClearColor",
+      "glClearDepthf",
+      "glColor4f",
+      "glDeleteTextures",
+      "glDepthFunc",
+      "glDepthMask",
+      "glDepthRangef",
+      "glDisable",
+      "glEnable",
+      "glEnableClientState",
+      "glGenBuffers",
+      "glGenTextures",
+      "glHint",
+      "glLoadIdentity",
+      "glMatrixMode",
+      "glOrthof",
+      "glRotatef",
+      "glScalef",
+      "glShadeModel",
+      "glTexImage2D",
+      "glTexParameteri",
+      "glTranslatef",
+      "glViewport"
+     ],
+     "reachable_function_count": 48,
+     "reachable_indirect_call_sites": [
+      "_ZN6cRHash6SearchEPc@0x855e4"
+     ]
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_nativeInit",
+     "addr": "0x15f4c",
+     "size": 60,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->nativeInit()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 4,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIOFOUnlockCB",
+     "addr": "0x85804",
+     "size": 72,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->JNIOFOUnlockCB(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_ADRenderer_JNIOFOSubmitCB",
+     "addr": "0x8584c",
+     "size": 72,
+     "java": "Lcom/sandlotgames/snailmail/ADRenderer;->JNIOFOSubmitCB(I)V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 2,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIOFOSave",
+     "addr": "0x85b24",
+     "size": 4,
+     "java": "Lcom/sandlotgames/snailmail/SnailMailActivity;->JNIOFOSave()V",
+     "direct_jni_calls": [],
+     "reaches_cached_env_users": [
+      "_Z13JAVACSaveFilePcPvi"
+     ],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 6,
+     "reachable_indirect_call_sites": []
+    },
+    {
+     "symbol": "Java_com_sandlotgames_snailmail_MyOpenFeintDelegate_JNIOFOInit",
+     "addr": "0x85c24",
+     "size": 32,
+     "java": "Lcom/sandlotgames/snailmail/MyOpenFeintDelegate;->JNIOFOInit(Ljava/lang/String;)V",
+     "direct_jni_calls": [
+      "GetStringUTFChars"
+     ],
+     "reaches_cached_env_users": [],
+     "reaches_gl_imports": [],
+     "reachable_function_count": 3,
+     "reachable_indirect_call_sites": []
+    }
+   ],
+   "declared_natives_without_export": [
+    "Java_com_sandlotgames_snailmail_SnailMailApplication_JNIOFInit"
+   ],
+   "jni_globals": {
+    "gJavaEnv": {
+     "addr": "0x9a330",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x94608",
+      "got_offset": "0x400",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "loaded_by_count": 26
+    },
+    "gJavaObj": {
+     "addr": "0x9a334",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x944dc",
+      "got_offset": "0x2d4",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "loaded_by_count": 25
+    },
+    "gJavaClass": {
+     "addr": "0x9a32c",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x943d8",
+      "got_offset": "0x1d0",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject"
+     ],
+     "loaded_by_count": 1
+    },
+    "gJAVAFunction": {
+     "addr": "0x946e8",
+     "size": 324,
+     "section": ".data",
+     "got": {
+      "slot": "0x943bc",
+      "got_offset": "0x1b4",
+      "reloc_type": 23
+     },
+     "stored_by": [],
+     "loaded_by_count": 25
+    },
+    "gJavaAssetFid": {
+     "addr": "0x9a320",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x944d0",
+      "got_offset": "0x2c8",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+     ],
+     "loaded_by_count": 0
+    },
+    "gJavaAssetStart": {
+     "addr": "0x9a324",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x94490",
+      "got_offset": "0x288",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+     ],
+     "loaded_by_count": 1
+    },
+    "gJavaAssetLength": {
+     "addr": "0x9a328",
+     "size": 4,
+     "section": ".bss",
+     "got": {
+      "slot": "0x94580",
+      "got_offset": "0x378",
+      "reloc_type": 23
+     },
+     "stored_by": [
+      "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+     ],
+     "loaded_by_count": 0
+    }
+   },
+   "gJAVAFunction": {
+    "addr": "0x946e8",
+    "size": 324,
+    "entries": [
+     {
+      "index": 0,
+      "entry_addr": "0x946e8",
+      "table_offset": "0x0",
+      "jmethodID_initial": "0x0",
+      "name": "JAVALoadSample",
+      "signature": "(Ljava/lang/String;)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVALoadSample(Ljava/lang/String;)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 1,
+      "entry_addr": "0x946f4",
+      "table_offset": "0xc",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAPlaySample",
+      "signature": "(IF)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPlaySample(IF)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 2,
+      "entry_addr": "0x94700",
+      "table_offset": "0x18",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAStopSample",
+      "signature": "(I)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAStopSample(I)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 3,
+      "entry_addr": "0x9470c",
+      "table_offset": "0x24",
+      "jmethodID_initial": "0x0",
+      "name": "JAVASaveFile",
+      "signature": "(Ljava/lang/String;[BI)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVASaveFile(Ljava/lang/String;[BI)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 4,
+      "entry_addr": "0x94718",
+      "table_offset": "0x30",
+      "jmethodID_initial": "0x0",
+      "name": "JAVADeleteFile",
+      "signature": "(Ljava/lang/String;)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVADeleteFile(Ljava/lang/String;)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 5,
+      "entry_addr": "0x94724",
+      "table_offset": "0x3c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVALoadFile",
+      "signature": "(Ljava/lang/String;[BI)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVALoadFile(Ljava/lang/String;[BI)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 6,
+      "entry_addr": "0x94730",
+      "table_offset": "0x48",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAFindFile",
+      "signature": "(Ljava/lang/String;)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAFindFile(Ljava/lang/String;)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 7,
+      "entry_addr": "0x9473c",
+      "table_offset": "0x54",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAFileSize",
+      "signature": "(Ljava/lang/String;)I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAFileSize(Ljava/lang/String;)I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 8,
+      "entry_addr": "0x94748",
+      "table_offset": "0x60",
+      "jmethodID_initial": "0x0",
+      "name": "JAVASetMusicVolume",
+      "signature": "(F)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVASetMusicVolume(F)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 9,
+      "entry_addr": "0x94754",
+      "table_offset": "0x6c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAPlayMusic",
+      "signature": "(Ljava/lang/String;)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPlayMusic(Ljava/lang/String;)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 10,
+      "entry_addr": "0x94760",
+      "table_offset": "0x78",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAStopMusic",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAStopMusic()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 11,
+      "entry_addr": "0x9476c",
+      "table_offset": "0x84",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnPauseMusic",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnPauseMusic()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 12,
+      "entry_addr": "0x94778",
+      "table_offset": "0x90",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAPauseMusic",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAPauseMusic()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 13,
+      "entry_addr": "0x94784",
+      "table_offset": "0x9c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAMusicRestart",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAMusicRestart()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 14,
+      "entry_addr": "0x94790",
+      "table_offset": "0xa8",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnZip",
+      "signature": "([B[B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnZip([B[B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 15,
+      "entry_addr": "0x9479c",
+      "table_offset": "0xb4",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnJpg",
+      "signature": "([B[B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnJpg([B[B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 16,
+      "entry_addr": "0x947a8",
+      "table_offset": "0xc0",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAUnPng",
+      "signature": "([B[B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAUnPng([B[B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 17,
+      "entry_addr": "0x947b4",
+      "table_offset": "0xcc",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintOpen",
+      "signature": "()V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintOpen()V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 18,
+      "entry_addr": "0x947c0",
+      "table_offset": "0xd8",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintLastLoggedInUserID",
+      "signature": "([B)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintLastLoggedInUserID([B)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 19,
+      "entry_addr": "0x947cc",
+      "table_offset": "0xe4",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintSubmit",
+      "signature": "(Ljava/lang/String;II)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintSubmit(Ljava/lang/String;II)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 20,
+      "entry_addr": "0x947d8",
+      "table_offset": "0xf0",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintUnlock",
+      "signature": "(Ljava/lang/String;I)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintUnlock(Ljava/lang/String;I)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 21,
+      "entry_addr": "0x947e4",
+      "table_offset": "0xfc",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintIsUserLoggedIn",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintIsUserLoggedIn()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 22,
+      "entry_addr": "0x947f0",
+      "table_offset": "0x108",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAOpenFeintIsOnline",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAOpenFeintIsOnline()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 23,
+      "entry_addr": "0x947fc",
+      "table_offset": "0x114",
+      "jmethodID_initial": "0x0",
+      "name": "JAVATime",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVATime()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 24,
+      "entry_addr": "0x94808",
+      "table_offset": "0x120",
+      "jmethodID_initial": "0x0",
+      "name": "JAVATimeHi",
+      "signature": "()I",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVATimeHi()I [PUBLIC]"
+      ]
+     },
+     {
+      "index": 25,
+      "entry_addr": "0x94814",
+      "table_offset": "0x12c",
+      "jmethodID_initial": "0x0",
+      "name": "JAVAVibrate",
+      "signature": "(I)V",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23,
+      "managed_matches": [
+       "Lcom/sandlotgames/snailmail/ADRenderer;->JAVAVibrate(I)V [PUBLIC]"
+      ]
+     },
+     {
+      "index": 26,
+      "entry_addr": "0x94820",
+      "table_offset": "0x138",
+      "jmethodID_initial": "0x0",
+      "name": "",
+      "signature": "",
+      "name_ptr_reloc": 23,
+      "sig_ptr_reloc": 23
+     }
+    ]
+   },
+   "jnienv_call_sites": [
+    {
+     "func": "0x14570",
+     "func_name": "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject",
+     "site": "0x145b8",
+     "offset": "0x7c",
+     "index": 31,
+     "jni": "GetObjectClass",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "JAVA_RegisterFunctions(_JNIEnv*, _jobject*)"
+    },
+    {
+     "func": "0x14570",
+     "func_name": "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject",
+     "site": "0x145fc",
+     "offset": "0x84",
+     "index": 33,
+     "jni": "GetMethodID",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVA_RegisterFunctions(_JNIEnv*, _jobject*)"
+    },
+    {
+     "func": "0x14720",
+     "func_name": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "site": "0x14740",
+     "offset": "0xf8",
+     "index": 62,
+     "jni": "CallVoidMethodV",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "_JNIEnv::CallVoidMethod(_jobject*, _jmethodID*, ...)"
+    },
+    {
+     "func": "0x14998",
+     "func_name": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "site": "0x149b8",
+     "offset": "0xc8",
+     "index": 50,
+     "jni": "CallIntMethodV",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "_JNIEnv::CallIntMethod(_jobject*, _jmethodID*, ...)"
+    },
+    {
+     "func": "0x14d0c",
+     "func_name": "_Z19JAVAOpenFeintSubmitPcii",
+     "site": "0x14d40",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintSubmit(char*, int, int)"
+    },
+    {
+     "func": "0x14d0c",
+     "func_name": "_Z19JAVAOpenFeintSubmitPcii",
+     "site": "0x14d88",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintSubmit(char*, int, int)"
+    },
+    {
+     "func": "0x14da4",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14df0",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14da4",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14e0c",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14da4",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14e34",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14da4",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14eb8",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14da4",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14eec",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14da4",
+     "func_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14f04",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x14f20",
+     "func_name": "_Z19JAVAOpenFeintUnlockPci",
+     "site": "0x14f50",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintUnlock(char*, int)"
+    },
+    {
+     "func": "0x14f20",
+     "func_name": "_Z19JAVAOpenFeintUnlockPci",
+     "site": "0x14f94",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintUnlock(char*, int)"
+    },
+    {
+     "func": "0x14fb0",
+     "func_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x14fe0",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "func": "0x14fb0",
+     "func_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x1502c",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "func": "0x14fb0",
+     "func_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x15044",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "func": "0x150b0",
+     "func_name": "_Z13JAVACFindFilePc",
+     "site": "0x150d8",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFindFile(char*)"
+    },
+    {
+     "func": "0x150b0",
+     "func_name": "_Z13JAVACFindFilePc",
+     "site": "0x1511c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFindFile(char*)"
+    },
+    {
+     "func": "0x15140",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x15178",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x15140",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x151a0",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x15140",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x151b8",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x15140",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x15204",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x15140",
+     "func_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x1521c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "_Z14JAVALoadSamplePc",
+     "site": "0x1526c",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVALoadSample(char*)"
+    },
+    {
+     "func": "0x15244",
+     "func_name": "_Z14JAVALoadSamplePc",
+     "site": "0x152b0",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVALoadSample(char*)"
+    },
+    {
+     "func": "0x152d0",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x1531c",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x152d0",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x15338",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x152d0",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x15360",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x152d0",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x153e4",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x152d0",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x15418",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x152d0",
+     "func_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x15430",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "func": "0x1544c",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x15484",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x1544c",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x154a0",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x1544c",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x154c8",
+     "offset": "0x340",
+     "index": 208,
+     "jni": "SetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x1544c",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x15514",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x1544c",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x1552c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x1544c",
+     "func_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x15544",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "func": "0x15798",
+     "func_name": "_Z15JAVACDeleteFilePc",
+     "site": "0x157c0",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACDeleteFile(char*)"
+    },
+    {
+     "func": "0x15798",
+     "func_name": "_Z15JAVACDeleteFilePc",
+     "site": "0x15800",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACDeleteFile(char*)"
+    },
+    {
+     "func": "0x1581c",
+     "func_name": "_Z17PfmAudioPlayMusicPc",
+     "site": "0x15844",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "PfmAudioPlayMusic(char*)"
+    },
+    {
+     "func": "0x1581c",
+     "func_name": "_Z17PfmAudioPlayMusicPc",
+     "site": "0x15884",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "PfmAudioPlayMusic(char*)"
+    },
+    {
+     "func": "0x1589c",
+     "func_name": "_Z13JAVACFileSizePc",
+     "site": "0x158c4",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFileSize(char*)"
+    },
+    {
+     "func": "0x1589c",
+     "func_name": "_Z13JAVACFileSizePc",
+     "site": "0x15908",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACFileSize(char*)"
+    },
+    {
+     "func": "0x15924",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x15970",
+     "offset": "0x2c0",
+     "index": 176,
+     "jni": "NewByteArray",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15924",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x1598c",
+     "offset": "0x29c",
+     "index": 167,
+     "jni": "NewStringUTF",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15924",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x159f8",
+     "offset": "0x320",
+     "index": 200,
+     "jni": "GetByteArrayRegion",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15924",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x15a1c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15924",
+     "func_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x15a34",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "gJavaEnv",
+     "string_args": {},
+     "func_demangled": "JAVACLoadFile(char*, void*)"
+    },
+    {
+     "func": "0x15b30",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15b5c",
+     "offset": "0x18",
+     "index": 6,
+     "jni": "FindClass",
+     "env_source": "arg0",
+     "string_args": {
+      "r1": "java/io/FileDescriptor"
+     },
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15b30",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15b78",
+     "offset": "0x54",
+     "index": 21,
+     "jni": "NewGlobalRef",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15b30",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15ba0",
+     "offset": "0x178",
+     "index": 94,
+     "jni": "GetFieldID",
+     "env_source": "arg0",
+     "string_args": {
+      "r2": "descriptor",
+      "r3": "I"
+     },
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15b30",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15bd8",
+     "offset": "0x190",
+     "index": 100,
+     "jni": "GetIntField",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15b30",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15d1c",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x15b30",
+     "func_name": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit",
+     "site": "0x15d30",
+     "offset": "0x5c",
+     "index": 23,
+     "jni": "DeleteLocalRef",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_SnailMailActivity_JNIDatInit"
+    },
+    {
+     "func": "0x85c24",
+     "func_name": "Java_com_sandlotgames_snailmail_MyOpenFeintDelegate_JNIOFOInit",
+     "site": "0x85c38",
+     "offset": "0x2a4",
+     "index": 169,
+     "jni": "GetStringUTFChars",
+     "env_source": "arg0",
+     "string_args": {},
+     "func_demangled": "Java_com_sandlotgames_snailmail_MyOpenFeintDelegate_JNIOFOInit"
+    }
+   ],
+   "helper_call_sites": [
+    {
+     "caller": "0x14754",
+     "caller_name": "_Z11JAVAVibratei",
+     "site": "0x1478c",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x12c",
+     "java_method": "JAVAVibrate",
+     "java_signature": "(I)V",
+     "tail_call": true,
+     "caller_demangled": "JAVAVibrate(int)"
+    },
+    {
+     "caller": "0x147a8",
+     "caller_name": "_Z17JAVAOpenFeintOpenv",
+     "site": "0x147d4",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xcc",
+     "java_method": "JAVAOpenFeintOpen",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "JAVAOpenFeintOpen()"
+    },
+    {
+     "caller": "0x147e8",
+     "caller_name": "_Z16JAVAMusicRestartv",
+     "site": "0x14814",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x9c",
+     "java_method": "JAVAMusicRestart",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "JAVAMusicRestart()"
+    },
+    {
+     "caller": "0x14828",
+     "caller_name": "_Z18PfmAudioPauseMusicv",
+     "site": "0x14854",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x90",
+     "java_method": "JAVAPauseMusic",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioPauseMusic()"
+    },
+    {
+     "caller": "0x14868",
+     "caller_name": "_Z20PfmAudioUnPauseMusicv",
+     "site": "0x14894",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x84",
+     "java_method": "JAVAUnPauseMusic",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioUnPauseMusic()"
+    },
+    {
+     "caller": "0x148a8",
+     "caller_name": "_Z17PfmAudioStopMusicv",
+     "site": "0x148d4",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x78",
+     "java_method": "JAVAStopMusic",
+     "java_signature": "()V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioStopMusic()"
+    },
+    {
+     "caller": "0x148e8",
+     "caller_name": "_Z18PfmAudioStopSamplei",
+     "site": "0x14920",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x18",
+     "java_method": "JAVAStopSample",
+     "java_signature": "(I)V",
+     "tail_call": true,
+     "caller_demangled": "PfmAudioStopSample(int)"
+    },
+    {
+     "caller": "0x14934",
+     "caller_name": "_Z22PfmAudioSetMusicVolumef",
+     "site": "0x1497c",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x60",
+     "java_method": "JAVASetMusicVolume",
+     "java_signature": "(F)V",
+     "tail_call": false,
+     "caller_demangled": "PfmAudioSetMusicVolume(float)"
+    },
+    {
+     "caller": "0x149cc",
+     "caller_name": "_Z8JAVATimev",
+     "site": "0x149fc",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x114",
+     "java_method": "JAVATime",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVATime()"
+    },
+    {
+     "caller": "0x149cc",
+     "caller_name": "_Z8JAVATimev",
+     "site": "0x14a10",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x120",
+     "java_method": "JAVATimeHi",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVATime()"
+    },
+    {
+     "caller": "0x14a44",
+     "caller_name": "_Z21JAVAOpenFeintIsOnlinev",
+     "site": "0x14a74",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x108",
+     "java_method": "JAVAOpenFeintIsOnline",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintIsOnline()"
+    },
+    {
+     "caller": "0x14a94",
+     "caller_name": "_Z27JAVAOpenFeintIsUserLoggedInv",
+     "site": "0x14ac4",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xfc",
+     "java_method": "JAVAOpenFeintIsUserLoggedIn",
+     "java_signature": "()I",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintIsUserLoggedIn()"
+    },
+    {
+     "caller": "0x14ae4",
+     "caller_name": "_Z14JAVAPlaySampleif",
+     "site": "0x14b38",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xc",
+     "java_method": "JAVAPlaySample",
+     "java_signature": "(IF)I",
+     "tail_call": false,
+     "caller_demangled": "JAVAPlaySample(int, float)"
+    },
+    {
+     "caller": "0x14d0c",
+     "caller_name": "_Z19JAVAOpenFeintSubmitPcii",
+     "site": "0x14d70",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xe4",
+     "java_method": "JAVAOpenFeintSubmit",
+     "java_signature": "(Ljava/lang/String;II)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintSubmit(char*, int, int)"
+    },
+    {
+     "caller": "0x14da4",
+     "caller_name": "_Z11JAVAC_UnPngPviS_iii",
+     "site": "0x14e64",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xc0",
+     "java_method": "JAVAUnPng",
+     "java_signature": "([B[B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAC_UnPng(void*, int, void*, int, int, int)"
+    },
+    {
+     "caller": "0x14f20",
+     "caller_name": "_Z19JAVAOpenFeintUnlockPci",
+     "site": "0x14f7c",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xf0",
+     "java_method": "JAVAOpenFeintUnlock",
+     "java_signature": "(Ljava/lang/String;I)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintUnlock(char*, int)"
+    },
+    {
+     "caller": "0x14fb0",
+     "caller_name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "site": "0x15008",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xd8",
+     "java_method": "JAVAOpenFeintLastLoggedInUserID",
+     "java_signature": "([B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAOpenFeintLastLoggedInUserID(char*, int)"
+    },
+    {
+     "caller": "0x150b0",
+     "caller_name": "_Z13JAVACFindFilePc",
+     "site": "0x15100",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x48",
+     "java_method": "JAVAFindFile",
+     "java_signature": "(Ljava/lang/String;)I",
+     "tail_call": false,
+     "caller_demangled": "JAVACFindFile(char*)"
+    },
+    {
+     "caller": "0x15140",
+     "caller_name": "_Z13JAVACSaveFilePcPvi",
+     "site": "0x151e8",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x24",
+     "java_method": "JAVASaveFile",
+     "java_signature": "(Ljava/lang/String;[BI)I",
+     "tail_call": false,
+     "caller_demangled": "JAVACSaveFile(char*, void*, int)"
+    },
+    {
+     "caller": "0x15244",
+     "caller_name": "_Z14JAVALoadSamplePc",
+     "site": "0x15294",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x0",
+     "java_method": "JAVALoadSample",
+     "java_signature": "(Ljava/lang/String;)I",
+     "tail_call": false,
+     "caller_demangled": "JAVALoadSample(char*)"
+    },
+    {
+     "caller": "0x152d0",
+     "caller_name": "_Z11JAVAC_UnJpgPviS_iii",
+     "site": "0x15390",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xb4",
+     "java_method": "JAVAUnJpg",
+     "java_signature": "([B[B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAC_UnJpg(void*, int, void*, int, int, int)"
+    },
+    {
+     "caller": "0x1544c",
+     "caller_name": "_Z11JAVAC_UnZipPviS_i",
+     "site": "0x154f0",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0xa8",
+     "java_method": "JAVAUnZip",
+     "java_signature": "([B[B)V",
+     "tail_call": false,
+     "caller_demangled": "JAVAC_UnZip(void*, int, void*, int)"
+    },
+    {
+     "caller": "0x15798",
+     "caller_name": "_Z15JAVACDeleteFilePc",
+     "site": "0x157e8",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x30",
+     "java_method": "JAVADeleteFile",
+     "java_signature": "(Ljava/lang/String;)V",
+     "tail_call": false,
+     "caller_demangled": "JAVACDeleteFile(char*)"
+    },
+    {
+     "caller": "0x1581c",
+     "caller_name": "_Z17PfmAudioPlayMusicPc",
+     "site": "0x1586c",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x6c",
+     "java_method": "JAVAPlayMusic",
+     "java_signature": "(Ljava/lang/String;)V",
+     "tail_call": false,
+     "caller_demangled": "PfmAudioPlayMusic(char*)"
+    },
+    {
+     "caller": "0x1589c",
+     "caller_name": "_Z13JAVACFileSizePc",
+     "site": "0x158ec",
+     "helper": "_ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x54",
+     "java_method": "JAVAFileSize",
+     "java_signature": "(Ljava/lang/String;)I",
+     "tail_call": false,
+     "caller_demangled": "JAVACFileSize(char*)"
+    },
+    {
+     "caller": "0x15924",
+     "caller_name": "_Z13JAVACLoadFilePcPv",
+     "site": "0x159c8",
+     "helper": "_ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz",
+     "env_source": "env/gJavaEnv",
+     "obj_source": "glob/gJavaObj",
+     "table_offset": "0x3c",
+     "java_method": "JAVALoadFile",
+     "java_signature": "(Ljava/lang/String;[BI)V",
+     "tail_call": false,
+     "caller_demangled": "JAVACLoadFile(char*, void*)"
+    }
+   ],
+   "java_callback_wrappers": [
+    {
+     "addr": "0x14570",
+     "name": "_Z22JAVA_RegisterFunctionsP7_JNIEnvP8_jobject",
+     "size": 204,
+     "direct_callers": [
+      "Java_com_sandlotgames_snailmail_ADRenderer_nativeInit",
+      "Java_com_sandlotgames_snailmail_ADRenderer_nativeReInit"
+     ],
+     "jni_calls": [
+      "GetMethodID",
+      "GetObjectClass"
+     ],
+     "java_methods": []
+    },
+    {
+     "addr": "0x14754",
+     "name": "_Z11JAVAVibratei",
+     "size": 76,
+     "direct_callers": [
+      "_Z10PfmVibratev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAVibrate"
+     ]
+    },
+    {
+     "addr": "0x147a8",
+     "name": "_Z17JAVAOpenFeintOpenv",
+     "size": 64,
+     "direct_callers": [
+      "_Z6OFOpenv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAOpenFeintOpen"
+     ]
+    },
+    {
+     "addr": "0x147e8",
+     "name": "_Z16JAVAMusicRestartv",
+     "size": 64,
+     "direct_callers": [
+      "_ZN17cRResourceManager2AIEv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAMusicRestart"
+     ]
+    },
+    {
+     "addr": "0x14828",
+     "name": "_Z18PfmAudioPauseMusicv",
+     "size": 64,
+     "direct_callers": [
+      "_Z16RShellMusicPausev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAPauseMusic"
+     ]
+    },
+    {
+     "addr": "0x14868",
+     "name": "_Z20PfmAudioUnPauseMusicv",
+     "size": 64,
+     "direct_callers": [
+      "_Z18RShellMusicUnPausev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAUnPauseMusic"
+     ]
+    },
+    {
+     "addr": "0x148a8",
+     "name": "_Z17PfmAudioStopMusicv",
+     "size": 64,
+     "direct_callers": [
+      "_Z15RShellMusicStopv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAStopMusic"
+     ]
+    },
+    {
+     "addr": "0x148e8",
+     "name": "_Z18PfmAudioStopSamplei",
+     "size": 76,
+     "direct_callers": [
+      "_Z21RShellSoundStopLoopedi",
+      "_Z21RShellSoundStopSamplei"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAStopSample"
+     ]
+    },
+    {
+     "addr": "0x14934",
+     "name": "_Z22PfmAudioSetMusicVolumef",
+     "size": 100,
+     "direct_callers": [
+      "_Z17RShellMusicVolumef"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVASetMusicVolume"
+     ]
+    },
+    {
+     "addr": "0x149cc",
+     "name": "_Z8JAVATimev",
+     "size": 120,
+     "direct_callers": [
+      "_Z7GetTimev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVATime",
+      "JAVATimeHi"
+     ]
+    },
+    {
+     "addr": "0x14a44",
+     "name": "_Z21JAVAOpenFeintIsOnlinev",
+     "size": 80,
+     "direct_callers": [
+      "_Z10OFIsOnlinev"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAOpenFeintIsOnline"
+     ]
+    },
+    {
+     "addr": "0x14a94",
+     "name": "_Z27JAVAOpenFeintIsUserLoggedInv",
+     "size": 80,
+     "direct_callers": [
+      "_Z16OFIsUserLoggedInv"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAOpenFeintIsUserLoggedIn"
+     ]
+    },
+    {
+     "addr": "0x14ae4",
+     "name": "_Z14JAVAPlaySampleif",
+     "size": 112,
+     "direct_callers": [
+      "_Z18PfmAudioPlaySampleifff"
+     ],
+     "jni_calls": [],
+     "java_methods": [
+      "JAVAPlaySample"
+     ]
+    },
+    {
+     "addr": "0x14d0c",
+     "name": "_Z19JAVAOpenFeintSubmitPcii",
+     "size": 152,
+     "direct_callers": [
+      "_Z11OFAddArcadei",
+      "_Z14OFAddArcadeProi",
+      "_Z14OFAddChallengei",
+      "_Z14OFAddTimeTrialiiii",
+      "_Z9OFOUpdatev"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAOpenFeintSubmit"
+     ]
+    },
+    {
+     "addr": "0x14da4",
+     "name": "_Z11JAVAC_UnPngPviS_iii",
+     "size": 380,
+     "direct_callers": [
+      "_Z14PfmLoadFileDatPviiiitt"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVAUnPng"
+     ]
+    },
+    {
+     "addr": "0x14f20",
+     "name": "_Z19JAVAOpenFeintUnlockPci",
+     "size": 144,
+     "direct_callers": [
+      "_Z16OFAddAchievementi",
+      "_Z9OFOUpdatev"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAOpenFeintUnlock"
+     ]
+    },
+    {
+     "addr": "0x14fb0",
+     "name": "_Z31JAVAOpenFeintLastLoggedInUserIDPci",
+     "size": 256,
+     "direct_callers": [
+      "_Z14OFGetHighScorev",
+      "_Z14OFSetHighScorev"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray"
+     ],
+     "java_methods": [
+      "JAVAOpenFeintLastLoggedInUserID"
+     ]
+    },
+    {
+     "addr": "0x150b0",
+     "name": "_Z13JAVACFindFilePc",
+     "size": 140,
+     "direct_callers": [
+      "_Z11PfmFindFilePc",
+      "_Z11PfmLoadFilePcPvPi"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAFindFile"
+     ]
+    },
+    {
+     "addr": "0x15140",
+     "name": "_Z13JAVACSaveFilePcPvi",
+     "size": 256,
+     "direct_callers": [
+      "_Z11PfmSaveFilePcPvi"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewByteArray",
+      "NewStringUTF",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVASaveFile"
+     ]
+    },
+    {
+     "addr": "0x15244",
+     "name": "_Z14JAVALoadSamplePc",
+     "size": 136,
+     "direct_callers": [
+      "_Z18PfmAudioLoadSamplePc"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVALoadSample"
+     ]
+    },
+    {
+     "addr": "0x152d0",
+     "name": "_Z11JAVAC_UnJpgPviS_iii",
+     "size": 380,
+     "direct_callers": [
+      "_Z14PfmLoadFileDatPviiiitt"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVAUnJpg"
+     ]
+    },
+    {
+     "addr": "0x1544c",
+     "name": "_Z11JAVAC_UnZipPviS_i",
+     "size": 276,
+     "direct_callers": [
+      "_Z14PfmLoadFileDatPviiiitt"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "SetByteArrayRegion"
+     ],
+     "java_methods": [
+      "JAVAUnZip"
+     ]
+    },
+    {
+     "addr": "0x15798",
+     "name": "_Z15JAVACDeleteFilePc",
+     "size": 128,
+     "direct_callers": [
+      "_Z13PfmDeleteFilePc"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVADeleteFile"
+     ]
+    },
+    {
+     "addr": "0x1581c",
+     "name": "_Z17PfmAudioPlayMusicPc",
+     "size": 128,
+     "direct_callers": [
+      "_Z15RShellMusicPlayPciS_"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAPlayMusic"
+     ]
+    },
+    {
+     "addr": "0x1589c",
+     "name": "_Z13JAVACFileSizePc",
+     "size": 136,
+     "direct_callers": [
+      "_Z11PfmLoadFilePcPvPi",
+      "_Z13JAVACLoadFilePcPv"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVAFileSize"
+     ]
+    },
+    {
+     "addr": "0x15924",
+     "name": "_Z13JAVACLoadFilePcPv",
+     "size": 360,
+     "direct_callers": [
+      "_Z11PfmLoadFilePcPvPi"
+     ],
+     "jni_calls": [
+      "DeleteLocalRef",
+      "GetByteArrayRegion",
+      "NewByteArray",
+      "NewStringUTF"
+     ],
+     "java_methods": [
+      "JAVALoadFile"
+     ]
+    }
+   ]
+  }
+ ]
+}

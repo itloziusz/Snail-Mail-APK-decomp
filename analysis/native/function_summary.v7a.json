@@ -1,0 +1,170 @@
+{
+ "binary": "v7a",
+ "binary_sha256": "e43bc913e9ba99abd2fed4d2cee40d4a33a951ecbcf8ca154d099cc8cabaa466",
+ "denominators": {
+  "raw_defined_FUNC_symbols_symtab": 1183,
+  "raw_defined_FUNC_symbols_dynsym": 1158,
+  "unique_function_start_addresses": 1173,
+  "same_address_alias_groups": 9,
+  "zero_size_symbol_addresses": 11,
+  "plt_stubs": 94,
+  "note": "raw FUNC symbol counts include aliases and libgcc/EABI helpers; they are NOT a count of recovered game functions. Use by_category.game."
+ },
+ "by_category": {
+  "game": 1096,
+  "jni": 18,
+  "runtime": 59
+ },
+ "by_component_hint": {
+  "app_glue": 6,
+  "class_c": 22,
+  "engine_class_cR": 615,
+  "gl_wrapper": 5,
+  "java_bridge": 20,
+  "jni": 18,
+  "jni_header_inline": 2,
+  "object_proc": 66,
+  "openfeint": 10,
+  "osd_text": 4,
+  "other": 162,
+  "resource_archive": 15,
+  "rshell_platform": 67,
+  "runtime": 59,
+  "static_init": 11,
+  "type_t": 91
+ },
+ "runtime_rule": {
+  "libgcc_tail_start": "0x7ee30",
+  "runtime_outside_tail": [],
+  "runtime_by_position_only": []
+ },
+ "boundary_confidence": {
+  "heuristic": 11,
+  "symbol": 11,
+  "symbol+exidx": 1151
+ },
+ "functions_with_exidx_entry": 1151,
+ "exidx_entries_total": 1151,
+ "status_counts": {
+  "DECOMPILED": 1173,
+  "DISASSEMBLED": 1173,
+  "DISCOVERED": 1173
+ },
+ "ghidra_merge": {
+  "summary_file": "analysis/native/ghidra_export_summary.v7a.json",
+  "ghidra_functions_processed": 1360,
+  "ghidra_functions_without_elf_symbol": 92,
+  "ghidra_functions_without_elf_symbol_outside_plt": []
+ },
+ "text": {
+  "start": "0x13ad0",
+  "end": "0x80d64",
+  "size": 447124,
+  "bytes_covered_by_function_symbols": 447116,
+  "gap_count": 2,
+  "gap_bytes": 8
+ },
+ "gaps": [
+  {
+   "start": "0x19694",
+   "end": "0x19698",
+   "size": 4,
+   "region_kinds": [
+    "data"
+   ],
+   "all_zero": true,
+   "first_insn": null,
+   "exidx_entry_at_start": false,
+   "interpretation": "alignment padding (zero bytes)"
+  },
+  {
+   "start": "0x4b3fc",
+   "end": "0x4b400",
+   "size": 4,
+   "region_kinds": [
+    "data"
+   ],
+   "all_zero": true,
+   "first_insn": null,
+   "exidx_entry_at_start": false,
+   "interpretation": "alignment padding (zero bytes)"
+  }
+ ],
+ "instructions_decoded": 107385,
+ "invalid_decodes": 0,
+ "calls": {
+  "direct_call_edges_unique": 2483,
+  "tailcall_edges_unique": 285,
+  "indirect_call_sites": 78,
+  "indirect_call_sites_statically_resolved": 0,
+  "indirect_jump_sites": 46,
+  "switch_tables": 46,
+  "branch_targets_not_function_start": []
+ },
+ "alias_groups": [
+  {
+   "addr": "0x7ee30",
+   "symbols": [
+    "__aeabi_idiv",
+    "__divsi3"
+   ]
+  },
+  {
+   "addr": "0x7ef24",
+   "symbols": [
+    "__aeabi_idiv0",
+    "__aeabi_ldiv0",
+    "__div0"
+   ]
+  },
+  {
+   "addr": "0x7fdf0",
+   "symbols": [
+    "__restore_core_regs",
+    "restore_core_regs"
+   ]
+  },
+  {
+   "addr": "0x7fee4",
+   "symbols": [
+    "_Unwind_RaiseException",
+    "___Unwind_RaiseException"
+   ]
+  },
+  {
+   "addr": "0x7ff08",
+   "symbols": [
+    "_Unwind_Resume",
+    "___Unwind_Resume"
+   ]
+  },
+  {
+   "addr": "0x7ff2c",
+   "symbols": [
+    "_Unwind_Resume_or_Rethrow",
+    "___Unwind_Resume_or_Rethrow"
+   ]
+  },
+  {
+   "addr": "0x7ff50",
+   "symbols": [
+    "_Unwind_ForcedUnwind",
+    "___Unwind_ForcedUnwind"
+   ]
+  },
+  {
+   "addr": "0x7ff74",
+   "symbols": [
+    "_Unwind_Backtrace",
+    "___Unwind_Backtrace"
+   ]
+  },
+  {
+   "addr": "0x80ca0",
+   "symbols": [
+    "__aeabi_uidiv",
+    "__udivsi3"
+   ]
+  }
+ ]
+}
