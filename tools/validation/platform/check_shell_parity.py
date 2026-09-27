@@ -74,6 +74,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--android-jar", default="/usr/lib/android-sdk/platforms/android-23/android.jar")
     args = ap.parse_args()
+    missing = [p for p in (SMALI, V7A, args.android_jar) if not os.path.exists(p)]
+    if missing:
+        # The original-derived inputs are gitignored (tools/inventory/setup_workspace.sh).
+        print("SKIP: missing inputs: " + ", ".join(missing))
+        return 77
     ok = True
     with tempfile.TemporaryDirectory() as td:
         srcs = glob.glob(os.path.join(SHELL, "*.java"))

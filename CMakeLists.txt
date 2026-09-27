@@ -12,11 +12,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 option(SM_SANITIZE "Build with ASan+UBSan (host builds)" OFF)
 option(SM_BUILD_TESTS "Build unit tests" ON)
 
-# Keep FP semantics strict until reference behaviour is characterised
-# (docs/ABI_PORTING.md). -ffp-contract=off prevents fused multiply-add
-# contraction that ARMv7 VFPv2 (the original target) could not perform.
+# Semantics-preserving flags, identical to android/app/src/main/cpp so host,
+# qemu-AArch64 and device builds agree (docs/ABI_PORTING.md):
+#  -ffp-contract=off  VFPv2 VMLA/VMLS round twice; AArch64 FMADD would not
+#  -funsigned-char    plain char was unsigned on ARM EABI (x86 hosts differ)
+#  -fwrapv            signed overflow wrapped in the original machine code
 add_compile_options(-Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align
-                    -Wformat=2 -ffp-contract=off -fno-strict-aliasing)
+                    -Wformat=2 -ffp-contract=off -funsigned-char -fwrapv
+                    -fno-strict-aliasing)
 if(SM_SANITIZE)
   add_compile_options(-fsanitize=address,undefined -fno-omit-frame-pointer
                       -fno-sanitize-recover=undefined)
@@ -35,6 +38,15 @@ foreach(dir ${SM_MODULE_DIRS})
 endforeach()
 
 if(SM_BUILD_TESTS)
+  find_package(Python3 COMPONENTS Interpreter)
+  if(Python3_Interpreter_FOUND)
+    # Packaging/contract checks (host tools; independent of the target ISA).
+    add_test(NAME platform.elf_alignment_selftest
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/platform/check_elf_alignment.py --self-test)
+    add_test(NAME platform.shell_parity
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/platform/check_shell_parity.py)
+    set_tests_properties(platform.shell_parity PROPERTIES SKIP_RETURN_CODE 77)
+  endif()
   file(GLOB SM_TEST_DIRS LIST_DIRECTORIES true ${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/*)
   foreach(dir ${SM_TEST_DIRS})
     if(EXISTS ${dir}/CMakeLists.txt)
