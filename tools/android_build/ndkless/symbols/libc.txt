@@ -20,6 +20,7 @@ gettimeofday
 lrand48
 lseek
 malloc
+memchr
 memcmp
 memcpy
 memmove

@@ -130,7 +130,7 @@ def main():
     common = [f"--target={target}", "-fPIC", "-O2", "-g", "-nostdinc",
               "-isystem", f"{res}/include", "-isystem", HERE / "include",
               "-isystem", jdk, "-isystem", jdk / "linux",
-              "-fno-stack-protector", "-mno-outline-atomics", "-ffp-contract=off",
+              "-fno-stack-protector", "-mno-outline-atomics", "-ffp-contract=off", "-funsigned-char", "-fwrapv",
               "-fno-strict-aliasing", "-fvisibility=hidden",
               "-Wall", "-Wextra", "-Werror=implicit-function-declaration"]
     common += [f"-I{i}" for i in a.incs] + [f"-D{d}" for d in a.defs]

@@ -1,0 +1,7 @@
+#pragma once
+#include <stdio.h>
+namespace std {
+using ::FILE;
+using ::snprintf;
+using ::vsnprintf;
+}  // namespace std
