@@ -20,7 +20,9 @@ on a device yet.
 The Java accelerometer listener now filters tilt by elapsed sensor time: a
 70 ms time constant reduces small jitter, while a 28 ms time constant responds
 to larger deliberate turns. It resets after a 500 ms sensor gap. This compiled
-in the APK but has not yet been assessed for steering feel on a phone.
+in the APK. A host harness using the actual Java listener and Android sensor
+stubs measured the same 50 ms turn response at 60 and 200 Hz samples and
+reduced alternating small input jitter. Steering feel still needs a phone test.
 
 This verifies a build artifact, not a device run. The GLES2 renderer, 60 Hz
 pacer, adaptive FOV, HUD alignment, and Display page in this revision still

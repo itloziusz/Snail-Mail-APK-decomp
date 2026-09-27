@@ -90,3 +90,18 @@ hands-on validation. See [porting status](PORTING_STATUS.md).
 The original game APK, extracted assets, and local signing key are not part of
 the source repository. Only use and distribute game assets according to the
 rights you hold.
+
+## Builder validation
+
+The Python command completed three builds on 2026-09-27: one from a clean copy
+without generated code or object cache, one repeated default build, and one
+with version code 6 and version name `0.1.2`. Each APK reported **Snail Mail**,
+the expected version, the original launcher icon, `arm64-v8a` only, a valid
+signature, and passing 16 KB alignment checks. A clean checkout generates a
+different local signing key; subsequent builds in one checkout reuse its key.
+
+Unsupported input, missing input, an output path equal to the original, and
+invalid package or version values were rejected. A failed input validation
+left an existing output file untouched. The desktop file dialogs were not run
+in the headless build environment; the command-line route and the compiled
+Android listener were tested there.
