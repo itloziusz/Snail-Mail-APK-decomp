@@ -77,8 +77,9 @@ from your own original APK.
 ## Recompiler starter for developers
 
 The repository also has a [documented experimental recompiler](docs/RECOMPILER_STARTER.md)
-for a small subset of raw 32-bit ARM instructions. It emits C that can be
-compiled into a 64-bit host program and includes runnable tests. It is a
+for a small subset of raw 32-bit ARM instructions. Its helpers extract named
+ELF32 ARM functions, report instruction coverage, compile generated C, and
+compare results with known test vectors. It is a
 starting point for exploring another game's port, not an automatic converter
 for arbitrary games or an APK builder. The Snail Mail build uses the more
 complete game-specific translator in `tools/aot/arm2c.py`.

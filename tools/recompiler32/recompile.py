@@ -101,6 +101,7 @@ def translate(data: bytes, base: int, max_steps: int) -> str:
         "#include <stdio.h>",
         "#include <stdlib.h>",
         "#include <errno.h>",
+        "typedef char require_64_bit_host[(sizeof(void *) == 8) ? 1 : -1];",
         "static uint32_t run(uint32_t a, uint32_t b, uint32_t c, uint32_t d, int *error) {",
         "  uint32_t r[16] = {a, b, c, d};",
         f"  uint32_t pc = 0x{base:08x}u;",
