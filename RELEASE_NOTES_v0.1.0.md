@@ -1,39 +1,21 @@
-# Snail Mail ARM64 preview v0.1.0
+# Historical preview notes — v0.1.0
 
-This is the first installable preview of the native ARM64 port. The game code
-is translated ahead of time and compiled into `lib/arm64-v8a/libsnailmail.so`.
-The APK uses the GLES1-on-GLES2 renderer, 60 Hz presentation pacing, and the
-new adaptive display settings. The corrected download installs as
-`com.sandlotgames.snailmail.port.preview`, alongside the original game and
-earlier `com.sandlotgames.snailmail.port` test builds. It avoids the signing
-conflict that can produce the generic “App not installed” error when an older
-test build used a different debug key. The existing test build and its save
-files are left alone.
+The first downloadable ARM64 preview was published and later withdrawn. No
+binary release is currently published in this repository. This file preserves
+what the v0.1.0 preview contained; it is not a current download page.
 
-The installed app is named “Snail Mail” and uses the original launcher icon in ldpi, mdpi, and hdpi. The APK contains the assets from the owner's original 1.00 package. The build stages the icon from that package; no proprietary art is checked into the source repository. Keep the
-original APK out of the repository. Build locally with:
+The APK contained native AArch64 game code translated ahead of time from the
+original Android version, a GLES1-on-GLES2 renderer, 60 Hz presentation pacing,
+adaptive Display settings, immersive full screen, and the original launcher
+icon. It used package `com.sandlotgames.snailmail.port.preview` to coexist with
+the original game. Its local debug signing key was not committed.
 
-```sh
-# Place the original package at original/com.sandlotgames.snailmail-1.00.apk
-tools/inventory/setup_workspace.sh
-JAVA_HOME=/path/to/jdk SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=4 \
-  SM_VERSION_NAME=0.1.0 \
-  SM_APP_ID=com.sandlotgames.snailmail.port.preview \
-  tools/android_build/build_dev_apk.sh
-```
+The current source adds time-based smoothing to accelerometer tilt steering and
+provides a Python builder with a file picker. To make your own APK from the
+original Android 1.00 package, follow [the build tutorial](docs/BUILD_FROM_ORIGINAL.md).
+It verifies the exact known original APK and builds version `0.1.1` with
+versionCode `5` and installed name **Snail Mail**.
 
-The output is `work/android_build/out/snailmail-port-arm64-gles2.apk` (SHA-256 `fd9f5f5b45f44d9ca67e7794f6de5977521f0361b27097df5b3c9680312fd9fc`). Its
-application version is `0.1.0` and it uses the same local debug signing
-key. The owner reported gameplay running on a Galaxy S24+ with an earlier
-version; the latest display settings and pacing changes have not been verified
-on a physical device. Treat this as an experimental build and keep a copy of
-any save files before testing updates.
-
-Version code 4 requests immersive mode for both the status bar and navigation
-bar. The Activity reapplies it when resumed or refocused. Android can still
-show the bars briefly when the user swipes from the screen edge.
-
-The source, build procedure, known device risks, and evidence levels are in
-`docs/PORTING_STATUS.md` and `docs/BUILDING.md`. A production release still
-needs a stable release signing key, a build with the Android NDK, and device
-validation of rendering, input, audio, lifecycle, and save files.
+The earlier Galaxy S24+ gameplay report concerns an older build. The current
+renderer, display, lifecycle, and steering changes still need hands-on device
+validation. See [porting status](docs/PORTING_STATUS.md) for evidence and limits.
