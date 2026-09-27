@@ -8,21 +8,24 @@ implementation of the game's GLES 1 calls.
 
 ## Build from your original APK
 
-The port has a Python build tool that accepts the original Snail Mail Android
-1.00 APK directly. It verifies the known input, extracts it temporarily,
-compiles the native AArch64 game code, and produces a signed APK. The original
-APK, game assets, and signing key are excluded from this repository.
+The port has a Python builder with a file picker. Run it on a Linux desktop,
+choose your original Snail Mail Android 1.00 APK, then choose where to save the
+new APK:
 
 ```sh
-.venv/bin/python tools/android_build/build_from_original.py \
-  /path/to/com.sandlotgames.snailmail-1.00.apk \
-  --output SnailMail-ARM64-v0.1.1.apk
+.venv/bin/python tools/android_build/build_from_original.py
 ```
 
-Follow the [step-by-step build tutorial](docs/BUILD_FROM_ORIGINAL.md) for
-prerequisites, installation, update signing, and verification. The app appears
-as **Snail Mail** with the original launcher icon. It installs under
+The same tool accepts an APK path for terminal builds. It verifies the known
+input, extracts it temporarily, compiles the native AArch64 game code, and
+checks the signed APK. Follow the [step-by-step build tutorial](docs/BUILD_FROM_ORIGINAL.md)
+for prerequisites, both ways to build, installation, and update signing. The
+app appears as **Snail Mail** with the original launcher icon. It installs under
 `com.sandlotgames.snailmail.port.preview` alongside the original game.
+
+The original APK, game assets, and signing key are excluded from this
+repository. The earlier downloadable preview release was withdrawn; build a
+local APK from your own original copy.
 
 The port includes the GLES 2 renderer, 60 Hz presentation pacing, adaptive
 Display settings, immersive full screen, and time-based smoothing for the
