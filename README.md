@@ -36,7 +36,7 @@ tools/inventory/setup_workspace.sh          # needs original/com.sandlotgames.sn
 cmake -S . -B build-host -DSM_SANITIZE=ON && cmake --build build-host && ctest --test-dir build-host
 cmake -S . -B build-a64 -DCMAKE_TOOLCHAIN_FILE=cmake/aarch64-linux-gnu.toolchain.cmake \
   && cmake --build build-a64 && ctest --test-dir build-a64
-SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=2 \
+SM_APK_VARIANT=aot-gles2 SM_VERSION_CODE=3 \
   SM_APP_ID=com.sandlotgames.snailmail.port.preview tools/android_build/build_dev_apk.sh
                                              # arm64-only preview APK
 ```
