@@ -368,7 +368,7 @@ def analyse(b: Binary, managed_natives, managed_methods):
                 else:
                     st[r] = v
 
-            cond_ok = ins.cc in (carm.ARM_CC_AL, carm.ARM_CC_INVALID)
+            cond_ok = always
             is_call = ins.id in (carm.ARM_INS_BL, carm.ARM_INS_BLX)
             is_jump = ins.id in (carm.ARM_INS_B, carm.ARM_INS_BX)
             # --- branches / calls
@@ -454,8 +454,6 @@ def analyse(b: Binary, managed_natives, managed_methods):
                         nv = ("glob", g)
                     else:
                         nv = ("mem", ga)
-                    if rd == "pc":
-                        pass
                     setr(rd, nv)
                 elif kind == "env" and disp == 0:
                     setr(rd, ("envfn", bv[1] if len(bv) > 1 else "arg0"))

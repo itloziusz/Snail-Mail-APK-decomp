@@ -39,6 +39,8 @@
     "meaning": "27 x {jmethodID id; const char* name; const char* sig}; entries 0-25 filled by GetMethodID, entry 26 is an empty sentinel"
    }
   },
+  "note": "Per-entry 'confidence' covers descriptor/symbol/address/behaviour claims; 'thread_confidence' is separate because thread identity rests on Android framework contracts.",
+  "verify": "tools/inventory/jni_native_scan.py --bin v7a=... --bin v5=... --managed analysis/dex/managed_shell_scan.json --check-map docs/JNI_MAP.json",
   "evidence": [
    "EV-JNI-0006",
    "EV-JNI-0007",
@@ -66,6 +68,7 @@
   ],
   "returns": "void",
   "thread": "n/a (never invoked)",
+  "thread_confidence": "established",
   "native_side_behavior": "No native implementation exists in either binary (no Java_ export, no RegisterNatives). Invoking it would throw UnsatisfiedLinkError; the DEX never invokes it.",
   "jobject_handling": "n/a",
   "lifetime_notes": "n/a",
@@ -103,6 +106,7 @@
   ],
   "returns": "jint: always 0",
   "thread": "Any thread that calls SnailMailActivity.wprintf: UI thread (lifecycle, input), GL thread (onSurfaceCreated/onDrawFrame/JAVA* methods), main thread OpenFeint callbacks.",
+  "thread_confidence": "likely",
   "native_side_behavior": "mov r0,#0; bx lr. Java wprintf prints only when JNIDebug()==1, so managed logging is permanently disabled. It is the first native call of a normal launch (wprintf in onCreate).",
   "jobject_handling": "jclass unused",
   "lifetime_notes": "none",
@@ -143,6 +147,7 @@
   ],
   "returns": "void",
   "thread": "main/UI thread (Activity lifecycle / View input callback) - SnailMailActivity.onCreate, after setContentView and SoundPool creation",
+  "thread_confidence": "likely",
   "native_side_behavior": "FindClass(\"java/io/FileDescriptor\") -> NewGlobalRef(cls) -> GetFieldID(cls,\"descriptor\",\"I\") -> GetIntField(fd) -> dup() -> gJavaAssetFid=dupfd, gJavaAssetStart=start, gJavaAssetLength=length; gDatFP=fdopen(dupfd,\"rb\"); fseek(start); fread 244-byte header; gDat=RShellMemoryMalloc(hdr.u32[2]); fseek(start); fread directory; cRHash::Init(&gDatHash,count,DatHashGetString); for each 24-byte record rewrite u32 at +4 (name offset) into an absolute pointer and cRHash::Add(name,i). Finally DeleteLocalRef(cls) and DeleteLocalRef(globalRef) (sic).",
   "jobject_handling": "fd jobject used only during the call; not cached. The dup()ed int fd and FILE* are cached (gJavaAssetFid/gDatFP).",
   "lifetime_notes": "Archive stays open for the process lifetime (JNIDatUnInit does not close it). A second onCreate in the same process leaks the previous FILE*/fd/directory.",
@@ -187,6 +192,7 @@
   ],
   "returns": "void",
   "thread": "main/UI thread (Activity lifecycle / View input callback) - onStop",
+  "thread_confidence": "likely",
   "native_side_behavior": "Only two wprintf calls (native wprintf is a no-op). Does not close gDatFP or free gDat.",
   "jobject_handling": "jclass unused",
   "lifetime_notes": "none",
@@ -224,6 +230,7 @@
   ],
   "returns": "void",
   "thread": "GL thread: only caller is ADRenderer.JAVAOpenFeintOpen(), which native code invokes from the GL thread (native->Java->native re-entry).",
+  "thread_confidence": "likely",
   "native_side_behavior": "b OFOSave: if gOFOValid -> gRegisterSaveFile(\"of.cfg\", gOFOData, 11520). Reaches JAVACSaveFile, i.e. uses the cached gJavaEnv/gJavaObj rather than its own env argument.",
   "jobject_handling": "jclass unused; uses cached gJavaObj",
   "lifetime_notes": "none",
@@ -262,6 +269,7 @@
   ],
   "returns": "void",
   "thread": "main/UI thread (Activity lifecycle / View input callback) - onPause, after mGLView.onPause() and wl.release()",
+  "thread_confidence": "likely",
   "native_side_behavior": "cRResourceManager::Invalidate(&gResourceManager): gLoadingBar byte +0x35 = 1; every resource record (stride 140) gets +8 = 1. No GL and no JNI calls.",
   "jobject_handling": "jclass unused",
   "lifetime_notes": "none",
@@ -306,6 +314,7 @@
   ],
   "returns": "void",
   "thread": "main/UI thread (Activity lifecycle / View input callback) - ADGLSurfaceView.onTouchEvent",
+  "thread_confidence": "likely",
   "native_side_behavior": "Returns unless gGameValid. X=x*640/gG0DeviceScreenWidth, Y=y*480/gG0DeviceScreenHeight. type 0: Game->mouse(+0x228).ClickiPhone(true,X,Y); ClickOn(). type 1: if *(int*)(Game+0x718fc)==2 ClickiPhone(true,X,Y); then ClickOn(). any other type: ClickOff() (no position).",
   "jobject_handling": "jclass unused",
   "lifetime_notes": "none",
@@ -345,6 +354,7 @@
   ],
   "returns": "void",
   "thread": "n/a (never invoked from the DEX)",
+  "thread_confidence": "established",
   "native_side_behavior": "Toggles an internal paused counter and accumulates paused wall time using gettimeofday milliseconds (_getTime).",
   "jobject_handling": "jclass unused",
   "lifetime_notes": "none",
@@ -386,6 +396,7 @@
   ],
   "returns": "void",
   "thread": "main/UI thread (Activity lifecycle / View input callback) - ADGLSurfaceView.onKeyDown (view must have focus)",
+  "thread_confidence": "likely",
   "native_side_behavior": "A-Z(29-54): cKeyPad::ConvertCode(Game+0xbf0,(char)(keycode+68)) i.e. 'a'..'z'; 0-9(7-16): ConvertCode((char)(keycode+41)) i.e. '0'..'9'; SPACE(62)->57, ENTER(66)->28, DEL(67)->14 (values equal DirectInput DIK_SPACE/DIK_RETURN/DIK_BACK - hypothesis on intent). KeySet(code) only when *(int*)(Game+0xbf0)==2, otherwise dropped.",
   "jobject_handling": "thiz unused",
   "lifetime_notes": "none",
@@ -429,6 +440,7 @@
   ],
   "returns": "void",
   "thread": "main thread - SensorManager.registerListener(listener, sensor, 0) without Handler delivers on the main Looper (framework contract)",
+  "thread_confidence": "likely",
   "native_side_behavior": "If Game != NULL: cAccelerometer::Input(Game+0xbd4, x, y, z).",
   "jobject_handling": "thiz unused",
   "lifetime_notes": "Listener is never unregistered (stop() never called): keeps firing while paused/stopped and a new listener is added per onCreate.",
@@ -468,6 +480,7 @@
   ],
   "returns": "void",
   "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - onSurfaceCreated second+ time when AudioInitFlag is set",
+  "thread_confidence": "likely",
   "native_side_behavior": "bx lr (no-op).",
   "jobject_handling": "unused",
   "lifetime_notes": "none",
@@ -503,6 +516,7 @@
   ],
   "returns": "void",
   "thread": "n/a (never invoked from the DEX)",
+  "thread_confidence": "established",
   "native_side_behavior": "appDeinit() and importGLDeinit(), both bx lr (no-op).",
   "jobject_handling": "unused",
   "lifetime_notes": "none",
@@ -539,6 +553,7 @@
   ],
   "returns": "void",
   "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - first onSurfaceCreated in the process (static SurfaceCreatedFirstTime)",
+  "thread_confidence": "likely",
   "native_side_behavior": "JAVA_RegisterFunctions(env, thiz): gJavaEnv=env, gJavaObj=thiz, gJavaClass=GetObjectClass(thiz), 26 x GetMethodID into gJAVAFunction; then cRResourceManager::Init(&gResourceManager); G0StartBlackCount=2.",
   "jobject_handling": "CACHES env (raw JNIEnv*) and thiz/cls as RAW LOCAL REFERENCES in globals (no NewGlobalRef).",
   "lifetime_notes": "gJavaObj/gJavaClass become invalid when nativeInit returns (JNI local-ref rules); they are reused by every later JAVA* callback. Worked on pre-ICS Dalvik (direct pointers); invalid under indirect-reference VMs.",
@@ -582,6 +597,7 @@
   ],
   "returns": "void",
   "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - every later onSurfaceCreated (new EGL context after pause, or new Activity in same process)",
+  "thread_confidence": "likely",
   "native_side_behavior": "JAVA_RegisterFunctions(env, thiz) (re-caches env/obj/method IDs); InitGL(); cRResourceManager::ReInit(&gResourceManager) (reloads textures through JAVAC_UnPng/UnJpg/UnZip, JAVACFileSize/FindFile/LoadFile); *(int*)(Game+0x718b4)=4; G0StartBlackCount=2.",
   "jobject_handling": "Same caching as nativeInit.",
   "lifetime_notes": "Same as nativeInit.",
@@ -623,6 +639,7 @@
   ],
   "returns": "void",
   "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - every onDrawFrame (RENDERMODE_CONTINUOUSLY default)",
+  "thread_confidence": "likely",
   "native_side_behavior": "if (AppInit()) appRender(flag != 0). Main game tick; reaches all JAVA* callbacks and GL imports.",
   "jobject_handling": "thiz unused (callbacks use cached gJavaObj)",
   "lifetime_notes": "none",
@@ -664,6 +681,7 @@
   ],
   "returns": "void",
   "thread": "GL thread (GLSurfaceView.GLThread; Renderer callback per documented GLSurfaceView contract) - onSurfaceChanged",
+  "thread_confidence": "likely",
   "native_side_behavior": "gG0DeviceScreenWidth = gG0ScreenWidth = (float)w; gG0DeviceScreenHeight = gG0ScreenHeight = (float)h.",
   "jobject_handling": "thiz unused",
   "lifetime_notes": "none",
@@ -702,6 +720,7 @@
   ],
   "returns": "void",
   "thread": "main thread - OpenFeint Client posts request completions to a Handler created on the main thread (Client ctor runs inside OpenFeint.initialize from Application.onCreate)",
+  "thread_confidence": "likely",
   "native_side_behavior": "if (ptr) *(uint8_t*)ptr = 2; gOFOSaveFlag = 1.",
   "jobject_handling": "thiz unused",
   "lifetime_notes": "Pointer originates from GL-thread code and is dereferenced on the main thread.",
@@ -749,6 +768,7 @@
   ],
   "returns": "void",
   "thread": "main thread (see JNIOFOSubmitCB)",
+  "thread_confidence": "likely",
   "native_side_behavior": "if (ptr) *(uint8_t*)ptr = 2; gOFOSaveFlag = 1.",
   "jobject_handling": "thiz unused",
   "lifetime_notes": "No callback at all when Achievement.load() fails (ADRenderer$2 lacks onFailure) - the state byte stays 1.",
@@ -792,6 +812,7 @@
   ],
   "returns": "void",
   "thread": "main thread - OpenFeintDelegate.userLoggedIn is called from OpenFeint request completions (Handler on main thread)",
+  "thread_confidence": "likely",
   "native_side_behavior": "GetStringUTFChars(userID, NULL) (never released); OFONewUser(chars): strcpy(gOFUser, chars); strcpy(gConfig+240, gOFUser); gOFOLoadFlag = 1.",
   "jobject_handling": "jstring chars leaked (no ReleaseStringUTFChars)",
   "lifetime_notes": "Dormant today (login can never succeed against defunct servers).",
@@ -841,6 +862,7 @@
   "native_side_behavior": "NewStringUTF(name); CallIntMethod; DeleteLocalRef(str); return Java result.",
   "java_side_behavior": "Opens assets/<name>.ogg with AssetManager.openFd and SoundPool.load(fd, off, len, 1); returns sample id or -1. AssetFileDescriptor never closed.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -893,6 +915,7 @@
   "native_side_behavior": "CallIntMethod(id, (double)vol) - float promoted to double through C varargs, as CallIntMethodV expects.",
   "java_side_behavior": "SoundPool.play(id, vol, vol, priority 1, loop 0, rate 1.0f) -> stream id.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -946,6 +969,7 @@
   "native_side_behavior": "CallVoidMethod(stream).",
   "java_side_behavior": "SoundPool.stop(stream).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -997,6 +1021,7 @@
   "native_side_behavior": "arr=NewByteArray(len); SetByteArrayRegion(arr,0,len,data); str=NewStringUTF(name); r=CallIntMethod(str,arr,len); DeleteLocalRef(str); DeleteLocalRef(arr); return r!=0.",
   "java_side_behavior": "Context.openFileOutput(name, MODE_PRIVATE).write(data,0,len); returns 1/0.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1049,6 +1074,7 @@
   "native_side_behavior": "NewStringUTF; CallVoidMethod; DeleteLocalRef.",
   "java_side_behavior": "Context.deleteFile(name).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1100,6 +1126,7 @@
   "native_side_behavior": "size=JAVACFileSize(name); if 0 return 0; arr=NewByteArray(size); str=NewStringUTF(name); CallVoidMethod(str,arr,size); GetByteArrayRegion(arr,0,size,dst); DeleteLocalRef x2; return size.",
   "java_side_behavior": "openFileInput(name).read(Data,0,length) - single read() call, short reads not retried.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1152,6 +1179,7 @@
   "native_side_behavior": "NewStringUTF; CallIntMethod; DeleteLocalRef; return r!=0.",
   "java_side_behavior": "1 if openFileInput(name) succeeds, else 0.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1204,6 +1232,7 @@
   "native_side_behavior": "NewStringUTF; CallIntMethod; DeleteLocalRef.",
   "java_side_behavior": "FileInputStream.available() of openFileInput(name), 0 on error.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1256,6 +1285,7 @@
   "native_side_behavior": "CallVoidMethod((double)v).",
   "java_side_behavior": "MusicVolume=v; MusicPlayer.setVolume(v,v) if playing.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1307,6 +1337,7 @@
   "native_side_behavior": "NewStringUTF; CallVoidMethod; DeleteLocalRef.",
   "java_side_behavior": "new MediaPlayer on assets/<name>.ogg (openFd), prepare(), setLooping(true), setVolume(MusicVolume), start(). Previous MediaPlayer is not released here.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1359,6 +1390,7 @@
   "native_side_behavior": "CallVoidMethod.",
   "java_side_behavior": "MusicPlayer.stop(); release(); MusicPlayer=null.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1410,6 +1442,7 @@
   "native_side_behavior": "CallVoidMethod.",
   "java_side_behavior": "MusicPlayer.start() if non-null.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1461,6 +1494,7 @@
   "native_side_behavior": "CallVoidMethod.",
   "java_side_behavior": "MusicPlayer.pause() if non-null.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1512,6 +1546,7 @@
   "native_side_behavior": "CallVoidMethod.",
   "java_side_behavior": "MusicPlayer.start() if non-null.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1563,6 +1598,7 @@
   "native_side_behavior": "a=NewByteArray(dstLen); b=NewByteArray(srcLen); SetByteArrayRegion(b,0,srcLen,src); CallVoidMethod(a,b); GetByteArrayRegion(a,0,dstLen,dst); DeleteLocalRef x2.",
   "java_side_behavior": "ZipInputStream over src; inflates ONLY the first entry into dst (bytewise copy); all exceptions swallowed.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1617,6 +1653,7 @@
   "native_side_behavior": "a=NewByteArray(dstLen); b=NewByteArray(srcLen); SetByteArrayRegion(b,..src); CallVoidMethod(a,b); rowBytes=dstLen/h; for i<h: GetByteArrayRegion(a, i*rowBytes, rowBytes, dst+(h-1-i)*rowBytes) (vertical flip); DeleteLocalRef x2. w is unused.",
   "java_side_behavior": "BitmapFactory.decodeByteArray(ARGB_8888, inDither) then copyPixelsToBuffer(ByteBuffer.wrap(dst)): RGBA byte order, premultiplied alpha (platform behaviour, likely).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1674,6 +1711,7 @@
   "native_side_behavior": "Same as JAVAC_UnJpg (bottom-up row copy).",
   "java_side_behavior": "Same as JAVAUnJpg; for PNG with alpha the premultiplication matters.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1731,6 +1769,7 @@
   "native_side_behavior": "CallVoidMethod.",
   "java_side_behavior": "Calls native JNIOFOSave() (re-entrant) then Dashboard.open() (starts an Activity from the GL thread).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1784,6 +1823,7 @@
   "native_side_behavior": "arr=NewByteArray(len) (callers pass 64); CallVoidMethod(arr); GetByteArrayRegion(arr,0,len,out); DeleteLocalRef; if out[0] strcpy(gConfig+240,out) else strcpy(out,gConfig+240).",
   "java_side_behavior": "Writes getCurrentUser().userID() bytes + NUL into the array with no bounds check (AIOOBE if >= len).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1841,6 +1881,7 @@
   "native_side_behavior": "NewStringUTF; CallVoidMethod(str, score, statePtr); DeleteLocalRef.",
   "java_side_behavior": "new Score(score).submitTo(new Leaderboard(id), cb) - cb forwards statePtr (success) or 0 (failure) to JNIOFOSubmitCB on the main thread.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1896,6 +1937,7 @@
   "native_side_behavior": "NewStringUTF; CallVoidMethod(str, statePtr); DeleteLocalRef.",
   "java_side_behavior": "Achievement.load(cb2); cb2.onSuccess: unlock(cb3) or JNIOFOUnlockCB(statePtr) if already unlocked; cb3 -> JNIOFOUnlockCB(statePtr|0). No callback on load failure.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -1950,6 +1992,7 @@
   "native_side_behavior": "CallIntMethod; return r!=0.",
   "java_side_behavior": "OpenFeint.isUserLoggedIn() ? 1 : 0.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -2001,6 +2044,7 @@
   "native_side_behavior": "CallIntMethod; return r!=0.",
   "java_side_behavior": "OpenFeint.isNetworkConnected() ? 1 : 0 (ConnectivityManager, not server reachability).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -2052,6 +2096,7 @@
   "native_side_behavior": "lo=CallIntMethod(JAVATime); hi=CallIntMethod(JAVATimeHi); return (((uint64_t)hi<<32)|(uint32_t)lo)/1000 (__aeabi_uldivmod) -> microseconds from System.nanoTime().",
   "java_side_behavior": "JAVATime: JTime=System.nanoTime(); return (int)JTime.",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -2106,6 +2151,7 @@
   "native_side_behavior": "Second call inside JAVATime(), must follow JAVATime on the same thread.",
   "java_side_behavior": "return (int)(JTime >> 32) (reads the static written by JAVATime).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",
@@ -2160,6 +2206,7 @@
   "native_side_behavior": "CallVoidMethod(ms).",
   "java_side_behavior": "Vibrator.vibrate((long)ms).",
   "thread": "GL thread: every native caller chain is rooted in nativeRender/nativeReInit (or JNIOFOSave, itself GL-thread) or in address-taken engine methods driven by the game loop; no UI/main-thread entry point can reach it (their call closures contain no indirect calls).",
+  "thread_confidence": "likely",
   "lifetime_notes": "Local refs created per call (NewStringUTF/NewByteArray) are deleted before return.",
   "arm64_hazards": [
    "Uses cached gJavaEnv (GL-thread JNIEnv*) and stale local ref gJavaObj; port must use a global ref / valid env.",

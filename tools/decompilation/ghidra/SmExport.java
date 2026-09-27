@@ -153,6 +153,35 @@ public class SmExport extends GhidraScript {
             }
         }
 
+        // --- drop operand references into the linker-metadata region.
+        // The image is based at 0 (addresses == ELF vaddrs), so small integer
+        // operands (GL enums, time constants, sizes) coincide with addresses in
+        // .hash/.dynsym/.dynstr/.rel.*, and Ghidra's constant-reference analysis
+        // turns them into references the decompiler then prints as strings.
+        // Game code never addresses that region, so these references are removed
+        // (in memory only) before decompiling.
+        long execStart = Long.MAX_VALUE;
+        for (ghidra.program.model.mem.MemoryBlock blk : currentProgram.getMemory().getBlocks()) {
+            if (blk.isExecute() && blk.isInitialized() && !"EXTERNAL".equals(blk.getName())) {
+                execStart = Math.min(execStart, blk.getStart().getOffset());
+            }
+        }
+        ghidra.program.model.symbol.ReferenceManager rm = currentProgram.getReferenceManager();
+        List<Reference> toDelete = new ArrayList<>();
+        ghidra.program.model.address.AddressIterator srcIt = rm.getReferenceSourceIterator(currentProgram.getMinAddress(), true);
+        while (srcIt.hasNext()) {
+            Address from = srcIt.next();
+            if (listing.getInstructionAt(from) == null) continue;
+            for (Reference r : rm.getReferencesFrom(from)) {
+                Address to = r.getToAddress();
+                if (!r.getReferenceType().isFlow() && to.isMemoryAddress() && to.getOffset() < execStart) {
+                    toDelete.add(r);
+                }
+            }
+        }
+        for (Reference r : toDelete) rm.delete(r);
+        int refsRemoved = toDelete.size();
+
         // --- functions, sorted by entry (listing iterator is address-ordered)
         List<Function> funcs = new ArrayList<>();
         FunctionIterator fit = listing.getFunctions(true);
@@ -340,6 +369,7 @@ public class SmExport extends GhidraScript {
           .append(",\n  \"calling_convention_forced\": ").append(q(cc))
           .append(",\n  \"calling_convention_changed_functions\": ").append(ccChanged)
           .append(",\n  \"calling_convention_failures\": [").append(String.join(", ", ccFailures)).append("]")
+          .append(",\n  \"operand_refs_removed_below_exec_start\": ").append(refsRemoved)
           .append(",\n  \"decompile_timeout_s\": ").append(timeout)
           .append(",\n  \"functions_processed\": ").append(processed)
           .append(",\n  \"thunks\": ").append(thunks)
