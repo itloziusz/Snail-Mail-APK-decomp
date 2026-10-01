@@ -48,7 +48,7 @@ endif()
 set_source_files_properties(${SM_AOT_GEN_SOURCES} ${SM_AOT_GENERATED}/aot_table.c PROPERTIES
   COMPILE_OPTIONS "-O2;-w;-ffp-contract=off;-fwrapv;-fno-strict-aliasing")
 
-# ---------------------------------------------------------------- host runner
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS")\n  return()\nendif()\n\n# ---------------------------------------------------------------- host runner
 find_package(PNG QUIET)
 find_package(JPEG QUIET)
 find_package(ZLIB QUIET)
