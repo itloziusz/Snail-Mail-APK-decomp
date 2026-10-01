@@ -47,6 +47,10 @@ install beside the original game. Keep a private backup of
 `work/android_build/keys/debug.keystore` if future builds must update the same
 installation. An APK signed with a different key cannot update it in place.
 
+## Native iOS port (bootstrap)
+
+A native iPhone/iPad target now lives under `ios/`. It reuses the same AOT-translated game core, replaces the Android shell with UIKit/CoreMotion/AVFoundation services, and keeps the original APK assets plus generated AOT code local and untracked. See [docs/IOS_PORT.md](docs/IOS_PORT.md) for the Xcode workflow and current validation status.
+
 ## Install and status
 
 Copy the resulting APK to an ARM64 Android device and open it, or install it
