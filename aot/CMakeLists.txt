@@ -13,7 +13,11 @@ add_library(sm_aot_runtime STATIC
   runtime/aot_jni.c)
 target_include_directories(sm_aot_runtime PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/runtime)
 find_package(Threads REQUIRED)
-target_link_libraries(sm_aot_runtime PUBLIC Threads::Threads m)
+set(SM_AOT_PLATFORM_LIBS Threads::Threads)
+if(NOT APPLE)
+  list(APPEND SM_AOT_PLATFORM_LIBS m)
+endif()
+target_link_libraries(sm_aot_runtime PUBLIC ${SM_AOT_PLATFORM_LIBS})
 if(SM_AOT_TRACE_CALLS)
   target_compile_definitions(sm_aot_runtime PUBLIC AOT_TRACE_CALLS=1)
 endif()
@@ -35,7 +39,7 @@ add_library(sm_aot_game STATIC
   ${SM_AOT_GEN_SOURCES} ${SM_AOT_GENERATED}/aot_table.c)
 target_include_directories(sm_aot_game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/runtime ${SM_AOT_GENERATED}
                            ${CMAKE_CURRENT_SOURCE_DIR}/port)
-target_link_libraries(sm_aot_game PUBLIC Threads::Threads m)
+target_link_libraries(sm_aot_game PUBLIC ${SM_AOT_PLATFORM_LIBS})
 if(SM_AOT_TRACE_CALLS)
   target_compile_definitions(sm_aot_game PUBLIC AOT_TRACE_CALLS=1)
 endif()
@@ -43,6 +47,10 @@ endif()
 # signed arithmetic, no strict aliasing; silence warnings about unused locals.
 set_source_files_properties(${SM_AOT_GEN_SOURCES} ${SM_AOT_GENERATED}/aot_table.c PROPERTIES
   COMPILE_OPTIONS "-O2;-w;-ffp-contract=off;-fwrapv;-fno-strict-aliasing")
+
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+  return()
+endif()
 
 # ---------------------------------------------------------------- host runner
 find_package(PNG QUIET)
