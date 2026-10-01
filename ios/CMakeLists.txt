@@ -1,7 +1,9 @@
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
   message(FATAL_ERROR "ios/ is only built with -DCMAKE_SYSTEM_NAME=iOS")
 endif()
-enable_language(OBJCXX)\n\nif(NOT TARGET sm_aot_game)
+enable_language(OBJCXX)
+
+if(NOT TARGET sm_aot_game)
   message(FATAL_ERROR "sm_aot_game is unavailable. Generate aot/generated from your original APK first (tools/ios_build/build_ios.py).")
 endif()
 if(NOT TARGET sm_rendering)
