@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(SM_SANITIZE "Build with ASan+UBSan (host builds)" OFF)
-option(SM_BUILD_TESTS "Build unit tests" ON)
+option(SM_BUILD_TESTS "Build unit tests" ON)\noption(SM_BUILD_IOS_APP "Build the native iOS application target" OFF)
 
 # Semantics-preserving flags, identical to android/app/src/main/cpp so host,
 # qemu-AArch64 and device builds agree (docs/ABI_PORTING.md):
