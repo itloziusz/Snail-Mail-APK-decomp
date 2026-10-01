@@ -19,7 +19,17 @@
 #include "sm_rendering/smgl.h"
 #include "sm_rendering/smgl_math.h"
 
-#if defined(__APPLE__)\n#include <TargetConditionals.h>\n#if TARGET_OS_IPHONE\n#include <OpenGLES/ES2/gl.h>\n#include <OpenGLES/ES2/glext.h>\n#else\n#include <GLES2/gl2.h>\n#endif\n#else\n#include <GLES2/gl2.h>\n#endif
+#if defined(__APPLE__)
+#include <TargetConditionals.h>
+#if TARGET_OS_IPHONE
+#include <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
+#else
+#include <GLES2/gl2.h>
+#endif
+#else
+#include <GLES2/gl2.h>
+#endif
 
 #include <math.h>
 #include <stdarg.h>
