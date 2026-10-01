@@ -10,7 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(SM_SANITIZE "Build with ASan+UBSan (host builds)" OFF)
-option(SM_BUILD_TESTS "Build unit tests" ON)\noption(SM_BUILD_IOS_APP "Build the native iOS application target" OFF)
+option(SM_BUILD_TESTS "Build unit tests" ON)
+option(SM_BUILD_IOS_APP "Build the native iOS application target" OFF)
 
 # Semantics-preserving flags, identical to android/app/src/main/cpp so host,
 # qemu-AArch64 and device builds agree (docs/ABI_PORTING.md):
@@ -41,6 +42,13 @@ endforeach()
 # sm_rendering / sm_host_egl targets exist).
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/aot/CMakeLists.txt)
   add_subdirectory(aot)
+endif()
+
+if(SM_BUILD_IOS_APP)
+  if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    message(FATAL_ERROR "SM_BUILD_IOS_APP requires -DCMAKE_SYSTEM_NAME=iOS")
+  endif()
+  add_subdirectory(ios)
 endif()
 
 if(SM_BUILD_TESTS)
