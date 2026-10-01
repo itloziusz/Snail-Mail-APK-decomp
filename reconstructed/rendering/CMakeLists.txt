@@ -13,7 +13,7 @@ get_filename_component(SM_RENDERING_REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../..
 
 add_library(sm_rendering_math STATIC src/smgl_math.c)
 target_include_directories(sm_rendering_math PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(sm_rendering_math PRIVATE m)
+if(NOT APPLE)\n  target_link_libraries(sm_rendering_math PRIVATE m)\nendif()
 set_target_properties(sm_rendering_math PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED ON C_EXTENSIONS OFF)
 
 find_path(SM_GLES2_INCLUDE_DIR GLES2/gl2.h)
