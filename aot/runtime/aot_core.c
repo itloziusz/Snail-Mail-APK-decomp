@@ -5,7 +5,7 @@
  */
 #define _GNU_SOURCE
 #include <errno.h>
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(__APPLE__)
 #include <signal.h>
 #endif
 #include <stdarg.h>
@@ -83,7 +83,7 @@ void aot_trace_enter(aot_cpu *c, uint32_t addr)
 }
 #endif
 
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(__APPLE__)
 static void fault_handler(int sig, siginfo_t *si, void *uc)
 {
     (void)uc;
@@ -490,8 +490,13 @@ int aot_init(const aot_config *cfg)
     if (sizeof(void *) < 8) {
         aot_fatal("the AOT runtime needs a 64-bit host (4 GiB guest reservation)");
     }
-    aot_mem = (uint8_t *)mmap(NULL, (size_t)k_reserve, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE,
-                              -1, 0);
+    {
+        int map_flags = MAP_PRIVATE | MAP_ANONYMOUS;
+#ifdef MAP_NORESERVE
+        map_flags |= MAP_NORESERVE;
+#endif
+        aot_mem = (uint8_t *)mmap(NULL, (size_t)k_reserve, PROT_NONE, map_flags, -1, 0);
+    }
     if (aot_mem == MAP_FAILED) {
         aot_fatal("cannot reserve 4 GiB guest address space: %s", strerror(errno));
     }
