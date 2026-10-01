@@ -13,8 +13,21 @@ get_filename_component(SM_RENDERING_REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../..
 
 add_library(sm_rendering_math STATIC src/smgl_math.c)
 target_include_directories(sm_rendering_math PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-if(NOT APPLE)\n  target_link_libraries(sm_rendering_math PRIVATE m)\nendif()
+if(NOT APPLE)
+  target_link_libraries(sm_rendering_math PRIVATE m)
+endif()
 set_target_properties(sm_rendering_math PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED ON C_EXTENSIONS OFF)
+
+if(APPLE AND CMAKE_SYSTEM_NAME STREQUAL "iOS")
+  find_library(SM_OPENGLES_FRAMEWORK OpenGLES REQUIRED)
+  add_library(sm_rendering STATIC src/smgl.c)
+  target_include_directories(sm_rendering PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${SM_RENDERING_REPO_ROOT}/aot/runtime)
+  target_link_libraries(sm_rendering PUBLIC sm_rendering_math ${SM_OPENGLES_FRAMEWORK})
+  set_target_properties(sm_rendering PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED ON C_EXTENSIONS OFF)
+  return()
+endif()
 
 find_path(SM_GLES2_INCLUDE_DIR GLES2/gl2.h)
 find_library(SM_GLESV2_LIBRARY NAMES GLESv2)
