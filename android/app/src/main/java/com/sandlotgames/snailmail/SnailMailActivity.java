@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
+import android.widget.FrameLayout;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
@@ -82,8 +83,14 @@ public class SnailMailActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(1); // Window.FEATURE_NO_TITLE
         getWindow().setFlags(1024, 1024); // WindowManager.LayoutParams.FLAG_FULLSCREEN
+        BackgroundArt.load(this);
         this.mGLView = new ADGLSurfaceView(this);
-        setContentView(this.mGLView);
+        if (getIntent().getBooleanExtra("nameentryDebug", false)) {
+            FrameLayout frame = new FrameLayout(this);
+            frame.addView(mGLView);
+            frame.addView(new NameEntryDebugView(this));
+            setContentView(frame);
+        } else setContentView(this.mGLView);
         hideSystemBars();
         // PORT-CHANGE: port options (screen fit, FOV, refresh); applies the
         // display mode for the refresh setting (60 Hz by default, see
@@ -145,6 +152,11 @@ public class SnailMailActivity extends Activity {
     @Override
     protected void onPause() {
         wprintf("*** OnPause");
+        if (PortSettings.controlsMode == PortSettings.CONTROLS_SMOOTH) {
+            PortSettings.invalidateQueuedControls();
+            ((ADGLSurfaceView) mGLView).cancelSmoothTouch();
+            if (Accelerometer != null) Accelerometer.stop();
+        }
         this.mGLView.onPause();
         this.wl.release();
         JNIResourceManagerInvalidate();
@@ -164,6 +176,8 @@ public class SnailMailActivity extends Activity {
         super.onResume();
         hideSystemBars();
         this.mGLView.onResume();
+        if (PortSettings.controlsMode == PortSettings.CONTROLS_SMOOTH && Accelerometer != null)
+            Accelerometer.start();
         this.wl.acquire();
     }
 

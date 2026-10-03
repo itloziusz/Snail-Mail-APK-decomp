@@ -8,14 +8,16 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.WindowInsets;
 import android.view.inputmethod.InputMethodManager;
 
 /**
  * Port of the original ADGLSurfaceView (work/jadx/.../ADGLSurfaceView.java).
  * No setEGLContextClientVersion() call: GLSurfaceView's default is an
  * OpenGL ES 1.x context, matching the GLES 1.1 imports of libsnailmail.so.
- * Input mapping is unchanged: MotionEvent ACTION_DOWN(0)->0, ACTION_UP(1)->2,
- * ACTION_MOVE(2)->1; all other actions (incl. pointer up/down) ignored.
+ * Legacy gameplay retains the original MotionEvent mapping. Name entry and
+ * Smooth gameplay track one pointer, handle cancellation, and queue writes
+ * on the GL thread; name entry uses its own source-art coordinate transform.
  *
  * PORT-CHANGE: 60 Hz presentation. appRender (v7a:0x15690) runs at least one
  * 16,666 us simulation step for every frame GLSurfaceView draws
@@ -25,19 +27,17 @@ import android.view.inputmethod.InputMethodManager;
  *   1. PortSettings asks the window for the 60 Hz display mode;
  *   2. surfaceCreated() declares the surface as fixed-rate 60 fps content
  *      (Surface.setFrameRate, Android 11+);
- *   3. FramePacer draws on vsync, but never twice within MIN_FRAME_INTERVAL_NS,
- *      in case the system keeps a faster refresh rate anyway.
+ *   3. FramePacer selects vsyncs on a 60 Hz deadline schedule even if the
+ *      system keeps a faster mode (including 75/90 Hz panels).
  * On a 60 Hz display every vsync is drawn, as in the original. The 120 Hz and
  * VRR port options (PortSettings) draw every vsync instead; native code then
  * interpolates between the game's 60 Hz steps.
  */
 class ADGLSurfaceView extends GLSurfaceView {
     ADRenderer mRenderer;
+    private int activeTouchId = -1;
+    private float activeTouchX, activeTouchY;
 
-    // One 60 Hz period minus 2 ms of tolerance for vsync timestamp jitter.
-    // Below half of a 120 Hz vsync period (4.17 ms), so on a 120 Hz display
-    // exactly every second vsync is drawn.
-    private static final long MIN_FRAME_INTERVAL_NS = 16666667L - 2000000L;
     // Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE (API 30).
     private static final int FRAME_RATE_COMPATIBILITY_FIXED_SOURCE = 1;
 
@@ -52,6 +52,38 @@ class ADGLSurfaceView extends GLSurfaceView {
     private static native void nativePause();
 
     public native void JNIKey(int i);
+    private static native boolean nativeNameEntryActive();
+    private static native void nativeSafeArea(float l, float t, float r, float b);
+
+    @Override public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        // The GL surface may already be inset by Android. Convert window
+        // obscured edges to surface-local distances to avoid double insets.
+        int l = insets.getSystemWindowInsetLeft(), t = insets.getSystemWindowInsetTop();
+        int r = insets.getSystemWindowInsetRight(), b = insets.getSystemWindowInsetBottom();
+        if (Build.VERSION.SDK_INT >= 28) {
+            try {
+                Object cutout = WindowInsets.class.getMethod("getDisplayCutout").invoke(insets);
+                if (cutout != null) {
+                    Class<?> c = Class.forName("android.view.DisplayCutout");
+                    l = Math.max(l, (Integer)c.getMethod("getSafeInsetLeft").invoke(cutout));
+                    t = Math.max(t, (Integer)c.getMethod("getSafeInsetTop").invoke(cutout));
+                    r = Math.max(r, (Integer)c.getMethod("getSafeInsetRight").invoke(cutout));
+                    b = Math.max(b, (Integer)c.getMethod("getSafeInsetBottom").invoke(cutout));
+                }
+            } catch (ReflectiveOperationException e) { throw new IllegalStateException(e); }
+        }
+        final int il = l, it = t, ir = r, ib = b;
+        post(new Runnable() { @Override public void run() {
+            int[] surface = new int[2], root = new int[2];
+            getLocationInWindow(surface); getRootView().getLocationInWindow(root);
+            final float sl = Math.max(0, il - (surface[0] - root[0]));
+            final float st = Math.max(0, it - (surface[1] - root[1]));
+            final float sr = Math.max(0, ir - (getRootView().getWidth() - getWidth() - surface[0] + root[0]));
+            final float sb = Math.max(0, ib - (getRootView().getHeight() - getHeight() - surface[1] + root[1]));
+            queueEvent(new Runnable() { @Override public void run() { nativeSafeArea(sl, st, sr, sb); }});
+        }});
+        return insets;
+    }
 
     public ADGLSurfaceView(Context context) {
         super(context);
@@ -68,57 +100,30 @@ class ADGLSurfaceView extends GLSurfaceView {
 
     @Override
     public boolean onKeyDown(int keycode, KeyEvent event) {
-        SnailMailActivity.wprintf("OnKeyDown " + keycode);
-        if (keycode == 4 && event.getRepeatCount() == 0) {
-            // KEYCODE_BACK swallowed, as original.
-            SnailMailActivity.wprintf("Back Pressed");
+        if (keycode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) return true;
+        final int key = keycode;
+        boolean text = (key >= 29 && key <= 54) || (key >= 7 && key <= 16)
+                || key == KeyEvent.KEYCODE_SPACE || key == KeyEvent.KEYCODE_DEL
+                || key == KeyEvent.KEYCODE_ENTER;
+        boolean navigation = (key >= 19 && key <= 23) || key == KeyEvent.KEYCODE_BUTTON_A;
+        if (text || (navigation && nativeNameEntryActive())) {
+            if (key == KeyEvent.KEYCODE_ENTER) {
+                InputMethodManager imm = (InputMethodManager)getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindowToken(), 0);
+            }
+            // Text, selection and touch share the GL update's FIFO. Consuming
+            // handled events prevents a second platform focus/navigation action.
+            queueEvent(new Runnable() { @Override public void run() { JNIKey(key); }});
             return true;
-        }
-        switch (event.getAction()) {
-            case 0:
-                if (keycode == 19) {
-                    SnailMailActivity.wprintf("DPAD_UP");
-                }
-                if (keycode == 20) {
-                    SnailMailActivity.wprintf("DPAD_DOWN");
-                }
-                if (keycode == 21) {
-                    SnailMailActivity.wprintf("DPAD_LEFT");
-                }
-                if (keycode == 22) {
-                    SnailMailActivity.wprintf("DPAD_RIGHT");
-                }
-                if (keycode >= 29 && keycode <= 54) {
-                    SnailMailActivity.wprintf("Key A-Z " + (keycode - 29));
-                    JNIKey(keycode);
-                }
-                if (keycode >= 7 && keycode <= 16) {
-                    SnailMailActivity.wprintf("Key 0-9 " + (keycode - 7));
-                    JNIKey(keycode);
-                }
-                if (keycode == 62) {
-                    JNIKey(keycode);
-                }
-                if (keycode == 67) {
-                    SnailMailActivity.wprintf("Key Delete " + keycode);
-                    JNIKey(keycode);
-                }
-                if (keycode == 66) {
-                    InputMethodManager imm = (InputMethodManager) SnailMailActivity.getContext()
-                            .getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getWindowToken(), 0);
-                    JNIKey(keycode);
-                    break;
-                }
-                break;
-            default:
-                break;
         }
         return super.onKeyDown(keycode, event);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (nativeNameEntryActive() || PortSettings.controlsMode == PortSettings.CONTROLS_SMOOTH)
+            return onSmoothTouchEvent(event);
         int action = event.getAction();
         // TODO(port): called on the UI thread while the renderer runs on the
         // GL thread, as in the original; the native side writes shared globals
@@ -138,6 +143,55 @@ class ADGLSurfaceView extends GLSurfaceView {
         }
     }
 
+    private void sendSmoothTouch(final int action, final float x, final float y) {
+        // cRMouse is consumed by the GL update. Keep touch writes on that
+        // thread. The newest Smooth orientation is consumed before rendering.
+        final int epoch = PortSettings.controlEpoch.get();
+        queueEvent(new Runnable() {
+            @Override public void run() {
+                if (epoch == PortSettings.controlEpoch.get()) JNIMouseEvent(action, x, y);
+            }
+        });
+    }
+
+    void cancelSmoothTouch() {
+        if (activeTouchId >= 0) sendSmoothTouch(2, activeTouchX, activeTouchY);
+        activeTouchId = -1;
+    }
+
+    private boolean onSmoothTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        if (action == MotionEvent.ACTION_DOWN) {
+            activeTouchId = event.getPointerId(0);
+            activeTouchX = event.getX(0);
+            activeTouchY = event.getY(0);
+            sendSmoothTouch(0, activeTouchX, activeTouchY);
+        } else if (action == MotionEvent.ACTION_MOVE) {
+            int index = event.findPointerIndex(activeTouchId);
+            if (index >= 0) {
+                activeTouchX = event.getX(index);
+                activeTouchY = event.getY(index);
+                sendSmoothTouch(1, activeTouchX, activeTouchY);
+            }
+        } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL
+                || action == MotionEvent.ACTION_POINTER_UP
+                && event.getPointerId(event.getActionIndex()) == activeTouchId) {
+            int index = event.findPointerIndex(activeTouchId);
+            if (index >= 0) {
+                activeTouchX = event.getX(index);
+                activeTouchY = event.getY(index);
+            }
+            // A menu press can switch Legacy -> Smooth between DOWN and UP.
+            if (activeTouchId < 0 && event.getPointerCount() > 0) {
+                activeTouchX = event.getX(0);
+                activeTouchY = event.getY(0);
+            }
+            sendSmoothTouch(2, activeTouchX, activeTouchY);
+            activeTouchId = -1;
+        }
+        return true;
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         super.surfaceCreated(holder);
@@ -147,7 +201,8 @@ class ADGLSurfaceView extends GLSurfaceView {
     /** PortSettings.REFRESH_*; UI thread. */
     void setPresentation(int refresh) {
         mRefresh = refresh;
-        mPacer.mMinIntervalNs = refresh == PortSettings.REFRESH_60 ? MIN_FRAME_INTERVAL_NS : 0L;
+        mPacer.mCapped = refresh == PortSettings.REFRESH_60;
+        mPacer.mSchedule.reset();
         Surface s = getHolder().getSurface();
         if (s != null && s.isValid()) {
             applyFrameRate(s);
@@ -184,18 +239,18 @@ class ADGLSurfaceView extends GLSurfaceView {
         super.onPause();
     }
 
-    /** Requests one render per vsync, at most one per mMinIntervalNs. Main thread only. */
+    /** Selects vsyncs to average 60 game ticks/s on 60, 75, 90, 120 Hz panels. */
     private final class FramePacer implements Choreographer.FrameCallback {
         private boolean mRunning;
-        private long mLastFrameNs;
-        long mMinIntervalNs = MIN_FRAME_INTERVAL_NS;
+        private final FrameSchedule mSchedule = new FrameSchedule();
+        boolean mCapped = true;
 
         void start() {
             if (mRunning) {
                 return;
             }
             mRunning = true;
-            mLastFrameNs = 0;
+            mSchedule.reset();
             Choreographer.getInstance().postFrameCallback(this);
         }
 
@@ -209,8 +264,7 @@ class ADGLSurfaceView extends GLSurfaceView {
             if (!mRunning) {
                 return;
             }
-            if (mLastFrameNs == 0 || frameTimeNanos - mLastFrameNs >= mMinIntervalNs) {
-                mLastFrameNs = frameTimeNanos;
+            if (mSchedule.shouldRender(frameTimeNanos, mCapped)) {
                 requestRender();
             }
             Choreographer.getInstance().postFrameCallback(this);

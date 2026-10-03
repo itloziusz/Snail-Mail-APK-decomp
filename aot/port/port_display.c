@@ -13,6 +13,7 @@
  */
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "aot_decls.h"
 #include "aot_host.h"
@@ -20,8 +21,10 @@
 #include "port.h"
 #include "port_internal.h"
 
-static sm_port_settings g_set = {SM_PORT_FIT_STRETCH, SM_PORT_FOV_ORIGINAL, SM_PORT_REFRESH_60};
+static sm_port_settings g_set = {SM_PORT_FIT_STRETCH, SM_PORT_FOV_ORIGINAL, SM_PORT_REFRESH_60,
+                                 SM_PORT_CONTROLS_LEGACY, 50};
 static sm_port_listener g_listener;
+static int g_background_only;
 static void *g_listener_user;
 
 void sm_port_settings_original(sm_port_settings *s)
@@ -29,6 +32,8 @@ void sm_port_settings_original(sm_port_settings *s)
     s->fit = SM_PORT_FIT_STRETCH;
     s->fov = SM_PORT_FOV_ORIGINAL;
     s->refresh = SM_PORT_REFRESH_60;
+    s->controls = SM_PORT_CONTROLS_LEGACY;
+    s->smoothness = 50;
 }
 
 void sm_port_settings_default(sm_port_settings *s)
@@ -36,6 +41,8 @@ void sm_port_settings_default(sm_port_settings *s)
     s->fit = SM_PORT_FIT_ADAPTIVE;
     s->fov = SM_PORT_FOV_ADAPTIVE;
     s->refresh = SM_PORT_REFRESH_60;
+    s->controls = SM_PORT_CONTROLS_LEGACY;
+    s->smoothness = 50;
 }
 
 void sm_port_set(const sm_port_settings *s) { g_set = *s; }
@@ -92,19 +99,32 @@ typedef struct canvas {
     float w, h;      /* screen */
     float sx, sy;    /* original per-axis scale (W/640, H/480) */
     float s, ox, oy; /* uniform scale and offsets */
+    float tx, ty; /* legacy logical coordinates -> pixels */
+    int nameentry;
 } canvas;
 
 static int canvas_get(canvas *cv)
 {
-    if (g_set.fit != SM_PORT_FIT_ADAPTIVE || !screen(&cv->w, &cv->h)) {
+    cv->nameentry = port_nameentry_active();
+    if ((!cv->nameentry && g_set.fit != SM_PORT_FIT_ADAPTIVE) || !screen(&cv->w, &cv->h)) {
         return 0;
     }
     cv->sx = cv->w / 640.0f;
     cv->sy = cv->h / 480.0f;
+    if (cv->nameentry) {
+        /* Legacy coordinates are normalized into the actual 480x320 source
+         * art canvas. Only one uniform source-to-display scale is applied. */
+        sm_name_canvas nc = port_nameentry_canvas(cv->w, cv->h);
+        cv->s = nc.scale; cv->ox = nc.x; cv->oy = nc.y;
+        cv->tx = nc.scale * (480.0f / 640.0f);
+        cv->ty = nc.scale * (320.0f / 480.0f);
+        return 1;
+    }
     if (fabsf(cv->sx - cv->sy) < 1e-4f * cv->sy) {
         return 0;
     }
     cv->s = cv->sx < cv->sy ? cv->sx : cv->sy;
+    cv->tx = cv->ty = cv->s;
     cv->ox = (cv->w - 640.0f * cv->s) * 0.5f;
     cv->oy = (cv->h - 480.0f * cv->s) * 0.5f;
     return 1;
@@ -137,8 +157,8 @@ static void qset(aot_cpu *c, int i, float v)
 
 /* logical coordinate -> logical coordinate that the original's stretch maps to
  * pixel ox + x * s (pixel = original_scale * result). */
-static float map_x(const canvas *cv, float ox, float x, int full) { return full ? x : (ox + x * cv->s) / cv->sx; }
-static float map_y(const canvas *cv, float y, int full) { return full ? y : (cv->oy + y * cv->s) / cv->sy; }
+static float map_x(const canvas *cv, float ox, float x, int full) { return full && !cv->nameentry ? x : (ox + x * cv->tx) / cv->sx; }
+static float map_y(const canvas *cv, float y, int full) { return full && !cv->nameentry ? y : (cv->oy + y * cv->ty) / cv->sy; }
 
 /* Covers the whole canvas on that axis (fades, full-screen panels): keeps the
  * original full-screen extent. */
@@ -170,11 +190,11 @@ static void adapt_quad(aot_cpu *c, const canvas *cv, float ox)
         int fy = full_y(y, y + h);
         qset(c, ARG_X, map_x(cv, ox, x, fx));
         qset(c, ARG_Y, map_y(cv, y, fy));
-        if (!fx) {
-            qset(c, ARG_W, w * cv->s / cv->sx);
+        if (!fx || cv->nameentry) {
+            qset(c, ARG_W, w * cv->tx / cv->sx);
         }
-        if (!fy) {
-            qset(c, ARG_H, h * cv->s / cv->sy);
+        if (!fy || cv->nameentry) {
+            qset(c, ARG_H, h * cv->ty / cv->sy);
         }
     }
 }
@@ -184,8 +204,8 @@ static void adapt_quad(aot_cpu *c, const canvas *cv, float ox)
  * the screen edge it was designed against: an element in the left quarter of
  * the 640-wide canvas is placed at the same scaled distance from the left
  * screen edge, one in the right quarter from the right edge, anything else is
- * centred. Menus (no 3D scene) keep the whole layout together on the centred
- * canvas, aligned with their full-screen frame art.
+ * centred. Menus keep interactive controls on the centred canvas; their
+ * lower-right decorative leaf follows the widened frame's right margin.
  *
  * An "element" is found per frame from the original's own draw queue: every
  * 2D quad is a cFontPrintBuffer entry (0x84 bytes, FontPrintBuffer), queued by
@@ -208,7 +228,7 @@ typedef struct rect {
 
 typedef struct touch_rect {
     rect r;   /* screen pixels */
-    float ox; /* canvas offset of its anchor */
+    float ox, oy; /* the same origin used to draw this widget */
 } touch_rect;
 
 static struct {
@@ -216,16 +236,25 @@ static struct {
     uint32_t next_group;
     uint32_t group[FP_MAX], group_gen[FP_MAX];
     uint8_t anchor[FP_MAX];
+    float offset[FP_MAX], offset_y[FP_MAX];
     uint32_t anchored_gen;             /* frame whose anchors are in anchor[] */
     int cur;                           /* entry being drawn, -1 outside */
     int measuring;
     rect m;
     int m_any;
-} g_hud = {0, 1, {0}, {0}, {0}, 0xffffffffu, -1, 0, {0, 0, 0, 0}, 0};
+} g_hud = {.next_group = 1, .anchored_gen = 0xffffffffu, .cur = -1};
 
 static aot_lock g_touch_lock = AOT_LOCK_INIT;
 static touch_rect g_touch[TOUCH_RECTS];
 static int g_touch_n;
+static float g_ui_snapshot[FP_MAX * 9];
+static int g_ui_snapshot_count;
+int sm_port_ui_debug(float *out, int capacity)
+{
+    int n = capacity < g_ui_snapshot_count ? capacity : g_ui_snapshot_count;
+    memcpy(out,g_ui_snapshot,sizeof(float)*(size_t)n);
+    return n;
+}
 
 static float anchor_ox(const canvas *cv, int anchor)
 {
@@ -293,7 +322,10 @@ static uint32_t fp_count(void)
     return n > FP_MAX ? FP_MAX : n;
 }
 
-static int hud_active(canvas *cv) { return canvas_get(cv) && port_backdrop_fills_screen(); }
+static int g_menu_backdrop, g_galaxy_backdrop;
+static float g_galaxy_detail_dx, g_galaxy_detail_dy;
+static rect g_galaxy_detail_source;
+static int hud_active(canvas *cv) { return canvas_get(cv) && !cv->nameentry && (port_backdrop_fills_screen() || g_menu_backdrop || g_galaxy_backdrop); }
 
 static float area(const rect *r) { return (r->x1 - r->x0) * (r->y1 - r->y0); }
 
@@ -370,6 +402,11 @@ static void hud_layout(aot_cpu *c, const canvas *cv)
     }
     for (k = 0; k < nitems; ++k) {
         for (l = k + 1; l < nitems; ++l) {
+            /* Header/footer chrome remains independent when an original popup
+             * overlaps its legacy coordinates before adaptive placement. */
+            if (g_galaxy_backdrop &&
+                    ((item[k].y1<=42 || item[k].y0>=410) !=
+                     (item[l].y1<=42 || item[l].y0>=410))) continue;
             if (nested(&item[k], &item[l])) {
                 int a = uf_find(parent, k), b = uf_find(parent, l);
                 if (a != b) {
@@ -384,22 +421,69 @@ static void hud_layout(aot_cpu *c, const canvas *cv)
             rect_add(&item[r], &item_has[r], item[k].x0, item[k].y0, item[k].x1, item[k].y1);
         }
     }
+    /* Galaxy chrome uses screen edges. The original map coordinates remain
+     * centred; details and the complete navigation row get their own origins. */
+    float item_offset[FP_MAX], item_y[FP_MAX], nav_x0=1e30f,nav_x1=-1e30f;
+    if(g_galaxy_backdrop) for(k=0;k<nitems;++k) {
+        const rect *r=&item[uf_find(parent,k)];
+        if(r->y0>=400 && r->x0>=160) {
+            nav_x0=fminf(nav_x0,r->x0);nav_x1=fmaxf(nav_x1,r->x1);
+        }
+    }
     /* 4. anchor per merged element */
+    g_ui_snapshot_count=0;
     for (k = 0; k < nitems; ++k) {
         const rect *r = &item[uf_find(parent, k)];
-        item_anchor[k] = r->x1 <= EDGE_ZONE ? ANCHOR_LEFT : r->x0 >= 640.0f - EDGE_ZONE ? ANCHOR_RIGHT : ANCHOR_CENTRE;
-        if (uf_find(parent, k) == k && item_anchor[k] != ANCHOR_CENTRE && tn < TOUCH_RECTS) {
-            float ox = anchor_ox(cv, item_anchor[k]), pad = 12.0f * cv->s;
+        if (g_galaxy_backdrop) {
+            float cx=(r->x0+r->x1)*.5f;
+            item_anchor[k]=r->y1<=70 ? (cx<320 ? ANCHOR_LEFT : ANCHOR_RIGHT)
+                : r->y0>=400 && r->x1<=160 ? ANCHOR_LEFT : ANCHOR_CENTRE;
+        } else if (g_menu_backdrop) {
+            /* The menu's small lower-right leaf is a queued widget rather
+             * than part of the backdrop. Keep its original size and margin
+             * while the other menu controls remain centred in the panel. */
+            item_anchor[k] = r->x0 >= 640.0f - EDGE_ZONE && r->y0 >= 380.0f
+                           ? ANCHOR_RIGHT : ANCHOR_CENTRE;
+        } else {
+            item_anchor[k] = r->x1 <= EDGE_ZONE ? ANCHOR_LEFT : r->x0 >= 640.0f - EDGE_ZONE ? ANCHOR_RIGHT : ANCHOR_CENTRE;
+        }
+        item_offset[k]=anchor_ox(cv,item_anchor[k]);
+        item_y[k]=cv->oy;
+        if(g_galaxy_backdrop) {
+            if(r->y0>=400 && r->x0>=160 && nav_x1>=nav_x0)
+                item_offset[k]=cv->ox+(320-(nav_x0+nav_x1)*.5f)*cv->s;
+            else if(r->x1-r->x0>250 && r->y1-r->y0>100)
+            {
+                g_galaxy_detail_dx=320-(r->x0+r->x1)*.5f;
+                g_galaxy_detail_dy=240-(r->y0+r->y1)*.5f;
+                g_galaxy_detail_source=*r;
+                item_offset[k]=cv->ox+g_galaxy_detail_dx*cv->s;
+                item_y[k]=cv->oy+g_galaxy_detail_dy*cv->s;
+            }
+        }
+        if (uf_find(parent, k) == k && (fabsf(item_offset[k]-cv->ox)>.01f || fabsf(item_y[k]-cv->oy)>.01f) && tn < TOUCH_RECTS) {
+            float ox = item_offset[k], pad = 12.0f * cv->s;
             tr[tn].ox = ox;
+            tr[tn].oy = item_y[k];
             tr[tn].r.x0 = ox + r->x0 * cv->s - pad;
             tr[tn].r.x1 = ox + r->x1 * cv->s + pad;
-            tr[tn].r.y0 = cv->oy + r->y0 * cv->s - pad;
-            tr[tn].r.y1 = cv->oy + r->y1 * cv->s + pad;
+            tr[tn].r.y0 = item_y[k] + r->y0 * cv->s - pad;
+            tr[tn].r.y1 = item_y[k] + r->y1 * cv->s + pad;
             ++tn;
+        }
+        if(uf_find(parent,k)==k && g_ui_snapshot_count+9<=FP_MAX*9) {
+            float *p=g_ui_snapshot+g_ui_snapshot_count;
+            p[0]=g_galaxy_backdrop && r->x1-r->x0>250 && r->y1-r->y0>100 ? 1 : 0;
+            p[1]=r->x0;p[2]=r->y0;p[3]=r->x1;p[4]=r->y1;
+            p[5]=item_offset[k]+r->x0*cv->s;p[6]=item_y[k]+r->y0*cv->s;
+            p[7]=item_offset[k]+r->x1*cv->s;p[8]=item_y[k]+r->y1*cv->s;
+            g_ui_snapshot_count+=9;
         }
     }
     for (i = 0; i < n; ++i) {
         g_hud.anchor[i] = item_of[i] >= 0 ? item_anchor[item_of[i]] : ANCHOR_CENTRE;
+        g_hud.offset[i] = item_of[i] >= 0 ? item_offset[item_of[i]] : cv->ox;
+        g_hud.offset_y[i] = item_of[i] >= 0 ? item_y[item_of[i]] : cv->oy;
     }
     g_hud.anchored_gen = g_hud.gen;
     aot_lock_acquire(&g_touch_lock);
@@ -412,6 +496,7 @@ void F_0004f5b0(aot_cpu *c) /* cRBorder::Draw: entries it queues form one widget
 {
     static uint32_t idx;
     uint32_t i0, i1, i, gid;
+    if (port_nameentry_hide_border(c->r[0])) return;
     if (!idx) {
         idx = port_sym("FontPrintIndex");
     }
@@ -432,6 +517,13 @@ void F_0004f5b0(aot_cpu *c) /* cRBorder::Draw: entries it queues form one widget
         }
     }
 }
+
+void F_000500ac(aot_cpu *c)
+{
+    if (port_nameentry_hide_border(c->r[0])) return;
+    F_000500ac_orig(c);
+}
+
 
 void F_00022ce0(aot_cpu *c) /* FontPrintRender(int layer mask) */
 {
@@ -456,15 +548,53 @@ void F_00022868(aot_cpu *c) { print_entry(c, F_00022868_orig); } /* OSDPrintReal
 
 void F_0007b7dc(aot_cpu *c) /* G0RenderFont */
 {
+    if (g_background_only) return;
     canvas cv;
     if (g_hud.measuring) {
+        /* Map nodes and route lines can sit beneath a translucent panel.
+         * They are independent map geometry, never children of that panel. */
+        const char *measured_texture=aot_host(c->r[0]+12u);
+        if(g_galaxy_backdrop && (!strncmp(measured_texture,"Galaxy/Line",11) ||
+                !strncmp(measured_texture,"Galaxy/Level",12) ||
+                !strcmp(measured_texture,"Galaxy/SpaceMapLogo.tga"))) return;
         measure_quad(c);
         return;
     }
     if (canvas_get(&cv)) {
         float ox = cv.ox;
-        if (g_hud.cur >= 0 && g_hud.anchored_gen == g_hud.gen) {
-            ox = anchor_ox(&cv, g_hud.anchor[g_hud.cur]);
+        if (!cv.nameentry && g_hud.cur >= 0 && g_hud.anchored_gen == g_hud.gen) {
+            ox = g_hud.offset[g_hud.cur];
+            cv.oy = g_hud.offset_y[g_hud.cur];
+        }
+        if(g_galaxy_backdrop) {
+            const char *texture_name=aot_host(c->r[0]+12u);
+            if(!strcmp(texture_name,"Galaxy/SpaceMapLogo.tga")) ox=cv.w-640*cv.s;
+            if((g_galaxy_detail_dx || g_galaxy_detail_dy) &&
+                    (!strcmp(texture_name,"Galaxy/Line.tga") || !strcmp(texture_name,"Galaxy/Linepro.tga"))) {
+                float width=qget(c,ARG_W),height=qget(c,ARG_H);
+                if(width>0 && fabsf(height)<=4) {
+                    float x=qget(c,ARG_X),y=qget(c,ARG_Y);
+                    qset(c,ARG_W,0);
+                    qset(c,ARG_X,x);qset(c,ARG_Y,y);
+                    qset(c,ARG_X+2,x+width);qset(c,ARG_Y+2,y);
+                    qset(c,ARG_X+4,x+width);qset(c,ARG_Y+4,y+height);
+                    qset(c,ARG_X+6,x);qset(c,ARG_Y+6,y+height);
+                    width=0;
+                }
+                if(width==0) {
+                    float x0=1e30f,x1=-1e30f,y0=1e30f,y1=-1e30f;
+                    for(int i=0;i<4;++i){float x=qget(c,ARG_X+2*i),y=qget(c,ARG_Y+2*i);x0=fminf(x0,x);x1=fmaxf(x1,x);y0=fminf(y0,y);y1=fmaxf(y1,y);}
+                    float d0=fminf(fabsf(x0-g_galaxy_detail_source.x0),fabsf(x0-g_galaxy_detail_source.x1));
+                    float d1=fminf(fabsf(x1-g_galaxy_detail_source.x0),fabsf(x1-g_galaxy_detail_source.x1));
+                    if(y1-y0<=4 && x1-x0>1)for(int i=0;i<4;++i) {
+                        float x=qget(c,ARG_X+2*i);
+                        if((x<(x0+x1)*.5f)==(d0<d1)) {
+                            qset(c,ARG_X+2*i,x+g_galaxy_detail_dx);
+                            qset(c,ARG_Y+2*i,qget(c,ARG_Y+2*i)+g_galaxy_detail_dy);
+                        }
+                    }
+                }
+            }
         }
         adapt_quad(c, &cv, ox);
     }
@@ -476,6 +606,16 @@ void F_0007b7dc(aot_cpu *c) /* G0RenderFont */
  * G0FontRenderStart / cRSplashManager::RenderStart) is narrowed so that the
  * image's 0..W x 0..H pixels land on the canvas rectangle. */
 static int g_canvas_proj;
+static int g_splash_proj, g_splash_first_draw, g_splash_slot = -1;
+static float g_splash_w, g_splash_h;
+enum { ART_SANDLOT, ART_ALPHA72, ART_MENU_FRAME, ART_BACKGROUND,
+       ART_MENU_ORIGINAL, ART_LOADING, ART_LOADING_ORIGINAL, ART_STAR_EXTENDED, ART_COUNT };
+static struct { int w, h; unsigned char *pixels; unsigned texture; } g_splash_art[ART_COUNT];
+static int g_menu_layer, g_space_layer;
+static void space_layer_draw(void);
+static unsigned art_texture(int slot);
+static void menu_layer_draw(void);
+static void splash_first_draw(void);
 static float g_color_mul = 1.0f;
 
 static int g_persp;                  /* current projection is a 3D camera */
@@ -485,14 +625,19 @@ static void filter_ortho(float v[6])
 {
     canvas cv;
     g_persp = 0;
-    if (!g_canvas_proj || !canvas_get(&cv)) {
+    if ((!g_canvas_proj && !g_splash_proj) || !canvas_get(&cv)) {
         return;
+    }
+    if (g_splash_proj) {
+        float s = fminf(cv.w / 480.0f, cv.h / 320.0f);
+        cv.ox = (cv.w - 480.0f*s)*0.5f; cv.oy = (cv.h - 320.0f*s)*0.5f;
+        cv.tx = s*480.0f/640.0f; cv.ty = s*320.0f/480.0f;
     }
     if (v[0] != 0.0f || v[3] != 0.0f || fabsf(v[1] - cv.w) > 0.5f || fabsf(v[2] - cv.h) > 0.5f) {
         return; /* not the screen-pixel projection */
     }
     {
-        float kx = 640.0f * cv.s / cv.w, ky = 480.0f * cv.s / cv.h;
+        float kx = 640.0f * cv.tx / cv.w, ky = 480.0f * cv.ty / cv.h;
         float l = -cv.ox / kx, t = -cv.oy / ky;
         v[0] = l;
         v[1] = l + cv.w / kx;
@@ -510,6 +655,9 @@ static void filter_color(float v[4])
 
 static void filter_draw(void)
 {
+    if (g_splash_first_draw) { g_splash_first_draw = 0; splash_first_draw(); }
+    if (g_menu_layer) menu_layer_draw();
+    if (g_space_layer) { g_space_layer=0; space_layer_draw(); }
     if (g_persp) {
         ++g_3d_draws;
     }
@@ -559,12 +707,269 @@ static void image_two_pass(aot_cpu *c, aot_fn orig, float dim)
     g_canvas_proj = 0;
 }
 
+/* MenuScreenHoriz is one 512x512 texture whose landscape backdrop samples
+ * 480x320 art pixels. Split beside the left ornament, preserving both outer
+ * compositions and widening the panel between them. The original open gap
+ * between the left green tube and logo surround stays open. */
+enum { MENU_GRID = 21, MENU_VERTS = MENU_GRID * MENU_GRID,
+       MENU_TEX_W = 512, MENU_VISIBLE_W = 480, MENU_VISIBLE_H = 320 };
+typedef struct menu_vertex { float x, y, z, u, v; } menu_vertex;
+
+void sm_port_splash_asset(int slot, int w, int h, const unsigned char *rgba)
+{
+    if (slot < 0 || slot >= ART_COUNT || w < 1 || h < 1 || w > 4096 || h > 4096 || !rgba) return;
+    int original = slot == ART_MENU_FRAME ? ART_MENU_ORIGINAL : slot == ART_LOADING ? ART_LOADING_ORIGINAL : -1;
+    if (original >= 0 && g_splash_art[original].pixels) {
+        /* Use generated artwork only as a matte. Exact original RGB pixels
+         * preserve the frame, logo lettering and loading-bar graphics. */
+        int ow = g_splash_art[original].w, oh = g_splash_art[original].h;
+        unsigned char *composite = malloc((size_t)ow*oh*4);
+        if (!composite) return;
+        for (int y=0;y<oh;++y) for (int x=0;x<ow;++x) {
+            size_t p = ((size_t)y*ow+x)*4;
+            size_t m = ((size_t)(y*h/oh)*w+x*w/ow)*4;
+            memcpy(composite+p, g_splash_art[original].pixels+p, 3);
+            composite[p+3] = rgba[m+3] < 16 ? 0 : rgba[m+3];
+        }
+        free(g_splash_art[slot].pixels);
+        g_splash_art[slot].pixels = composite; g_splash_art[slot].w=ow; g_splash_art[slot].h=oh;
+        return;
+    }
+    size_t n = (size_t)w*h*4;
+    unsigned char *copy = malloc(n);
+    if (!copy) return;
+    memcpy(copy, rgba, n);
+    free(g_splash_art[slot].pixels);
+    g_splash_art[slot].pixels = copy; g_splash_art[slot].w = w; g_splash_art[slot].h = h;
+}
+
+void sm_port_splash_context_created(void)
+{
+    /* The old IDs belong to the destroyed GL context. Retain CPU pixels for
+     * re-upload; never delete stale IDs in the newly created context. */
+    for (int i=0;i<ART_COUNT;++i) g_splash_art[i].texture = 0;
+}
+
+void sm_port_background_debug_only(int on) { g_background_only = on; }
+
+static unsigned art_texture(int slot)
+{
+    const sm_gl_backend *gl = aot_cfg->gl;
+    if (!g_splash_art[slot].pixels) return 0;
+    if (!g_splash_art[slot].texture) {
+        gl->GenTextures(1, &g_splash_art[slot].texture);
+        gl->BindTexture(0x0de1, g_splash_art[slot].texture);
+        gl->TexParameteri(0x0de1,0x2801,0x2601); gl->TexParameteri(0x0de1,0x2800,0x2601);
+        gl->TexParameteri(0x0de1,0x2802,0x812f); gl->TexParameteri(0x0de1,0x2803,0x812f);
+        gl->TexImage2D(0x0de1,0,0x1908,g_splash_art[slot].w,g_splash_art[slot].h,0,0x1908,0x1401,g_splash_art[slot].pixels);
+    }
+    return g_splash_art[slot].texture;
+}
+
+static void art_cover(int slot, float w, float h)
+{
+    const sm_gl_backend *gl = aot_cfg->gl;
+    unsigned tex = art_texture(slot);
+    if (!tex) return;
+    float s = fmaxf(w/g_splash_art[slot].w,h/g_splash_art[slot].h);
+    float u = (1-w/(s*g_splash_art[slot].w))*.5f;
+    float v = (1-h/(s*g_splash_art[slot].h))*.5f;
+    menu_vertex q[4]={{0,0,0,u,v},{w,0,0,1-u,v},{w,h,0,1-u,1-v},{0,h,0,u,1-v}};
+    const unsigned short indices[4]={0,1,3,2};
+    gl->BindTexture(0x0de1,tex); gl->VertexPointer(3,0x1406,sizeof *q,q);
+    gl->TexCoordPointer(2,0x1406,sizeof *q,&q[0].u);
+    gl->DrawElements(5,4,0x1403,indices);
+}
+
+static menu_vertex *g_menu_vertices;
+static unsigned g_menu_index_buffer;
+static float g_menu_w, g_menu_h;
+static void space_layer_draw(void)
+{
+    const sm_gl_backend *gl=aot_cfg->gl;
+    gl->BindTexture(0x0de1,art_texture(ART_STAR_EXTENDED));
+    gl->VertexPointer(3,0x1406,sizeof *g_menu_vertices,g_menu_vertices);
+    gl->TexCoordPointer(2,0x1406,sizeof *g_menu_vertices,&g_menu_vertices[0].u);
+}
+
+static void menu_layer_draw(void)
+{
+    const sm_gl_backend *gl = aot_cfg->gl;
+    if (g_menu_layer == 1) {
+        /* Original backdrop indices live in an element VBO. Our background
+         * quad has client indices; unbind and restore the original VBO. */
+        gl->BindBuffer(0x8893,0);
+        art_cover(ART_BACKGROUND,g_menu_w,g_menu_h);
+        gl->BindBuffer(0x8893,g_menu_index_buffer);
+    }
+    gl->BindTexture(0x0de1,art_texture(ART_MENU_FRAME));
+    gl->VertexPointer(3,0x1406,sizeof *g_menu_vertices,g_menu_vertices);
+    gl->TexCoordPointer(2,0x1406,sizeof *g_menu_vertices,&g_menu_vertices[0].u);
+    gl->Enable(0x0be2); gl->BlendFunc(0x0302,0x0303);
+    if (g_background_only) gl->Color4f(1,1,1,0);
+}
+
+static void splash_first_draw(void)
+{
+    const sm_gl_backend *gl = aot_cfg->gl;
+    menu_vertex *q = aot_host(port_sym("gSplashSpriteVertexUVArray"));
+    if (g_splash_slot >= 0 && g_splash_art[g_splash_slot].pixels) {
+        int slot = g_splash_slot;
+        gl->BindTexture(0x0de1, art_texture(slot));
+        /* Uniform cover: crop only the extended outer artwork, never stretch
+         * a logo. Bitmap rows arrive top-first, so top uses V=0. */
+        float s = fmaxf(g_splash_w/g_splash_art[slot].w, g_splash_h/g_splash_art[slot].h);
+        float u = (1.0f-g_splash_w/(s*g_splash_art[slot].w))*0.5f;
+        float v = (1.0f-g_splash_h/(s*g_splash_art[slot].h))*0.5f;
+        q[0] = (menu_vertex){0,0,0,u,v}; q[1] = (menu_vertex){g_splash_w,0,0,1-u,v};
+        q[2] = (menu_vertex){g_splash_w,g_splash_h,0,1-u,1-v}; q[3] = (menu_vertex){0,g_splash_h,0,u,1-v};
+    } else if (g_splash_slot == -1 && g_splash_art[ART_BACKGROUND].pixels && g_splash_art[ART_LOADING].pixels) {
+        /* Temporarily use a full-screen projection for the background, then
+         * restore the uniform loading canvas for both its image and bar. */
+        gl->MatrixMode(0x1701); gl->PushMatrix(); gl->LoadIdentity();
+        gl->Orthof(0,g_splash_w,g_splash_h,0,-1,1);
+        art_cover(ART_BACKGROUND,g_splash_w,g_splash_h);
+        gl->PopMatrix(); gl->MatrixMode(0x1700);
+        gl->BindTexture(0x0de1,art_texture(ART_LOADING));
+        for (int i=0;i<4;++i) q[i].v = 1.0f-q[i].v;
+        gl->VertexPointer(3,0x1406,sizeof *q,q); gl->TexCoordPointer(2,0x1406,sizeof *q,&q[0].u);
+        gl->Enable(0x0be2); gl->BlendFunc(0x0302,0x0303);
+    } else if (g_splash_proj && g_splash_w/g_splash_h >= 16.0f/9.0f) {
+        /* Continue background edge colours into the side areas. The original
+         * loading logo, bar frame and progress fill stay on one 480x320 canvas. */
+        float extent = (g_splash_w-1.5f*g_splash_h)*g_splash_w/(3.0f*g_splash_h);
+        const unsigned short indices[4] = {0,1,3,2};
+        menu_vertex edge[4];
+        for (int side=0;side<2;++side) {
+            float x0 = side ? g_splash_w : -extent, x1 = side ? g_splash_w+extent : 0;
+            float u = side ? 479.5f/512.0f : 0.5f/512.0f;
+            edge[0]=(menu_vertex){x0,0,0,u,1}; edge[1]=(menu_vertex){x1,0,0,u,1};
+            edge[2]=(menu_vertex){x1,g_splash_h,0,u,.375f}; edge[3]=(menu_vertex){x0,g_splash_h,0,u,.375f};
+            gl->VertexPointer(3,0x1406,sizeof *edge,edge);
+            gl->TexCoordPointer(2,0x1406,sizeof *edge,&edge[0].u);
+            gl->DrawElements(5,4,0x1403,indices);
+        }
+        gl->VertexPointer(3,0x1406,sizeof *q,q);
+        gl->TexCoordPointer(2,0x1406,sizeof *q,&q[0].u);
+    }
+}
+
+static void menu_draw_pass(aot_cpu *c)
+{
+    aot_cpu entry = *c;
+    uint32_t sp = c->r[13], args[8];
+    unsigned i;
+    for (i = 0; i < 8; ++i) args[i] = AOT_LD32(sp + 4u*i);
+    invalidate_colour_cache();
+    F_0007c8b8_orig(c);
+    *c = entry;
+    for (i = 0; i < 8; ++i) AOT_ST32(sp + 4u*i, args[i]);
+}
+
+static void menu_responsive(aot_cpu *c, float w, float h)
+{
+    menu_vertex *v = (menu_vertex *)aot_host(c->r[0]);
+    menu_vertex base[MENU_VERTS];
+    const float fixed = h / MENU_VISIBLE_H;
+    const float added = w - MENU_VISIBLE_W * fixed;
+    unsigned i, part;
+    memcpy(base, v, sizeof base);
+    const int nameentry = port_nameentry_active();
+    const int layered = g_splash_art[ART_MENU_FRAME].pixels && g_splash_art[ART_BACKGROUND].pixels;
+    g_menu_vertices=v; g_menu_w=w; g_menu_h=h; g_menu_index_buffer=c->r[1];
+
+    /* The original artwork's natural visible area is 480x320. Split it on
+     * the diagonal beside the left ornament (x=204 at the top, x=260 at the
+     * bottom). The complete left and right compositions keep their source
+     * scale; only the transparent interior and thin frame outline grow.
+     * This also moves the baked logo right without rescaling it. */
+    for (part = 0; part < 3; ++part) {
+        for (i = 0; i < MENU_VERTS; ++i) {
+            /* HighScore animates the original backdrop UVs inward by 0.09.
+             * Those cropped UVs cannot define the boundaries of three pieces:
+             * they leave diagonal holes and crop the frame. Its column-major
+             * grid instead samples the same authored 480x320 canvas as menus. */
+            float t = nameentry || layered ? (float)(i / MENU_GRID) / (MENU_GRID - 1)
+                               : base[i].u * MENU_TEX_W / MENU_VISIBLE_W;
+            float sy = nameentry || layered ? (float)(i % MENU_GRID) * MENU_VISIBLE_H / (MENU_GRID - 1)
+                                : (1.0f - base[i].v) * MENU_TEX_W;
+            float cut = 204.0f + 56.0f * sy / MENU_VISIBLE_H;
+            float left_end = cut - 6.0f, right_start = cut + 6.0f;
+            float sx, dx;
+            if (part == 0) { /* transparent interior and thin frame outline */
+                /* In the header, x>=215 belongs to the logo's green cap.
+                 * Keep those pixels in the intact right piece; interpolating
+                 * them across the widened strip creates a green smear. */
+                float fill_end = sy <= 48.0f ? fminf(right_start, 214.0f)
+                                                : right_start;
+                sx = left_end + (fill_end-left_end)*t;
+                dx = left_end * fixed + (added + 12.0f * fixed) * t;
+            } else if (part == 1) { /* intact left structure */
+                sx = left_end * t;
+                dx = sx * fixed;
+            } else { /* intact logo, right frame and rounded corner */
+                sx = right_start + (MENU_VISIBLE_W - right_start) * t;
+                dx = sx * fixed + added;
+            }
+            v[i].x = dx;
+            v[i].y = nameentry || layered ? sy * fixed : base[i].y;
+            v[i].z = base[i].z;
+            v[i].u = sx / MENU_TEX_W;
+            v[i].v = layered ? sy/MENU_TEX_W : nameentry ? 1.0f-sy/MENU_TEX_W : base[i].v;
+        }
+        g_menu_layer = layered ? (part == 0 ? 1 : 2) : 0;
+        menu_draw_pass(c);
+        g_menu_layer = 0;
+        if (layered) aot_cfg->gl->Disable(0x0be2);
+    }
+    memcpy(v, base, sizeof base);
+    if (layered) AOT_ST32(port_sym("gBindTextureRefLast"),0xffffffffu);
+}
+
 /* G0RenderBackdrop(cGLVertexUV*, vbo, count, cRTexture*), v7a:0x7c8b8:
  * the scrolling full-screen backdrop, drawn from a grid of screen-pixel
  * vertices built by cRBackdrop::Render. */
 void F_0007c8b8(aot_cpu *c)
 {
     canvas cv;
+    /* The decorative menu frame fills the viewport in name entry too.
+     * Its intact edge pieces keep their proportions; only the panel grows.
+     * Interactive name-entry art and hitboxes still share the safe canvas. */
+    if ((g_set.fit == SM_PORT_FIT_ADAPTIVE || port_nameentry_active()) && screen(&cv.w, &cv.h)
+            && cv.w / cv.h >= 16.0f / 9.0f
+            && strcmp((const char *)aot_host(c->r[3] + 12u),
+                      "Backgrounds/MenuScreenHoriz.png") == 0) {
+        g_menu_backdrop = 1;
+        menu_responsive(c, cv.w, cv.h);
+        return;
+    }
+    const char *backdrop_name = aot_host(c->r[3]+12u);
+    int star_map=!strcmp(backdrop_name,"Backgrounds/Starmapbg.jpg") ||
+        !strcmp(backdrop_name,"Backgrounds/Starmapprobg.jpg");
+    if (canvas_get(&cv) && star_map && g_splash_art[ART_STAR_EXTENDED].pixels) {
+        {
+            menu_vertex *vertices=aot_host(c->r[0]), base[MENU_VERTS];
+            memcpy(base,vertices,sizeof base);
+            for(int i=0;i<MENU_VERTS;++i) {
+                float x=(float)(i/MENU_GRID)/(MENU_GRID-1),y=(float)(i%MENU_GRID)/(MENU_GRID-1);
+                float scale=fmaxf(cv.w/g_splash_art[ART_STAR_EXTENDED].w,cv.h/g_splash_art[ART_STAR_EXTENDED].h);
+                float u=(1-cv.w/(scale*g_splash_art[ART_STAR_EXTENDED].w))*.5f;
+                float v=(1-cv.h/(scale*g_splash_art[ART_STAR_EXTENDED].h))*.5f;
+                vertices[i]=(menu_vertex){x*cv.w,y*cv.h,base[i].z,u+x*(1-2*u),v+y*(1-2*v)};
+            }
+            g_menu_vertices=vertices;g_space_layer=1;g_galaxy_backdrop=1;
+            invalidate_colour_cache();F_0007c8b8_orig(c);
+            g_space_layer=0;memcpy(vertices,base,sizeof base);
+            AOT_ST32(port_sym("gBindTextureRefLast"),0xffffffffu);
+            return;
+        }
+    }
+    if (port_nameentry_active() && canvas_get(&cv)) {
+        g_canvas_proj = 1;
+        F_0007c8b8_orig(c);
+        g_canvas_proj = 0;
+        return;
+    }
     if (!canvas_get(&cv) || port_backdrop_fills_screen()) {
         F_0007c8b8_orig(c);
         return;
@@ -582,9 +987,15 @@ void F_00079cf8(aot_cpu *c)
         F_00079cf8_orig(c);
         return;
     }
-    g_canvas_proj = 1;
+    const char *name = aot_host(c->r[0]+5u);
+    g_splash_slot = strstr(name, "SANDLOTLOADING") || strstr(name, "SandlotLoading") ? 0
+                  : strstr(name, "ALPHA72GAMESLOADING") || strstr(name, "Alpha72GamesLoading") ? 1
+                  : strstr(name, "SPRITES/LOADING.PNG") || strstr(name, "Sprites/Loading.png") ? -1 : -2;
+    g_splash_w = cv.w; g_splash_h = cv.h;
+    g_splash_proj = g_splash_slot < 0 || !g_splash_art[g_splash_slot].pixels;
+    g_splash_first_draw = 1;
     F_00079cf8_orig(c);
-    g_canvas_proj = 0;
+    g_splash_proj = 0; g_splash_first_draw = 0;
 }
 
 /* ---------------------------------------------------------------- field of view */
@@ -629,29 +1040,33 @@ void F_0007b0c8(aot_cpu *c) /* gluPerspective */
 void sm_port_map_touch(float *x, float *y)
 {
     canvas cv;
-    float ox;
+    float ox, oy;
     int i;
     if (!canvas_get(&cv)) {
         return;
     }
     ox = cv.ox;
+    oy = cv.oy;
     aot_lock_acquire(&g_touch_lock);
     for (i = 0; i < g_touch_n; ++i) {
         const rect *r = &g_touch[i].r;
-        if (*x >= r->x0 && *x <= r->x1 && *y >= r->y0 && *y <= r->y1) {
+        if (!cv.nameentry && *x >= r->x0 && *x <= r->x1 && *y >= r->y0 && *y <= r->y1) {
             ox = g_touch[i].ox;
+            oy = g_touch[i].oy;
             break;
         }
     }
     aot_lock_release(&g_touch_lock);
     /* screen pixel -> logical (inverse of the element's placement) -> the
      * pixel that the original's x * 640/W scaling turns into that logical x */
-    *x = (*x - ox) / cv.s * cv.sx;
-    *y = (*y - cv.oy) / cv.s * cv.sy;
+    *x = (*x - ox) / cv.tx * cv.sx;
+    *y = (*y - oy) / cv.ty * cv.sy;
 }
 
 void sm_port_frame_begin(void)
 {
+    float w, h;
+    if (screen(&w, &h)) port_nameentry_snapshot(w, h);
     install_filters();
     if (g_hud.anchored_gen != g_hud.gen) {
         /* last frame had no anchored elements: touches use the centred canvas */
@@ -660,6 +1075,8 @@ void sm_port_frame_begin(void)
         aot_lock_release(&g_touch_lock);
     }
     ++g_hud.gen;
+    g_ui_snapshot_count=0;
+    g_menu_backdrop = 0;g_galaxy_backdrop=0;g_galaxy_detail_dx=0;g_galaxy_detail_dy=0;
     g_3d_draws_prev = g_3d_draws;
     g_3d_draws = 0;
 }

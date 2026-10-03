@@ -52,6 +52,9 @@ if(SM_BUILD_TESTS)
     add_test(NAME platform.shell_parity
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/platform/check_shell_parity.py)
     set_tests_properties(platform.shell_parity PROPERTIES SKIP_RETURN_CODE 77)
+    add_test(NAME controls.java_replay
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/control/run_tests.py)
+    set_tests_properties(controls.java_replay PROPERTIES SKIP_RETURN_CODE 77)
   endif()
   file(GLOB SM_TEST_DIRS LIST_DIRECTORIES true ${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/*
                                                 ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/*)

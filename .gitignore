@@ -30,3 +30,7 @@ __pycache__/
 # AOT translation output: embeds the original binary's code semantics and data
 # bytes. Regenerate locally with tools/aot/arm2c.py; never commit.
 /aot/generated/
+
+# Exact original artwork is extracted locally from the owner's asset archive.
+/android/app/src/main/assets/port/menu-original.png
+/android/app/src/main/assets/port/loading-original.png

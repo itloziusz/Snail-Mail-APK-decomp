@@ -188,20 +188,32 @@ uint32_t aot_malloc(uint32_t size)
 
 void aot_free(uint32_t p)
 {
-    uint32_t b, hdr, k;
+    uint32_t b, hdr, k, size;
+    uint64_t capacity, need;
     if (p == 0) {
         return;
     }
-    if (p < AOT_HEAP_BASE + 8u || p >= g_heap_top) {
+    aot_lock_acquire(&g_lock);
+    if ((p & 7u) || p < AOT_HEAP_BASE + 8u || p >= g_heap_top) {
         aot_fatal("free() of non-heap guest pointer %08x", p);
     }
     b = p - 8u;
     hdr = AOT_LD32(b);
-    if ((hdr & 0xFFFF0000u) != HEAP_MAGIC) {
+    k = hdr & 0xFFu;
+    /* Only the exact allocated header is valid. In particular, the 0x8000
+     * free marker must never enter a free list a second time. Validate the
+     * class before shifting or indexing g_free. The lock covers validation
+     * as well as insertion so concurrent frees cannot both accept a block. */
+    if (k < 4u || k > 30u || hdr != (HEAP_MAGIC | k)) {
         aot_fatal("free() of corrupt or foreign block %08x (header %08x)", p, hdr);
     }
-    k = hdr & 0xFFu;
-    aot_lock_acquire(&g_lock);
+    capacity = 1ull << k;
+    size = AOT_LD32(b + 4u);
+    need = (uint64_t)size + 8u;
+    if ((uint64_t)b + capacity > g_heap_top || need > capacity ||
+        (k > 4u && need <= (capacity >> 1))) {
+        aot_fatal("free() of corrupt block %08x (class %u, size %u)", p, k, size);
+    }
     AOT_ST32(b, HEAP_MAGIC | 0x8000u | k); /* mark free */
     AOT_ST32(p, g_free[k]);
     g_free[k] = b;
@@ -258,7 +270,8 @@ void aot_tailjump(aot_cpu *c, uint32_t target, uint32_t site, uint32_t entry_lr)
         fn(c);
         return;
     }
-    if (target >= AOT_JNI_THUNK_BASE && target < AOT_JNI_THUNK_BASE + 4u * AOT_JNI_THUNK_COUNT) {
+    if (target >= AOT_JNI_THUNK_BASE && target < AOT_JNI_THUNK_BASE + 4u * AOT_JNI_THUNK_COUNT &&
+        (target & 3u) == 0) {
         aot_jni_dispatch(c, (target - AOT_JNI_THUNK_BASE) / 4u);
         return;
     }

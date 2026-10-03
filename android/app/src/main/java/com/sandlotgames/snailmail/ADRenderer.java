@@ -58,6 +58,7 @@ class ADRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        BackgroundArt.nativeContextCreated();
         SnailMailActivity.ActivityInitFlag = false;
         if (!SurfaceCreatedFirstTime) {
             SnailMailActivity.wprintf("** OnSurfaceCreated");
@@ -88,6 +89,8 @@ class ADRenderer implements GLSurfaceView.Renderer {
             SnailMailActivity.wprintf("Not got focus");
             SystemPauseFlag = 1;
         }
+        if (SystemPauseFlag == 0 && SnailMailActivity.Accelerometer != null)
+            SnailMailActivity.Accelerometer.consumeSmoothInput();
         nativeRender(SystemPauseFlag);
     }
 

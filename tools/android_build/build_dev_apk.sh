@@ -49,6 +49,7 @@ for t in clang ld.lld javac dalvik-exchange aapt apksigner keytool python3; do
 done
 [ -f "$ANDROID_JAR" ] || { echo "missing $ANDROID_JAR (apt install android-sdk-platform-23)"; exit 1; }
 [ -f "$EXTRACTED/assets/asm.mp3" ] || { echo "missing extracted asm.mp3 (run tools/inventory/setup_workspace.sh)"; exit 1; }
+python3 tools/android_build/prepare_background_art.py --archive "$EXTRACTED/assets/asm.mp3"
 for density in ldpi mdpi hdpi; do
   [ -f "$EXTRACTED/res/drawable-$density/icon.png" ] || {
     echo "missing original drawable-$density/icon.png (run tools/inventory/setup_workspace.sh)"
@@ -73,7 +74,8 @@ if [ "$VARIANT" = "aot" ] || [ "$VARIANT" = "aot-gles2" ]; then
   fi
   AOT_SRCS=(aot/runtime/aot_core.c aot/runtime/aot_libc.c aot/runtime/aot_gl.c aot/runtime/aot_jni.c
     aot/runtime/aot_android.c aot/generated/aot_table.c aot/generated/aot_funcs_*.c
-    aot/port/port_display.c aot/port/port_menu.c aot/port/port_android.c)
+    aot/port/port_display.c aot/port/port_menu.c aot/port/port_android.c
+    aot/port/port_nameentry.c aot/port/nameentry_layout.c)
   if [ "$VARIANT" = "aot" ]; then
     echo "== native (arm64-v8a, NDK-less): AOT runtime + translated game (GLES 1.1)"
     GL_ARGS=(--lib libGLESv1_CM)
@@ -162,7 +164,7 @@ fi
 aapt package -f --debug-mode \
   --min-sdk-version "$MIN_SDK" --target-sdk-version "$TARGET_SDK" \
   --rename-manifest-package "$APP_ID" \
-  -M "$OUT/app/AndroidManifest.xml" -S "$OUT/app/res" -S android/app/src/main/res -A "$EXTRACTED/assets" \
+  -M "$OUT/app/AndroidManifest.xml" -S "$OUT/app/res" -S android/app/src/main/res -A "$EXTRACTED/assets" -A android/app/src/main/assets \
   -I "$ANDROID_JAR" -0 arsc -0 mp3 -0 ogg -F "$OUT/app/unaligned.apk"
 
 python3 - "$OUT/app/unaligned.apk" "$OUT/app/pkg" <<'PY'

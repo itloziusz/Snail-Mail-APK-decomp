@@ -13,6 +13,9 @@ Compares four sources of truth:
   4. Java_* symbols exported by the original v7a .so vs JNIEXPORT functions
      defined in android/app/src/main/cpp/jni_bridge.cpp.
 
+The port-only PortSettings.nativeSet entry is checked against its own JNI
+implementation; it is intentionally absent from the original APK.
+
 Exit status 0 when everything matches (differences that are intentional,
 i.e. the removed MyOpenFeintDelegate class, are reported as INFO).
 
@@ -38,6 +41,17 @@ SHELL = os.path.join(REPO, "android/app/src/main/java/com/sandlotgames/snailmail
 BRIDGE = os.path.join(REPO, "android/app/src/main/cpp/jni_bridge.cpp")
 V7A = os.path.join(REPO, "work/apk_unzip/lib/armeabi-v7a/libsnailmail.so")
 INTENTIONALLY_REMOVED = {"MyOpenFeintDelegate"}
+PORT_ONLY_NATIVES = {
+    ("PortSettings", "nativeSet", "(IIIIII)V"):
+        os.path.join(REPO, "aot/port/port_android.c"),
+    **{entry: os.path.join(REPO, "aot/port/port_android.c") for entry in (
+        ("ADGLSurfaceView", "nativeNameEntryActive", "()Z"),
+        ("ADGLSurfaceView", "nativeSafeArea", "(FFFF)V"),
+        ("BackgroundArt", "nativeAsset", "(III[I)V"),
+        ("BackgroundArt", "nativeContextCreated", "()V"),
+        ("NameEntryDebugView", "nativeSnapshot", "()[F"),
+    )},
+}
 
 
 def smali_natives():
@@ -96,8 +110,29 @@ def main():
             print(f"FAIL  native {cls}.{name}{desc}: missing or different in port shell")
             ok = False
     for extra in sorted(port_natives - orig):
-        print(f"FAIL  native {extra}: not in original")
+        if extra in PORT_ONLY_NATIVES:
+            source = open(PORT_ONLY_NATIVES[extra], encoding="utf-8").read()
+            export = "Java_com_sandlotgames_snailmail_" + extra[0] + "_" + extra[1]
+            if export in source:
+                print(f"OK    port-only native {extra}: implemented in port_android.c")
+                continue
+        print(f"FAIL  native {extra}: unexpected or missing port JNI implementation")
         ok = False
+    for expected in PORT_ONLY_NATIVES:
+        if expected not in port_natives:
+            print(f"FAIL  port-only native {expected}: missing or wrong descriptor")
+            ok = False
+    callback = port_methods.get("PortSettings", {}).get(("onChanged", "(IIIII)V"))
+    if callback is None or "static" not in callback:
+        print("FAIL  PortSettings.onChanged(IIIII)V callback missing")
+        ok = False
+    else:
+        source = open(PORT_ONLY_NATIVES[("PortSettings", "nativeSet", "(IIIIII)V")], encoding="utf-8").read()
+        if '"(IIIII)V"' not in source:
+            print("FAIL  native callback descriptor differs from Java")
+            ok = False
+        else:
+            print("OK    PortSettings.onChanged(IIIII)V callback")
 
     elf = ArmElf(V7A, "v7a")
     base = elf.sym_by_name["gJAVAFunction"]

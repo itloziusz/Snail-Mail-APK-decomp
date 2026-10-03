@@ -195,6 +195,8 @@ class Emitter:
         self.uses_vfp = False
         self.insns = []  # (addr, word, capstone insn or None)
         self.unsupported = []
+        self.falls_through = True
+        self.current_condition = 14
 
     # ---------------------------------------------------------------- helpers
     def R(self, n, a):
@@ -206,6 +208,7 @@ class Emitter:
     def fail(self, a, msg):
         self.unsupported.append({"addr": hex(a), "why": msg})
         self.emit('    aot_unsupported(c, %s, "%s");' % (hx(GUEST_BASE + a), msg.replace('"', "'")))
+        self.falls_through = False
 
     def target_kind(self, t):
         if self.f["addr"] <= t < self.f["end"]:
@@ -275,15 +278,29 @@ class Emitter:
         body = []
         self.lines = body
         prev_w = None
+        next_pc = f["addr"]
+        self.falls_through = True
         for idx, (a, w) in enumerate(self.insns):
+            if a != next_pc:
+                if self.falls_through:
+                    self.fail(next_pc, "sequential PC enters non-code region")
+                prev_w = None
             if a in self.labels:
                 self.emit("L_%08x:" % a)
+                # Incoming branches need not execute the preceding MOV LR,PC.
+                prev_w = None
+            reachable_here = self.falls_through or a in self.labels
             self.emit("    /* %08x: %08x */" % (a, w))
+            self.falls_through = True
             try:
                 self.insn(a, w, prev_w)
             except TranslationError as e:
                 self.fail(a, str(e))
+            self.falls_through = self.falls_through and reachable_here
             prev_w = w
+            next_pc = a + 4
+        if next_pc != f["end"] and self.falls_through:
+            self.fail(next_pc, "sequential PC enters non-code region")
         self.emit("    aot_fell_off_end(c, %s);" % hx(GUEST_BASE + f["end"]))
         addrs = {a for a, _ in self.insns}
         missing = sorted(t for t in self.labels if t not in addrs)
@@ -306,7 +323,9 @@ class Emitter:
         head.append("    AOT_TRACE(%s);" % hx(GUEST_BASE + f["addr"]))
         return "\n".join(head + body + ["}"])
 
-    def wrap_cond(self, cond, stmts):
+    def wrap_cond(self, cond, stmts, terminates=False):
+        if cond == 14 and terminates:
+            self.falls_through = False
         if cond == 14:
             # own block: temporaries are per instruction, and a label may precede it
             self.emit("    {")
@@ -321,6 +340,7 @@ class Emitter:
 
     def insn(self, a, w, prev_w):
         cond = w >> 28
+        self.current_condition = cond
         if cond == 0xF:
             return self.uncond(a, w)
         op1 = (w >> 25) & 7
@@ -352,6 +372,8 @@ class Emitter:
         """Statements for a runtime PC write with target expression texpr."""
         if is_call:
             return ["{ uint32_t t_ = %s; AOT_CALL_INDIRECT(t_, %s); }" % (texpr, hx(GUEST_BASE + a))]
+        if self.current_condition == 14:
+            self.falls_through = False
         return ["{ uint32_t t_ = %s; AOT_JUMP(t_, %s); }" % (texpr, hx(GUEST_BASE + a))]
 
     def is_call_after_mov_lr_pc(self, prev_w, cond):
@@ -368,11 +390,11 @@ class Emitter:
             return self.wrap_cond(cond, stmts)
         k = self.target_kind(t)
         if k == "intra":
-            return self.wrap_cond(cond, ["goto L_%08x;" % t])
+            return self.wrap_cond(cond, ["goto L_%08x;" % t], terminates=True)
         if k == "func":
-            return self.wrap_cond(cond, ["AOT_TAILCALL(%s);" % self.fname(t)])
+            return self.wrap_cond(cond, ["AOT_TAILCALL(%s);" % self.fname(t)], terminates=True)
         if k == "import":
-            return self.wrap_cond(cond, ["AOT_TAILCALL(aot_imp_%s);" % self.img.plt[t]])
+            return self.wrap_cond(cond, ["AOT_TAILCALL(aot_imp_%s);" % self.img.plt[t]], terminates=True)
         raise TranslationError("branch to unknown target %#x" % t)
 
     # ------------------------------------------------------------ data processing
@@ -428,10 +450,14 @@ class Emitter:
         else:
             if (w & 0x0FF00000) == 0x03000000:  # MOVW
                 rd = (w >> 12) & 0xF
+                if rd == 15:
+                    raise TranslationError("MOVW with PC destination")
                 v = ((w >> 4) & 0xF000) | (w & 0xFFF)
                 return self.wrap_cond(cond, ["%s = %s;" % (REG[rd], hx(v))])
             if (w & 0x0FF00000) == 0x03400000:  # MOVT
                 rd = (w >> 12) & 0xF
+                if rd == 15:
+                    raise TranslationError("MOVT with PC destination")
                 v = ((w >> 4) & 0xF000) | (w & 0xFFF)
                 return self.wrap_cond(cond, ["%s = (%s & 0xffffu) | %s;" % (REG[rd], REG[rd], hx(v << 16))])
             if (w & 0x0FB00000) == 0x03200000:  # MSR imm / hints
@@ -497,25 +523,24 @@ class Emitter:
                     st2.append("    case %s: goto L_%08x;" % (hx(t), t))
                 st2.append("    default: aot_bad_jump(c, %s, res_);" % hx(GUEST_BASE + a))
                 st2.append("}")
-                return self.wrap_cond(cond, st2)
+                return self.wrap_cond(cond, st2, terminates=True)
             is_call = self.is_call_after_mov_lr_pc(prev_w, cond)
             return self.wrap_cond(cond, st + self.pc_write(a, "res_", is_call=is_call))
         st.append("%s = res_;" % REG[rd])
         return self.wrap_cond(cond, st)
 
     def misc(self, a, w, cond, prev_w):
-        op2 = (w >> 4) & 0xF
-        op = (w >> 21) & 3
         rm = w & 0xF
-        if op2 == 1 and op == 1:  # BX
+        # Include every fixed encoding bit, not just the opcode subfields.
+        if (w & 0x0FFFFFF0) == 0x012FFF10:  # BX
             if rm == 14:
-                return self.wrap_cond(cond, ["AOT_RETURN_TO(lr, %s);" % hx(GUEST_BASE + a)])
+                return self.wrap_cond(cond, ["AOT_RETURN_TO(lr, %s);" % hx(GUEST_BASE + a)], terminates=True)
             is_call = self.is_call_after_mov_lr_pc(prev_w, cond)
             return self.wrap_cond(cond, self.pc_write(a, REG[rm], is_call=is_call))
-        if op2 == 3 and op == 1:  # BLX reg
+        if (w & 0x0FFFFFF0) == 0x012FFF30:  # BLX reg
             return self.wrap_cond(cond, ["{ uint32_t t_ = %s; lr = %s; AOT_CALL_INDIRECT(t_, %s); }" % (
                 REG[rm], hx(GUEST_BASE + a + 4), hx(GUEST_BASE + a))])
-        if op2 == 1 and op == 3:  # CLZ
+        if (w & 0x0FFF0FF0) == 0x016F0F10:  # CLZ
             rd = (w >> 12) & 0xF
             return self.wrap_cond(cond, ["%s = aot_clz(%s);" % (REG[rd], REG[rm])])
         raise TranslationError("misc instruction %08x" % w)
@@ -1068,7 +1093,9 @@ def main():
             total_unsupported += len(em.unsupported)
             manifest["functions"].append({"addr": hex(f["addr"]), "name": f["name"], "end": hex(f["end"]),
                                           "insns": len(em.insns), "uses_vfp": em.uses_vfp,
-                                          "unsupported": em.unsupported})
+                                          "unsupported": em.unsupported,
+                                          "translation_status": "UNRESOLVED" if em.unsupported else "EMITTED_UNVALIDATED",
+                                          "validation_status": "UNVALIDATED"})
         with open(os.path.join(args.out, "aot_funcs_%02d.c" % ci), "w") as fh:
             fh.write("\n".join(out))
     # declarations
@@ -1136,9 +1163,17 @@ def main():
     manifest["function_count"] = len(code_funcs)
     manifest["chunks"] = len(chunks)
     manifest["unsupported_sites"] = total_unsupported
+    manifest["metrics"] = {
+        "discovered_function_starts": len(code_funcs),
+        "emitted_functions": len(manifest["functions"]),
+        "functions_with_explicit_unsupported_sites": sum(bool(f["unsupported"]) for f in manifest["functions"]),
+        "functions_emitted_without_explicit_unsupported_sites": sum(not f["unsupported"] for f in manifest["functions"]),
+        "functions_with_proof_attached": 0,
+        "interpretation": "Emission is not semantic validation; no per-function proof is attached by this generator.",
+    }
     with open(os.path.join(args.out, "aot_manifest.json"), "w") as fh:
         json.dump(manifest, fh, indent=1)
-    print("translated %d functions into %d files; %d unsupported sites (fatal if reached); %d hooked" % (
+    print("emitted %d functions into %d files; %d unsupported sites (fatal if reached); %d hooked; no semantic proof attached" % (
         len(code_funcs), len(chunks), total_unsupported, len(hooks)))
 
 

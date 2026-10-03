@@ -23,10 +23,12 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include <png.h>
 
 #include "aot_host.h"
 #include "java_emul.h"
 #include "port.h"
+#include "aot_rt.h"
 
 #ifdef SM_HOST_HAVE_GL
 #include "egl_offscreen.h"
@@ -47,6 +49,23 @@ typedef struct {
 static event *g_events;
 static int g_nevents;
 
+static void load_background_art(void)
+{
+    const char *names[] = {"sandlot-wide.png","alpha72-wide.png","menu-original.png",
+        "menu-frame-mask.png","menu-background.png","loading-original.png","loading-mask.png","galaxy-map-wide.png"};
+    const int slots[] = {0,1,4,2,3,6,5,7};
+    for (int i=0;i<8;++i) {
+        png_image image; memset(&image,0,sizeof image); image.version=PNG_IMAGE_VERSION;
+        char path[512]; snprintf(path,sizeof path,"android/app/src/main/assets/port/%s",names[i]);
+        if (!png_image_begin_read_from_file(&image,path)) continue;
+        image.format=PNG_FORMAT_RGBA;
+        unsigned char *pixels=malloc(PNG_IMAGE_SIZE(image));
+        if (pixels && png_image_finish_read(&image,NULL,pixels,0,NULL))
+            sm_port_splash_asset(slots[i],image.width,image.height,pixels);
+        free(pixels); png_image_free(&image);
+    }
+}
+
 static void load_script(const char *path)
 {
     FILE *f = fopen(path, "r");
@@ -60,7 +79,7 @@ static void load_script(const char *path)
         memset(&e, 0, sizeof e);
         if (line[0] == '#' || sscanf(line, "%d %7s", &e.frame, e.what) != 2) continue;
         if (!strcmp(e.what, "key")) sscanf(line, "%*d %*s %d", &e.key);
-        else if (!strcmp(e.what, "accel")) sscanf(line, "%*d %*s %f %f %f", &e.x, &e.y, &e.z);
+        else if (!strcmp(e.what, "accel") || !strcmp(e.what, "insets")) sscanf(line, "%*d %*s %f %f %f", &e.x, &e.y, &e.z);
         else sscanf(line, "%*d %*s %f %f", &e.x, &e.y);
         g_events = (event *)realloc(g_events, sizeof(event) * (size_t)(g_nevents + 1));
         g_events[g_nevents++] = e;
@@ -132,6 +151,7 @@ int sm_host_run(int argc, char **argv)
         else if (!strcmp(a, "--fit") && v) port.fit = !strcmp(argv[++i], "adaptive") ? SM_PORT_FIT_ADAPTIVE : SM_PORT_FIT_STRETCH;
         else if (!strcmp(a, "--fov") && v) port.fov = !strcmp(argv[++i], "adaptive") ? SM_PORT_FOV_ADAPTIVE : SM_PORT_FOV_ORIGINAL;
         else if (!strcmp(a, "--port-defaults")) sm_port_settings_default(&port);
+        else if (!strcmp(a, "--background-only")) sm_port_background_debug_only(1);
         else {
             fprintf(stderr,
                     "usage: %s [--assets DIR] [--files DIR] [--out DIR] [--frames N] [--size WxH]\n"
@@ -189,6 +209,7 @@ int sm_host_run(int argc, char **argv)
     clock_gettime(CLOCK_MONOTONIC, &t0);
     if (aot_init(&cfg) != 0) return 1;
     sm_port_set(&port);
+    load_background_art();
 
     g_cpu = aot_thread_enter(NULL);
     g_env = aot_thread_guest_env();
@@ -222,6 +243,8 @@ int sm_host_run(int argc, char **argv)
             headless ? "headless" : "GLES1-on-GLES2 offscreen");
 
     for (int frame = 0; frame < frames; ++frame) {
+        int splash = -1;
+        float progress = 0;
         int shot = shot_every > 0 && (frame + 1) % shot_every == 0;
         (void)shot;
         for (int k = 0; k < g_nevents; ++k) {
@@ -241,12 +264,101 @@ int sm_host_run(int argc, char **argv)
                 call("Java_com_sandlotgames_snailmail_AccelerometerListener_JNIAccelerometer", a, 5);
             } else if (!strcmp(e->what, "shot")) {
                 shot = 1;
+            } else if (!strcmp(e->what, "lose")) {
+                /* Test-only fixture: force the last-life condition and a
+                 * qualifying score, then use the real falling/death path.
+                 * No screen transition is injected. Never linked on Android. */
+                uint32_t game = AOT_LD32(aot_symbol_addr("Game"));
+                uint32_t sub = game + 0x718a0u, goldy = sub + 0xfac4u;
+                if (AOT_LD32(goldy + 0x400u) != sub) {
+                    fprintf(stderr, "[test] lose requires an initialized gameplay actor\n"); return 4;
+                }
+                AOT_ST32(goldy + 0x3ff4u, 0); /* extra lives: zero = final life */
+                AOT_ST32(goldy + 0x2ccu, 999999);
+                uint32_t a = goldy;
+                call("_ZN10cRSubGoldy4KillEv", &a, 1);
+                fprintf(stderr, "[test] final-life loss initiated in gameplay, mode=%u\n", AOT_LD32(sub + 0x60u));
+            } else if (!strcmp(e->what, "splash")) {
+                splash = (int)e->x; progress = e->y; shot = 1;
+            } else if (!strcmp(e->what, "mapinfo")) {
+                uint32_t game=AOT_LD32(aot_symbol_addr("Game"));
+                uint32_t mode=AOT_LD32(game+0x392960u);
+                int level=(int)e->x;
+                if(mode>1 || level<0 || level>=50) return 4;
+                /* Test profile unlocks the catalogue in this temporary host
+                 * process only. Original AI otherwise clamps to saved progress. */
+                AOT_ST32(aot_symbol_addr("gConfig")+0xa0u,(uint32_t)level);
+                AOT_ST32(aot_symbol_addr("gConfig")+0xa4u,(uint32_t)level);
+                uint32_t args[2]={game+0x392964u+mode*0x8e6cu,(uint32_t)level};
+                /* Init2 initializes the original route text and navigation;
+                 * BoxOn alone only repositions the existing description. */
+                call("_ZN8cRGalaxy6UnInitEv",args,1);
+                AOT_ST32(args[0]+0x8e34u,(uint32_t)level);
+                call("_ZN8cRGalaxy5Init2Ev",args,1);
+                call("_ZN8cRGalaxy5BoxOnEi",args,2);
+                fprintf(stderr,"[test] original galaxy description level=%d mode=%u actual=%d opened\n",level,mode,
+                        (int32_t)AOT_LD32(args[0]+0x8e34u));
+            } else if (!strcmp(e->what, "mapoff")) {
+                uint32_t game=AOT_LD32(aot_symbol_addr("Game"));
+                uint32_t mode=AOT_LD32(game+0x392960u);
+                if(mode>1) return 4;
+                uint32_t galaxy=game+0x392964u+mode*0x8e6cu;
+                call("_ZN8cRGalaxy6BoxOffEv",&galaxy,1);
+                fprintf(stderr,"[test] galaxy selector detail panel closed\n");
+            } else if (!strcmp(e->what, "profile")) {
+                /* A repeat-player profile: skip first-run tutorial redirect. */
+                AOT_ST8(aot_symbol_addr("gConfig") + 0xc0u, 1);
+            } else if (!strcmp(e->what, "insets")) {
+                sm_port_safe_area(e->x, e->y, e->z, 0);
+            } else if (!strcmp(e->what, "inspect")) {
+                uint32_t game = AOT_LD32(aot_symbol_addr("Game"));
+                uint32_t pad = game + 0xbf0u, b = AOT_LD32(pad + 0x1cu);
+                fprintf(stderr, "[test] frame=%d screen=%u keypad=%u name='%s'\n", frame,
+                        AOT_LD32(game + 0x15cu), AOT_LD32(pad), b ? (char *)aot_host(b + 0x2c4u) : "");
             }
         }
         {
             uint32_t a[3] = {g_env, thiz, 0u};
             sm_port_frame_begin();
             call("Java_com_sandlotgames_snailmail_ADRenderer_nativeRender", a, 3);
+        }
+        if (splash >= 0 && splash <= 2) {
+            const char *names[] = {"SPRITES/SANDLOTLOADING.JPG","SPRITES/ALPHA72GAMESLOADING.JPG","SPRITES/LOADING.PNG"};
+            uint32_t text = aot_malloc((uint32_t)strlen(names[splash])+1);
+            strcpy(aot_host(text), names[splash]);
+            uint32_t args[2] = {aot_symbol_addr("G0SplashManager"),text};
+            call("_ZN15cRSplashManager9SetSplashEPc",args,2);
+            args[1]=fbits(1.0f); /* Render argument is brightness, not bar progress. */
+            call("_ZN15cRSplashManager6RenderEf",args,2);
+            aot_free(text);
+        }
+        if (shot && out) {
+            float ui[512*9];
+            int ui_n=sm_port_ui_debug(ui,512*9);
+            char ui_path[1200];
+            snprintf(ui_path,sizeof ui_path,"%s/ui_%05d.txt",out,frame+1);
+            FILE *ui_file=fopen(ui_path,"w");
+            if(ui_file) {
+                for(int j=0;j+8<ui_n;j+=9) fprintf(ui_file,"%g %g %g %g %g %g %g %g %g\n",
+                        ui[j],ui[j+1],ui[j+2],ui[j+3],ui[j+4],ui[j+5],ui[j+6],ui[j+7],ui[j+8]);
+                fclose(ui_file);
+            }
+            uint32_t game=AOT_LD32(aot_symbol_addr("Game"));
+            uint32_t mode=AOT_LD32(game+0x392960u);
+            if(mode<=1) fprintf(stderr,"[test] galaxy shot selection=%d\n",
+                    (int32_t)AOT_LD32(game+0x392964u+mode*0x8e6cu+0x8e34u));
+            float data[2 + 64 * 9];
+            int n = sm_port_nameentry_debug(data, 2 + 64 * 9);
+            char p[1200];
+            snprintf(p, sizeof p, "%s/layout_%05d.txt", out, frame + 1);
+            FILE *layout = fopen(p, "w");
+            if (layout) {
+                fprintf(layout, "count=%g selected=%g\n", n > 0 ? data[0] : 0, n > 1 ? data[1] : -1);
+                for (int j = 2; j + 8 < n; j += 9)
+                    fprintf(layout, "%c ref %g %g %g %g pixel %g %g %g %g\n", (int)data[j],
+                            data[j+1],data[j+2],data[j+3],data[j+4],data[j+5],data[j+6],data[j+7],data[j+8]);
+                fclose(layout);
+            }
         }
         if (!realtime) sm_java_clock_advance((uint64_t)(1e9 / hz + 0.5));
 #ifdef SM_HOST_HAVE_GL

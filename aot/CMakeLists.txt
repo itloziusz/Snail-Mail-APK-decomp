@@ -27,7 +27,7 @@ endif()
 file(GLOB SM_AOT_GEN_SOURCES ${SM_AOT_GENERATED}/aot_funcs_*.c)
 # Hand-written wrappers for the functions listed in tools/aot/hooks.txt
 # (display adaptation, options menu); see aot/port/port.h.
-set(SM_AOT_PORT_SOURCES port/port_display.c port/port_menu.c)
+set(SM_AOT_PORT_SOURCES port/port_display.c port/port_menu.c port/port_nameentry.c port/nameentry_layout.c)
 # The runtime and the generated tables reference each other, so they form one
 # static library (sm_aot_game = runtime sources + translated sources).
 add_library(sm_aot_game STATIC

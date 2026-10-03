@@ -10,7 +10,7 @@ _Z16G0RenderBackdropP11cGLVertexUVjiP9cRTexture        # full-screen backdrops
 _ZN15cRSplashManager6RenderEf                          # splash / loading screens
 _Z14gluPerspectivefffff                                # field of view
 
-# Options menu: Display page (aot/port/port_menu.c)
+# Options menu: Display and Controls pages (aot/port/port_menu.c)
 _ZN9cROptions4InitEv
 _ZN9cROptions2AIEv
 _ZN9cROptions6UnInitEv
@@ -22,3 +22,14 @@ _ZN8cRBorder4DrawEv
 _Z15FontPrintRenderi
 _Z13FontPrintRealP16cFontPrintBuffer
 _Z12OSDPrintRealP16cFontPrintBuffer
+
+# Name-entry subsystem: source mask, navigation and scene lifetime.
+_ZN11cRHighScore4InitEii
+_ZN11cRHighScore6UnInitEv
+_ZN7cKeyPad4OpenEv
+_ZN7cKeyPad4InitEP8cRBorder
+_ZN7cKeyPad7KeyTestEiiPi
+_ZN7cKeyPad2AIEv
+Java_com_sandlotgames_snailmail_ADGLSurfaceView_JNIKey
+_ZN8cRBorder2AIEv # labels are queued separately from Draw
+_ZN15cRBorderManager9GetBorderEv # collect high-score scene ownership
